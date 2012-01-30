@@ -67,22 +67,7 @@
 				</replacetokens>
 			</filterchain>
 		</reflexive>
-		
-		<reflexive>
-			<fileset dir="./build/application/config">
-				<include pattern="mongodb.php" />
-			</fileset>
-			<filterchain>
-				<replacetokens begintoken="##" endtoken="##">
-					<token key="MONGO_SERVERS" value="${MONGO_SERVERS}" />
-					<token key="MONGO_PORT" value="${MONGO_PORT}" />
-					<token key="MONGO_DATABASE" value="${MONGO_DATABASE}" />
-					<token key="MONGO_USER" value="${MONGO_USER}" />
-					<token key="MONGO_PASSWORD" value="${MONGO_PASSWORD}" />
-				</replacetokens>
-			</filterchain>
-		</reflexive>
-		
+				
 		<echo msg="Configuration token replacement complete." />
         
     </target>
