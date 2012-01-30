@@ -15,6 +15,15 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 /**
+ * Orbital Manager Name
+ *
+ * A name for this instance of Orbital Manager. Useful if your institution
+ * wants to call it by something else.
+*/
+
+$config['orbital_manager_name'] = '##ORBITAL_MANAGER_NAME##';
+
+/**
  * Core Location
  *
  * The location of the Orbital Core instance this Manager should use.

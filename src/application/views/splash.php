@@ -1,37 +1,46 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
+<!-- Main hero unit for a primary marketing message or call to action -->
+<div class="hero-unit">
+  <h1>Hello, world!</h1>
+  <p>Vestibulum id ligula porta felis euismod semper. Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit.</p>
+  <p><a class="btn primary large">Learn more &raquo;</a></p>
+</div>
 
-	<meta charset="utf-8">
-	<title>Orbital Manager</title>
+<!-- Example row of columns -->
+<div class="row">
+  <div class="span6">
+    <h2>Heading</h2>
+    <p>Etiam porta sem malesuada magna mollis euismod. Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit.</p>
+    <p><a class="btn" href="#">View details &raquo;</a></p>
+  </div>
+  <div class="span5">
+    <h2>Heading</h2>
+     <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+    <p><a class="btn" href="#">View details &raquo;</a></p>
+ </div>
+  <div class="span5">
+    <h2>Heading</h2>
+    <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
+    <p><a class="btn" href="#">View details &raquo;</a></p>
+  </div>
+</div>
 
-	<link href='https://fonts.googleapis.com/css?family=Spinnaker' rel='stylesheet' type='text/css'>
+<hr>
 
-	<style type="text/css">
-	
-		body {
-			background: #000 url(<?php echo base_url(); ?>img/bg.png);
-			color: #FFF;
-			font-family: 'Spinnaker', sans-serif;
-			text-align: center;
-			font-size: 1.2em;
-			margin-top: 50px;
-		}
-		
-		a {
-			color: #F5D89A;
-		}
-	
-	</style>
-	
-</head>
-<body>
-
-	<h1><img src="<?php echo base_url(); ?>img/logo.png" title="Orbital" alt="Orbital Logo"></h1>
-	
-	<p>This is Orbital Manager version <?php echo $this->config->item('orbital_manager_version'); ?>. Orbital Core instance is at <?php echo $this->config->item('orbital_core_location'); ?>.
-	
-	<p><a href="https://github.com/lncd/Orbital-Manager">Orbital Manager on Github</a> &middot; <a href="http://orbital.blogs.lincoln.ac.uk/">Orbital Blog</a></p>
-
-</body>
-</html>
+<!-- Example row of columns -->
+<div class="row">
+  <div class="span6">
+    <h2>Heading</h2>
+    <p>Etiam porta sem malesuada magna mollis euismod. Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit.</p>
+    <p><a class="btn" href="#">View details &raquo;</a></p>
+  </div>
+  <div class="span5">
+    <h2>Heading</h2>
+     <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+    <p><a class="btn" href="#">View details &raquo;</a></p>
+ </div>
+  <div class="span5">
+    <h2>Heading</h2>
+    <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
+    <p><a class="btn" href="#">View details &raquo;</a></p>
+  </div>
+</div>
