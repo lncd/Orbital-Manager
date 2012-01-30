@@ -63,7 +63,7 @@
 			</fileset>
 			<filterchain>
 				<replacetokens begintoken="##" endtoken="##">
-					<token key="ORBITAL_INSTITUTION_NAME" value="${ORBITAL_INSTITUTION_NAME}" />
+					<token key="ORBITAL_CORE_LOCATION" value="${ORBITAL_CORE_LOCATION}" />
 				</replacetokens>
 			</filterchain>
 		</reflexive>
