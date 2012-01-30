@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="Orbital Core" default="dist">
+
+	<!-- ============================================  -->
+    <!-- Target: prepare                               -->
+    <!-- ============================================  -->
+    <target name="prepare">
+    
+        <echo msg="Preparing..." />
+        
+    </target>
+
+    <!-- ============================================  -->
+    <!-- Target: build                                 -->
+    <!-- ============================================  -->
+    <target name="build" depends="prepare">
+    
+        <echo msg="Building..." />
+        
+        <copy todir="./build" includeemptydirs="true">
+			<fileset dir="./src">
+				<include name="**" />
+				<exclude name="**/.git/**" />
+			</fileset>
+		</copy>
+        
+    </target>
+    
+	<!-- ============================================  -->
+    <!-- Target: configure                               -->
+    <!-- ============================================  -->
+    <target name="configure" depends="build">
+    
+        <echo msg="Configuring..." />
+        
+        <reflexive>
+			<fileset dir="./build">
+				<include pattern="index.php" />
+			</fileset>
+			<filterchain>
+				<replacetokens begintoken="##" endtoken="##">
+					<token key="CI_ENVIRONMENT" value="${CI_ENVIRONMENT}" />
+				</replacetokens>
+			</filterchain>
+		</reflexive>
+		
+		<reflexive>
+			<fileset dir="./build/application/config">
+				<include pattern="config.php" />
+			</fileset>
+			<filterchain>
+				<replacetokens begintoken="##" endtoken="##">
+					<token key="CI_BASEURL" value="${CI_BASEURL}" />
+					<token key="CI_INDEXPAGE" value="${CI_INDEXPAGE}" />
+				</replacetokens>
+			</filterchain>
+		</reflexive>
+		
+		<reflexive>
+			<fileset dir="./build/application/config">
+				<include pattern="orbital.php" />
+			</fileset>
+			<filterchain>
+				<replacetokens begintoken="##" endtoken="##">
+					<token key="ORBITAL_INSTITUTION_NAME" value="${ORBITAL_INSTITUTION_NAME}" />
+				</replacetokens>
+			</filterchain>
+		</reflexive>
+		
+		<reflexive>
+			<fileset dir="./build/application/config">
+				<include pattern="mongodb.php" />
+			</fileset>
+			<filterchain>
+				<replacetokens begintoken="##" endtoken="##">
+					<token key="MONGO_SERVERS" value="${MONGO_SERVERS}" />
+					<token key="MONGO_PORT" value="${MONGO_PORT}" />
+					<token key="MONGO_DATABASE" value="${MONGO_DATABASE}" />
+					<token key="MONGO_USER" value="${MONGO_USER}" />
+					<token key="MONGO_PASSWORD" value="${MONGO_PASSWORD}" />
+				</replacetokens>
+			</filterchain>
+		</reflexive>
+		
+		<echo msg="Configuration token replacement complete." />
+        
+    </target>
+    
+    <!-- ============================================  -->
+    <!-- Target: test                                 -->
+    <!-- ============================================  -->
+    <target name="test" depends="configure">
+    
+        <echo msg="Testing..." />
+        
+    </target>
+    
+    <!-- ============================================  -->
+    <!-- Target: report                                 -->
+    <!-- ============================================  -->
+    <target name="report" depends="test">
+    
+        <echo msg="Reporting..." />
+        
+        <exec command="phpcs --standard=CodeIgniter --report=checkstyle --ignore=./system,index.php ./build > ./reports/checkstyle.xml" escape="false" />
+        
+        <echo msg="PHP Check Style complete." />
+        
+    </target>
+
+    <!-- ============================================  -->
+    <!-- (DEFAULT)  Target: dist                       --> 
+    <!-- ============================================  -->
+    <target name="dist" depends="report">
+    
+        <echo msg="Distributing..." />
+
+    </target>
+
+</project>

@@ -1,6 +1,6 @@
-# Orbital Manager
+# Orbital Core
 
-This repository is the Orbital Manager, which provides a browser-accessible interface to the functionality of the [Orbital Core](http://github.com/lncd/Orbital-Core).
+This repository is the Orbital Core, responsible for the deposit, storage, retrieval and modification of research data as part of the Orbital project.
 
 ## The Orbital Project
 
