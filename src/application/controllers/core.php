@@ -13,7 +13,7 @@ class Core extends CI_Controller {
 		$ping_response = $this->orbital->core_ping();
 	
 		$data = array(
-			'page_title' => 'Core Ping'
+			'page_title' => 'Core Ping',
 			'ping_response_message' => $ping_response->message,
 			'ping_response_orbital_institution' => $ping_response->orbital->institution_name,
 			'ping_response_orbital_version' => $ping_response->orbital->core_version,
