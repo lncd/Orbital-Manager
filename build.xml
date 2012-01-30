@@ -64,6 +64,7 @@
 			<filterchain>
 				<replacetokens begintoken="##" endtoken="##">
 					<token key="ORBITAL_CORE_LOCATION" value="${ORBITAL_CORE_LOCATION}" />
+					<token key="ORBITAL_MANAGER_NAME" value="${ORBITAL_MANAGER_NAME}" />
 				</replacetokens>
 			</filterchain>
 		</reflexive>
