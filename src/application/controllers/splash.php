@@ -11,7 +11,7 @@ class Splash extends CI_Controller {
 	{
 	
 		$data = array(
-			'page_title' = 'Welcome to ' . $this->config->item('orbital_manager_name')
+			'page_title' => 'Welcome to ' . $this->config->item('orbital_manager_name')
 		);
 	
 		$this->parser->parse('includes/header', $data);
