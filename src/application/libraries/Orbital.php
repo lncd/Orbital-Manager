@@ -5,9 +5,11 @@ class Orbital {
 	private function get($target)
 	{
 	
+		$CI =& get_instance();
+	
 		try
 		{
-			return json_decode(file_get_contents($this->config->item('orbital_core_location') . $target));
+			return json_decode(file_get_contents($CI->config->item('orbital_core_location') . $target));
 		}
 		catch (Exception $e)
 		{
