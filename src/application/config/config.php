@@ -1,5 +1,18 @@
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
+/**
+ * Configuration
+ *
+ * Configuration information for CodeIgniter and Orbital Manager
+ * environment.
+ *
+ * @category   Configuration
+ * @package    Orbital
+ * @subpackage Manager
+ * @author     Nick Jackson <nijackson@lincoln.ac.uk>
+ * @link       https://github.com/lncd/Orbital-Manager
+*/
+
 /*
 |--------------------------------------------------------------------------
 | Base Site URL
@@ -356,5 +369,5 @@ $config['rewrite_short_tags'] = FALSE;
 $config['proxy_ips'] = '';
 
 
-/* End of file config.php */
-/* Location: ./application/config/config.php */
+// End of file config.php
+// Location: ./config/config.php
