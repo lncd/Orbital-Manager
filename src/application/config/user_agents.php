@@ -174,5 +174,5 @@ $robots = array(
 					'lycos'				=> 'Lycos'
 				);
 
-/* End of file user_agents.php */
-/* Location: ./application/config/user_agents.php */
+// End of file user_agents.php
+// Location: ./config/user_agents.php
