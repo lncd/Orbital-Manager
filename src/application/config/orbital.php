@@ -39,5 +39,5 @@ $config['orbital_core_location'] = '##ORBITAL_CORE_LOCATION##';
 
 $config['orbital_manager_version'] = '0.0.1';
 
-/* End of file orbital.php */
-/* Location: ./config/orbital.php */
+// End of file orbital.php
+// Location: ./config/orbital.php
