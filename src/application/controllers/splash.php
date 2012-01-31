@@ -39,12 +39,16 @@ class Splash extends CI_Controller {
 	{
 	
 		$data = array(
-			'page_title' => 'Welcome to ' . $this->config->item('orbital_manager_name')
+			'base_url' => base_url(),
+			'orbital_manager_name' => $this->config->item('orbital_manager_name'),
+			'orbital_manager_version' => $this->config->item('orbital_manager_version'),
+			'orbital_core_location' => $this->config->item('orbital_core_location'),
+			'page_title' => 'Welcome'
 		);
 	
 		$this->parser->parse('includes/header', $data);
-		$this->load->view('splash', $data);
-		$this->load->view('includes/footer');
+		$this->parser->parse('splash', $data);
+		$this->parser->parse('includes/footer', $data);
 	}
 }
 

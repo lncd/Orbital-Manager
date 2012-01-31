@@ -2,9 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>{page_title}</title>
-    <meta name="description" content="">
-    <meta name="author" content="">
+    <title>{page_title} - {orbital_manager_name}</title>
 
     <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
     <!--[if lt IE 9]>
