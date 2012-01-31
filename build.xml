@@ -93,11 +93,7 @@
         
         <echo msg="PHP Check Style complete." />
         
-        <docblox title="Orbital Manager Documentation" destdir="docs">
-			<fileset dir="./build/application">
-				<include name="**/*.php" />
-			</fileset>
-		</docblox>
+        <exec command="docblox -d build/application -t docs">
 		
 		<echo msg="DocBlox complete." />
         
