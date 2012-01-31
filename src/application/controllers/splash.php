@@ -1,11 +1,39 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+<?php
+
+/**
+ * Splash Page
+ *
+ * Home page for users
+ *
+ * @category   Controller
+ * @package    Orbital
+ * @subpackage Manager
+ * @author     Nick Jackson <nijackson@lincoln.ac.uk>
+ * @link       https://github.com/lncd/Orbital-Manager
+*/
+
+if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+
+/**
+ * Splash
+*/
 
 class Splash extends CI_Controller {
+
+	/**
+	 * Constructor
+	*/
 
 	function __construct()
 	{
 		parent::__construct();
 	}
+
+	/**
+	 * Index
+	 *
+	 * Parses the splash template
+	*/
 
 	function index()
 	{
@@ -20,4 +48,5 @@ class Splash extends CI_Controller {
 	}
 }
 
-// EOF
+// End of file splash.php
+// Location: ./controllers/splash.php
