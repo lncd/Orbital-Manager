@@ -9,7 +9,7 @@
  * @package    Orbital
  * @subpackage Manager
  * @author     Nick Jackson <nijackson@lincoln.ac.uk>
- * @link       https://github.com/lncd/Orbital-Core
+ * @link       https://github.com/lncd/Orbital-Manager
 */
 
 defined('BASEPATH') OR exit('No direct script access allowed');
