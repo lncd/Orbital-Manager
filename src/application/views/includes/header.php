@@ -10,7 +10,8 @@
     <![endif]-->
 
     <!-- Le styles -->
-    <link href="{base_url}css/bootstrap.css" rel="stylesheet">
+    <link href="{base_url}css/bootstrap.min.css" rel="stylesheet">
+    <link href="{base_url}css/bootstrap.min.responsive.css" rel="stylesheet">
     <style type="text/css">
       body {
         padding-top: 60px;
@@ -22,6 +23,10 @@
     <link rel="apple-touch-icon" href="{base_url}img/icon/apple-touch-icon.png">
     <link rel="apple-touch-icon" sizes="72x72" href="{base_url}img/icon/apple-touch-icon-72x72.png">
     <link rel="apple-touch-icon" sizes="114x114" href="{base_url}img/icon/apple-touch-icon-114x114.png">
+    
+    <script src="{base_url}js/jquery.js" type="text/javascript"></script>
+    <script src="{base_url}js/bootstrap.min.js" type="text/javascript"></script>
+    
   </head>
 
   <body>
