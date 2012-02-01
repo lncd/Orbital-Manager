@@ -38,9 +38,12 @@
 |
 */
 
-$route['default_controller'] = "splash";
+$route['default_controller'] = 'static';
 $route['404_override'] = '';
 
+$route['about'] = 'static/about';
+$route['contact'] = 'static/contact';
 
-/* End of file routes.php */
-/* Location: ./application/config/routes.php */
+
+// End of file routes.php
+// Location: ./config/routes.php

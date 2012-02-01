@@ -1,11 +1,9 @@
-<!-- Main hero unit for a primary marketing message or call to action -->
 <div class="hero-unit">
   <h1>Hello. I'm {orbital_manager_name}.</h1>
   <p>Orbital is a project at the University of Lincoln</p>
-  <p><a class="btn btn-primary btn-large">Find Out More &raquo;</a></p>
+  <p><a href="{base_url}about" class="btn btn-primary btn-large">Find Out More &raquo;</a></p>
 </div>
 
-<!-- Example row of columns -->
 <div class="row-fluid">
   <div class="span4">
     <h2>Sign In</h2>
@@ -20,6 +18,6 @@
   <div class="span4">
     <h2>Get In Touch</h2>
     <p>Want to talk to a real person about {orbital_manager_name}?</p>
-    <p><a class="btn" href="#">View Details &raquo;</a></p>
+    <p><a href="{base_url}contact"class="btn" href="#">View Details &raquo;</a></p>
   </div>
 </div>

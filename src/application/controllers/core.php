@@ -25,7 +25,7 @@ class Core extends CI_Controller {
 		);
 	
 		$this->parser->parse('includes/header', $data);
-		$this->parser->parse('core_ping', $data);
+		$this->parser->parse('core/ping', $data);
 		$this->parser->parse('includes/footer', $data);
 	}
 }
