@@ -38,11 +38,11 @@
 |
 */
 
-$route['default_controller'] = 'static';
+$route['default_controller'] = 'static_content';
 $route['404_override'] = '';
 
-$route['about'] = 'static/about';
-$route['contact'] = 'static/contact';
+$route['about'] = 'static_content/about';
+$route['contact'] = 'static_content/contact';
 
 
 // End of file routes.php

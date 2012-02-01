@@ -15,10 +15,10 @@
 if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 /**
- * Static
+ * Static_Content
 */
 
-class Static extends CI_Controller {
+class Static_Content extends CI_Controller {
 
 	/**
 	 * Constructor
