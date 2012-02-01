@@ -9,13 +9,13 @@
 		
 	</div>
 	
-	<div class="span8">
+	<div class="span4 well">
 	
-		<h1>Around The Web</h1>
+		<h2>Around The Web</h2>
 		
 		<p>The Orbital project is plugged in to the rest of the internet, so it's easy to find out more about what we're doing. Here are the places we hang out.</p>
 		
-		<ul class="nav nav-pills">
+		<ul class="nav nav-pills nav-stacked">
 			<li>
 				<a href="http://orbital.blogs.lincoln.ac.uk">
 					<i class="icon-chevron-right"></i>
