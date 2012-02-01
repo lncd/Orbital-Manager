@@ -9,38 +9,42 @@
 		
 	</div>
 	
-	<div class="span4 well">
+	<div class="span4">
 	
-		<h2>Around The Web</h2>
+		<div class="well">
+	
+			<h2>Around The Web</h2>
+			
+			<p>The Orbital project is plugged in to the rest of the internet, so it's easy to find out more about what we're doing. Here are the places we hang out.</p>
+			
+			<ul class="nav nav-pills nav-stacked">
+				<li>
+					<a href="http://orbital.blogs.lincoln.ac.uk">
+						<i class="icon-chevron-right"></i>
+						Orbital Blog
+					</a>
+				</li>
+				<li>
+					<a href="https://github.com/lncd/Orbital-Core">
+						<i class="icon-chevron-right"></i>
+						GitHub (Orbital Core)
+					</a>
+				</li>
+				<li>
+					<a href="https://github.com/lncd/Orbital-Core">
+						<i class="icon-chevron-right"></i>
+						GitHub (Orbital Manager)
+					</a>
+				</li>
+				<li>
+					<a href="https://www.pivotaltracker.com/projects/366731">
+						<i class="icon-chevron-right"></i>
+						Pivotal Tracker
+					</a>
+				</li>
+			</ul>
 		
-		<p>The Orbital project is plugged in to the rest of the internet, so it's easy to find out more about what we're doing. Here are the places we hang out.</p>
-		
-		<ul class="nav nav-pills nav-stacked">
-			<li>
-				<a href="http://orbital.blogs.lincoln.ac.uk">
-					<i class="icon-chevron-right"></i>
-					Orbital Blog
-				</a>
-			</li>
-			<li>
-				<a href="https://github.com/lncd/Orbital-Core">
-					<i class="icon-chevron-right"></i>
-					GitHub (Orbital Core)
-				</a>
-			</li>
-			<li>
-				<a href="https://github.com/lncd/Orbital-Core">
-					<i class="icon-chevron-right"></i>
-					GitHub (Orbital Manager)
-				</a>
-			</li>
-			<li>
-				<a href="https://www.pivotaltracker.com/projects/366731">
-					<i class="icon-chevron-right"></i>
-					Pivotal Tracker
-				</a>
-			</li>
-		</ul>
+		</div>
 		
 	</div>
 </div>
