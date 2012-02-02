@@ -1,6 +1,6 @@
-# Orbital Core
+# Orbital Manager
 
-This repository is the Orbital Core, responsible for the deposit, storage, retrieval and modification of research data as part of the Orbital project.
+This repository is the Orbital Manager, which provides a user-friendly browser-accessible interface to the Orbital Core.
 
 ## The Orbital Project
 
