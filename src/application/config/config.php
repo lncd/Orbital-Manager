@@ -257,7 +257,7 @@ $config['encryption_key'] = '##CI_ENCRYPTKEY##';
 | 'sess_time_to_update'		= how many seconds between CI refreshing Session Information
 |
 */
-$config['sess_cookie_name']		= '##CI_NAME_PREFIX##_session';
+$config['sess_cookie_name']		= 'session';
 $config['sess_expiration']		= 7200;
 $config['sess_expire_on_close']	= TRUE;
 $config['sess_encrypt_cookie']	= TRUE;
@@ -305,8 +305,8 @@ $config['global_xss_filtering'] = FALSE;
 | 'csrf_expire' = The number in seconds the token should expire.
 */
 $config['csrf_protection'] = TRUE;
-$config['csrf_token_name'] = '##CI_NAME_PREFIX##_csrf_token';
-$config['csrf_cookie_name'] = '##CI_NAME_PREFIX##_csrf_cookie';
+$config['csrf_token_name'] = 'csrf_token';
+$config['csrf_cookie_name'] = 'csrf_cookie';
 $config['csrf_expire'] = 3600;
 
 /*
