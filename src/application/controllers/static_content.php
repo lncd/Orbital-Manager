@@ -33,7 +33,7 @@ class Static_Content extends CI_Controller {
 			'orbital_manager_name' => $this->config->item('orbital_manager_name'),
 			'orbital_manager_version' => $this->config->item('orbital_manager_version'),
 			'orbital_core_location' => $this->config->item('orbital_core_location')
-		};
+		);
 		
 		if ($this->session->userdata('current_user_name'))
 		{
@@ -55,7 +55,7 @@ class Static_Content extends CI_Controller {
 	{
 	
 		
-		$data['page_title'] => 'Welcome';
+		$data['page_title'] = 'Welcome';
 	
 		$this->parser->parse('includes/header', $data);
 		$this->parser->parse('static/home', $data);
@@ -71,7 +71,7 @@ class Static_Content extends CI_Controller {
 	function about()
 	{
 	
-		$data['page_title'] => 'About';
+		$data['page_title'] = 'About';
 	
 		$this->parser->parse('includes/header', $data);
 		$this->parser->parse('static/about', $data);
@@ -87,7 +87,7 @@ class Static_Content extends CI_Controller {
 	function contact()
 	{
 	
-		$data['page_title'] => 'Contact';
+		$data['page_title'] = 'Contact';
 	
 		$this->parser->parse('includes/header', $data);
 		$this->parser->parse('static/contact', $data);

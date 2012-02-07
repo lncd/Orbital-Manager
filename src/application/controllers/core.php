@@ -11,7 +11,7 @@ class Core extends CI_Controller {
 			'orbital_manager_name' => $this->config->item('orbital_manager_name'),
 			'orbital_manager_version' => $this->config->item('orbital_manager_version'),
 			'orbital_core_location' => $this->config->item('orbital_core_location')
-		};
+		);
 		
 		if ($this->session->userdata('current_user_name'))
 		{
@@ -28,11 +28,11 @@ class Core extends CI_Controller {
 	
 		$ping_response = $this->orbital->core_ping();
 	
-		$data['page_title'] => 'Core Ping';
-		$data['ping_response_message'] => $ping_response->message;
-		$data['ping_response_orbital_institution'] => $ping_response->orbital->institution_name;
-		$data['ping_response_orbital_version'] => $ping_response->orbital->core_version;
-		$data['ping_response_orbital_timestamp'] => $ping_response->orbital->request_timestamp;
+		$data['page_title'] = 'Core Ping';
+		$data['ping_response_message'] = $ping_response->message;
+		$data['ping_response_orbital_institution'] = $ping_response->orbital->institution_name;
+		$data['ping_response_orbital_version'] = $ping_response->orbital->core_version;
+		$data['ping_response_orbital_timestamp'] = $ping_response->orbital->request_timestamp;
 	
 		$this->parser->parse('includes/header', $data);
 		$this->parser->parse('core/ping', $data);
