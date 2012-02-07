@@ -5,7 +5,6 @@
 		<meta charset="utf-8">
 		<title>{page_title} - {orbital_manager_name}</title>
 		
-		<!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
 		<!--[if lt IE 9]>
 		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
 		<![endif]-->
@@ -23,11 +22,10 @@
 		</style>
 		<link href="{base_url}css/bootstrap.min.responsive.css" rel="stylesheet">
 		
-		<!-- Le fav and touch icons -->
 		<link rel="shortcut icon" href="{base_url}favicon.ico">
 		<link rel="apple-touch-icon" href="{base_url}img/apple-touch-icon.png">
-		<link rel="apple-touch-icon" sizes="72x72" href="{base_url}img/apple-touch-icon-72x72.png">
-		<link rel="apple-touch-icon" sizes="114x114" href="{base_url}img/apple-touch-icon-114x114.png">
+		<link rel="apple-touch-icon" sizes="72x72" href="{base_url}img/apple-touch-icon-72.png">
+		<link rel="apple-touch-icon" sizes="114x114" href="{base_url}img/apple-touch-icon-114.png">
 		
 	</head>
 	
@@ -48,7 +46,7 @@
 							<li><a href="{base_url}about">About</a></li>
 							<li><a href="{base_url}contact">Contact</a></li>
 						</ul>
-						<p class="navbar-text pull-right">Logged in as <a href="#">username</a></p>
+						<p class="navbar-text pull-right">{user_presence}</p>
 					</div>
 				</div>
 			</div>

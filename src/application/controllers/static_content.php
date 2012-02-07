@@ -27,6 +27,22 @@ class Static_Content extends CI_Controller {
 	function __construct()
 	{
 		parent::__construct();
+		
+		$data = array(
+			'base_url' => base_url(),
+			'orbital_manager_name' => $this->config->item('orbital_manager_name'),
+			'orbital_manager_version' => $this->config->item('orbital_manager_version'),
+			'orbital_core_location' => $this->config->item('orbital_core_location')
+		};
+		
+		if ($this->session->userdata('current_user_name'))
+		{
+			$data['user_presence'] = 'Signed in as <a href="#">' . $this->session->userdata('current_user_name') . '</a>';
+		}
+		else
+		{
+			$data['user_presence'] = '<a href="#">Sign In</a>';
+		}
 	}
 
 	/**
@@ -38,13 +54,8 @@ class Static_Content extends CI_Controller {
 	function index()
 	{
 	
-		$data = array(
-			'base_url' => base_url(),
-			'orbital_manager_name' => $this->config->item('orbital_manager_name'),
-			'orbital_manager_version' => $this->config->item('orbital_manager_version'),
-			'orbital_core_location' => $this->config->item('orbital_core_location'),
-			'page_title' => 'Welcome'
-		);
+		
+		$data['page_title'] => 'Welcome';
 	
 		$this->parser->parse('includes/header', $data);
 		$this->parser->parse('static/home', $data);
@@ -60,13 +71,7 @@ class Static_Content extends CI_Controller {
 	function about()
 	{
 	
-		$data = array(
-			'base_url' => base_url(),
-			'orbital_manager_name' => $this->config->item('orbital_manager_name'),
-			'orbital_manager_version' => $this->config->item('orbital_manager_version'),
-			'orbital_core_location' => $this->config->item('orbital_core_location'),
-			'page_title' => 'About'
-		);
+		$data['page_title'] => 'About';
 	
 		$this->parser->parse('includes/header', $data);
 		$this->parser->parse('static/about', $data);
@@ -82,13 +87,7 @@ class Static_Content extends CI_Controller {
 	function contact()
 	{
 	
-		$data = array(
-			'base_url' => base_url(),
-			'orbital_manager_name' => $this->config->item('orbital_manager_name'),
-			'orbital_manager_version' => $this->config->item('orbital_manager_version'),
-			'orbital_core_location' => $this->config->item('orbital_core_location'),
-			'page_title' => 'Contact'
-		);
+		$data['page_title'] => 'Contact';
 	
 		$this->parser->parse('includes/header', $data);
 		$this->parser->parse('static/contact', $data);
