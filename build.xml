@@ -53,23 +53,6 @@
 				<replacetokens begintoken="##" endtoken="##">
 					<token key="CI_BASEURL" value="${CI_BASEURL}" />
 					<token key="CI_INDEXPAGE" value="${CI_INDEXPAGE}" />
-					<token key="CI_ENCRYPTKEY" value="${CI_ENCRYPTKEY}" />
-					<token key="CI_NAME_PREFIX" value="${CI_NAME_PREFIX}" />
-					<token key="CI_SESSION_TABLE" value="${CI_SESSION_TABLE}" />
-				</replacetokens>
-			</filterchain>
-		</reflexive>
-		
-		<reflexive>
-			<fileset dir="./build/application/config">
-				<include pattern="database.php" />
-			</fileset>
-			<filterchain>
-				<replacetokens begintoken="##" endtoken="##">
-					<token key="MYSQL_HOSTNAME" value="${MYSQL_HOSTNAME}" />
-					<token key="MYSQL_USERNAME" value="${MYSQL_USERNAME}" />
-					<token key="MYSQL_PASSWORD" value="${MYSQL_PASSWORD}" />
-					<token key="MYSQL_DATABASE" value="${MYSQL_DATABASE}" />
 				</replacetokens>
 			</filterchain>
 		</reflexive>
