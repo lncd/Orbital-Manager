@@ -42,7 +42,7 @@ $active_group = 'default';
 $active_record = TRUE;
 
 $db['default']['hostname'] = '##MYSQL_HOSTNAME##';
-$db['default']['username'] = '##MYSQL_USERNAME#';
+$db['default']['username'] = '##MYSQL_USERNAME##';
 $db['default']['password'] = '##MYSQL_PASSWORD##';
 $db['default']['database'] = '##MYSQL_DATABASE##';
 $db['default']['dbdriver'] = 'mysqli';
