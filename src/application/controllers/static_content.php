@@ -20,6 +20,8 @@ if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 class Static_Content extends CI_Controller {
 
+	private $data = array();
+
 	/**
 	 * Constructor
 	*/
@@ -28,7 +30,7 @@ class Static_Content extends CI_Controller {
 	{
 		parent::__construct();
 		
-		$data = array(
+		$this->data = array(
 			'base_url' => base_url(),
 			'orbital_manager_name' => $this->config->item('orbital_manager_name'),
 			'orbital_manager_version' => $this->config->item('orbital_manager_version'),
@@ -37,11 +39,11 @@ class Static_Content extends CI_Controller {
 		
 		if ($this->session->userdata('current_user_name'))
 		{
-			$data['user_presence'] = 'Signed in as <a href="#">' . $this->session->userdata('current_user_name') . '</a>';
+			$this->data['user_presence'] = 'Signed in as <a href="#">' . $this->session->userdata('current_user_name') . '</a>';
 		}
 		else
 		{
-			$data['user_presence'] = '<a href="#">Sign In</a>';
+			$this->data['user_presence'] = '<a href="#">Sign In</a>';
 		}
 	}
 
@@ -55,11 +57,11 @@ class Static_Content extends CI_Controller {
 	{
 	
 		
-		$data['page_title'] = 'Welcome';
+		$this->data['page_title'] = 'Welcome';
 	
-		$this->parser->parse('includes/header', $data);
-		$this->parser->parse('static/home', $data);
-		$this->parser->parse('includes/footer', $data);
+		$this->parser->parse('includes/header', $this->data);
+		$this->parser->parse('static/home', $this->data);
+		$this->parser->parse('includes/footer', $this->data);
 	}
 	
 	/**
@@ -71,11 +73,11 @@ class Static_Content extends CI_Controller {
 	function about()
 	{
 	
-		$data['page_title'] = 'About';
+		$this->data['page_title'] = 'About';
 	
-		$this->parser->parse('includes/header', $data);
-		$this->parser->parse('static/about', $data);
-		$this->parser->parse('includes/footer', $data);
+		$this->parser->parse('includes/header', $this->data);
+		$this->parser->parse('static/about', $this->data);
+		$this->parser->parse('includes/footer', $this->data);
 	}
 	
 	/**
@@ -87,11 +89,11 @@ class Static_Content extends CI_Controller {
 	function contact()
 	{
 	
-		$data['page_title'] = 'Contact';
+		$this->data['page_title'] = 'Contact';
 	
-		$this->parser->parse('includes/header', $data);
-		$this->parser->parse('static/contact', $data);
-		$this->parser->parse('includes/footer', $data);
+		$this->parser->parse('includes/header', $this->data);
+		$this->parser->parse('static/contact', $this->data);
+		$this->parser->parse('includes/footer', $this->data);
 	}
 	
 }

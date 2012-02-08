@@ -2,11 +2,13 @@
 
 class Core extends CI_Controller {
 
+	private $data = array();
+
 	function __construct()
 	{
 		parent::__construct();
 		
-		$data = array(
+		$this->data = array(
 			'base_url' => base_url(),
 			'orbital_manager_name' => $this->config->item('orbital_manager_name'),
 			'orbital_manager_version' => $this->config->item('orbital_manager_version'),
@@ -15,11 +17,11 @@ class Core extends CI_Controller {
 		
 		if ($this->session->userdata('current_user_name'))
 		{
-			$data['user_presence'] = 'Signed in as <a href="#">' . $this->session->userdata('current_user_name') . '</a>';
+			$this->data['user_presence'] = 'Signed in as <a href="#">' . $this->session->userdata('current_user_name') . '</a>';
 		}
 		else
 		{
-			$data['user_presence'] = '<a href="#">Sign In</a>';
+			$this->data['user_presence'] = '<a href="#">Sign In</a>';
 		}
 	}
 
@@ -28,15 +30,15 @@ class Core extends CI_Controller {
 	
 		$ping_response = $this->orbital->core_ping();
 	
-		$data['page_title'] = 'Core Ping';
-		$data['ping_response_message'] = $ping_response->message;
-		$data['ping_response_orbital_institution'] = $ping_response->orbital->institution_name;
-		$data['ping_response_orbital_version'] = $ping_response->orbital->core_version;
-		$data['ping_response_orbital_timestamp'] = $ping_response->orbital->request_timestamp;
+		$this->data['page_title'] = 'Core Ping';
+		$this->data['ping_response_message'] = $ping_response->message;
+		$this->data['ping_response_orbital_institution'] = $ping_response->orbital->institution_name;
+		$this->data['ping_response_orbital_version'] = $ping_response->orbital->core_version;
+		$this->data['ping_response_orbital_timestamp'] = $ping_response->orbital->request_timestamp;
 	
-		$this->parser->parse('includes/header', $data);
-		$this->parser->parse('core/ping', $data);
-		$this->parser->parse('includes/footer', $data);
+		$this->parser->parse('includes/header', $this->data);
+		$this->parser->parse('core/ping', $this->data);
+		$this->parser->parse('includes/footer', $this->data);
 	}
 }
 
