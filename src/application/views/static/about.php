@@ -16,14 +16,14 @@
 		
 		<h2>At your fingertips.</h2>
 		
-		<p>Orbital can keep track of hundreds, thousands or even millions of bits of research data, so it can get what you're looking for in front of you in seconds.</p>
+		<p>Orbital can keep track of hundreds, thousands or even millions of bits of research data, and it's built with speed in mind. When you're looking for something you can expect to get hold of it in not just minutes, but seconds.</p>
 		
 	</div>
 	<div class="span4">
 		
 		<h2>Not just a place for files.</h2>
 		
-		<p>Where before you would just store files, Orbital goes a step further and takes a look inside to extract as much of the data as it can into a smart, self-organising database. Instantly turn a pile of Excel spreadsheets into indexed data, run full-text searches on documents</p>
+		<p>Where before you would just store files, Orbital goes a step further and takes a look inside to extract as much of the data as it can into a smart, self-organising database. Instantly turn a pile of Excel spreadsheets into indexed data, store information directly from the source and more.</p>
 		
 	</div>
 </div>
@@ -40,16 +40,16 @@
 	</div>
 	<div class="span4">
 		
-		<h2>Safe and secure.</h2>
+		<h2>Ready where you are.</h2>
 		
-		<p>Orbital...</p>
+		<p>Your research doesn't just happen in one office, so why should your data be tied to that hard disk in your desktop PC? Orbital stores your data securely in the cloud, so you can get to it from wherever you are.</p>
 		
 	</div>
 	<div class="span4">
 		
-		<h2>Safe and secure.</h2>
+		<h2>Security fitted as standard.</h2>
 		
-		<p>Orbital...</p>
+		<p>Nobody wants their research data leaking out, be it commercially sensitive, confidential or simply too ground-breaking to share before it's ready. Which is why Orbital has comprehensive access control and industry-standard transport encryption built in from the ground up.</p>
 		
 	</div>
 </div>
