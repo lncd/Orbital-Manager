@@ -52,7 +52,7 @@ class Signin extends CI_Controller {
 	
 		$auth_types = $this->orbital->core_auth_types();
 		
-		foreach ($auth_types->response as $auth_type)
+		foreach ($auth_types->response->auth_types as $auth_type)
 		{
 			$this->data['auth_types'] = array(
 				'name' => $auth_type->name,
