@@ -21,7 +21,7 @@ class Core extends CI_Controller {
 		}
 		else
 		{
-			$this->data['user_presence'] = '<a href="{base_url}signin">Sign In</a>';
+			$this->data['user_presence'] = '<a href="' . base_url() . 'signin">Sign In</a>';
 		}
 	}
 
