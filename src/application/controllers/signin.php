@@ -54,7 +54,7 @@ class Signin extends CI_Controller {
 		
 		foreach ($auth_types->response->auth_types as $auth_type)
 		{
-			$this->data['auth_types'] = array(
+			$this->data['auth_types'][] = array(
 				'name' => $auth_type->name,
 				'uri' => $auth_type->uri
 			);
