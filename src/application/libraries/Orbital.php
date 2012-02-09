@@ -24,6 +24,13 @@ class Orbital {
     	return $this->get('core/ping');
     
     }
+    
+    public function core_auth_types()
+    {
+    
+    	return $this->get('core/auth_types');
+    
+    }
 }
 
-/* End of file Someclass.php */
+/* End of file Orbital.php */
