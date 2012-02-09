@@ -8,21 +8,7 @@ class Core extends CI_Controller {
 	{
 		parent::__construct();
 		
-		$this->data = array(
-			'base_url' => base_url(),
-			'orbital_manager_name' => $this->config->item('orbital_manager_name'),
-			'orbital_manager_version' => $this->config->item('orbital_manager_version'),
-			'orbital_core_location' => $this->config->item('orbital_core_location')
-		);
-		
-		if ($this->session->userdata('current_user_name'))
-		{
-			$this->data['user_presence'] = 'Signed in as <a href="#">' . $this->session->userdata('current_user_name') . '</a>';
-		}
-		else
-		{
-			$this->data['user_presence'] = '<a href="' . base_url() . 'signin">Sign In</a>';
-		}
+		$this->data = $this->orbital->common_content();
 	}
 
 	function ping()

@@ -9,19 +9,56 @@ class Orbital {
 	
 		$common_content = array(
 			'base_url' => base_url(),
-			'orbital_manager_name' => $this->config->item('orbital_manager_name'),
-			'orbital_manager_version' => $this->config->item('orbital_manager_version'),
-			'orbital_core_location' => $this->config->item('orbital_core_location')
+			'orbital_manager_name' => $CI->config->item('orbital_manager_name'),
+			'orbital_manager_version' => $CI->config->item('orbital_manager_version'),
+			'orbital_core_location' => $CI->config->item('orbital_core_location')
 		);
 		
-		if ($this->session->userdata('current_user_name'))
+		if ($CI->session->userdata('current_user_name'))
 		{
-			$common_content['user_presence'] = 'Signed in as <a href="#">' . $this->session->userdata('current_user_name') . '</a>';
+			$common_content['user_presence'] = 'Signed in as <a href="#">' . $CI->session->userdata('current_user_name') . '</a>';
 		}
 		else
 		{
-			$common_content['user_presence'] = '<a href="' . base_url() . 'signin">Sign In</a>';
+			$common_content['user_presence'] = '<a href="' . site_url('signin') . '">Sign In</a>';
 		}
+		
+		$common_content['nav_menu'] = array(
+			array (
+				'title' => 'Main Menu',
+				'items' => array (
+					array (
+						'name' => 'Home',
+						'uri' => site_url()
+					),
+					array (
+						'name' => 'About',
+						'uri' => site_url('about')
+					)
+					array (
+						'name' => 'Contact',
+						'uri' => site_url('contact')
+					)
+				)
+			),
+			array (
+				'title' => 'Other Menu',
+				'items' => array (
+					array (
+						'name' => 'Item 1',
+						'uri' => site_url('one')
+					),
+					array (
+						'name' => 'Item 2',
+						'uri' => site_url('three')
+					)
+					array (
+						'name' => 'Item 3',
+						'uri' => site_url('two')
+					)
+				)
+			)
+		);
 		
 		return $common_content;
 	
