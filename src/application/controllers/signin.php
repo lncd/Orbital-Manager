@@ -37,14 +37,14 @@ class Signin extends CI_Controller {
 		}
 		else
 		{
-			$this->data['user_presence'] = '<a href="#">Sign In</a>';
+			$this->data['user_presence'] = '<a href="{base_url}signin">Sign In</a>';
 		}
 	}
 
 	/**
-	 * Index
+	 * Sign In
 	 *
-	 * Default home page
+	 * Directs user to sign-in method selection.
 	*/
 
 	function index()
@@ -66,8 +66,20 @@ class Signin extends CI_Controller {
 		$this->parser->parse('user/signin', $this->data);
 		$this->parser->parse('includes/footer', $this->data);
 	}
+	
+	/**
+	 * Sign Out
+	 *
+	 * Destroys user session and redirects to home page.
+	*/
+	
+	function signout()
+	{
+		$this->session->sess_destroy();
+		redirect();
+	}
 		
 }
 
-// End of file static.php
-// Location: ./controllers/static.php
+// End of file signin.php
+// Location: ./controllers/signin.php

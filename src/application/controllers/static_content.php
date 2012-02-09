@@ -37,7 +37,7 @@ class Static_Content extends CI_Controller {
 		}
 		else
 		{
-			$this->data['user_presence'] = '<a href="#">Sign In</a>';
+			$this->data['user_presence'] = '<a href="{base_url}signin">Sign In</a>';
 		}
 	}
 
@@ -92,5 +92,5 @@ class Static_Content extends CI_Controller {
 	
 }
 
-// End of file static.php
-// Location: ./controllers/static.php
+// End of file static_content.php
+// Location: ./controllers/static_content.php

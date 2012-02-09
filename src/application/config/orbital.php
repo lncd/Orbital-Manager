@@ -32,6 +32,22 @@ $config['orbital_manager_name'] = '##ORBITAL_MANAGER_NAME##';
 $config['orbital_core_location'] = '##ORBITAL_CORE_LOCATION##';
 
 /**
+ * Application ID
+ *
+ * ID of this application in Orbital Core
+*/
+
+$config['orbital_app_id'] = '##ORBITAL_APP_ID##';
+
+/**
+ * Application Secret
+ *
+ * Secret of this application in Orbital Core
+*/
+
+$config['orbital_app_secret'] = '##ORBITAL_APP_SECRET##';
+
+/**
  * Orbital Manager Version
  *
  * The version of this instance of Orbital Manager.

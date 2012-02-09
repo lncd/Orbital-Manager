@@ -82,6 +82,8 @@
 				<replacetokens begintoken="##" endtoken="##">
 					<token key="ORBITAL_CORE_LOCATION" value="${ORBITAL_CORE_LOCATION}" />
 					<token key="ORBITAL_MANAGER_NAME" value="${ORBITAL_MANAGER_NAME}" />
+					<token key="ORBITAL_APP_ID" value="${ORBITAL_APP_ID}" />
+					<token key="ORBITAL_APP_SECRET" value="${ORBITAL_APP_SECRET}" />
 				</replacetokens>
 			</filterchain>
 		</reflexive>
