@@ -42,7 +42,7 @@ class Signin extends CI_Controller {
 		{
 			$this->data['auth_types'][] = array(
 				'name' => $auth_type->name,
-				'uri' => $auth_type->uri
+				'uri' => $auth_type->uri  . '?client_id=' . $this->config->item('orbital_app_id' . '&redirect_uri=' . site_url('signin/callback')
 			);
 		}
 		
