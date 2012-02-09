@@ -34,7 +34,7 @@ class Orbital {
 					array (
 						'name' => 'About',
 						'uri' => site_url('about')
-					)
+					),
 					array (
 						'name' => 'Contact',
 						'uri' => site_url('contact')
@@ -51,7 +51,7 @@ class Orbital {
 					array (
 						'name' => 'Item 2',
 						'uri' => site_url('three')
-					)
+					),
 					array (
 						'name' => 'Item 3',
 						'uri' => site_url('two')
