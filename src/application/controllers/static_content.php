@@ -1,4 +1,4 @@
-<?php
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 /**
  * Static Page Controller
@@ -10,12 +10,6 @@
  * @subpackage Manager
  * @author     Nick Jackson <nijackson@lincoln.ac.uk>
  * @link       https://github.com/lncd/Orbital-Manager
-*/
-
-if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-
-/**
- * Static_Content
 */
 
 class Static_Content extends CI_Controller {

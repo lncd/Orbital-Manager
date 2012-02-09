@@ -1,8 +1,24 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Core extends CI_Controller {
+/**
+ * Sign In Controller
+ *
+ * Marshalls sign-in requests to the appropriate Core URI
+ *
+ * @category   Controller
+ * @package    Orbital
+ * @subpackage Manager
+ * @author     Nick Jackson <nijackson@lincoln.ac.uk>
+ * @link       https://github.com/lncd/Orbital-Manager
+*/
+
+class Signin extends CI_Controller {
 
 	private $data = array();
+
+	/**
+	 * Constructor
+	*/
 
 	function __construct()
 	{
@@ -25,21 +41,24 @@ class Core extends CI_Controller {
 		}
 	}
 
-	function ping()
+	/**
+	 * Index
+	 *
+	 * Default home page
+	*/
+
+	function index()
 	{
 	
-		$ping_response = $this->orbital->core_ping();
-	
-		$this->data['page_title'] = 'Core Ping';
-		$this->data['ping_response_message'] = $ping_response->response->message;
-		$this->data['ping_response_orbital_institution'] = $ping_response->orbital->institution_name;
-		$this->data['ping_response_orbital_version'] = $ping_response->orbital->core_version;
-		$this->data['ping_response_orbital_timestamp'] = $ping_response->orbital->request_timestamp;
+		
+		$this->data['page_title'] = 'Sign In';
 	
 		$this->parser->parse('includes/header', $this->data);
-		$this->parser->parse('core/ping', $this->data);
+		$this->parser->parse('user/signin', $this->data);
 		$this->parser->parse('includes/footer', $this->data);
 	}
+		
 }
 
-// EOF
+// End of file static.php
+// Location: ./controllers/static.php
