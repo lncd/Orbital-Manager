@@ -42,7 +42,7 @@
 					<a class="brand" href="#">{orbital_manager_name}</a>
 					<div class="nav-collapse">
 						<ul class="nav">
-							<li class="active"><a href="{base_url}">Home</a></li>
+							<li><a href="{base_url}">Home</a></li>
 							<li><a href="{base_url}about">About</a></li>
 							<li><a href="{base_url}contact">Contact</a></li>
 						</ul>
