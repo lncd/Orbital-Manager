@@ -43,6 +43,7 @@ $route['404_override'] = '';
 
 $route['about'] = 'static_content/about';
 $route['contact'] = 'static_content/contact';
+$route['signout'] = 'signin/signout';
 
 
 // End of file routes.php
