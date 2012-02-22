@@ -14,51 +14,56 @@ class Orbital {
 			'orbital_core_location' => $CI->config->item('orbital_core_location')
 		);
 		
-		if ($CI->session->userdata('current_user_name'))
+		if ($CI->session->userdata('current_user_string'))
 		{
-			$common_content['user_presence'] = 'Signed in as <a href="#">' . $CI->session->userdata('current_user_name') . '</a>';
+			$common_content['user_presence'] = 'Signed in as <a href="' . site_url('me') . '">' . $CI->session->userdata('current_user_string') . '</a> &middot; <a href="' . site_url('signout') . '">Sign Out</a>';
 		}
 		else
 		{
 			$common_content['user_presence'] = '<a href="' . site_url('signin') . '">Sign In</a>';
 		}
 		
-		$common_content['nav_menu'] = array(
-			array (
-				'title' => 'Main Menu',
-				'items' => array (
-					array (
-						'name' => 'Home',
-						'uri' => site_url()
-					),
-					array (
-						'name' => 'About',
-						'uri' => site_url('about')
-					),
-					array (
-						'name' => 'Contact',
-						'uri' => site_url('contact')
-					)
-				)
-			),
-			array (
-				'title' => 'Other Menu',
-				'items' => array (
-					array (
-						'name' => 'Item 1',
-						'uri' => site_url('one')
-					),
-					array (
-						'name' => 'Item 2',
-						'uri' => site_url('three')
-					),
-					array (
-						'name' => 'Item 3',
-						'uri' => site_url('two')
-					)
+		$common_content['nav_menu'][] = array (
+			'title' => 'Main Menu',
+			'items' => array (
+				array (
+					'name' => 'Home',
+					'uri' => site_url()
+				),
+				array (
+					'name' => 'About',
+					'uri' => site_url('about')
+				),
+				array (
+					'name' => 'Contact',
+					'uri' => site_url('contact')
 				)
 			)
 		);
+			
+		if ($CI->session->userdata('current_user_string'))
+		{
+			
+			$common_content['nav_menu'][] = array (
+				'title' => 'My Research',
+				'items' => array (
+					array (
+						'name' => 'Projects Dashboard',
+						'uri' => site_url('projects')
+					),
+				)
+			);
+			
+			$common_content['nav_menu'][] = array (
+				'title' => 'My Details',
+				'items' => array (
+					array (
+						'name' => 'About Me',
+						'uri' => site_url('me')
+					),
+				)
+			);
+		}
 		
 		return $common_content;
 	

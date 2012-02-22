@@ -116,7 +116,9 @@ class Signin extends CI_Controller {
 						// Sign in has gone smoothly and we have all expected fields. Load up user details to the session!
 						
 						$this->session->set_userdata(array(
-							'current_user_name' => $response->user
+							'current_user_string' => $response->user,
+							'access_token' => $response->access_token,
+							'refresh_token' => $response->refresh_token
 						));
 						
 						redirect();
