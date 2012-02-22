@@ -53,17 +53,3 @@
 		</div>
 		
 		<div class="container-fluid">
-			<div class="row-fluid">
-				<div class="span3">
-					<div class="well sidebar-nav">
-						<ul class="nav nav-list">
-							{nav_menu}
-							<li class="nav-header">{title}</li>
-								{items}
-								<li><a href="{uri}">{name}</a></li>
-								{/items}
-							{/nav_menu}
-						</ul>
-					</div>
-				</div>
-				<div class="span9">

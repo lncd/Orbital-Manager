@@ -23,21 +23,18 @@ class Orbital {
 			$common_content['user_presence'] = '<a href="' . site_url('signin') . '">Sign In</a>';
 		}
 		
-		$common_content['nav_menu'][] = array (
-			'title' => 'Main Menu',
-			'items' => array (
-				array (
-					'name' => 'Home',
-					'uri' => site_url()
-				),
-				array (
-					'name' => 'About',
-					'uri' => site_url('about')
-				),
-				array (
-					'name' => 'Contact',
-					'uri' => site_url('contact')
-				)
+		$common_content['nav_menu'] = array (
+			array (
+				'name' => 'Home',
+				'uri' => site_url()
+			),
+			array (
+				'name' => 'About',
+				'uri' => site_url('about')
+			),
+			array (
+				'name' => 'Contact',
+				'uri' => site_url('contact')
 			)
 		);
 			
@@ -45,24 +42,15 @@ class Orbital {
 		{
 			
 			$common_content['nav_menu'][] = array (
-				'title' => 'My Research',
-				'items' => array (
-					array (
-						'name' => 'Projects Dashboard',
-						'uri' => site_url('projects')
-					),
-				)
+				'name' => 'Projects',
+				'uri' => site_url('projects')
 			);
 			
 			$common_content['nav_menu'][] = array (
-				'title' => 'My Details',
-				'items' => array (
-					array (
-						'name' => 'About Me',
-						'uri' => site_url('me')
-					),
-				)
+				'name' => 'Me',
+				'uri' => site_url('me')
 			);
+			
 		}
 		
 		return $common_content;
