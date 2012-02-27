@@ -100,12 +100,13 @@ class Signin extends CI_Controller {
 					// Code present, try swap it
 					
 					// Go complete the flow!				
-					$postfields = 'client_id=' . $this->config->item('orbital_app_id') . '&redirect_uri=' . urlencode(site_url('signin/auth')) . '&client_secret=' . $this->config->item('orbital_app_secret') . '&grant_type=authorization_code&code=' . $this->input->get('code');
+					$postfields = 'grant_type=authorization_code&code=' . $this->input->get('code');
 					$c = curl_init();
 					curl_setopt($c, CURLOPT_URL, $this->config->item('orbital_core_location') . 'auth/access_token');
 					curl_setopt($c, CURLOPT_POST, true);
 					curl_setopt($c, CURLOPT_RETURNTRANSFER, true);
 					curl_setopt($c, CURLOPT_POSTFIELDS, $postfields);
+					curl_setopt($s, CURLOPT_USERPWD, $this->config->item('orbital_app_id') . ':' . $this->config->item('orbital_app_secret'));
 					$reply = curl_exec($c);
 					curl_close ($c);
 					
