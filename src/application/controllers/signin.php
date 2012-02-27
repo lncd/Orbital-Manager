@@ -106,7 +106,7 @@ class Signin extends CI_Controller {
 					curl_setopt($c, CURLOPT_POST, true);
 					curl_setopt($c, CURLOPT_RETURNTRANSFER, true);
 					curl_setopt($c, CURLOPT_POSTFIELDS, $postfields);
-					curl_setopt($s, CURLOPT_USERPWD, $this->config->item('orbital_app_id') . ':' . $this->config->item('orbital_app_secret'));
+					curl_setopt($c, CURLOPT_USERPWD, $this->config->item('orbital_app_id') . ':' . $this->config->item('orbital_app_secret'));
 					$reply = curl_exec($c);
 					curl_close ($c);
 					
