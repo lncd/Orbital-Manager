@@ -1,130 +1,161 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-<project name="Orbital Core" default="dist">
-
-	<!-- ============================================  -->
-    <!-- Target: prepare                               -->
-    <!-- ============================================  -->
-    <target name="prepare">
-    
-        <echo msg="Preparing..." />
-        
-    </target>
-
-    <!-- ============================================  -->
-    <!-- Target: build                                 -->
-    <!-- ============================================  -->
-    <target name="build" depends="prepare">
-    
-        <echo msg="Building..." />
-        
-        <copy todir="./build" includeemptydirs="true">
-			<fileset dir="./src">
-				<include name="**" />
-				<exclude name="**/.git/**" />
+<project name="Orbital Manager" default="build">
+	<target name="build"
+		depends="prepare,lint,phploc,pdepend,phpmd-ci,phpcs-ci,phpcpd,phpdox,phpunit,phpcb"/>
+	
+	<target name="build-parallel"
+		depends="prepare,lint,tools-parallel,phpunit,phpcb"/>
+	
+	<target name="tools-parallel"
+		description="Run tools in parallel">
+		<parallel threadCount="2">
+			<sequential>
+				<antcall target="pdepend"/>
+				<antcall target="phpmd-ci"/>
+			</sequential>
+			<antcall target="phpcpd"/>
+			<antcall target="phpcs-ci"/>
+			<antcall target="phploc"/>
+			<antcall target="phpdox"/>
+		</parallel>
+	</target>
+	
+	<target name="clean" description="Cleanup build artifacts">
+		<delete dir="${basedir}/build/api"/>
+		<delete dir="${basedir}/build/code-browser"/>
+		<delete dir="${basedir}/build/coverage"/>
+		<delete dir="${basedir}/build/logs"/>
+		<delete dir="${basedir}/build/pdepend"/>
+	</target>
+	
+	<target name="prepare" depends="clean"
+		description="Prepare for build">
+		<mkdir dir="${basedir}/build/api"/>
+		<mkdir dir="${basedir}/build/code-browser"/>
+		<mkdir dir="${basedir}/build/coverage"/>
+		<mkdir dir="${basedir}/build/logs"/>
+		<mkdir dir="${basedir}/build/pdepend"/>
+		<mkdir dir="${basedir}/build/phpdox"/>
+	</target>
+	
+	<target name="lint">
+		<apply executable="php" failonerror="true">
+			<arg value="-l" />
+			
+			<fileset dir="${basedir}/src">
+				<include name="**/*.php" />
+				<modified />
 			</fileset>
-		</copy>
-        
-    </target>
-    
-	<!-- ============================================  -->
-    <!-- Target: configure                               -->
-    <!-- ============================================  -->
-    <target name="configure" depends="build">
-    
-        <echo msg="Configuring..." />
-        
-        <reflexive>
-			<fileset dir="./build">
-				<include pattern="index.php" />
+			
+			<fileset dir="${basedir}/tests">
+				<include name="**/*.php" />
+				<modified />
 			</fileset>
-			<filterchain>
-				<replacetokens begintoken="##" endtoken="##">
-					<token key="CI_ENVIRONMENT" value="${CI_ENVIRONMENT}" />
-				</replacetokens>
-			</filterchain>
-		</reflexive>
-		
-		<reflexive>
-			<fileset dir="./build/application/config">
-				<include pattern="config.php" />
-			</fileset>
-			<filterchain>
-				<replacetokens begintoken="##" endtoken="##">
-					<token key="CI_BASEURL" value="${CI_BASEURL}" />
-					<token key="CI_INDEXPAGE" value="${CI_INDEXPAGE}" />
-					<token key="CI_ENCRYPTKEY" value="${CI_ENCRYPTKEY}" />
-					<token key="CI_NAME_PREFIX" value="${CI_NAME_PREFIX}" />
-					<token key="CI_SESSION_TABLE" value="${CI_SESSION_TABLE}" />
-				</replacetokens>
-			</filterchain>
-		</reflexive>
-		
-		<reflexive>
-			<fileset dir="./build/application/config">
-				<include pattern="database.php" />
-			</fileset>
-			<filterchain>
-				<replacetokens begintoken="##" endtoken="##">
-					<token key="MYSQL_HOSTNAME" value="${MYSQL_HOSTNAME}" />
-					<token key="MYSQL_USERNAME" value="${MYSQL_USERNAME}" />
-					<token key="MYSQL_PASSWORD" value="${MYSQL_PASSWORD}" />
-					<token key="MYSQL_DATABASE" value="${MYSQL_DATABASE}" />
-				</replacetokens>
-			</filterchain>
-		</reflexive>
-		
-		<reflexive>
-			<fileset dir="./build/application/config">
-				<include pattern="orbital.php" />
-			</fileset>
-			<filterchain>
-				<replacetokens begintoken="##" endtoken="##">
-					<token key="ORBITAL_CORE_LOCATION" value="${ORBITAL_CORE_LOCATION}" />
-					<token key="ORBITAL_MANAGER_NAME" value="${ORBITAL_MANAGER_NAME}" />
-					<token key="ORBITAL_APP_ID" value="${ORBITAL_APP_ID}" />
-					<token key="ORBITAL_APP_SECRET" value="${ORBITAL_APP_SECRET}" />
-				</replacetokens>
-			</filterchain>
-		</reflexive>
-				
-		<echo msg="Configuration token replacement complete." />
-        
-    </target>
-    
-    <!-- ============================================  -->
-    <!-- Target: test                                 -->
-    <!-- ============================================  -->
-    <target name="test" depends="configure">
-    
-        <echo msg="Testing..." />
-        
-    </target>
-    
-    <!-- ============================================  -->
-    <!-- Target: report                                 -->
-    <!-- ============================================  -->
-    <target name="report" depends="test">
-    
-        <echo msg="Reporting..." />
-        
-        <exec command="phpcs --standard=CodeIgniter --report=checkstyle --ignore=./system,index.php,./js,./css ./build > ./reports/checkstyle.xml" escape="false" />
-        
-        <echo msg="PHP Check Style complete." />
-        
-        <exec command="docblox -d build/application -t docs" />
-		
-		<echo msg="DocBlox complete." />
-        
-    </target>
-
-    <!-- ============================================  -->
-    <!-- (DEFAULT)  Target: dist                       --> 
-    <!-- ============================================  -->
-    <target name="dist" depends="report">
-    
-        <echo msg="Distributing..." />
-
-    </target>
-
+		</apply>
+	</target>
+	
+	<target name="phploc" description="Measure project size using PHPLOC">
+		<exec executable="phploc">
+			<arg value="--log-csv" />
+			<arg value="${basedir}/build/logs/phploc.csv" />
+			<arg path="${basedir}/src" />
+		</exec>
+	</target>
+	
+	<target name="pdepend"
+		description="Calculate software metrics using PHP_Depend">
+		<exec executable="pdepend">
+			<arg value="--jdepend-xml=${basedir}/build/logs/jdepend.xml" />
+			<arg value="--jdepend-chart=${basedir}/build/pdepend/dependencies.svg" />
+			<arg value="--overview-pyramid=${basedir}/build/pdepend/overview-pyramid.svg" />
+			<arg path="${basedir}/src" />
+		</exec>
+	</target>
+	
+	<target name="phpmd"
+		description="Perform project mess detection using PHPMD and print human readable output. Intended for usage on the command line before committing.">
+		<exec executable="phpmd">
+			<arg path="${basedir}/src" />
+			<arg value="text" />
+			<arg value="${basedir}/build/phpmd.xml" />
+		</exec>
+	</target>
+	
+	<target name="phpmd-ci"
+		description="Perform project mess detection using PHPMD creating a log file for the continuous integration server">
+		<exec executable="phpmd">
+			<arg path="${basedir}/src" />
+			<arg value="xml" />
+			<arg value="${basedir}/build/phpmd.xml" />
+			<arg value="--reportfile" />
+			<arg value="${basedir}/build/logs/pmd.xml" />
+		</exec>
+	</target>
+	
+	<target name="phpcs"
+		description="Find coding standard violations using PHP_CodeSniffer and print human readable output. Intended for usage on the command line before committing.">
+		<exec executable="phpcs">
+			<arg value="--standard=${basedir}/build/phpcs.xml" />
+			<arg path="${basedir}/src" />
+		</exec>
+	</target>
+	
+	<target name="phpcs-ci"
+		description="Find coding standard violations using PHP_CodeSniffer creating a log file for the continuous integration server">
+		<exec executable="phpcs" output="/dev/null">
+			<arg value="--report=checkstyle" />
+			<arg value="--report-file=${basedir}/build/logs/checkstyle.xml" />
+			<arg value="--standard=${basedir}/build/phpcs.xml" />
+			<arg path="${basedir}/src" />
+		</exec>
+	</target>
+	
+	<target name="phpcpd" description="Find duplicate code using PHPCPD">
+		<exec executable="phpcpd">
+			<arg value="--log-pmd" />
+			<arg value="${basedir}/build/logs/pmd-cpd.xml" />
+			<arg path="${basedir}/src" />
+		</exec>
+	</target>
+	
+	<target name="phpdox"
+		description="Generate API documentation using phpDox">
+		<exec executable="phpdox"/>
+	</target>
+	
+	<target name="phpunit" description="Run unit tests with PHPUnit">
+	
+		<replace file="${basedir}/tests/phpunit.xml">
+			<replacefilter token="@ORBITAL_CI_BASEURL@" value="${ORBITAL_CI_BASEURL}" />
+			<replacefilter token="@ORBITAL_CI_INDEXPAGE@" value="${ORBITAL_CI_INDEXPAGE}" />
+			<replacefilter token="@ORBITAL_CI_ENCRYPTKEY@" value="${ORBITAL_CI_ENCRYPTKEY}" />
+			<replacefilter token="@ORBITAL_CI_COOKIE_NAME_PREFIX@" value="${ORBITAL_CI_COOKIE_NAME_PREFIX}" />
+			<replacefilter token="@ORBITAL_CI_SESSION_TABLE@" value="${ORBITAL_CI_SESSION_TABLE}" />
+			<replacefilter token="@ORBITAL_MYSQL_HOSTNAME@" value="${ORBITAL_MYSQL_HOSTNAME}" />
+			<replacefilter token="@ORBITAL_MYSQL_USERNAME@" value="${ORBITAL_MYSQL_USERNAME}" />
+			<replacefilter token="@ORBITAL_MYSQL_PASSWORD@" value="${ORBITAL_MYSQL_PASSWORD}" />
+			<replacefilter token="@ORBITAL_MYSQL_DATABASE@" value="${ORBITAL_MYSQL_DATABASE}" />
+			<replacefilter token="@ORBITAL_CORE_LOCATION@" value="${ORBITAL_CORE_LOCATION}" />
+			<replacefilter token="@ORBITAL_MANAGER_NAME@" value="${ORBITAL_MANAGER_NAME}" />
+			<replacefilter token="@ORBITAL_APP_ID@" value="${ORBITAL_APP_ID}" />
+			<replacefilter token="@ORBITAL_APP_SECRET@" value="${ORBITAL_APP_SECRET}" />
+		</replace>
+	
+		<exec executable="phpunit" failonerror="true">
+			<arg value="-c" />
+			<arg path="${basedir}/tests/phpunit.xml" />
+		</exec>
+	</target>
+	
+	<target name="phpcb"
+		description="Aggregate tool output with PHP_CodeBrowser">
+		<exec executable="phpcb">
+			<arg value="--log" />
+			<arg path="${basedir}/build/logs" />
+			<arg value="--source" />
+			<arg path="${basedir}/src" />
+			<arg value="--output" />
+			<arg path="${basedir}/build/code-browser" />
+		</exec>
+	</target>
 </project>

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit 
+	colors="true" 
+	stopOnFailure="false" 
+	bootstrap="../src/application/third_party/CIUnit/bootstrap_phpunit.php">
+	
+	<php>
+		<server name="ORBITAL_CI_ENVIRONMENT" value="testing" />
+		<server name="ORBITAL_CI_BASEURL" value="@ORBITAL_CI_BASEURL@" />
+		<server name="ORBITAL_CI_INDEXPAGE" value="@ORBITAL_CI_INDEXPAGE@" />
+		<server name="ORBITAL_CI_ENCRYPTKEY" value="@ORBITAL_CI_ENCRYPTKEY@" />
+		<server name="ORBITAL_CI_COOKIE_NAME_PREFIX" value="@ORBITAL_CI_COOKIE_NAME_PREFIX@" />
+		<server name="ORBITAL_CI_SESSION_TABLE" value="@ORBITAL_CI_SESSION_TABLE@" />
+		<server name="ORBITAL_MYSQL_HOSTNAME" value="@ORBITAL_MYSQL_HOSTNAME@" />
+		<server name="ORBITAL_MYSQL_USERNAME" value="@ORBITAL_MYSQL_USERNAME@" />
+		<server name="ORBITAL_MYSQL_PASSWORD" value="@ORBITAL_MYSQL_PASSWORD@" />
+		<server name="ORBITAL_MYSQL_DATABASE" value="@ORBITAL_MYSQL_DATABASE@" />
+		<server name="ORBITAL_CORE_LOCATION" value="@ORBITAL_CORE_LOCATION@" />
+		<server name="ORBITAL_MANAGER_NAME" value="@ORBITAL_MANAGER_NAME@" />
+		<server name="ORBITAL_APP_ID" value="@ORBITAL_APP_ID@" />
+		<server name="ORBITAL_APP_SECRET" value="@ORBITAL_APP_SECRET@" />
+	</php>
+	
+	<logging>
+		<log type="coverage-html" target="build/coverage" title="Orbital Manager"
+			charset="UTF-8" yui="true" highlight="true"
+			lowUpperBound="35" highLowerBound="70"/>
+		<log type="coverage-clover" target="build/logs/clover.xml"/>
+		<log type="junit" target="build/logs/junit.xml" logIncompleteSkipped="false"/>
+	</logging>
+	
+	<testsuites>
+	
+		<testsuite name="ControllerTests">
+			<directory>controllers</directory>
+		</testsuite>
+		
+		<testsuite name="HelperTests">
+			<directory suffix=".php">helpers</directory>
+		</testsuite>
+		
+		<testsuite name="LibTests">
+			<directory suffix=".php">libs</directory>
+		</testsuite>
+		
+		<testsuite name="ModelTests">
+			<directory suffix=".php">models</directory>
+		</testsuite>
+		
+		<testsuite name="SystemTests">
+			<directory suffix=".php">system</directory>
+		</testsuite>
+		
+	</testsuites>
+	
+</phpunit>
