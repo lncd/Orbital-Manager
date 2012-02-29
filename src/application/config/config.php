@@ -27,7 +27,7 @@
 | path to your installation.
 |
 */
-$config['base_url']	= '##CI_BASEURL##';
+$config['base_url']	= $_SERVER['ORBITAL_CI_BASEURL'];
 
 /*
 |--------------------------------------------------------------------------
@@ -39,7 +39,7 @@ $config['base_url']	= '##CI_BASEURL##';
 | variable so that it is blank.
 |
 */
-$config['index_page'] = '##CI_INDEXPAGE##';
+$config['index_page'] = $_SERVER['ORBITAL_CI_INDEXPAGE'];
 
 /*
 |--------------------------------------------------------------------------
@@ -237,7 +237,7 @@ $config['cache_path'] = '';
 | MUST set an encryption key.  See the user guide for info.
 |
 */
-$config['encryption_key'] = '##CI_ENCRYPTKEY##';
+$config['encryption_key'] = 'kXnw2M63LJf58WEOATQM16W2fOGe5lQd';
 
 /*
 |--------------------------------------------------------------------------
@@ -257,12 +257,12 @@ $config['encryption_key'] = '##CI_ENCRYPTKEY##';
 | 'sess_time_to_update'		= how many seconds between CI refreshing Session Information
 |
 */
-$config['sess_cookie_name']		= 'session';
+$config['sess_cookie_name']		= 'ci_session';
 $config['sess_expiration']		= 7200;
 $config['sess_expire_on_close']	= TRUE;
 $config['sess_encrypt_cookie']	= TRUE;
 $config['sess_use_database']	= TRUE;
-$config['sess_table_name']		= '##CI_SESSION_TABLE##';
+$config['sess_table_name']		= $_SERVER['ORBITAL_CI_SESSION_TABLE'];
 $config['sess_match_ip']		= FALSE;
 $config['sess_match_useragent']	= TRUE;
 $config['sess_time_to_update']	= 300;
@@ -277,7 +277,7 @@ $config['sess_time_to_update']	= 300;
 | 'cookie_path'   =  Typically will be a forward slash
 |
 */
-$config['cookie_prefix']	= '##CI_NAME_PREFIX##_';
+$config['cookie_prefix']	= $_SERVER['ORBITAL_CI_COOKIE_NAME_PREFIX'];
 $config['cookie_domain']	= '';
 $config['cookie_path']		= '/';
 

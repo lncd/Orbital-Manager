@@ -21,7 +21,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * wants to call it by something else.
 */
 
-$config['orbital_manager_name'] = '##ORBITAL_MANAGER_NAME##';
+$config['orbital_manager_name'] = $_SERVER['ORBITAL_MANAGER_NAME'];
 
 /**
  * Core Location
@@ -29,7 +29,7 @@ $config['orbital_manager_name'] = '##ORBITAL_MANAGER_NAME##';
  * The location of the Orbital Core instance this Manager should use.
 */
 
-$config['orbital_core_location'] = '##ORBITAL_CORE_LOCATION##';
+$config['orbital_core_location'] = $_SERVER['ORBITAL_CORE_LOCATION'];
 
 /**
  * Application ID
@@ -37,7 +37,7 @@ $config['orbital_core_location'] = '##ORBITAL_CORE_LOCATION##';
  * ID of this application in Orbital Core
 */
 
-$config['orbital_app_id'] = '##ORBITAL_APP_ID##';
+$config['orbital_app_id'] = $_SERVER['ORBITAL_APP_ID'];
 
 /**
  * Application Secret
@@ -45,7 +45,7 @@ $config['orbital_app_id'] = '##ORBITAL_APP_ID##';
  * Secret of this application in Orbital Core
 */
 
-$config['orbital_app_secret'] = '##ORBITAL_APP_SECRET##';
+$config['orbital_app_secret'] = $_SERVER['ORBITAL_APP_SECRET'];;
 
 /**
  * Orbital Manager Version

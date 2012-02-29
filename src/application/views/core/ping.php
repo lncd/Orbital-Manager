@@ -1,11 +1,17 @@
-<!-- Example row of columns -->
+<div class="row-fluid">
+	<div class="span12">
+		<h1>Core Ping</h1>
+	</div>
+</div>
 <div class="row-fluid">
 	<div class="span8">
-		<h1>Core Ping</h1>
-		<p>{ping_response_message}</p>
-		<p>{ping_response_orbital_institution}</p>
-		<p>{ping_response_orbital_version}</p>
-		<p>{ping_response_orbital_timestamp}</p>
+		<table class="table table-striped table-bordered">
+			<tr><th scope="row">Response</th><td>{ping_response_message}</td></tr>
+			<tr><th scope="row">Response Time</th><td>{ping_response_time}s</tr>
+			<tr><th scope="row">Institution</th><td>{ping_response_orbital_institution}</td></tr>
+			<tr><th scope="row">Core Version</th><td>{ping_response_orbital_version}</td></tr>
+			<tr><th scope="row">Request Time</th><td>{ping_response_orbital_timestamp_pretty} ({ping_response_orbital_timestamp})</td></tr>
+		</table>
 	</div>
 	<div class="span4">
 		<div class="well">

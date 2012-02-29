@@ -41,10 +41,10 @@
 $active_group = 'default';
 $active_record = TRUE;
 
-$db['default']['hostname'] = '##MYSQL_HOSTNAME##';
-$db['default']['username'] = '##MYSQL_USERNAME##';
-$db['default']['password'] = '##MYSQL_PASSWORD##';
-$db['default']['database'] = '##MYSQL_DATABASE##';
+$db['default']['hostname'] = $_SERVER['ORBITAL_MYSQL_HOSTNAME'];
+$db['default']['username'] = $_SERVER['ORBITAL_MYSQL_USERNAME'];
+$db['default']['password'] = $_SERVER['ORBITAL_MYSQL_PASSWORD'];
+$db['default']['database'] = $_SERVER['ORBITAL_MYSQL_DATABASE'];
 $db['default']['dbdriver'] = 'mysqli';
 $db['default']['dbprefix'] = '';
 $db['default']['pconnect'] = TRUE;
