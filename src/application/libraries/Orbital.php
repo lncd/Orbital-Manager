@@ -209,7 +209,7 @@ class Orbital {
 	
 		try
 		{
-			return json_decode(file_get_contents($this->_ci->config->item('orbital_core_location') . $target));
+			return json_decode(@file_get_contents($this->_ci->config->item('orbital_core_location') . $target));
 		}
 		catch (Exception $e)
 		{
@@ -249,6 +249,23 @@ class Orbital {
     {
     
     	return $this->get_unauthed('core/auth_types');
+    
+    }
+    
+    /**
+	 * Core: Database Server Status
+	 *
+	 * Returns the status of the connected Mongo server.
+	 *
+	 * @access public
+	 *
+	 * @return object|FALSE Object if successful, FALSE if not.
+	 */
+    
+    public function core_server_status()
+    {
+    
+    	return $this->get_unauthed('core/mongo_server_status');
     
     }
     

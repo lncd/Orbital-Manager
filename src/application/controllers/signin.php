@@ -36,24 +36,39 @@ class Signin extends CI_Controller {
 	function index()
 	{
 	
-		$auth_types = $this->orbital->core_auth_types();
-		
-		// Generate the sign-in instance token (help prevent CSRF)
-		$this->session->set_userdata('signin_token', uniqid());
-		
-		foreach ($auth_types->response->auth_types as $auth_type)
+		if ($auth_types = $this->orbital->core_auth_types())
 		{
-			$this->data['auth_types'][] = array(
-				'name' => $auth_type->name,
-				'uri' => $auth_type->uri  . '?response_type=code&scope=access&client_id=' . $this->config->item('orbital_app_id') . '&redirect_uri=' . site_url('signin/auth') . '&state=' . $this->session->userdata('signin_token')
-			);
-		}
 		
-		$this->data['page_title'] = 'Sign In';
-	
-		$this->parser->parse('includes/header', $this->data);
-		$this->parser->parse('user/signin', $this->data);
-		$this->parser->parse('includes/footer', $this->data);
+			// Generate the sign-in instance token (help prevent CSRF)
+			$this->session->set_userdata('signin_token', uniqid());
+			
+			foreach ($auth_types->response->auth_types as $auth_type)
+			{
+				$this->data['auth_types'][] = array(
+					'name' => $auth_type->name,
+					'uri' => $auth_type->uri  . '?response_type=code&scope=access&client_id=' . $this->config->item('orbital_app_id') . '&redirect_uri=' . site_url('signin/auth') . '&state=' . $this->session->userdata('signin_token')
+				);
+			}
+			
+			$this->data['page_title'] = 'Sign In';
+		
+			$this->parser->parse('includes/header', $this->data);
+			$this->parser->parse('user/signin', $this->data);
+			$this->parser->parse('includes/footer', $this->data);
+			
+		}
+		else
+		{
+			// Error, load the error view up
+			$this->data['page_title'] = 'Problem Signing In';
+			$this->data['error_title'] = 'Problem Signing In';
+			$this->data['error_text'] = 'There has been a problem starting the sign-in process. Sorry about that.';
+			$this->data['error_technical'] = 'no_auth_response: Orbital Core did not respond with a valid list of authentication methods.';
+			
+			$this->parser->parse('includes/header', $this->data);
+			$this->parser->parse('static/error', $this->data);
+			$this->parser->parse('includes/footer', $this->data);
+		}
 	}
 	
 	/**
