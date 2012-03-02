@@ -11,10 +11,4 @@ class CoreTest extends CIUnit_TestCase
 		// Set the tested controller
 		$this->CI = set_controller('core');
 	}
-	
-	public function testPing()
-	{
-		// Call the controllers method
-		$this->CI->ping();
-	}
 }
