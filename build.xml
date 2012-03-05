@@ -6,7 +6,7 @@
 	<target name="build-parallel"
 		depends="prepare,lint,tools-parallel,phpunit,phpcb" />
 		
-	<target name="build"
+	<target name="minimal"
 		depends="prepare,lint,phploc,pdepend,phpmd-ci,phpcs-ci,phpcpd,phpdox,phpcb" />
 	
 	<target name="tools-parallel"
