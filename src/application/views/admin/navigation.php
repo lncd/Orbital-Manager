@@ -1,5 +1,6 @@
 <div class="row-fluid">
 	<div class="span12">
+	
 		<ul class="breadcrumb">
 			<li>
 				<a href="{base_url}">Home</a> <span class="divider">/</span>
@@ -8,11 +9,6 @@
 				<a href="{base_url}admin">Administration</a></span>
 			</li>
 		</ul>
-	</div>
-</div>
-
-<div class="row-fluid">
-	<div class="span12">
 	
 		<h1>System Administration</h1>
 		

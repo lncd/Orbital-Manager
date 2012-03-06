@@ -1,3 +1,18 @@
+<div class="row-fluid">
+	<div class="span12">
+	
+		<ul class="breadcrumb">
+			<li>
+				<a href="{base_url}">Home</a> <span class="divider">/</span>
+			</li>
+			<li class="active">
+				<a href="{base_url}about">About</a></span>
+			</li>
+		</ul>
+		
+	</div>
+</div>
+
 <div class="hero-unit">
   <h1>Managing Research Data. Easy.</h1>
   <p>Orbital is a service to help you manage your research data, keep track of what you've got, publish data, perform lighting-fast analysis and more.</p>
@@ -62,7 +77,7 @@
 		<h2>Ready to go?</h2>
 		
 		<p>Want to get an {orbital_manager_name} account and take a whole new look at your research data?</p>
-    	<p><a class="btn" href="#">Sign Up &raquo;</a></p>
+    	<p><a class="btn" href="#">Sign In &raquo;</a></p>
 		
 	</div>
 </div>

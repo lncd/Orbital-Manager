@@ -1,7 +1,23 @@
 <div class="row-fluid">
-	<div class="span8">
+	<div class="span12">
+	
+		<ul class="breadcrumb">
+			<li>
+				<a href="{base_url}">Home</a> <span class="divider">/</span>
+			</li>
+			<li class="active">
+				<a href="{base_url}contact">Contact Us</a></span>
+			</li>
+		</ul>
 	
 		<h1>Contact Us</h1>
+		
+	</div>
+</div>
+
+<div class="row-fluid">
+	<div class="span8">
+	
 		
 		<p>We love hearing from people, so we've made it easy. Just drop us an email to <b><a href="mailto:orbital@lncd.org">orbital@lncd.org</a></b>, and let us know what you're thinking about.</p>
 		
