@@ -58,20 +58,8 @@ class Core extends CI_Controller {
 			$this->data['server_connections_current'] = $status_response->response->server->connections->current;
 			$this->data['server_connections_available'] = $status_response->response->server->connections->available;
 			
-		
 			$this->parser->parse('includes/header', $this->data);
 			$this->parser->parse('core/database_status', $this->data);
-			$this->parser->parse('includes/footer', $this->data);
-		}
-		else
-		{
-			$this->data['page_title'] = 'Response Error';
-			$this->data['error_title'] = 'Response Error';
-			$this->data['error_text'] = 'An error has occurred retrieving the database status.';
-			$this->data['error_technical'] = 'no_response: Orbital Core did not respond, or responded with a hard error code.';
-			
-			$this->parser->parse('includes/header', $this->data);
-			$this->parser->parse('static/error', $this->data);
 			$this->parser->parse('includes/footer', $this->data);
 		}
 	}

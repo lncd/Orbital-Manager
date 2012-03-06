@@ -140,7 +140,8 @@ class Signin extends CI_Controller {
 						$this->session->set_userdata(array(
 							'current_user_string' => $response->user,
 							'access_token' => $response->access_token,
-							'refresh_token' => $response->refresh_token
+							'refresh_token' => $response->refresh_token,
+							'system_admin' => $response->system_admin
 						));
 						
 						redirect();

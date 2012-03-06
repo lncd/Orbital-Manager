@@ -14,18 +14,15 @@ class Me extends CI_Controller {
 	function index()
 	{
 	
-		echo 'me';
-	
 		if ($response = $this->orbital->user_details())
 		{
-			print_r($response);
+			$this->data['user_name'] = $response->response->user->name;
 		}
 	
-		/*
+		
 		$this->parser->parse('includes/header', $this->data);
-		$this->parser->parse('core/ping', $this->data);
+		$this->parser->parse('user/profile', $this->data);
 		$this->parser->parse('includes/footer', $this->data);
-		*/
 	}
 }
 

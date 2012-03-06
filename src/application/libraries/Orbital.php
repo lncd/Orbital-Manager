@@ -18,6 +18,8 @@ class Orbital {
 
 	private $_ci;
 	
+	private $data;
+	
 	function __construct()
 	{
 		$this->_ci =& get_instance();
@@ -70,8 +72,17 @@ class Orbital {
 				'uri' => site_url('me')
 			);
 			
+			if ($this->_ci->session->userdata('system_admin'))
+			{
+				$common_content['nav_menu'][] = array (
+					'name' => 'Administration',
+					'uri' => site_url('admin')
+				);
+			}
+			
 		}
 		
+		$this->data = $common_content;
 		return $common_content;
 	
 	}
@@ -109,7 +120,8 @@ class Orbital {
 				$this->_ci->session->set_userdata(array(
 					'current_user_string' => $response->user,
 					'access_token' => $response->access_token,
-					'refresh_token' => $response->refresh_token
+					'refresh_token' => $response->refresh_token,
+					'system_admin' => $response->system_admin
 				));
 				return TRUE;
 			}
@@ -136,8 +148,8 @@ class Orbital {
 	 *
 	 * @param array $scopes Scopes to ensure that the user has access to.
 	 *
-	 * @return string|FALSE User's email address if credentials match, FALSE
-	 *                      if not.
+	 * @return object|FALSE An object representing the request result, or
+	 *                      FALSE on a request failure.
 	 */
 
 	private function get_authed($target)
@@ -164,6 +176,7 @@ class Orbital {
 				{
 					// Something has gone wrong - try figure out what.
 					$http_status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+					echo $http_status;
 					curl_close($ch);
 					
 					// Different behaviours for unauthorised code
@@ -176,6 +189,12 @@ class Orbital {
 						}
 						else
 						{
+						
+							$this->data['page_title'] = 'Authentication Error';
+							$this->data['error_title'] = 'Authentication Error';
+							$this->data['error_text'] = 'There has been a problem authenticating this request.';
+							$this->data['error_technical'] = 'refresh_failure: Unable to refresh access token.';
+						
 							// Refresh failed. Abort.
 							$this->_ci->parser->parse('includes/header', $this->data);
 							$this->_ci->parser->parse('static/error', $this->data);
@@ -188,6 +207,12 @@ class Orbital {
 						// Something else has gone wrong. Try to parse it out.
 						if ($response = json_decode($output) && isset($response->error))
 						{
+						
+							$this->data['page_title'] = 'Authentication Error';
+							$this->data['error_title'] = 'Authentication Error';
+							$this->data['error_text'] = 'There has been a problem authenticating this request.';
+							$this->data['error_technical'] = 'oauth_401: ' . $response->error . ': ' . $response->error_description;
+						
 							// Load error view with given error message
 							$this->_ci->parser->parse('includes/header', $this->data);
 							$this->_ci->parser->parse('static/error', $this->data);
@@ -196,6 +221,12 @@ class Orbital {
 						}
 						else
 						{
+						
+							$this->data['page_title'] = 'Authentication Error';
+							$this->data['error_title'] = 'Authentication Error';
+							$this->data['error_text'] = 'There has been a problem authenticating this request.';
+							$this->data['error_technical'] = 'oauth_401_generic: Core issued a HTTP 401 during authentication.';
+						
 							// Load error view with own message.
 							$this->_ci->parser->parse('includes/header', $this->data);
 							$this->_ci->parser->parse('static/error', $this->data);
@@ -292,7 +323,7 @@ class Orbital {
     public function core_server_status()
     {
     
-    	return $this->get_unauthed('core/mongo_server_status');
+    	return $this->get_authed('core/mongo_server_status');
     
     }
     
