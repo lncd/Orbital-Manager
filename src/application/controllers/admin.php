@@ -42,8 +42,6 @@ class Admin extends CI_Controller {
 		{
 		
 			$this->load->helper('date');
-			
-			print_r($status_response);
 	
 			$this->data['page_title'] = 'Database Status';
 			$this->data['server_host'] = $status_response->response->server->host;
