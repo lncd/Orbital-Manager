@@ -1,5 +1,21 @@
 <div class="row-fluid">
 	<div class="span12">
+		<ul class="breadcrumb">
+			<li>
+				<a href="{base_url}">Home</a> <span class="divider">/</span>
+			</li>
+			<li>
+				<a href="{base_url}admin">Administration</a> <span class="divider">/</span>
+			</li>
+			<li class="active">
+				<a href="{base_url}admin/database_status">Database Status</a></span>
+			</li>
+		</ul>
+	</div>
+</div>
+
+<div class="row-fluid">
+	<div class="span12">
 		<h1>Database Status</h1>
 	</div>
 </div>
