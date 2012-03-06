@@ -94,14 +94,29 @@ class Orbital {
 	
 		$postfields = 'grant_type=refresh_token&refresh_token=' . $token;
 		$ch = curl_init();
-		curl_setopt($ch, CURLOPT_URL, $this->config->item('orbital_core_location') . 'auth/refresh_token');
+		curl_setopt($ch, CURLOPT_URL, $this->_ci->config->item('orbital_core_location') . 'auth/refresh_token');
 		curl_setopt($ch, CURLOPT_POST, true);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+		if (ENVIRONMENT === 'development') { curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); }
 		curl_setopt($ch, CURLOPT_POSTFIELDS, $postfields);
-		curl_setopt($ch, CURLOPT_USERPWD, $this->config->item('orbital_app_id') . ':' . $this->config->item('orbital_app_secret'));
+		curl_setopt($ch, CURLOPT_USERPWD, $this->_ci->config->item('orbital_app_id') . ':' . $this->_ci->config->item('orbital_app_secret'));
 		if ($reply = curl_exec($ch))
 		{
-		
+			$response = json_decode($reply);
+					
+			if (!isset($response->error) && isset($response->access_token) && isset($response->token_type) && isset($response->expires_in) && isset($response->refresh_token) && isset($response->scope) && isset($response->user))
+			{
+				$this->_ci->session->set_userdata(array(
+					'current_user_string' => $response->user,
+					'access_token' => $response->access_token,
+					'refresh_token' => $response->refresh_token
+				));
+				return TRUE;
+			}
+			else
+			{
+				return FALSE;
+			}
 		}
 		else
 		{
@@ -136,6 +151,7 @@ class Orbital {
 			
 				$ch = curl_init($this->_ci->config->item('orbital_core_location') . $target);
 				curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+				if (ENVIRONMENT === 'development') { curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); }
 				curl_setopt($ch,CURLOPT_HTTPHEADER,array('Authorization: Bearer ' . base64_encode($this->_ci->session->userdata('access_token'))));
 				
 				if ($output = curl_exec($ch))
@@ -153,8 +169,19 @@ class Orbital {
 					// Different behaviours for unauthorised code
 					if ($http_status === 401)
 					{
-						// Unauthorised response - token invalid/expired/revoked. Try to refresh.
-						echo '401 Attempt Refresh';
+						// Unauthorised response - token invalid/expired/revoked. Try to refresh, and run again
+						if ($this->refresh_token($this->_ci->session->userdata('refresh_token')))
+						{
+							return $this->get_authed($target);
+						}
+						else
+						{
+							// Refresh failed. Abort.
+							$this->_ci->parser->parse('includes/header', $this->data);
+							$this->_ci->parser->parse('static/error', $this->data);
+							$this->_ci->parser->parse('includes/footer', $this->data);
+							return FALSE;
+						}
 					}
 					else
 					{

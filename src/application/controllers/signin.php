@@ -15,6 +15,11 @@
 class Signin extends CI_Controller {
 
 	private $data = array();
+	
+	private $request_scopes = array(
+		'access',
+		'administration'
+	);
 
 	/**
 	 * Constructor
@@ -46,7 +51,7 @@ class Signin extends CI_Controller {
 			{
 				$this->data['auth_types'][] = array(
 					'name' => $auth_type->name,
-					'uri' => $auth_type->uri  . '?response_type=code&scope=access&client_id=' . $this->config->item('orbital_app_id') . '&redirect_uri=' . site_url('signin/auth') . '&state=' . $this->session->userdata('signin_token')
+					'uri' => $auth_type->uri  . '?response_type=code&scope=' . implode(' ', $this->request_scopes) . '&client_id=' . $this->config->item('orbital_app_id') . '&redirect_uri=' . site_url('signin/auth') . '&state=' . $this->session->userdata('signin_token')
 				);
 			}
 			
@@ -118,11 +123,12 @@ class Signin extends CI_Controller {
 					$postfields = 'grant_type=authorization_code&code=' . $this->input->get('code');
 					$c = curl_init();
 					curl_setopt($c, CURLOPT_URL, $this->config->item('orbital_core_location') . 'auth/access_token');
-					curl_setopt($c, CURLOPT_POST, true);
-					curl_setopt($c, CURLOPT_RETURNTRANSFER, true);
+					curl_setopt($c, CURLOPT_POST, TRUE);
+					curl_setopt($c, CURLOPT_RETURNTRANSFER, TRUE);
+					if (ENVIRONMENT === 'development') { curl_setopt($c, CURLOPT_SSL_VERIFYPEER, false); }
 					curl_setopt($c, CURLOPT_POSTFIELDS, $postfields);
 					curl_setopt($c, CURLOPT_USERPWD, $this->config->item('orbital_app_id') . ':' . $this->config->item('orbital_app_secret'));
-					$reply = curl_exec($c);
+					$reply = curl_exec($c);	
 					curl_close ($c);
 					
 					$response = json_decode($reply);
@@ -152,8 +158,6 @@ class Signin extends CI_Controller {
 						}
 						else
 						{
-						
-							print_r($reply);
 						
 							$this->data['page_title'] = 'Sign-In Error';
 							$this->data['error_title'] = 'Sign-In Error';
