@@ -11,7 +11,7 @@
 		</ul>
 	
 		<h1>{user_name}</h1>
-		
+		<h3>{institution}<h3>
 		<h2>Research Summary</h2>
 		
 	</div>
