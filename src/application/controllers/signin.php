@@ -18,7 +18,10 @@ class Signin extends CI_Controller {
 	
 	private $request_scopes = array(
 		'access',
-		'administration'
+		'administration',
+		'archivefiles_read',
+		'archivefiles_write',
+		'projects'
 	);
 
 	/**

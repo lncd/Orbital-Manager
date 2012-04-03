@@ -351,7 +351,19 @@ class Orbital {
     	{
     		return $this->get_authed('user/details?user=' . urlencode($user));
     	}
+    }
+
+    public function projects_list($user = NULL)
+    {
     
+    	if ($user === NULL)
+    	{
+    		return $this->get_authed('projects');
+    	}
+    	else
+    	{
+    		return $this->get_authed('projects?user=' . urlencode($user));
+    	}
     }
 }
 
