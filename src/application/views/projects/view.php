@@ -33,3 +33,21 @@
 		</div>
 	</div>
 </div>
+
+<div class="row-fluid">
+	<div class="span4">
+		<div class="well">
+			<h2>Workspace</h2>
+		</div>
+	</div>
+	<div class="span4">
+		<div class="well">
+			<h2>Working Data</h2>
+		</div>
+	</div>
+	<div class="span4">
+		<div class="well">
+			<h2>File Archives</h2>
+		</div>
+	</div>
+</div>
