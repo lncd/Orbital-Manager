@@ -25,7 +25,6 @@ class Projects extends CI_Controller {
 			$this->parser->parse('includes/header', $this->data);
 			$this->parser->parse('projects/list', $this->data);
 			$this->parser->parse('includes/footer', $this->data);
-
 		}
 	}
 

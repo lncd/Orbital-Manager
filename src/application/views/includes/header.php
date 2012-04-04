@@ -26,7 +26,12 @@
 		<link rel="apple-touch-icon" href="{base_url}img/apple-touch-icon.png">
 		<link rel="apple-touch-icon" sizes="72x72" href="{base_url}img/apple-touch-icon-72.png">
 		<link rel="apple-touch-icon" sizes="114x114" href="{base_url}img/apple-touch-icon-114.png">
-		
+		<script src="{base_url}js/jquery.min.js"></script>
+		<script src="{base_url}js/bootstrap.min.js"></script>
+		<script src="{base_url}js/vendor/jquery.ui.widget.js"></script>
+		<script src="{base_url}js/jquery.iframe-transport.js"></script>
+		<script src="{base_url}js/jquery.fileupload.js"></script>
+	
 	</head>
 	
 	<body>
