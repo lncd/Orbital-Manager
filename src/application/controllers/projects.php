@@ -13,6 +13,9 @@ class Projects extends CI_Controller {
 
 	function index()
 	{
+	
+		$this->data['page_title'] = 'My Projects';
+	
 		if ($response = $this->orbital->projects_list())
 		{
 			foreach($response->response->projects as $project)
@@ -20,10 +23,16 @@ class Projects extends CI_Controller {
 				$this->data['projects'][] = array('project_name' => $project->name, 'project_uri' => site_url('project/' . $project->identifier));
 			}
 
-			$this->data['page_title'] = 'My Projects';
-
 			$this->parser->parse('includes/header', $this->data);
 			$this->parser->parse('projects/list', $this->data);
+			$this->parser->parse('includes/footer', $this->data);
+		}
+		else
+		{
+		
+			// This user has no projects. Show them this fact!
+			$this->parser->parse('includes/header', $this->data);
+			$this->parser->parse('projects/first', $this->data);
 			$this->parser->parse('includes/footer', $this->data);
 		}
 	}
