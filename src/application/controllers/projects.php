@@ -60,12 +60,17 @@ class Projects extends CI_Controller {
 			{
 				print_f('There was a problem calculating project progress');
 			}
-			
+
 			$this->parser->parse('includes/header', $this->data);
 			$this->parser->parse('projects/view', $this->data);
 			$this->parser->parse('includes/footer', $this->data);
 
 		}
+	}
+
+	function create()
+	{
+		print_r($this->Orbital->post_authed('projects/create', array('name' => $this->input->post($name))));
 	}
 }
 
