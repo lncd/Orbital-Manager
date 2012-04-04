@@ -13,14 +13,14 @@ class Projects extends CI_Controller {
 
 	function index()
 	{
-	
+
 		$this->data['page_title'] = 'My Projects';
-	
+
 		if ($response = $this->orbital->projects_list())
 		{
 			foreach($response->response->projects as $project)
 			{
-				$this->data['projects'][] = array('project_name' => $project->name, 'project_uri' => site_url('project/' . $project->identifier));
+				$this->data['projects'][] = array('project_name' => $project->name, 'project_uri' => site_url('project/' . $project->_id));
 			}
 
 			$this->parser->parse('includes/header', $this->data);
@@ -29,7 +29,7 @@ class Projects extends CI_Controller {
 		}
 		else
 		{
-		
+
 			// This user has no projects. Show them this fact!
 			$this->parser->parse('includes/header', $this->data);
 			$this->parser->parse('projects/first', $this->data);
@@ -70,7 +70,10 @@ class Projects extends CI_Controller {
 
 	function create()
 	{
-		print_r($this->Orbital->post_authed('projects/create', array('name' => $this->input->post($name))));
+		if ($response = $this->orbital->create_project($this->input->post('name'), $this->input->post('abstract')))
+		{
+			redirect('project/' . $response->response->project_id);
+		}
 	}
 }
 

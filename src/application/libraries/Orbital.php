@@ -249,7 +249,7 @@ class Orbital {
 		}
 
 	}
-	
+
 	private function post_authed($target, $post_fields)
 	{
 
@@ -262,17 +262,17 @@ class Orbital {
 				if (ENVIRONMENT === 'development') { curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); }
 				curl_setopt($ch,CURLOPT_HTTPHEADER,array('Authorization: Bearer ' . base64_encode($this->_ci->session->userdata('access_token'))));
 				curl_setopt($ch, CURLOPT_POST, TRUE);
-				
-				$postfields = '';
-				
+
+				$postfields = array();
+
 				foreach ($post_fields as $fieldname => $fieldvalue)
 				{
-					$postfields .= $fieldname . '=' . urlencode($fieldvalue);
+					$postfields[] .= $fieldname . '=' . urlencode($fieldvalue);
 				}
 
-				curl_setopt($ch, CURLOPT_POSTFIELDS, implode('&', $postfields);
-		
-		
+				curl_setopt($ch, CURLOPT_POSTFIELDS, implode('&', $postfields));
+
+
 				if ($output = curl_exec($ch))
 				{
 					// Response OK, content all good!
@@ -476,6 +476,11 @@ class Orbital {
 	public function project_details($project)
 	{
 		return $this->get_authed('project/' .$project);
+	}
+	
+		public function create_project($name, $abstract)
+	{
+		return $this->post_authed('projects/create', array('name' => $name, 'abstract' => $abstract));
 	}
 }
 
