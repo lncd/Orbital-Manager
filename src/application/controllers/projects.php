@@ -42,29 +42,42 @@ class Projects extends CI_Controller {
 		if ($response = $this->orbital->project_details($identifier))
 		{
 			$this->load->library('typography');
-			$this->data['project_id'] = $response->response->project->identifier;
-
+			$this->data['project_id'] = $response->response->project->_id;
 			$this->data['page_title'] = $response->response->project->name;
 			$this->data['project_name'] = $response->response->project->name;
-			$this->data['project_startdate'] = $response->response->project->start_date;
-			$this->data['project_enddate'] = $response->response->project->end_date;
-			$this->data['project_startdate_pretty'] = date('D jS F Y', $response->response->project->start_date);
-			$this->data['project_enddate_pretty'] = date('D jS F Y', $response->response->project->end_date);
+
+			if (isset($response->response->project->start_date) && isset($response->response->project->end_date))
+			{
+				//Check for both start and end dates - if not present dont show project progress
+			}
+
+			if (isset($response->response->project->start_date))
+			{
+				$this->data['project_startdate'] = $response->response->project->start_date;
+				$this->data['project_startdate_pretty'] = date('D jS F Y', $response->response->project->start_date);
+			}
+			if (isset($response->response->project->end_date))
+			{
+				$this->data['project_enddate'] = $response->response->project->end_date;
+				$this->data['project_enddate_pretty'] = date('D jS F Y', $response->response->project->end_date);
+			}
 			$this->data['project_description'] = $this->typography->auto_typography($response->response->project->abstract);
 
 			try
 			{
-				$this->data['project_complete'] = abs(((time() - $response->response->project->start_date) / ($response->response->project->end_date - $response->response->project->start_date)) * 100);
+				if ($response->response->project->end_date > $response->response->project->start_date)
+				{
+					$this->data['project_complete'] = abs(((time() - $response->response->project->start_date) / ($response->response->project->end_date - $response->response->project->start_date)) * 100);
+				}
 			}
 			catch (Exception $e)
 			{
-				print_f('There was a problem calculating project progress');
+				print_r('There was a problem calculating project progress');
 			}
 
 			$this->parser->parse('includes/header', $this->data);
 			$this->parser->parse('projects/view', $this->data);
 			$this->parser->parse('includes/footer', $this->data);
-
 		}
 	}
 
