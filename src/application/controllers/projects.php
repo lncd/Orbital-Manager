@@ -18,22 +18,27 @@ class Projects extends CI_Controller {
 
 		if ($response = $this->orbital->projects_list())
 		{
-			foreach($response->response->projects as $project)
+		
+			if (count($response->response->projects) > 0)
 			{
-				$this->data['projects'][] = array('project_name' => $project->name, 'project_uri' => site_url('project/' . $project->_id));
+		
+				foreach($response->response->projects as $project)
+				{
+					$this->data['projects'][] = array('project_name' => $project->name, 'project_uri' => site_url('project/' . $project->_id));
+				}
+	
+				$this->parser->parse('includes/header', $this->data);
+				$this->parser->parse('projects/list', $this->data);
+				$this->parser->parse('includes/footer', $this->data);
 			}
-
-			$this->parser->parse('includes/header', $this->data);
-			$this->parser->parse('projects/list', $this->data);
-			$this->parser->parse('includes/footer', $this->data);
-		}
-		else
-		{
-
-			// This user has no projects. Show them this fact!
-			$this->parser->parse('includes/header', $this->data);
-			$this->parser->parse('projects/first', $this->data);
-			$this->parser->parse('includes/footer', $this->data);
+			else
+			{
+	
+				// This user has no projects. Show them this fact!
+				$this->parser->parse('includes/header', $this->data);
+				$this->parser->parse('projects/first', $this->data);
+				$this->parser->parse('includes/footer', $this->data);
+			}
 		}
 	}
 
