@@ -170,7 +170,22 @@ class Orbital {
 				{
 					// Response OK, content all good!
 					curl_close($ch);
-					return json_decode($output);
+					if($return = json_decode($output))
+					{
+						return $return;
+					}
+					else
+					{
+						$this->data['page_title'] = 'Parsing Error';
+						$this->data['error_title'] = 'Invalid Response';
+						$this->data['error_text'] = 'Orbitla Core has not returned a valid reponse.';
+						$this->data['error_technical'] = 'invalid_reponse: Orbital returned an invalid response.';
+						// Refresh failed. Abort.
+						$this->_ci->parser->parse('includes/header', $this->data);
+						$this->_ci->parser->parse('static/error', $this->data);
+						$this->_ci->parser->parse('includes/footer', $this->data);
+						return FALSE;
+					}
 				}
 				else
 				{
@@ -238,6 +253,15 @@ class Orbital {
 			}
 			catch (Exception $e)
 			{
+				$this->data['page_title'] = 'Unknown Error';
+				$this->data['error_title'] = 'Unknown Error';
+				$this->data['error_text'] = 'Something has gone wrong.';
+				$this->data['error_technical'] = $e->getMessage();
+				// Load error view with own message.
+				$this->_ci->parser->parse('includes/header', $this->data);
+				$this->_ci->parser->parse('static/error', $this->data);
+				$this->_ci->parser->parse('includes/footer', $this->data);
+				
 				return FALSE;
 			}
 
@@ -277,7 +301,22 @@ class Orbital {
 				{
 					// Response OK, content all good!
 					curl_close($ch);
-					return json_decode($output);
+					if($return = json_decode($output))
+					{
+						return $return;
+					}
+					else
+					{
+						$this->data['page_title'] = 'Parsing Error';
+						$this->data['error_title'] = 'Invalid Response';
+						$this->data['error_text'] = 'Orbitla Core has not returned a valid reponse.';
+						$this->data['error_technical'] = 'invalid_reponse: Orbital returned an invalid response.';
+						// Refresh failed. Abort.
+						$this->_ci->parser->parse('includes/header', $this->data);
+						$this->_ci->parser->parse('static/error', $this->data);
+						$this->_ci->parser->parse('includes/footer', $this->data);
+						return FALSE;
+					}
 				}
 				else
 				{
@@ -345,6 +384,15 @@ class Orbital {
 			}
 			catch (Exception $e)
 			{
+				$this->data['page_title'] = 'Unknown Error';
+				$this->data['error_title'] = 'Unknown Error';
+				$this->data['error_text'] = 'Something has gone wrong.';
+				$this->data['error_technical'] = $e->getMessage();
+				// Load error view with own message.
+				$this->_ci->parser->parse('includes/header', $this->data);
+				$this->_ci->parser->parse('static/error', $this->data);
+				$this->_ci->parser->parse('includes/footer', $this->data);
+				
 				return FALSE;
 			}
 
@@ -378,7 +426,16 @@ class Orbital {
 		}
 		catch (Exception $e)
 		{
-			return FALSE;
+				$this->data['page_title'] = 'Unknown Error';
+				$this->data['error_title'] = 'Unknown Error';
+				$this->data['error_text'] = 'Something has gone wrong.';
+				$this->data['error_technical'] = $e->getMessage();
+				// Load error view with own message.
+				$this->_ci->parser->parse('includes/header', $this->data);
+				$this->_ci->parser->parse('static/error', $this->data);
+				$this->_ci->parser->parse('includes/footer', $this->data);
+				
+				return FALSE;
 		}
 
 	}
