@@ -44,6 +44,7 @@ $route['404_override'] = '';
 $route['about'] = 'static_content/about';
 $route['contact'] = 'static_content/contact';
 $route['signout'] = 'signin/signout';
+$route['project/(:any)'] = "projects/view/$1";
 
 
 // End of file routes.php

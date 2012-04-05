@@ -21,7 +21,8 @@ class Signin extends CI_Controller {
 		'administration',
 		'archivefiles_read',
 		'archivefiles_write',
-		'projects'
+		'projects',
+		'create_projects'
 	);
 
 	/**
