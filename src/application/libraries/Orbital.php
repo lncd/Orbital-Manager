@@ -179,7 +179,7 @@ class Orbital {
 						$this->data['page_title'] = 'Parsing Error';
 						$this->data['error_title'] = 'Invalid Response';
 						$this->data['error_text'] = 'Orbitla Core has not returned a valid reponse.';
-						$this->data['error_technical'] = 'invalid_reponse: Orbital returned an invalid response.';
+						$this->data['error_technical'] = 'invalid_reponse: Orbital returned an invalid response.<br>' . $return;
 						// Refresh failed. Abort.
 						$this->_ci->parser->parse('includes/header', $this->data);
 						$this->_ci->parser->parse('static/error', $this->data);
@@ -310,7 +310,7 @@ class Orbital {
 						$this->data['page_title'] = 'Parsing Error';
 						$this->data['error_title'] = 'Invalid Response';
 						$this->data['error_text'] = 'Orbitla Core has not returned a valid reponse.';
-						$this->data['error_technical'] = 'invalid_reponse: Orbital returned an invalid response.';
+						$this->data['error_technical'] = 'invalid_reponse: Orbital returned an invalid response.<br>' . $return;
 						// Refresh failed. Abort.
 						$this->_ci->parser->parse('includes/header', $this->data);
 						$this->_ci->parser->parse('static/error', $this->data);
@@ -426,16 +426,15 @@ class Orbital {
 		}
 		catch (Exception $e)
 		{
-				$this->data['page_title'] = 'Unknown Error';
-				$this->data['error_title'] = 'Unknown Error';
-				$this->data['error_text'] = 'Something has gone wrong.';
-				$this->data['error_technical'] = $e->getMessage();
-				// Load error view with own message.
-				$this->_ci->parser->parse('includes/header', $this->data);
-				$this->_ci->parser->parse('static/error', $this->data);
-				$this->_ci->parser->parse('includes/footer', $this->data);
-				
-				return FALSE;
+			$this->data['page_title'] = 'Parsing Error';
+			$this->data['error_title'] = 'Invalid Response';
+			$this->data['error_text'] = 'Orbitla Core has not returned a valid reponse.';
+			$this->data['error_technical'] = 'invalid_reponse: Orbital returned an invalid response.<br>' . $return;
+			// Refresh failed. Abort.
+			$this->_ci->parser->parse('includes/header', $this->data);
+			$this->_ci->parser->parse('static/error', $this->data);
+			$this->_ci->parser->parse('includes/footer', $this->data);
+			return FALSE;
 		}
 
 	}
