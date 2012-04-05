@@ -179,7 +179,7 @@ class Orbital {
 						$this->data['page_title'] = 'Parsing Error';
 						$this->data['error_title'] = 'Invalid Response';
 						$this->data['error_text'] = 'Orbitla Core has not returned a valid reponse.';
-						$this->data['error_technical'] = 'invalid_reponse: Orbital returned an invalid response.<br>' . $return;
+						$this->data['error_technical'] = 'invalid_reponse: Orbital returned an invalid response.<br>' . $output;
 						// Refresh failed. Abort.
 						$this->_ci->parser->parse('includes/header', $this->data);
 						$this->_ci->parser->parse('static/error', $this->data);
@@ -310,7 +310,7 @@ class Orbital {
 						$this->data['page_title'] = 'Parsing Error';
 						$this->data['error_title'] = 'Invalid Response';
 						$this->data['error_text'] = 'Orbitla Core has not returned a valid reponse.';
-						$this->data['error_technical'] = 'invalid_reponse: Orbital returned an invalid response.<br>' . $return;
+						$this->data['error_technical'] = 'invalid_reponse: Orbital returned an invalid response.<br>' . $output;
 						// Refresh failed. Abort.
 						$this->_ci->parser->parse('includes/header', $this->data);
 						$this->_ci->parser->parse('static/error', $this->data);
@@ -429,7 +429,7 @@ class Orbital {
 			$this->data['page_title'] = 'Parsing Error';
 			$this->data['error_title'] = 'Invalid Response';
 			$this->data['error_text'] = 'Orbitla Core has not returned a valid reponse.';
-			$this->data['error_technical'] = 'invalid_reponse: Orbital returned an invalid response.<br>' . $return;
+			$this->data['error_technical'] = 'invalid_reponse: Orbital returned an invalid response.';
 			// Refresh failed. Abort.
 			$this->_ci->parser->parse('includes/header', $this->data);
 			$this->_ci->parser->parse('static/error', $this->data);
