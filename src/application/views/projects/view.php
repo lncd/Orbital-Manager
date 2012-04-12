@@ -19,6 +19,14 @@
 		<a class="btn" href="{uri}">{title}</a>
 		{/project_controls}
 		
+		
+		<?php
+		
+		if (isset ($project_startdate) AND isset($project_enddate))
+		{
+		
+		?>
+		
 		<div class = "well">
 			<h2>Project Progress</h2>
 			<div class="progress">
@@ -26,6 +34,7 @@
   				</div>
   			</div>
 			<div class = "container-fluid">
+			
 				<div class = "row-fluid">
 					<div class = "span6"><b>Project Start</b><br>{project_startdate_pretty}
 					</div>
@@ -34,6 +43,8 @@
 				</div>
 			</div>
 		</div>
+		
+		<?php } ?>
 	</div>
 </div>
 
