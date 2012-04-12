@@ -18,22 +18,22 @@ class Projects extends CI_Controller {
 
 		if ($response = $this->orbital->projects_list())
 		{
-		
+
 			if (count($response->response->projects) > 0)
 			{
-		
+
 				foreach($response->response->projects as $project)
 				{
 					$this->data['projects'][] = array('project_name' => $project->name, 'project_uri' => site_url('project/' . $project->_id));
 				}
-	
+
 				$this->parser->parse('includes/header', $this->data);
 				$this->parser->parse('projects/list', $this->data);
 				$this->parser->parse('includes/footer', $this->data);
 			}
 			else
 			{
-	
+
 				// This user has no projects. Show them this fact!
 				$this->parser->parse('includes/header', $this->data);
 				$this->parser->parse('projects/first', $this->data);
@@ -102,6 +102,7 @@ class Projects extends CI_Controller {
 			$this->data['project_id'] = $response->response->project->_id;
 			$this->data['page_title'] = 'Edit ' . $response->response->project->name;
 			$this->data['project_name'] = $response->response->project->name;
+			$this->data['project_abstract'] = $response->response->project->abstract;
 
 			if (in_array('write', $response->response->permissions))
 			{
@@ -115,7 +116,7 @@ class Projects extends CI_Controller {
 			{
 				//Set array of permissions for user
 				$user_permissions = array();
-				
+
 				//Gert permissions and set as true or false
 				$user_permissions['permission_read'] = FALSE;
 				if (in_array('read', $permissions))
@@ -177,6 +178,14 @@ class Projects extends CI_Controller {
 	function create()
 	{
 		if ($response = $this->orbital->create_project($this->input->post('name'), $this->input->post('abstract')))
+		{
+			redirect('project/' . $response->response->project_id);
+		}
+	}
+
+	function update()
+	{
+		if ($response = $this->orbital->update_project($this->input->post('identifier'), $this->input->post('name'), $this->input->post('abstract')))
 		{
 			redirect('project/' . $response->response->project_id);
 		}
