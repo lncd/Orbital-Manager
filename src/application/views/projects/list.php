@@ -33,9 +33,9 @@
 			<h2>Create A Project</h2>
 			<form method="post" action="{base_url}projects/create">
 				<label for="project_name">Project Name</label>
-				<input type="text" id="project_name" name="name" placeholder="My Research Project">
+				<input type="text" id="project_name" name="name" placeholder="My Research Project" required>
 				<label for="project_abstract">Project Description</label>
-				<textarea id="project_abstract" name="abstract" rows="4" placeholder="This is a project which…"></textarea>
+				<textarea id="project_abstract" name="abstract" rows="4" placeholder="This is a project which…" required></textarea>
 				<button type="submit" class="btn btn-success">Create Project</button>
 			</form>
 

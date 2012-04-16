@@ -58,3 +58,16 @@
 		</div>
 		
 		<div class="container-fluid">
+		<?php 
+		if ($this->session->flashdata('message'))
+		{
+			echo '<div class="alert'; 
+			
+			if($this->session->flashdata('message_type'))
+			{
+				echo ' alert-' . $this->session->flashdata('message_type');
+			}
+			
+			echo '"><a class="close" data-dismiss="alert">×</a>' . $this->session->flashdata('message') . '</div>';
+		}
+		?>

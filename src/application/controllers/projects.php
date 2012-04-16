@@ -186,9 +186,18 @@ class Projects extends CI_Controller {
 
 	function create()
 	{
-		if ($response = $this->orbital->create_project($this->input->post('name'), $this->input->post('abstract')))
+		if($this->input->post('name') AND $this->input->post('name') !== '')
 		{
-			redirect('project/' . $response->response->project_id);
+			if ($response = $this->orbital->create_project($this->input->post('name'), $this->input->post('abstract')))
+			{
+				redirect('project/' . $response->response->project_id);
+			}
+		}
+		else
+		{
+			$this->session->set_flashdata('message', 'A project must have a name');
+			$this->session->set_flashdata('message_type', 'alert');
+			redirect('projects');
 		}
 	}	
 	
