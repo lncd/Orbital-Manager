@@ -288,6 +288,12 @@ class Projects extends CI_Controller {
 			$this->parser->parse('projects/delete', $this->data);
 			$this->parser->parse('includes/footer', $this->data);
 		}
+		else
+		{
+			$this->session->set_flashdata('message', $response->response->project->name . ' could not be deleted');
+			$this->session->set_flashdata('message_type', 'alert-error');
+			redirect('project/' . $identifier);
+		}
 	}
 }
 
