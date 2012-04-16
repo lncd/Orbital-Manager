@@ -24,7 +24,22 @@ class Projects extends CI_Controller {
 
 				foreach($response->response->projects as $project)
 				{
-					$this->data['projects'][] = array('project_name' => $project->name, 'project_uri' => site_url('project/' . $project->identifier));
+					$output = array('project_name' => $project->name,
+						'project_uri' => site_url('project/' . $project->identifier),
+					);
+					
+					if (isset($project->start_date))
+					{
+						$output['project_startdate'] = date('D jS F Y', $project->start_date);
+					}
+
+					if (isset($project->end_date))
+					{
+						$output['project_enddate'] = date('D jS F Y', $project->end_date);
+					}
+					$this->data['projects'][] = $output;
+
+
 				}
 
 				$this->parser->parse('includes/header', $this->data);
@@ -59,7 +74,7 @@ class Projects extends CI_Controller {
 					'title' => 'Edit'
 				);
 			}
-			
+
 			//Check for Delete permissions
 			if (in_array('delete', $response->response->permissions))
 			{
@@ -186,7 +201,7 @@ class Projects extends CI_Controller {
 
 	function create()
 	{
-		if($this->input->post('name') AND $this->input->post('name') !== '')
+		if($this->input->post('name') and $this->input->post('name') !== '')
 		{
 			if ($response = $this->orbital->create_project($this->input->post('name'), $this->input->post('abstract')))
 			{
@@ -199,8 +214,8 @@ class Projects extends CI_Controller {
 			$this->session->set_flashdata('message_type', 'alert');
 			redirect('projects');
 		}
-	}	
-	
+	}
+
 	function delete($identifier)
 	{
 		if ($response = $this->orbital->project_details($identifier))
@@ -209,7 +224,7 @@ class Projects extends CI_Controller {
 			{
 				$this->orbital->delete_project($identifier);
 				$this->session->set_flashdata('message', 'Project deleted successfully.');
-					$this->session->set_flashdata('message_type', 'success');
+				$this->session->set_flashdata('message_type', 'success');
 				redirect('projects/');
 			}
 

@@ -34,13 +34,11 @@
   				<div class="bar" style="width: {project_complete}%;">
   				</div>
   			</div>
-			<div class="container">
-				<div class = "row">
-					<div class = "span6"><b>Project Start</b><br>{project_startdate_pretty}
-					</div>
-					<div class = "span6" style = "text-align:right"><b>Project End</b><br>{project_enddate_pretty}
-					</div>
-				</div>
+  			<div class = "pull-left"><b>Project Start</b><br>{project_startdate_pretty}
+			</div>
+			<div class = "pull-right"><b>Project End</b><br>{project_enddate_pretty}
+			</div>
+			<div style = clear:both>
 			</div>
 		</div>
 		

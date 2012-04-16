@@ -19,11 +19,11 @@
 	<div class="span8">
 		<table class="table table-striped table-bordered">
 			<thead>
-				<tr><th>Name</th></tr>
+				<tr><th>Name</th><th>Start</th><th>End</th></tr>
 			</thead>
 			<tbody>
 				{projects}
-				<tr><td><a href = "{project_uri}">{project_name}</a></td></tr>
+				<tr><td><a href = "{project_uri}">{project_name}</a> <th>{project_startdate}</th><th>{project_enddate}</th></td></tr>
 				{/projects}
 			</tbody>
 		</table>
