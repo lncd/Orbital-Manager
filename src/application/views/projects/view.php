@@ -62,6 +62,24 @@
 	<div class="span4">
 		<div class="well">
 			<h2>File Archives</h2>
+			
+			<?php
+			
+			$this->load->helper('number');
+			
+			$archives_available = 26843545600;
+			$archives_used = 23833543500;
+			
+			$archive_percentage = ceil(($archives_used / $archives_available) * 100);
+			
+			?>
+			
+			<div class="progress">
+			  <div class="bar"
+			       style="width: <?php echo $archive_percentage; ?>%;"></div>
+			</div>
+			
+			<p>You have used <?php echo byte_format($archives_used); ?> of <?php echo byte_format($archives_available); ?>.</p>
 		</div>
 	</div>
 </div>
