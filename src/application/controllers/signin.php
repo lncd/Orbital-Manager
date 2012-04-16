@@ -148,6 +148,9 @@ class Signin extends CI_Controller {
 							'system_admin' => $response->system_admin
 						));
 						
+						$this->session->set_flashdata('message', 'Signed in successfully. Welcome to Orbital!');
+						$this->session->set_flashdata('message_type', 'success');
+						
 						redirect();
 						
 					}
