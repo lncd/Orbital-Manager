@@ -17,7 +17,7 @@
 		
 		{project_description}
 		{project_controls}
-		<a class="btn" href="{uri}">{title}</a>
+		<a class="btn btn-small" href="{uri}">{title}</a>
 		{/project_controls}
 		
 		
@@ -34,7 +34,7 @@
   				<div class="bar" style="width: {project_complete}%;">
   				</div>
   			</div>
-			<divclass="container">
+			<div class="container">
 				<div class = "row">
 					<div class = "span6"><b>Project Start</b><br>{project_startdate_pretty}
 					</div>
