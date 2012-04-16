@@ -25,18 +25,19 @@
 	<div class="span6">
 		<div class="well">
 			<h2>Project Details</h2>
-			<form method="post" action="{base_url}projects/create">
+			<form method="post" action="{base_url}project/{project_id}/edit">
 				<label for="project_name">Project Name</label>
 				<input type="text" id="project_name" name="name" value="{project_name}">
 				<label for="project_abstract">Project Description</label>
 				<textarea id="project_abstract" name="abstract" rows="4">{project_abstract}</textarea>
+				<button type="submit" class="btn btn-success">Save Details</button>
 			</form>
 		</div>
 	</div>
 	<div class="span6">
 		<div class="well">
 			<h2>Project Members</h2>
-				<form method="post" action="{base_url}projects/create">
+				<form method="post" action="{base_url}project/{project_id}/edit">
 					<label for="project_name">Members</label>
 					{project_users}
 					<tr><td>{user}<br>
@@ -52,4 +53,3 @@
 		</div>
 	</div>
 </div>
-<button type="submit" class="btn btn-success">Save Details</button>

@@ -14,6 +14,7 @@
 		</ul>
 
 		<h1>{project_name}</h1>
+		
 		{project_description}
 		{project_controls}
 		<a class="btn" href="{uri}">{title}</a>
