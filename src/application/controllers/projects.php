@@ -208,6 +208,8 @@ class Projects extends CI_Controller {
 			if($this->input->post('delete'))
 			{
 				$this->orbital->delete_project($identifier);
+				$this->session->set_flashdata('message', 'Project deleted successfully.');
+					$this->session->set_flashdata('message_type', 'success');
 				redirect('projects/');
 			}
 
