@@ -1,4 +1,4 @@
-<div class="row-fluid">
+<div class="row">
 	<div class="span12">
 	
 		<ul class="breadcrumb">
@@ -18,7 +18,7 @@
 	</div>
 </div>
 
-<div class="row-fluid">
+<div class="row">
 	<div class="span8">
 	
 		<h2>Current Connection</h2>

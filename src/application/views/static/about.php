@@ -1,4 +1,4 @@
-<div class="row-fluid">
+<div class="row">
 	<div class="span12">
 	
 		<ul class="breadcrumb">
@@ -19,7 +19,7 @@
   <p>Find out what it's got to offer.</p>
 </div>
 
-<div class="row-fluid">
+<div class="row">
 	<div class="span4">
 		
 		<h2>With you all the way.</h2>
@@ -45,7 +45,7 @@
 
 <hr>
 
-<div class="row-fluid">
+<div class="row">
 	<div class="span4">
 		
 		<h2>Data safety done right.</h2>
@@ -71,7 +71,7 @@
 
 <hr>
 
-<div class="row-fluid">
+<div class="row">
 	<div class="span12">
 		
 		<h2>Ready to go?</h2>

@@ -1,4 +1,4 @@
-<div class="row-fluid">
+<div class="row">
 	<div class="span8">
 	
 		<h1>Sign In</h1>

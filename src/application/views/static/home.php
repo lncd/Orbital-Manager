@@ -4,7 +4,7 @@
   <p><a href="{base_url}about" class="btn btn-primary btn-large">Find Out More &raquo;</a></p>
 </div>
 
-<div class="row-fluid">
+<div class="row">
   <div class="span6">
     <h2>Sign In</h2>
     <p>Dive right in to {orbital_manager_name} and start managing your projects and data.</p>

@@ -1,4 +1,4 @@
-<div class="row-fluid">
+<div class="row">
 	<div class="span12">
 
 		<ul class="breadcrumb">
@@ -34,9 +34,8 @@
   				<div class="bar" style="width: {project_complete}%;">
   				</div>
   			</div>
-			<div class = "container-fluid">
-			
-				<div class = "row-fluid">
+			<divclass="container">
+				<div class = "row">
 					<div class = "span6"><b>Project Start</b><br>{project_startdate_pretty}
 					</div>
 					<div class = "span6" style = "text-align:right"><b>Project End</b><br>{project_enddate_pretty}
@@ -49,7 +48,7 @@
 	</div>
 </div>
 
-<div class="row-fluid">
+<div class="row">
 	<div class="span4">
 		<div class="well">
 			<h2>Workspace</h2>
