@@ -781,10 +781,10 @@ class Orbital {
 		}
 	}
 	
-	public function projects_public_list()
+	public function projects_public_list($limit = 20)
 	{
 
-		return $this->get_unauthed('projects/public');
+		return $this->get_unauthed('projects/public?limit=' . $limit);
 	}
 
 	public function project_details($project)

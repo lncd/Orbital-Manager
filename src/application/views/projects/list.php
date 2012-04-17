@@ -44,6 +44,16 @@
 		</div>
 		<div class="well">
 			<h2>Public Projects</h2>
+			
+			<ul class="nav nav-pills nav-stacked">
+				
+				{public_projects}
+				<li>
+					<a href = "{project_uri}/public"><i class="icon-chevron-right"></i>{project_name}</a>
+					</a>
+				</li>
+				{/public_projects}
+			</ul>
 			<a class="btn" href="{base_url}projects/public">View All &raquo;</a>
 		</div>
 	</div>

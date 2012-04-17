@@ -43,13 +43,14 @@
 					<label for="project_name">Members</label>
 					{project_users}
 					<tr><td>{user}<br>
-					<input type="checkbox" name="Read" value="read" checked="{permission_read}">Read<br>
-					<input type="checkbox" name="write" value="write" checked="{permission_write}">Write<br>
-					<input type="checkbox" name="delete" value="delete" checked="{permission_delete}">Delete<br>
-					<input type="checkbox" name="archivefiles_write" value="archivefiles_write" checked="{permission_archivefiles_write}">Archive Files Write<br>
-					<input type="checkbox" name="archivefiles_read" value="archivefiles_read" checked="{permission_archivefiles_write}">Archive Files Read<br>
-					<input type="checkbox" name="sharedworkspace_read" value="sharedworkspace_read" checked="{permission_sharedworkspace_read}">Shared Workspace Read<br>
-					<input type="checkbox" name="dataset_create" value="dataset_create" checked="{permission_dataset_create}">Dataset Create<br></td></tr>
+					<input type="checkbox" name="permission[{user_email}][read]" value="read" checked="{permission_read}">Read<br>
+					<input type="checkbox" name="permission[{user_email}][write]" value="write" checked="{permission_write}">Write<br>
+					<input type="checkbox" name="permission[{user_email}][delete]" value="delete" checked="{permission_delete}">Delete<br>
+					<input type="checkbox" name="permission[{user_email}][archivefiles_write]" value="archivefiles_write" checked="{permission_archivefiles_write}">Archive Files Write<br>
+					<input type="checkbox" name="permission[{user_email}][archivefiles_read]" value="archivefiles_read" checked="{permission_archivefiles_write}">Archive Files Read<br>
+					<input type="checkbox" name="permission[{user_email}][sharedworkspace_read]" value="sharedworkspace_read" checked="{permission_sharedworkspace_read}">Shared Workspace Read<br>
+					<input type="checkbox" name="permission[{user_email}][dataset_create]" value="dataset_create" checked="{permission_dataset_create}">Dataset Create<br></td></tr>
+					<button type="submit" name = "save_members_details" value = "save_members_details" class="btn btn-success">Save Members Details</button>
 					{/project_users}
 				</form>
 		</div>

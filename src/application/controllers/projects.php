@@ -27,7 +27,7 @@ class Projects extends CI_Controller {
 					$output = array('project_name' => $project->name,
 						'project_uri' => site_url('project/' . $project->identifier),
 					);
-					
+
 					if (isset($project->start_date))
 					{
 						$output['project_startdate'] = date('D jS F Y', $project->start_date);
@@ -38,8 +38,34 @@ class Projects extends CI_Controller {
 						$output['project_enddate'] = date('D jS F Y', $project->end_date);
 					}
 					$this->data['projects'][] = $output;
+				}
+				
+				if ($response = $this->orbital->projects_public_list(5))
+				{
+
+					if (count($response->response->projects) > 0)
+					{
+
+						foreach($response->response->projects as $project)
+						{
+							$output = array('project_name' => $project->name,
+								'project_uri' => site_url('project/' . $project->identifier),
+							);
+
+							if (isset($project->start_date))
+							{
+								$output['project_startdate'] = date('D jS F Y', $project->start_date);
+							}
+
+							if (isset($project->end_date))
+							{
+								$output['project_enddate'] = date('D jS F Y', $project->end_date);
+							}
+							$this->data['public_projects'][] = $output;
 
 
+						}
+					}
 				}
 
 				$this->parser->parse('includes/header', $this->data);
@@ -56,7 +82,7 @@ class Projects extends CI_Controller {
 			}
 		}
 	}
-	
+
 	function list_public()
 	{
 		$this->data['page_title'] = 'Public projects';
@@ -70,9 +96,9 @@ class Projects extends CI_Controller {
 				foreach($response->response->projects as $project)
 				{
 					$output = array('project_name' => $project->name,
-						'project_uri' => site_url('project/' . $project->identifier),
+						'project_uri' => site_url('project/' . $project->identifier)
 					);
-					
+
 					if (isset($project->start_date))
 					{
 						$output['project_startdate'] = date('D jS F Y', $project->start_date);
@@ -82,6 +108,12 @@ class Projects extends CI_Controller {
 					{
 						$output['project_enddate'] = date('D jS F Y', $project->end_date);
 					}
+					$output['research_group'] = '';
+					if(isset($project->research_group))
+					{
+						$output['research_group'] = $project->research_group;
+					}
+					
 					$this->data['projects'][] = $output;
 
 
@@ -179,6 +211,20 @@ class Projects extends CI_Controller {
 				$this->orbital->update_project($identifier, $this->input->post('name'), $this->input->post('abstract'));
 				$response = $this->orbital->project_details($identifier);
 			}
+			
+			if($this->input->post('save_members_details'))
+			{/*
+				$this->orbital->update_project_members($identifier,
+				$this->input->post('read'),
+				$this->input->post('write'),
+				$this->input->post('delete'),
+				$this->input->post('archivefiles_read'),
+				$this->input->post('archivefiles_write'),
+				$this->input->post('sharedworkspace_read'),
+				$this->input->post('dataset_create'));
+				$response = $this->orbital->project_details($identifier);*/
+				print_r($this->input->post());
+			}
 
 			$this->load->library('typography');
 			$this->data['project_id'] = $response->response->project->identifier;
@@ -236,7 +282,7 @@ class Projects extends CI_Controller {
 					$user_permissions['permission_dataset_create'] = TRUE;
 				}
 
-				$this->data['project_users'][] = array('user' => $user, 'permissions' => $user_permissions);
+				$this->data['project_users'][] = array('user' => $user, 'permissions' => $user_permissions, 'user_email' => base64_encode($user));
 			}
 
 			if (isset($response->response->project->start_date))
