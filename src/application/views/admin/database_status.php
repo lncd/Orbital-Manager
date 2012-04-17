@@ -13,7 +13,9 @@
 			</li>
 		</ul>
 	
-		<h1>Database Status</h1>
+		<div class="page-header">
+			<h1>Database Status</h1>
+		</div>
 		
 	</div>
 </div>

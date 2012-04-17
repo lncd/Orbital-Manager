@@ -10,7 +10,9 @@
 			</li>
 		</ul>
 	
-		<h1>Contact Us</h1>
+		<div class="page-header">
+			<h1>Contact Us</h1>
+		</div>
 		
 	</div>
 </div>

@@ -10,7 +10,9 @@
 			</li>
 		</ul>
 	
-		<h1>System Administration</h1>
+		<div class="page-header">
+			<h1>System Administration</h1>
+		</div>
 		
 		<p>As a system administrator, you can access the following restricted functions:</p>
 		

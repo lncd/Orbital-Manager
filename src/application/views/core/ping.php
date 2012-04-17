@@ -1,6 +1,8 @@
 <div class="row">
 	<div class="span12">
-		<h1>Core Ping</h1>
+		<div class="page-header">
+			<h1>Core Ping</h1>
+		</div>
 	</div>
 </div>
 <div class="row">

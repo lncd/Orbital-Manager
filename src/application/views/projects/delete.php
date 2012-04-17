@@ -16,18 +16,23 @@
 			</li>
 		</ul>
 		
-		
-		<h1>{project_name}</h1>
+		<div class="page-header">
+			<h1>{project_name} <small>Delete</small></h1>
+		</div>
 		
 		<?php
 		$this->load->helper('text');
 		echo word_limiter($project_description, 50);
 		?>
 		
+		<hr>
+		
 		<div class="alert alert-error">
   			<p><strong>Are you sure you want to delete this project?</strong></p>
+  			<p>Deleting this project will mean that you can no longer edit any of its details, and will remove any workspaces, unpublished datasets and private archived files.</p>
+  			<p>You <em>cannot</em> undo this action.</p>
   			<form method="post" action="{base_url}project/{project_id}/delete">
-				<button type="submit" name = "delete" value = "delete" class="btn btn-danger">Delete</button>
+				<button type="submit" name = "delete" value = "delete" class="btn btn-danger btn-large">Delete</button>
 				<a class="btn" href="{base_url}project/{project_id}">No</a>
 			</form>
 		</div>

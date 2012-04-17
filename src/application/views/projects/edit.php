@@ -16,7 +16,9 @@
 			</li>
 		</ul>
 
-		<h1>Edit: {project_name}</h1>
+		<div class="page-header">
+			<h1>{project_name} <small>Edit</small></h1>
+		</div>
 
 	</div>
 </div>

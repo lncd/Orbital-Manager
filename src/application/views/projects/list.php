@@ -10,7 +10,9 @@
 			</li>
 		</ul>
 	
-		<h1>My Projects</h1>
+		<div class="page-header">
+			<h1>My Projects</h1>
+		</div>
 
 	</div>
 </div>

@@ -10,7 +10,9 @@
 			</li>
 		</ul>
 	
-		<h1>My Projects</h1>
+		<div class="page-header">
+			<h1>My Projects</h1>
+		</div>
 		
 		<p>At the moment you don't have access to any projects in Orbital. Fortunately, we're here to help you get started as quickly as possible! Just use the simple form below and click the button, and we'll get you a shiny new project environment to play in.</p>
 		

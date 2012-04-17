@@ -150,6 +150,19 @@ class Projects extends CI_Controller {
 			{
 				$this->data['project_complete'] = abs(((time() - $response->response->project->start_date) / ($response->response->project->end_date - $response->response->project->start_date)) * 100);
 			}
+			
+			// Generate workspace modes
+			
+			$this->data['workspace_project'] = false;
+			$this->data['workspace_personal'] = false;
+			
+			// Generate list of datasets
+			
+			$this->data['working_datasets'] = array();
+			
+			// Generate list of archive files
+			
+			$this->data['archive_files'] = array();
 
 			$this->parser->parse('includes/header', $this->data);
 			$this->parser->parse('projects/view', $this->data);
