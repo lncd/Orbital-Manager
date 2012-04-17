@@ -56,6 +56,51 @@ class Projects extends CI_Controller {
 			}
 		}
 	}
+	
+	function list_public()
+	{
+		$this->data['page_title'] = 'Public projects';
+
+		if ($response = $this->orbital->projects_public_list())
+		{
+
+			if (count($response->response->projects) > 0)
+			{
+
+				foreach($response->response->projects as $project)
+				{
+					$output = array('project_name' => $project->name,
+						'project_uri' => site_url('project/' . $project->identifier),
+					);
+					
+					if (isset($project->start_date))
+					{
+						$output['project_startdate'] = date('D jS F Y', $project->start_date);
+					}
+
+					if (isset($project->end_date))
+					{
+						$output['project_enddate'] = date('D jS F Y', $project->end_date);
+					}
+					$this->data['projects'][] = $output;
+
+
+				}
+
+				$this->parser->parse('includes/header', $this->data);
+				$this->parser->parse('projects/public', $this->data);
+				$this->parser->parse('includes/footer', $this->data);
+			}
+			else
+			{
+
+				// This user has no projects. Show them this fact!
+				$this->parser->parse('includes/header', $this->data);
+				$this->parser->parse('projects/first', $this->data);
+				$this->parser->parse('includes/footer', $this->data);
+			}
+		}
+	}
 
 	function view($identifier)
 	{

@@ -23,7 +23,7 @@
 			</thead>
 			<tbody>
 				{projects}
-				<tr><td><a href = "{project_uri}">{project_name}</a> <th>{project_startdate}</th><th>{project_enddate}</th></td></tr>
+				<tr><td><a href = "{project_uri}">{project_name}</a> <th>{project_startdate}</th><th>{project_enddate}</td></tr>
 				{/projects}
 			</tbody>
 		</table>
@@ -39,6 +39,10 @@
 				<button type="submit" class="btn btn-success">Create Project</button>
 			</form>
 
+		</div>
+		<div class="well">
+			<h2>Public Projects</h2>
+			<a class="btn" href="{base_url}projects/public">View All &raquo;</a>
 		</div>
 	</div>
 </div>

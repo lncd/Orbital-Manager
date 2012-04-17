@@ -689,7 +689,6 @@ class Orbital {
 			$this->_ci->parser->parse('includes/footer', $this->data);
 			return FALSE;
 		}
-
 	}
 
 	/**
@@ -780,6 +779,12 @@ class Orbital {
 		{
 			return $this->get_authed('projects?user=' . urlencode($user));
 		}
+	}
+	
+	public function projects_public_list()
+	{
+
+		return $this->get_unauthed('projects/public');
 	}
 
 	public function project_details($project)
