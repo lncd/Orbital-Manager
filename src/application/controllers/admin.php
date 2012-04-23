@@ -35,7 +35,7 @@ class Admin extends CI_Controller {
 		}
 	}
 	
-	function database_status()
+	function mongo_status()
 	{
 	
 		if ($status_response = $this->orbital->core_server_status())
@@ -79,7 +79,7 @@ class Admin extends CI_Controller {
 			}
 			
 			$this->parser->parse('includes/header', $this->data);
-			$this->parser->parse('admin/database_status', $this->data);
+			$this->parser->parse('admin/mongo_status', $this->data);
 			$this->parser->parse('includes/footer', $this->data);
 		}
 	}

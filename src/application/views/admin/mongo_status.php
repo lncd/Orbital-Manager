@@ -9,12 +9,12 @@
 				<a href="{base_url}admin">Administration</a> <span class="divider">/</span>
 			</li>
 			<li class="active">
-				<a href="{base_url}admin/database_status">Database Status</a></span>
+				<a href="{base_url}admin/mongo_status">MongoDB Status</a></span>
 			</li>
 		</ul>
 	
 		<div class="page-header">
-			<h1>Database Status</h1>
+			<h1>MongoDB Status</h1>
 		</div>
 		
 	</div>
@@ -57,8 +57,8 @@
 	<div class="span4">
 		<div class="well">
 			<h2>What is this?</h2>
-			<p>This page gives an overview of the state of the Orbital Core database servers which {orbital_manager_name} communicates with.</p>
-			<p>This information may come in handy when diagnosing database problems. Please note this data does <i>not</i> relate to communications between {orbital_manager_name} and the Orbital Core instance.</p>
+			<p>This page gives an overview of the state of the MongoDB database servers which Orbital Core communicates with.</p>
+			<p>This information may come in handy when diagnosing problems with working datasets. Please note this data does <i>not</i> relate to communications between {orbital_manager_name} and the Orbital Core instance.</p>
 		</div>
 	</div>
 </div>

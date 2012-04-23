@@ -19,7 +19,9 @@
 		<ul class="nav nav-pills nav-stacked">
 				
 			<li>
-				<a href="{base_url}admin/database_status"><i class="icon-chevron-right"></i>Database Status</a>
+				<a href="{base_url}admin/licences"><i class="icon-cog"></i> Data Licences</a>
+				<a href="{base_url}admin/applications"><i class="icon-cog"></i> OAuth Applications</a>
+				<a href="{base_url}admin/mongo_status"><i class="icon-cog"></i> MongoDB Status</a>
 			</li>
 			
 		</ul>
