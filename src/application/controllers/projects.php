@@ -190,7 +190,7 @@ class Projects extends CI_Controller {
 			
 			// Generate list of datasets
 			
-			$this->data['working_datasets'] = array();
+			$this->data['working_datasets'] = array('foo');
 			
 			// Generate list of archive files
 			

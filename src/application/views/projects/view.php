@@ -94,6 +94,33 @@
 			if (count($working_datasets) > 0)
 			{
 			
+			?>
+			
+			<ul class="nav nav-list">
+				<li class="nav-header">
+					Published
+				</li>
+				<li>
+					<a href="#"><i class="icon-eye-open"></i> Something</a>
+				</li>
+				<li>
+					<a href="#"><i class="icon-eye-open"></i> Something Else</a>
+				</li>
+				<li class="nav-header">
+					Private
+				</li>
+				<li>
+					<a href="#"><i class="icon-eye-close"></i> Something Else</a>
+				</li>
+				<li>
+					<a href="#"><i class="icon-eye-close"></i> Something Else</a>
+				</li>
+			</ul>
+			
+			<hr>
+			
+			<?php
+			
 			}
 			else
 			{
