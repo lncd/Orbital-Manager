@@ -1,5 +1,17 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
+/**
+ * Archive Controller
+ *
+ * Controls the uploading of files to projects.
+ *
+ * @category   Controller
+ * @package    Orbital
+ * @subpackage Manager
+ * @author     Harry Newton <hnewton@lincoln.ac.uk>
+ * @link       https://github.com/lncd/Orbital-Manager
+*/
+
 class Archive extends CI_Controller {
 
 	private $data = array();
@@ -10,6 +22,12 @@ class Archive extends CI_Controller {
 
 		$this->data = $this->orbital->common_content();
 	}
+
+	/**
+	 * Upload file
+	 *
+	 * Uploads file to the archive.
+	 */
 
 	function upload($project_id)
 	{

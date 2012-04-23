@@ -11,6 +11,12 @@ class Me extends CI_Controller {
 		$this->data = $this->orbital->common_content();
 	}
 
+	/**
+	 * User details
+	 *
+	 * Retrieves current user details.
+	 */
+
 	function index()
 	{
 	

@@ -11,6 +11,12 @@ class Core extends CI_Controller {
 		$this->data = $this->orbital->common_content();
 	}
 
+	/**
+	 * Ping
+	 *
+	 * Pings Orbital core.
+	 */
+
 	function ping()
 	{
 	

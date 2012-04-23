@@ -4,12 +4,22 @@ class Projects extends CI_Controller {
 
 	private $data = array();
 
+	/**
+	 * Contruct
+	 */
+
 	function __construct()
 	{
 		parent::__construct();
 
 		$this->data = $this->orbital->common_content();
 	}
+
+	/**
+	 * Projects list
+	 *
+	 * Get array of projects and their details
+	 */
 
 	function index()
 	{
@@ -83,6 +93,12 @@ class Projects extends CI_Controller {
 		}
 	}
 
+	/**
+	 * Public Projects list
+	 *
+	 * Get array of public projects and their details
+	 */
+
 	function list_public()
 	{
 		$this->data['page_title'] = 'Public projects';
@@ -133,6 +149,12 @@ class Projects extends CI_Controller {
 			}
 		}
 	}
+
+	/**
+	 * Project view
+	 *
+	 * Gets details of a specific project
+	 */
 
 	function view($identifier)
 	{
@@ -201,6 +223,12 @@ class Projects extends CI_Controller {
 			$this->parser->parse('includes/footer', $this->data);
 		}
 	}
+
+	/**
+	 * Edit project
+	 *
+	 * Gets project details, users and their permissions
+	 */
 
 	function edit($identifier)
 	{
@@ -302,6 +330,12 @@ class Projects extends CI_Controller {
 			$this->parser->parse('includes/footer', $this->data);
 		}
 	}
+	
+	/**
+	 * Create project
+	 *
+	 * Creates a new project
+	 */
 
 	function create()
 	{
@@ -319,6 +353,12 @@ class Projects extends CI_Controller {
 			redirect('projects');
 		}
 	}
+
+	/**
+	 * Delete project
+	 *
+	 * Deletes a project
+	 */
 
 	function delete($identifier)
 	{
