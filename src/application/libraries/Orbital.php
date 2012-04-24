@@ -737,9 +737,22 @@ class Orbital {
 
 	public function core_server_status()
 	{
-
 		return $this->get_authed('core/mongo_server_status');
+	}
+	
+	/**
+	 * Licences: List
+	 *
+	 * Returns a list of all licences.
+	 *
+	 * @access public
+	 *
+	 * @return object|FALSE Object if successful, FALSE if not.
+	 */
 
+	public function licences_list()
+	{
+		return $this->get_authed('licences');
 	}
 
 	/**

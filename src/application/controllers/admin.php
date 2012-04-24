@@ -83,6 +83,26 @@ class Admin extends CI_Controller {
 			$this->parser->parse('includes/footer', $this->data);
 		}
 	}
+	
+	function licences()
+	{
+	
+		if ($licences_response = $this->orbital->licences_list())
+		{
+			
+			$this->data['page_title'] = 'Data Licences';
+			$this->data['licences'] = array();
+			
+			foreach ($licences_response->response->licences as $licence)
+			{
+				$this->data['licences'][] = $licence;
+			}
+			
+			$this->parser->parse('includes/header', $this->data);
+			$this->parser->parse('admin/licences', $this->data);
+			$this->parser->parse('includes/footer', $this->data);
+		}
+	}
 }
 
-// End of file core.php
+// End of file admin.php
