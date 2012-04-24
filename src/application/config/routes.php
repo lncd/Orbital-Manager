@@ -46,6 +46,7 @@ $route['contact'] = 'static_content/contact';
 $route['signout'] = 'signin/signout';
 $route['project/(:any)/edit'] = "projects/edit/$1";
 $route['project/(:any)/delete'] = "projects/delete/$1";
+$route['project/(:any)/public'] = "projects/view_public/$1";
 $route['project/(:any)'] = "projects/view/$1";
 $route['projects/public'] = 'projects/list_public';
 

@@ -38,14 +38,22 @@ class Projects extends CI_Controller {
 						'project_uri' => site_url('project/' . $project->identifier),
 					);
 
-					if (isset($project->start_date))
+					if ($project->start_date !== NULL)
 					{
-						$output['project_startdate'] = date('D jS F Y', $project->start_date);
+						$output['project_startdate'] = date('D jS F Y', strtotime($project->start_date));
+					}
+					else
+					{
+						$output['project_startdate'] = 'Unspecified';
 					}
 
-					if (isset($project->end_date))
+					if ($project->end_date !== NULL)
 					{
-						$output['project_enddate'] = date('D jS F Y', $project->end_date);
+						$output['project_enddate'] = date('D jS F Y', strtotime($project->end_date));
+					}
+					else
+					{
+						$output['project_enddate'] = 'Unspecified';
 					}
 					$this->data['projects'][] = $output;
 				}
@@ -115,20 +123,25 @@ class Projects extends CI_Controller {
 						'project_uri' => site_url('project/' . $project->identifier)
 					);
 
-					if (isset($project->start_date))
+					if ($project->start_date !== NULL)
 					{
-						$output['project_startdate'] = date('D jS F Y', $project->start_date);
+						$output['project_startdate'] = date('D jS F Y', strtotime($project->start_date));
+					}
+					else
+					{
+						$output['project_startdate'] = 'Unknown';
 					}
 
-					if (isset($project->end_date))
+					if ($project->end_date !== NULL)
 					{
-						$output['project_enddate'] = date('D jS F Y', $project->end_date);
+						$output['project_enddate'] = date('D jS F Y', strtotime($project->end_date));
 					}
-					$output['research_group'] = '';
-					if(isset($project->research_group))
+
+					if($project->research_group !== NULL)
 					{
 						$output['research_group'] = $project->research_group;
 					}
+
 					
 					$this->data['projects'][] = $output;
 
@@ -166,7 +179,7 @@ class Projects extends CI_Controller {
 			$this->data['project_name'] = $response->response->project->name;
 
 			//Check for Edit permissions
-			if (in_array('write', $response->response->permissions))
+			if ($response->response->permissions->write === TRUE)
 			{
 				$this->data['project_controls'][] = array(
 					'uri' => site_url('project/' . $response->response->project->identifier . '/edit'),
@@ -175,7 +188,7 @@ class Projects extends CI_Controller {
 			}
 
 			//Check for Delete permissions
-			if (in_array('delete', $response->response->permissions))
+			if ($response->response->permissions->delete === TRUE)
 			{
 				$this->data['project_controls'][] = array(
 					'uri' => site_url('project/' . $response->response->project->identifier . '/delete'),
@@ -188,16 +201,26 @@ class Projects extends CI_Controller {
 				//Check for both start and end dates - if not present dont show project progress
 			}
 
-			if (isset($response->response->project->start_date))
+			if ($response->response->project->start_date !== NULL)
 			{
 				$this->data['project_startdate'] = $response->response->project->start_date;
-				$this->data['project_startdate_pretty'] = date('D jS F Y', $response->response->project->start_date);
+				$this->data['project_startdate_pretty'] = date('D jS F Y', strtotime($response->response->project->start_date));
 			}
-			if (isset($response->response->project->end_date))
+			else
+			{
+				$this->data['project_startdate_pretty'] = 'Unspecified';
+			}
+			
+			if ($response->response->project->end_date !== NULL)
 			{
 				$this->data['project_enddate'] = $response->response->project->end_date;
-				$this->data['project_enddate_pretty'] = date('D jS F Y', $response->response->project->end_date);
+				$this->data['project_enddate_pretty'] = date('D jS F Y', strtotime($response->response->project->end_date));
 			}
+			else
+			{
+				$this->data['project_enddate_pretty'] = 'Unspecified';
+			}
+
 			$this->data['project_description'] = $this->typography->auto_typography($response->response->project->abstract);
 
 			if (isset($response->response->project->start_date) and isset($response->response->project->end_date) and $response->response->project->end_date > $response->response->project->start_date)
@@ -223,6 +246,59 @@ class Projects extends CI_Controller {
 			$this->parser->parse('includes/footer', $this->data);
 		}
 	}
+	
+	/**
+	 * Public Project view
+	 *
+	 * Gets details of a specific public project
+	 */
+
+	function view_public($identifier)
+	{
+		if ($response = $this->orbital->project_public_details($identifier))
+		{
+			$this->load->library('typography');
+			$this->data['project_id'] = $response->response->project->identifier;
+			$this->data['page_title'] = $response->response->project->name;
+			$this->data['project_name'] = $response->response->project->name;
+
+
+			if (!isset($response->response->project->start_date) && !isset($response->response->project->end_date))
+			{
+				//Check for both start and end dates - if not present dont show project progress
+			}
+
+			if ($response->response->project->start_date !== NULL)
+			{
+				$this->data['project_startdate'] = $response->response->project->start_date;
+				$this->data['project_startdate_pretty'] = date('D jS F Y', strtotime($response->response->project->start_date));
+			}
+			if ($response->response->project->end_date !== NULL)
+			{
+				$this->data['project_enddate'] = $response->response->project->end_date;
+				$this->data['project_enddate_pretty'] = date('D jS F Y', strtotime($response->response->project->end_date));
+			}
+			$this->data['project_description'] = $this->typography->auto_typography($response->response->project->abstract);
+
+			if (isset($response->response->project->start_date) and isset($response->response->project->end_date) and $response->response->project->end_date > $response->response->project->start_date)
+			{
+				$this->data['project_complete'] = abs(((time() - $response->response->project->start_date) / ($response->response->project->end_date - $response->response->project->start_date)) * 100);
+			}
+						
+			// Generate list of datasets
+			
+			$this->data['working_datasets'] = array('foo');
+			
+			// Generate list of archive files
+			
+			$this->data['archive_files'] = array();
+
+			$this->parser->parse('includes/header', $this->data);
+			$this->parser->parse('projects/view_public', $this->data);
+			$this->parser->parse('includes/footer', $this->data);
+		}
+	}
+		
 
 	/**
 	 * Edit project
@@ -260,7 +336,7 @@ class Projects extends CI_Controller {
 			$this->data['project_name'] = $response->response->project->name;
 			$this->data['project_abstract'] = $response->response->project->abstract;
 
-			if (in_array('write', $response->response->permissions))
+			if ($response->response->permissions->write)
 			{
 				$this->data['project_controls'][] = array(
 					'uri' => site_url('project/' . $response->response->project->identifier . '/edit'),
@@ -275,37 +351,37 @@ class Projects extends CI_Controller {
 
 				//Gert permissions and set as true or false
 				$user_permissions['permission_read'] = FALSE;
-				if (in_array('read', $permissions))
+				if ($permissions->read)
 				{
 					$user_permissions['permission_read'] = TRUE;
 				}
 				$user_permissions['permission_write'] = FALSE;
-				if (in_array('write', $permissions))
+				if ($permissions->write)
 				{
 					$user_permissions['permission_write'] = TRUE;
 				}
 				$user_permissions['permission_delete'] = FALSE;
-				if (in_array('delete', $permissions))
+				if ($permissions->delete)
 				{
 					$user_permissions['permission_delete'] = TRUE;
 				}
 				$user_permissions['permission_archivefiles_write'] = FALSE;
-				if (in_array('archivefiles_write', $permissions))
+				if ($permissions->archive_write)
 				{
 					$user_permissions['permission_archivefiles_write'] = TRUE;
 				}
 				$user_permissions['permission_archivefiles_read'] = FALSE;
-				if (in_array('archivefiles_read', $permissions))
+				if ($permissions->archive_read)
 				{
 					$user_permissions['permission_archivefiles_read'] = TRUE;
 				}
 				$user_permissions['permission_sharedworkspace_read'] = FALSE;
-				if (in_array('sharedworkspace_read', $permissions))
+				if ($permissions->sharedworkspace_read)
 				{
 					$user_permissions['permission_sharedworkspace_read'] = TRUE;
 				}
 				$user_permissions['permission_dataset_create'] = FALSE;
-				if (in_array('dataset_create', $permissions))
+				if ($permissions->dataset_create)
 				{
 					$user_permissions['permission_dataset_create'] = TRUE;
 				}
@@ -316,12 +392,12 @@ class Projects extends CI_Controller {
 			if (isset($response->response->project->start_date))
 			{
 				$this->data['project_startdate'] = $response->response->project->start_date;
-				$this->data['project_startdate_pretty'] = date('D jS F Y', $response->response->project->start_date);
+				$this->data['project_startdate_pretty'] = date('D jS F Y', strtotime($response->response->project->start_date));
 			}
 			if (isset($response->response->project->end_date))
 			{
 				$this->data['project_enddate'] = $response->response->project->end_date;
-				$this->data['project_enddate_pretty'] = date('D jS F Y', $response->response->project->end_date);
+				$this->data['project_enddate_pretty'] = date('D jS F Y', strtotime($response->response->project->end_date));
 			}
 			$this->data['project_description'] = $this->typography->auto_typography($response->response->project->abstract);
 
@@ -378,7 +454,7 @@ class Projects extends CI_Controller {
 			$this->data['project_name'] = $response->response->project->name;
 			$this->data['project_abstract'] = $response->response->project->abstract;
 
-			if (in_array('write', $response->response->permissions))
+			if ($response->response->permissions->write)
 			{
 				$this->data['project_controls'][] = array(
 					'uri' => site_url('project/' . $response->response->project->identifier . '/delete'),
@@ -393,37 +469,37 @@ class Projects extends CI_Controller {
 
 				//Gert permissions and set as true or false
 				$user_permissions['permission_read'] = FALSE;
-				if (in_array('read', $permissions))
+				if ($permissions->read)
 				{
 					$user_permissions['permission_read'] = TRUE;
 				}
 				$user_permissions['permission_write'] = FALSE;
-				if (in_array('write', $permissions))
+				if ($permissions->write)
 				{
 					$user_permissions['permission_write'] = TRUE;
 				}
 				$user_permissions['permission_delete'] = FALSE;
-				if (in_array('delete', $permissions))
+				if ($permissions->delete)
 				{
 					$user_permissions['permission_delete'] = TRUE;
 				}
 				$user_permissions['permission_archivefiles_write'] = FALSE;
-				if (in_array('archivefiles_write', $permissions))
+				if ($permissions->archive_write)
 				{
 					$user_permissions['permission_archivefiles_write'] = TRUE;
 				}
 				$user_permissions['permission_archivefiles_read'] = FALSE;
-				if (in_array('archivefiles_read', $permissions))
+				if ($permissions->archive_read)
 				{
 					$user_permissions['permission_archivefiles_read'] = TRUE;
 				}
 				$user_permissions['permission_sharedworkspace_read'] = FALSE;
-				if (in_array('sharedworkspace_read', $permissions))
+				if ($permissions->sharedworkspace_read)
 				{
 					$user_permissions['permission_sharedworkspace_read'] = TRUE;
 				}
 				$user_permissions['permission_dataset_create'] = FALSE;
-				if (in_array('dataset_create', $permissions))
+				if ($permissions->dataset_create)
 				{
 					$user_permissions['permission_dataset_create'] = TRUE;
 				}
@@ -434,12 +510,12 @@ class Projects extends CI_Controller {
 			if (isset($response->response->project->start_date))
 			{
 				$this->data['project_startdate'] = $response->response->project->start_date;
-				$this->data['project_startdate_pretty'] = date('D jS F Y', $response->response->project->start_date);
+				$this->data['project_startdate_pretty'] = date('D jS F Y', strtotime($response->response->project->start_date));
 			}
 			if (isset($response->response->project->end_date))
 			{
 				$this->data['project_enddate'] = $response->response->project->end_date;
-				$this->data['project_enddate_pretty'] = date('D jS F Y', $response->response->project->end_date);
+				$this->data['project_enddate_pretty'] = date('D jS F Y', strtotime($response->response->project->end_date));
 			}
 			$this->data['project_description'] = $this->typography->auto_typography($response->response->project->abstract);
 

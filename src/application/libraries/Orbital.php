@@ -802,7 +802,12 @@ class Orbital {
 
 	public function project_details($project)
 	{
-		return $this->get_authed('project/' .$project);
+		return $this->get_authed('project/' . $project);
+	}
+	
+	public function project_public_details($project)
+	{
+		return $this->get_unauthed('project/' . $project . '/public');
 	}
 
 	public function create_project($name, $abstract)
