@@ -310,9 +310,12 @@ class Projects extends CI_Controller {
 	{
 		if ($response = $this->orbital->project_details($identifier))
 		{
+			$licences = $this->orbital->licences_enabled_list();
+			$this->data['licences'] = $licences->response->licences;
+
 			if($this->input->post('name') and $this->input->post('abstract'))
 			{
-				$this->orbital->update_project($identifier, $this->input->post('name'), $this->input->post('abstract'));
+				$this->orbital->update_project($identifier, $this->input->post('name'), $this->input->post('abstract'), $this->input->post('research_group'), $this->input->post('start_date'), $this->input->post('end_date'), (int)$this->input->post('default_licence'));
 				$response = $this->orbital->project_details($identifier);
 			}
 			
@@ -335,6 +338,10 @@ class Projects extends CI_Controller {
 			$this->data['page_title'] = 'Edit ' . $response->response->project->name;
 			$this->data['project_name'] = $response->response->project->name;
 			$this->data['project_abstract'] = $response->response->project->abstract;
+			$this->data['project_research_group'] = $response->response->project->research_group;
+			$this->data['project_start_date'] = $response->response->project->start_date;
+			$this->data['project_end_date'] = $response->response->project->end_date;
+			$this->data['project_default_licence'] = $response->response->project->default_licence;
 
 			if ($response->response->permissions->write)
 			{
@@ -384,6 +391,11 @@ class Projects extends CI_Controller {
 				if ($permissions->dataset_create)
 				{
 					$user_permissions['permission_dataset_create'] = TRUE;
+				}
+				$user_permissions['permission_manage_users'] = FALSE;
+				if ($permissions->manage_users)
+				{
+					$user_permissions['permission_manage_users'] = TRUE;
 				}
 
 				$this->data['project_users'][] = array('user' => $user, 'permissions' => $user_permissions, 'user_email' => base64_encode($user));

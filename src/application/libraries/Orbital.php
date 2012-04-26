@@ -796,7 +796,6 @@ class Orbital {
 	
 	public function projects_public_list($limit = 20)
 	{
-
 		return $this->get_unauthed('projects/public?limit=' . $limit);
 	}
 
@@ -815,14 +814,19 @@ class Orbital {
 		return $this->post_authed('projects/create', array('name' => $name, 'abstract' => $abstract));
 	}
 
-	public function update_project($identifier, $name, $abstract)
+	public function update_project($identifier, $name, $abstract, $research_group, $start_date, $end_date, $default_licence)
 	{
-		return $this->put_authed('project/' . $identifier, array('name' => $name, 'abstract' => $abstract));
+		return $this->put_authed('project/' . $identifier, array('name' => $name, 'abstract' => $abstract, 'research_group' => $research_group, 'start_date' => $start_date, 'end_date' => $end_date, 'default_licence' => $default_licence));
 	}
 	
 	public function delete_project($identifier)
 	{
 		return $this->delete_authed('project/' . $identifier);
+	}
+	
+	public function licences_enabled_list()
+	{
+		return $this->get_unauthed('licences/enabled');
 	}
 }
 

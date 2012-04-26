@@ -38,7 +38,7 @@
 				<input type="text" id="project_name" name="name" placeholder="My Research Project" required>
 				<label for="project_abstract">Project Description</label>
 				<textarea id="project_abstract" name="abstract" rows="4" placeholder="This is a project which…" required></textarea>
-				<button type="submit" class="btn btn-success">Create Project</button>
+				<button type="submit" class="btn btn-success"><i class = "icon-plus icon-white"></i> Create Project</button>
 			</form>
 
 		</div>
