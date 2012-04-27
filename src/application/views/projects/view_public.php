@@ -61,13 +61,15 @@
 		<div class="well">
 			<h2>File Archives</h2>
 			
+			<ul class="nav nav-list">
+				<li class="nav-header">
 			<?php
 			
 			if (count($archive_files) > 0)
 			{
 				foreach ($archive_files as $archive_file)
 				{
-					echo '<a href = #>' . $archive_file . '</a><br>';
+					echo '<li><a href={base_url}file/><i class="icon-download"></i>' . $archive_file . '</a></li>';
 				}
 			}
 			else
@@ -77,6 +79,7 @@
 			}
 			
 			?>
+			</ul>
 			
 			
 		</div>

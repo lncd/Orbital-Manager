@@ -238,7 +238,7 @@ class Projects extends CI_Controller {
 			
 			// Generate list of archive files
 			
-			$this->data['archive_files'] = array();
+			$this->data['archive_files'] = $response->response->archive_files;
 
 			$this->parser->parse('includes/header', $this->data);
 			$this->parser->parse('projects/view', $this->data);
