@@ -49,6 +49,7 @@ $route['project/(:any)/delete'] = "projects/delete/$1";
 $route['project/(:any)/public'] = "projects/view_public/$1";
 $route['project/(:any)'] = "projects/view/$1";
 $route['projects/public'] = 'projects/list_public';
+$route['file/(:any)'] = 'projects/download_file';
 
 $route['admin/licences/add'] = 'admin/licences_add';
 

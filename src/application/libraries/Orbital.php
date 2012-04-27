@@ -833,6 +833,17 @@ class Orbital {
 	public function licence_create($name, $shortname, $uri)
 	{
 		return $this->post_authed('licences', array('name' => $name, 'shortname' => $shortname, 'uri' => $uri));
+
+	public function get_otk($file_id)
+	{
+		if ($this->session->userdata('current_user_string'))
+		{
+			return $this->get_authed('file/get_otk/' . $file_id);
+		}
+		else
+		{
+			return $this->get_unauthed('file/get_otk/' . $file_id);
+		}
 	}
 }
 

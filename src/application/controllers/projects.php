@@ -57,7 +57,7 @@ class Projects extends CI_Controller {
 					}
 					$this->data['projects'][] = $output;
 				}
-				
+
 				if ($response = $this->orbital->projects_public_list(5))
 				{
 
@@ -142,7 +142,7 @@ class Projects extends CI_Controller {
 						$output['research_group'] = $project->research_group;
 					}
 
-					
+
 					$this->data['projects'][] = $output;
 
 
@@ -210,7 +210,7 @@ class Projects extends CI_Controller {
 			{
 				$this->data['project_startdate_pretty'] = 'Unspecified';
 			}
-			
+
 			if ($response->response->project->end_date !== NULL)
 			{
 				$this->data['project_enddate'] = $response->response->project->end_date;
@@ -227,17 +227,17 @@ class Projects extends CI_Controller {
 			{
 				$this->data['project_complete'] = abs(((time() - $response->response->project->start_date) / ($response->response->project->end_date - $response->response->project->start_date)) * 100);
 			}
-			
+
 			// Generate workspace mode
-			
+
 			$this->data['workspace'] = false;
-			
+
 			// Generate list of datasets
-			
+
 			$this->data['working_datasets'] = array();
-			
+
 			// Generate list of archive files
-			
+
 			$this->data['archive_files'] = $response->response->archive_files;
 
 			$this->parser->parse('includes/header', $this->data);
@@ -245,7 +245,7 @@ class Projects extends CI_Controller {
 			$this->parser->parse('includes/footer', $this->data);
 		}
 	}
-	
+
 	/**
 	 * Public Project view
 	 *
@@ -260,7 +260,7 @@ class Projects extends CI_Controller {
 			$this->data['project_id'] = $response->response->project->identifier;
 			$this->data['page_title'] = $response->response->project->name;
 			$this->data['project_name'] = $response->response->project->name;
-			
+
 			if (!isset($response->response->project->start_date) && !isset($response->response->project->end_date))
 			{
 				//Check for both start and end dates - if not present dont show project progress
@@ -282,13 +282,13 @@ class Projects extends CI_Controller {
 			{
 				$this->data['project_complete'] = abs(((time() - $response->response->project->start_date) / ($response->response->project->end_date - $response->response->project->start_date)) * 100);
 			}
-						
+
 			// Generate list of datasets
-			
+
 			$this->data['working_datasets'] = array('foo');
-			
+
 			// Generate list of archive files
-			
+
 			$this->data['archive_files'] = $response->response->archive_files;
 
 			$this->parser->parse('includes/header', $this->data);
@@ -296,7 +296,7 @@ class Projects extends CI_Controller {
 			$this->parser->parse('includes/footer', $this->data);
 		}
 	}
-		
+
 
 	/**
 	 * Edit project
@@ -316,9 +316,9 @@ class Projects extends CI_Controller {
 				$this->orbital->update_project($identifier, $this->input->post('name'), $this->input->post('abstract'), $this->input->post('research_group'), $this->input->post('start_date'), $this->input->post('end_date'), (int)$this->input->post('default_licence'));
 				$response = $this->orbital->project_details($identifier);
 			}
-			
+
 			if($this->input->post('save_members_details'))
-			{/*
+				{/*
 				$this->orbital->update_project_members($identifier,
 				$this->input->post('read'),
 				$this->input->post('write'),
@@ -416,7 +416,7 @@ class Projects extends CI_Controller {
 			$this->parser->parse('includes/footer', $this->data);
 		}
 	}
-	
+
 	/**
 	 * Create project
 	 *
@@ -538,6 +538,20 @@ class Projects extends CI_Controller {
 			$this->session->set_flashdata('message', $response->response->project->name . ' could not be deleted');
 			$this->session->set_flashdata('message_type', 'alert-error');
 			redirect('project/' . $identifier);
+		}
+	}
+
+
+	/**
+	 * Download archive file
+	 *
+	 * Downloads an archive file from a project
+	 */
+
+	function download_file()
+	{
+		if ($response = $this->orbital->get_otk($identifier))
+		{
 		}
 	}
 }
