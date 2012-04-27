@@ -94,8 +94,66 @@
 	</tbody>
 </table>
 
-<p><a href="#" class="btn btn-success disabled"><i class="icon-plus icon-white"></i> Add Licence</a>
+<p><a href="#addLicenceDialog" class="btn btn-success" data-toggle="modal"><i class="icon-plus icon-white"></i> Add Licence</a></p>
+
+
+<?php
+
+echo form_open(site_url('admin/licences/add'), array(
+	'class' => 'modal fade',
+	'id' => 'addLicenceDialog'
+));
+
+?>
+
+	<div class="modal-header">
+		<button class="close" data-dismiss="modal">×</button>
+		<h3>Add Licence</h3>
+	</div>
+	<div class="modal-body">
+		
+		<?php
+		
+		$form_name = array(
+			'name'        => 'name',
+			'id'          => 'name',
+			'placeholder' => 'Orbital Example Licence',
+			'maxlength'   => '255'
+		);
+
+		echo form_label('Full name of the licence', 'name');
+		echo form_input($form_name);
+		
+		$form_shortname = array(
+			'name'        => 'shortname',
+			'id'          => 'shortname',
+			'placeholder' => 'OEL v1.0',
+			'maxlength'   => '16'
+		);
+
+		echo form_label('Short name of the licence', 'shortname');
+		echo form_input($form_shortname);
+		
+		$form_url = array(
+			'name'        => 'url',
+			'id'          => 'url',
+			'placeholder' => 'http://example.com/licence/summary',
+			'maxlength'   => '255'
+		);
+
+		echo form_label('URL of the licence summary', 'url');
+		echo form_input($form_url);
+		
+		?>
+		
+	</div>
+	<div class="modal-footer">
+		<button class="btn" data-dismiss="modal">Close</button>
+		<button type="submit" class="btn btn-success"><i class="icon-plus icon-white"></i> Add Licence</button>
+	</div>
+  
+<?php echo form_close(); ?>
 
 <script type="text/javascript">
- $('.undeletable').popover({placement:'left'});
+	$('.undeletable').popover({placement:'left'});
 </script>

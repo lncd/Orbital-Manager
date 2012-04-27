@@ -103,6 +103,39 @@ class Admin extends CI_Controller {
 			$this->parser->parse('includes/footer', $this->data);
 		}
 	}
+	
+	function licences_add()
+	{
+	
+		$this->load->library('form_validation');
+		
+		$this->form_validation->set_rules('name', 'Name', 'trim|required');
+		$this->form_validation->set_rules('shortname', 'Short name', 'trim|required');
+		$this->form_validation->set_rules('url', 'URL', 'trim|required');
+		
+		if ($this->form_validation->run() === TRUE)
+		{
+			if ($this->orbital->licence_create($this->input->post('name'), $this->input->post('shortname'), $this->input->post('url')))
+			{
+				$this->session->set_flashdata('message', 'Licence added successfully. Remember to enable it before it can be used.');
+				$this->session->set_flashdata('message_type', 'success');
+			}
+			else
+			{
+				$this->session->set_flashdata('message', 'Something went wrong adding this licence.');
+				$this->session->set_flashdata('message_type', 'error');
+			}
+		}
+		else
+		{
+			$this->session->set_flashdata('message', 'Unable to add licence: ' . validation_errors());
+			$this->session->set_flashdata('message_type', 'error');
+			
+		}
+	
+		redirect('admin/licences');
+	
+	}
 }
 
 // End of file admin.php

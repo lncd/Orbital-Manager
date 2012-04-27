@@ -50,6 +50,7 @@ $route['project/(:any)/public'] = "projects/view_public/$1";
 $route['project/(:any)'] = "projects/view/$1";
 $route['projects/public'] = 'projects/list_public';
 
+$route['admin/licences/add'] = 'admin/licences_add';
 
 // End of file routes.php
 // Location: ./config/routes.php

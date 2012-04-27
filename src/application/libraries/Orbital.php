@@ -739,21 +739,6 @@ class Orbital {
 	{
 		return $this->get_authed('core/mongo_server_status');
 	}
-	
-	/**
-	 * Licences: List
-	 *
-	 * Returns a list of all licences.
-	 *
-	 * @access public
-	 *
-	 * @return object|FALSE Object if successful, FALSE if not.
-	 */
-
-	public function licences_list()
-	{
-		return $this->get_authed('licences');
-	}
 
 	/**
 	 * User: Details
@@ -824,9 +809,30 @@ class Orbital {
 		return $this->delete_authed('project/' . $identifier);
 	}
 	
+	
+	/**
+	 * Licences: List
+	 *
+	 * Returns a list of all licences.
+	 *
+	 * @access public
+	 *
+	 * @return object|FALSE Object if successful, FALSE if not.
+	 */
+
+	public function licences_list()
+	{
+		return $this->get_authed('licences');
+	}
+	
 	public function licences_enabled_list()
 	{
 		return $this->get_unauthed('licences/enabled');
+	}
+	
+	public function licence_create($name, $shortname, $uri)
+	{
+		return $this->post_authed('licences', array('name' => $name, 'shortname' => $shortname, 'uri' => $uri));
 	}
 }
 
