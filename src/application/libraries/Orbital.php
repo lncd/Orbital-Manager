@@ -37,11 +37,11 @@ class Orbital {
 
 		if ($this->_ci->session->userdata('current_user_string'))
 		{
-			$common_content['user_presence'] = 'Signed in as <a href="' . site_url('me') . '">' . $this->_ci->session->userdata('current_user_string') . '</a> &middot; <a href="' . site_url('signout') . '">Sign Out</a>';
+			$common_content['user_presence'] = lang('navigation_signed_in') . '<a href="' . site_url('me') . '">' . $this->_ci->session->userdata('current_user_string') . '</a> &middot; <a href="' . site_url('signout') . '">' . lang('navigation_sign_out') . '</a>';
 		}
 		else
 		{
-			$common_content['user_presence'] = '<a href="' . site_url('signin') . '">Sign In</a>';
+			$common_content['user_presence'] = '<a href="' . site_url('signin') . '">' . lang('navigation_sign_in') . '</a>';
 		}
 
 		$common_content['nav_menu'] = array (

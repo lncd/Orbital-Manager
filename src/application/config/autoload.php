@@ -64,7 +64,7 @@ $autoload['libraries'] = array('database', 'session', 'parser', 'orbital');
 |	$autoload['helper'] = array('url', 'file');
 */
 
-$autoload['helper'] = array('url', 'form');
+$autoload['helper'] = array('url', 'form', 'language', 'typography');
 
 
 /*
@@ -96,7 +96,7 @@ $autoload['config'] = array('orbital');
 |
 */
 
-$autoload['language'] = array();
+$autoload['language'] = array('navigation');
 
 
 /*

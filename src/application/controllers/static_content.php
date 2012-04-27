@@ -36,6 +36,7 @@ class Static_Content extends CI_Controller {
 	function index()
 	{
 	
+		$this->lang->load('marketing');
 		
 		$this->data['page_title'] = 'Welcome';
 	
@@ -52,6 +53,8 @@ class Static_Content extends CI_Controller {
 	
 	function about()
 	{
+	
+		$this->lang->load('about');
 	
 		$this->data['page_title'] = 'About';
 	
