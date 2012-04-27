@@ -50,48 +50,9 @@
 <div class="row">
 	<div class="span6">
 		<div class="well">
-			<h2>Working Data</h2>
+			<h2>Dynamic Datasets</h2>
 			
-			<?php
-			
-			if (count($working_datasets) > 0)
-			{
-			
-			?>
-			
-			<ul class="nav nav-list">
-				<li class="nav-header">
-					Published
-				</li>
-				<li>
-					<a href="#"><i class="icon-eye-open"></i> Something</a>
-				</li>
-				<li>
-					<a href="#"><i class="icon-eye-open"></i> Something Else</a>
-				</li>
-				<li class="nav-header">
-					Private
-				</li>
-				<li>
-					<a href="#"><i class="icon-eye-close"></i> Something Else</a>
-				</li>
-				<li>
-					<a href="#"><i class="icon-eye-close"></i> Something Else</a>
-				</li>
-			</ul>
-			
-			<hr>
-			
-			<?php
-			
-			}
-			else
-			{
-				echo '<p>This project doesn\'t have any working datasets.</p>
-				<p>A working dataset lets you directly manipulate your project data and perform complex queries on it.</p>';
-			}
-			
-			?>
+			<p>This project hasn't published any dynamic datasets.</p>
 			
 			
 		</div>

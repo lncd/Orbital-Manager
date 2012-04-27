@@ -55,30 +55,16 @@
 		<div class="well">
 			<h2>Workspace</h2>
 			
-				<h3>Shared Space</h3>
-			
 			<?php
 			
-			if ($workspace_project)
+			if ($workspace)
 			{
 			
 			}
 			else
 			{
-				echo '<p>This project doesn\'t yet have a shared workspace. You can use a shared workspace to share files and data with colleagues.</p>
+				echo '<p>This project doesn\'t yet have a workspace. You can use a workspace to share files and data with colleagues, as well as to keep a backed up history of your work.</p>
 				<p><a href="#" class="btn btn-success disabled"><i class="icon-folder-open icon-white"></i> Create Shared Workspace</a>';
-			}
-			
-			echo '<h3>Personal</h3>';
-			
-			if ($workspace_personal)
-			{
-			
-			}
-			else
-			{
-				echo '<p>You don\'t yet have a personal workspace for this project. You can use a personal workspace to store your files safely, and access them from anywhere.</p>
-				<p><a href="#" class="btn btn-success disabled"><i class="icon-folder-open icon-white"></i> Create Personal Workspace</a>';
 			}
 			
 			?>
@@ -87,7 +73,7 @@
 	</div>
 	<div class="span4">
 		<div class="well">
-			<h2>Working Data</h2>
+			<h2>Dynamic Datasets</h2>
 			
 			<?php
 			
@@ -124,8 +110,8 @@
 			}
 			else
 			{
-				echo '<p>This project doesn\'t have any working datasets.</p>
-				<p>A working dataset lets you directly manipulate your project data and perform complex queries on it.</p>';
+				echo '<p>This project doesn\'t have any dynamic datasets.</p>
+				<p>A dynamic dataset lets you directly manipulate your project data and perform complex queries on it.</p>';
 			}
 			
 			?>

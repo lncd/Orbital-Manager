@@ -228,14 +228,13 @@ class Projects extends CI_Controller {
 				$this->data['project_complete'] = abs(((time() - $response->response->project->start_date) / ($response->response->project->end_date - $response->response->project->start_date)) * 100);
 			}
 			
-			// Generate workspace modes
+			// Generate workspace mode
 			
-			$this->data['workspace_project'] = false;
-			$this->data['workspace_personal'] = false;
+			$this->data['workspace'] = false;
 			
 			// Generate list of datasets
 			
-			$this->data['working_datasets'] = array('foo');
+			$this->data['working_datasets'] = array();
 			
 			// Generate list of archive files
 			
