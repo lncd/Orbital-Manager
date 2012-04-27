@@ -67,10 +67,14 @@
 			
 			if (count($archive_files) > 0)
 			{
+				echo '<ul class="nav nav-list">';
+			
 				foreach ($archive_files as $archive_file)
 				{
-					echo '<li><a href={base_url}file/><i class="icon-download"></i>' . $archive_file . '</a></li>';
+					echo '<li><a href="' . base_url() . 'file/' . $archive_file->id . '"><i class="icon-eye-open"></i> ' . $archive_file->original_name . '</a></li>';
 				}
+				
+				echo '</ul>';
 			}
 			else
 			{
