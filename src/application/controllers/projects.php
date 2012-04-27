@@ -261,8 +261,7 @@ class Projects extends CI_Controller {
 			$this->data['project_id'] = $response->response->project->identifier;
 			$this->data['page_title'] = $response->response->project->name;
 			$this->data['project_name'] = $response->response->project->name;
-
-
+			
 			if (!isset($response->response->project->start_date) && !isset($response->response->project->end_date))
 			{
 				//Check for both start and end dates - if not present dont show project progress
@@ -291,7 +290,7 @@ class Projects extends CI_Controller {
 			
 			// Generate list of archive files
 			
-			$this->data['archive_files'] = array();
+			$this->data['archive_files'] = $response->response->archive_files;
 
 			$this->parser->parse('includes/header', $this->data);
 			$this->parser->parse('projects/view_public', $this->data);

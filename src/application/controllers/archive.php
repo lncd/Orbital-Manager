@@ -40,9 +40,7 @@ class Archive extends CI_Controller {
 			$this->parser->parse('includes/header', $this->data);
 			$this->parser->parse('projects/jqueryupload', $this->data);
 			$this->parser->parse('includes/footer', $this->data);
-			
-	}
-	
+	}	
 }
 
 // End of file core.php
