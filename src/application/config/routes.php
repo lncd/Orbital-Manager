@@ -51,6 +51,8 @@ $route['project/(:any)'] = "projects/view/$1";
 $route['projects/public'] = 'projects/list_public';
 
 $route['admin/licences/add'] = 'admin/licences_add';
+$route['admin/licence/(:num)/enable'] = "admin/licence_enable/$1";
+$route['admin/licence/(:num)/disable'] = "admin/licence_disable/$1";
 
 // End of file routes.php
 // Location: ./config/routes.php

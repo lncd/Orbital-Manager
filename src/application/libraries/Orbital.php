@@ -830,9 +830,19 @@ class Orbital {
 		return $this->get_unauthed('licences/enabled');
 	}
 	
+	public function licence_get($id)
+	{
+		return $this->get_authed('licence/' . $id);
+	}
+	
 	public function licence_create($name, $shortname, $uri)
 	{
 		return $this->post_authed('licences', array('name' => $name, 'shortname' => $shortname, 'uri' => $uri));
+	}
+	
+	public function licence_update($id, $name, $shortname, $uri, $enable = FALSE)
+	{
+		return $this->post_authed('licence/' . $id, array('name' => $name, 'shortname' => $shortname, 'uri' => $uri, 'enable' => $enable));
 	}
 }
 
