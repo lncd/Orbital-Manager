@@ -51,7 +51,7 @@
 					</div>
 					<div class="modal-footer">
 						<a href="#" data-dismiss="modal" class="btn">Close</a>
-						<a href="#" data-dismiss="modal" class="btn btn-warning">Disable Licence</a>
+						<a href="' . site_url('admin/licence/' . $licence->id . '/disable') . '" class="btn btn-warning"><i class="icon-off icon-white"></i> Disable Licence</a>
 					</div>
 				</div>';
 		}
@@ -69,7 +69,7 @@
 					</div>
 					<div class="modal-footer">
 						<a href="#" data-dismiss="modal" class="btn">Close</a>
-						<a href="#" data-dismiss="modal" class="btn btn-success">Enable Licence</a>
+						<a href="' . site_url('admin/licence/' . $licence->id . '/enable') . '" class="btn btn-success"><i class="icon-off icon-white"></i> Enable Licence</a>
 					</div>
 				</div>';
 		}

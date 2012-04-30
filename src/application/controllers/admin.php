@@ -136,6 +136,60 @@ class Admin extends CI_Controller {
 		redirect('admin/licences');
 	
 	}
+	
+	function licence_enable($id)
+	{
+	
+		if ($licence = $this->orbital->licence_get($id))
+		{
+		
+			$licence = $licence->response->licence;
+		
+			if ($this->orbital->licence_update($licence->id, $licence->name, $licence->short_name, $licence->uri, TRUE))
+			{
+				$this->session->set_flashdata('message', 'Licence enabled.');
+				$this->session->set_flashdata('message_type', 'success');
+			}
+			else
+			{
+				$this->session->set_flashdata('message', 'Something went wrong enabling this licence.');
+				$this->session->set_flashdata('message_type', 'error');
+			}
+		}
+		else
+		{
+			show_404();
+		}
+		
+		redirect('admin/licences');
+	}
+	
+	function licence_disable($id)
+	{
+	
+		if ($licence = $this->orbital->licence_get($id))
+		{
+		
+			$licence = $licence->response->licence;
+		
+			if ($this->orbital->licence_update($licence->id, $licence->name, $licence->short_name, $licence->uri, FALSE))
+			{
+				$this->session->set_flashdata('message', 'Licence disabled.');
+				$this->session->set_flashdata('message_type', 'success');
+			}
+			else
+			{
+				$this->session->set_flashdata('message', 'Something went wrong disabling this licence.');
+				$this->session->set_flashdata('message_type', 'error');
+			}
+		}
+		else
+		{
+			show_404();
+		}
+		
+		redirect('admin/licences');
+	}
 }
 
 // End of file admin.php
