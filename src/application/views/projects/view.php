@@ -87,6 +87,9 @@
 			else
 			{
 				echo '<p>This project doesn\'t yet have a workspace. You can use a workspace to share files and data with colleagues, as well as to keep a backed up history of your work.</p>
+				
+				<hr>
+				
 				<p><a href="#" class="btn disabled"><i class="icon-folder-open icon-white"></i> Create Shared Workspace</a>';
 			}
 			
@@ -138,6 +141,8 @@
 			}
 			
 			?>
+			
+			<hr>
 			
 			<p><a href="#" class="btn disabled"><i class="icon-plus icon-white"></i> Create Dataset</a>
 			
@@ -231,6 +236,8 @@
 			
 			?>
 			
+			<hr>
+			
 			<p><a href="#uploadFileDialogue" class="btn btn-success" class="btn btn-success" data-toggle="modal"><i class="icon-upload icon-white"></i> Upload File</a>
 			
 			<?php
@@ -240,7 +247,7 @@
 				'id' => 'uploadFileDialogue'
 			));
 			
-			echo form_hidden('upload_token', 'cqlksLM7HmLDktcOo51qSnzqLlRMzIYPwax7lrM0OY6gR04r6232HBdVu49kSBOC');
+			echo form_hidden('upload_token', $upload_token);
 			echo form_hidden('return_uri', site_url('project/' . $project_id));
 			
 			?>

@@ -255,7 +255,10 @@ class Projects extends CI_Controller {
 
 				$this->data['workspace'] = false;
 
-				// Generate list of datasets
+				$this->data['archive_files'] = $response->response->archive_files;
+				
+				$this->data['project_default_licence'] = $response->response->project->default_licence;
+				$this->data['upload_token'] = $response->response->upload_token;
 
 				$this->data['working_datasets'] = array();
 
