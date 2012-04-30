@@ -260,6 +260,10 @@ class Projects extends CI_Controller {
 			$this->data['project_id'] = $response->response->project->identifier;
 			$this->data['page_title'] = $response->response->project->name;
 			$this->data['project_name'] = $response->response->project->name;
+			
+			if ($response->response->project->google_analytics !== 'NULL'){
+				$this->data['alt_tracking'] = $response->response->project->google_analytics;
+			}
 
 			if (!isset($response->response->project->start_date) && !isset($response->response->project->end_date))
 			{

@@ -38,6 +38,16 @@
 		_gaq.push(['_setAccount', 'UA-17360674-21']);
 		_gaq.push(['_trackPageview']);
 		
+		<?php
+		
+		if (isset($alt_tracking))
+		{
+			echo '_gaq.push([\'b.setAccount\', \'' . $alt_tracking . '\']);
+			_gaq.push([\'b._trackPageview\']);';
+		}
+		
+		?>
+		
 		(function() {
 			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
 			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
