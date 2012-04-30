@@ -541,19 +541,6 @@ class Projects extends CI_Controller {
 		}
 	}
 
-
-	/**
-	 * Download archive file
-	 *
-	 * Downloads an archive file from a project
-	 */
-
-	function download_file()
-	{
-		if ($response = $this->orbital->get_otk($identifier))
-		{
-		}
-	}
 }
 
 // End of file me.php

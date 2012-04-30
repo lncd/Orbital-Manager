@@ -856,6 +856,11 @@ class Orbital {
 			return $this->get_unauthed('file/get_otk/' . $file_id);
 		}
 	}
+	
+	public function file_get_details($file_id)
+	{
+		return $this->get_unauthed('file/' . $file_id);	
+	}
 }
 
 /* End of file Orbital.php */
