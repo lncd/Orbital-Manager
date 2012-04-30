@@ -26,6 +26,7 @@ class Files extends CI_Controller {
 	{
 		if ($response = $this->orbital->file_get_details($identifier))
 		{
+			$project = $this->orbital->project_public_details($response->response->file->project);
 			$this->load->library('typography');
 			$this->data['file_id'] = $response->response->file->id;
 			$this->data['file_project'] = $response->response->file->project_name;
@@ -37,8 +38,8 @@ class Files extends CI_Controller {
 			$this->data['file_mimetype'] = $response->response->file->mimetype;
 			$this->data['page_title'] = $response->response->file->original_name;
 
-			if ($response->response->project->google_analytics !== 'NULL'){
-				$this->data['alt_tracking'] = $response->response->project->google_analytics;
+			if ($project->response->project->google_analytics !== 'NULL'){
+				$this->data['alt_tracking'] = $project->response->project->google_analytics;
 			}
 
 			$this->parser->parse('includes/header', $this->data);
