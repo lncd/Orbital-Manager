@@ -173,6 +173,17 @@ class Projects extends CI_Controller {
 	{
 		if ($response = $this->orbital->project_details($identifier))
 		{
+		
+			if ($this->input->get('error'))
+			{
+				$this->data['error'] = $this->input->get('error');
+			}
+			
+			if ($this->input->get('message'))
+			{
+				$this->data['success'] = $this->input->get('message');
+			}
+		
 			$this->load->library('typography');
 			$this->data['project_id'] = $response->response->project->identifier;
 			$this->data['page_title'] = $response->response->project->name;
@@ -239,6 +250,8 @@ class Projects extends CI_Controller {
 			// Generate list of archive files
 
 			$this->data['archive_files'] = $response->response->archive_files;
+			
+			$this->data['project_default_licence'] = $response->response->project->default_licence;
 
 			$this->parser->parse('includes/header', $this->data);
 			$this->parser->parse('projects/view', $this->data);

@@ -32,6 +32,10 @@ class Files extends CI_Controller {
 			$this->data['file_name'] = $response->response->file->original_name;
 			$this->data['file_licence'] = $response->response->file->licence;
 
+			if ($response->response->project->google_analytics !== 'NULL'){
+				$this->data['alt_tracking'] = $response->response->project->google_analytics;
+			}
+
 			$this->parser->parse('includes/header', $this->data);
 			$this->parser->parse('files/view_file', $this->data);
 			$this->parser->parse('includes/footer', $this->data);
