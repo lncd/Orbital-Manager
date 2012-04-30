@@ -248,7 +248,7 @@
 				'id' => 'uploadFileDialogue'
 			));
 			
-			echo form_hidden('upload_token', 'foobarbaz');
+			echo form_hidden('upload_token', 'cqlksLM7HmLDktcOo51qSnzqLlRMzIYPwax7lrM0OY6gR04r6232HBdVu49kSBOC');
 			echo form_hidden('return_uri', site_url('project/' . $project_id));
 			
 			?>
