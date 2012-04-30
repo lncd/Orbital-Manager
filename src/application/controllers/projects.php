@@ -177,44 +177,31 @@ class Projects extends CI_Controller {
 	{
 		if ($response = $this->orbital->project_details($identifier))
 		{
-		
-			if ($this->input->get('error'))
+			if ($response->response->status === true)
 			{
-				$this->data['error'] = $this->input->get('error');
-			}
-			
-			if ($this->input->get('message'))
-			{
-				$this->data['success'] = $this->input->get('message');
-			}
-		
-			$this->load->library('typography');
-			$this->data['project_id'] = $response->response->project->identifier;
-			$this->data['page_title'] = $response->response->project->name;
-			$this->data['project_name'] = $response->response->project->name;
+				if ($this->input->get('error'))
+				{
+					$this->data['error'] = $this->input->get('error');
+				}
 
-			//Check for Edit permissions
-			if ($response->response->permissions->write === TRUE)
-			{
-				$this->data['project_controls'][] = array(
-					'uri' => site_url('project/' . $response->response->project->identifier . '/edit'),
-					'title' => 'Edit'
-				);
-			}
+				if ($this->input->get('message'))
+				{
+					$this->data['success'] = $this->input->get('message');
+				}
 
-			//Check for Delete permissions
-			if ($response->response->permissions->delete === TRUE)
-			{
-				$this->data['project_controls'][] = array(
-					'uri' => site_url('project/' . $response->response->project->identifier . '/delete'),
-					'title' => 'Delete'
-				);
-			}
+				$this->load->library('typography');
+				$this->data['project_id'] = $response->response->project->identifier;
+				$this->data['page_title'] = $response->response->project->name;
+				$this->data['project_name'] = $response->response->project->name;
 
-			if (!isset($response->response->project->start_date) && !isset($response->response->project->end_date))
-			{
-				//Check for both start and end dates - if not present dont show project progress
-			}
+				//Check for Edit permissions
+				if ($response->response->permissions->write === TRUE)
+				{
+					$this->data['project_controls'][] = array(
+						'uri' => site_url('project/' . $response->response->project->identifier . '/edit'),
+						'title' => 'Edit'
+					);
+				}
 
 			if ($response->response->project->start_date !== NULL)
 			{
@@ -236,30 +223,56 @@ class Projects extends CI_Controller {
 				$this->data['project_enddate_pretty'] = 'Unspecified';
 			}
 
-			$this->data['project_description'] = $this->typography->auto_typography($response->response->project->abstract);
+				//Check for Delete permissions
+				if ($response->response->permissions->delete === TRUE)
+				{
+					$this->data['project_controls'][] = array(
+						'uri' => site_url('project/' . $response->response->project->identifier . '/delete'),
+						'title' => 'Delete'
+					);
+				}
+
+				if (!isset($response->response->project->start_date) && !isset($response->response->project->end_date))
+				{
+					//Check for both start and end dates - if not present dont show project progress
+				}
+
 
 			if (isset($response->response->project->start_date) and isset($response->response->project->end_date) and strtotime($response->response->project->end_date) > strtotime($response->response->project->start_date))
 			{
 				$this->data['project_complete'] = abs(((time() - strtotime($response->response->project->start_date)) / (strtotime($response->response->project->end_date) - strtotime($response->response->project->start_date))) * 100);
 			}
 
-			// Generate workspace mode
 
-			$this->data['workspace'] = false;
+				$this->data['project_description'] = $this->typography->auto_typography($response->response->project->abstract);
 
-			// Generate list of datasets
+				if (isset($response->response->project->start_date) and isset($response->response->project->end_date) and $response->response->project->end_date > $response->response->project->start_date)
+				{
+					$this->data['project_complete'] = abs(((time() - $response->response->project->start_date) / ($response->response->project->end_date - $response->response->project->start_date)) * 100);
+				}
 
-			$this->data['working_datasets'] = array();
+				// Generate workspace mode
 
-			// Generate list of archive files
+				$this->data['workspace'] = false;
 
-			$this->data['archive_files'] = $response->response->archive_files;
-			
-			$this->data['project_default_licence'] = $response->response->project->default_licence;
+				// Generate list of datasets
 
-			$this->parser->parse('includes/header', $this->data);
-			$this->parser->parse('projects/view', $this->data);
-			$this->parser->parse('includes/footer', $this->data);
+				$this->data['working_datasets'] = array();
+
+				// Generate list of archive files
+
+				$this->data['archive_files'] = $response->response->archive_files;
+
+				$this->data['project_default_licence'] = $response->response->project->default_licence;
+
+				$this->parser->parse('includes/header', $this->data);
+				$this->parser->parse('projects/view', $this->data);
+				$this->parser->parse('includes/footer', $this->data);
+			}
+			else
+			{
+				show_404();
+			}
 		}
 	}
 
@@ -277,7 +290,7 @@ class Projects extends CI_Controller {
 			$this->data['project_id'] = $response->response->project->identifier;
 			$this->data['page_title'] = $response->response->project->name;
 			$this->data['project_name'] = $response->response->project->name;
-			
+
 			if ($response->response->project->google_analytics !== 'NULL'){
 				$this->data['alt_tracking'] = $response->response->project->google_analytics;
 			}
