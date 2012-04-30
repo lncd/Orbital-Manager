@@ -8,17 +8,24 @@
 			<li>
 				<a href="{base_url}projects">Projects</a> <span class="divider">/</span>
 			</li>
+			<li>
+				<a href="{base_url}project/{file_project_id}">{file_project}</a> <span class="divider">/</span>
+			</li>
 			<li class="active">
-				<a href="{base_url}project/{project_id}">{project_name}</a></span>
+				{file_name}
 			</li>
 		</ul>
 
 		<div class="page-header">
 			<h1>{file_name}</h1>
 		</div>
-		
-		{file_licence}
-		<a class="btn btn-small" href="{base_url}file/{file_id}/download">Download</a>		
+		<div class = "well">
+		Licence: {file_licence}<br>
+		Extension: {file_extension}<br>
+		Mime type: {file_mimetype}<br>
+		Project: <a href="{base_url}project/{file_project_id}">{file_project}</a>
+		</div>
+		<a class="btn btn-large btn-primary" href="{base_url}file/{file_id}/download"><i class = "icon-ok icon-download icon-white"></i> Download</a>		
 		
 		<?php
 		

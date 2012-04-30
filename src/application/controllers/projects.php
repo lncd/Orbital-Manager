@@ -136,6 +136,10 @@ class Projects extends CI_Controller {
 					{
 						$output['project_enddate'] = date('D jS F Y', strtotime($project->end_date));
 					}
+					else
+					{
+						$output['project_enddate'] = 'Unknown';
+					}
 
 					if($project->research_group !== NULL)
 					{

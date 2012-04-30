@@ -1,6 +1,3 @@
-<div class="row">
-	<div class="span12">
-	
 		<ul class="breadcrumb">
 			<li>
 				<a href="{base_url}">Home</a> <span class="divider">/</span>
@@ -12,14 +9,11 @@
 				Public
 			</li>
 		</ul>
-	
-		<h1>Public Projects</h1>
 
-	</div>
-</div>
+		<div class="page-header">
+			<h1>Public Projects</h1>
+		</div>
 
-<div class="row">
-	<div class="span8">
 		<table class="table table-striped table-bordered">
 			<thead>
 				<tr><th>Name</th><th>Research Group</th><th>Start</th><th>End</th></tr>
@@ -30,5 +24,3 @@
 				{/projects}
 			</tbody>
 		</table>
-	</div>
-</div>
