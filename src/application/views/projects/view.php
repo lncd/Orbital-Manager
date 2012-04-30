@@ -86,7 +86,7 @@
 			else
 			{
 				echo '<p>This project doesn\'t yet have a workspace. You can use a workspace to share files and data with colleagues, as well as to keep a backed up history of your work.</p>
-				<p><a href="#" class="btn btn-success disabled"><i class="icon-folder-open icon-white"></i> Create Shared Workspace</a>';
+				<p><a href="#" class="btn disabled"><i class="icon-folder-open icon-white"></i> Create Shared Workspace</a>';
 			}
 			
 			?>
@@ -138,7 +138,7 @@
 			
 			?>
 			
-			<p><a href="#" class="btn btn-success disabled"><i class="icon-plus icon-white"></i> Create Dataset</a>
+			<p><a href="#" class="btn disabled"><i class="icon-plus icon-white"></i> Create Dataset</a>
 			
 		</div>
 	</div>
@@ -186,43 +186,34 @@
 						$priv_icon = 'close';
 					}
 				
-					echo '<li>';
+					echo '<li><a href="' . base_url() . 'file/' . $archive_file->id . '"><i class="icon-eye-' . $priv_icon . '"></i> ' . $archive_file->original_name . ' ';
+						
+					switch ($archive_file->status)
+					{
 					
-					if ($archive_file->status === 'uploaded')
-					{
-					echo '<a href="' . base_url() . 'file/' . $archive_file->id . '"><i class="icon-eye-' . $priv_icon . '"></i> ' . $archive_file->original_name . '</a>';
-					}
-					else
-					{
-						echo '<i class="icon-eye-' . $priv_icon . '"></i> ' . $archive_file->original_name . ' ';
-						
-						switch ($archive_file->status)
-						{
-						
-							case 'placeholder':
-								echo '<span class="label label-inverse labeltip" rel="popover" data-content="This file is a placeholder for one due to be manually uploaded by an administrator." data-original-title="Placeholder">Placeholder</span>';
-								break;
-								
-							case 'staged':
-								echo '<span class="label label-default labeltip" rel="popover" data-content="This file is queued, waiting to be processed." data-original-title="Queued">Queued</span>';
-								break;
-								
-							case 'uploading':
-								echo '<span class="label label-info labeltip" rel="popover" data-content="This file is currently being processed and will be available soon." data-original-title="Processing">Processing</span>';
-								break;
-								
-							case 'upload_error_soft':
-								echo '<span class="label label-warning labeltip" rel="popover" data-content="Something has gone wrong processing this file, but it will be retried automatically." data-original-title="Upload Error">Upload Error</span>';
-								break;
-								
-							case 'upload_error_hard':
-								echo '<span class="label label-important labeltip" rel="popover" data-content="Something has gone wrong uploading this file, and it cannot be retried. An administrator has been notified." data-original-title="Upload Error">Upload Error</span>';
-								break;
-						
-						}
+						case 'placeholder':
+							echo '<span class="label label-inverse labeltip" rel="popover" data-content="This file is a placeholder for one due to be manually uploaded by an administrator." data-original-title="Placeholder">Placeholder</span>';
+							break;
+							
+						case 'staged':
+							echo '<span class="label label-default labeltip" rel="popover" data-content="This file is queued, waiting to be processed." data-original-title="Queued">Queued</span>';
+							break;
+							
+						case 'uploading':
+							echo '<span class="label label-info labeltip" rel="popover" data-content="This file is currently being processed and will be available soon." data-original-title="Processing">Processing</span>';
+							break;
+							
+						case 'upload_error_soft':
+							echo '<span class="label label-warning labeltip" rel="popover" data-content="Something has gone wrong processing this file, but it will be retried automatically." data-original-title="Upload Error">Upload Error</span>';
+							break;
+							
+						case 'upload_error_hard':
+							echo '<span class="label label-important labeltip" rel="popover" data-content="Something has gone wrong uploading this file, and it cannot be retried. An administrator has been notified." data-original-title="Upload Error">Upload Error</span>';
+							break;
+					
 					}
 					
-					echo '</li>';
+					echo '</a></li>';
 				}
 				
 				echo '</ul>
