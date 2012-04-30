@@ -547,7 +547,7 @@ class Orbital {
 		}
 
 	}
-	
+
 	private function delete_authed($target)
 	{
 		if ($this->_ci->session->userdata('access_token'))
@@ -778,7 +778,7 @@ class Orbital {
 			return $this->get_authed('projects?user=' . urlencode($user));
 		}
 	}
-	
+
 	public function projects_public_list($limit = 20)
 	{
 		return $this->get_unauthed('projects/public?limit=' . $limit);
@@ -788,7 +788,7 @@ class Orbital {
 	{
 		return $this->get_authed('project/' . $project);
 	}
-	
+
 	public function project_public_details($project)
 	{
 		return $this->get_unauthed('project/' . $project . '/public');
@@ -803,13 +803,13 @@ class Orbital {
 	{
 		return $this->put_authed('project/' . $identifier, array('name' => $name, 'abstract' => $abstract, 'research_group' => $research_group, 'start_date' => $start_date, 'end_date' => $end_date, 'default_licence' => $default_licence));
 	}
-	
+
 	public function delete_project($identifier)
 	{
 		return $this->delete_authed('project/' . $identifier);
 	}
-	
-	
+
+
 	/**
 	 * Licences: List
 	 *
@@ -818,48 +818,55 @@ class Orbital {
 	 * @access public
 	 *
 	 * @return object|FALSE Object if successful, FALSE if not.
-	*/
+	 */
 
 	public function licences_list()
 	{
 		return $this->get_authed('licences');
 	}
-	
+
 	public function licences_enabled_list()
 	{
 		return $this->get_unauthed('licences/enabled');
 	}
-	
+
 	public function licence_get($id)
 	{
 		return $this->get_authed('licence/' . $id);
 	}
-	
+
 	public function licence_create($name, $shortname, $uri)
 	{
 		return $this->post_authed('licences', array('name' => $name, 'shortname' => $shortname, 'uri' => $uri));
 	}
-	
+
 	public function licence_update($id, $name, $shortname, $uri, $enable = FALSE)
 	{
 		return $this->post_authed('licence/' . $id, array('name' => $name, 'shortname' => $shortname, 'uri' => $uri, 'enable' => $enable));
 	}
-	
+
 	public function get_otk($file_id)
 	{
-		if ($this->session->userdata('current_user_string'))
+		if ($this->_ci->session->userdata('current_user_string'))
 		{
-			return $this->get_authed('file/get_otk/' . $file_id);
+			return $this->get_authed('file/' . $file_id . '/get_otk');
 		}
 		else
 		{
-			return $this->get_unauthed('file/get_otk/' . $file_id);
+			return $this->get_unauthed('file/' . $file_id . '/get_otk');
 		}
 	}
-	
+
 	public function file_get_details($file_id)
 	{
-		return $this->get_unauthed('file/' . $file_id);	
+		if ($this->_ci->session->userdata('current_user_string'))
+		{
+			return $this->get_authed('file/' . $file_id);
+		}
+		else
+		{
+			return $this->get_unauthed('file/' . $file_id);
+		}
 	}
 }
 

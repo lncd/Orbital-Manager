@@ -27,12 +27,13 @@ class Files extends CI_Controller {
 		if ($response = $this->orbital->file_get_details($identifier))
 		{
 			$this->load->library('typography');
-			$this->data['project_id'] = $response->response->project->identifier;
-			$this->data['page_title'] = $response->response->project->name;
-			$this->data['project_name'] = $response->response->project->name;
+			$this->data['file_id'] = $response->response->file->id;
+			$this->data['file_title'] = $response->response->file->original_name;
+			$this->data['file_name'] = $response->response->file->original_name;
+			$this->data['file_licence'] = $response->response->file->licence;
 
 			$this->parser->parse('includes/header', $this->data);
-			$this->parser->parse('files/view', $this->data);
+			$this->parser->parse('files/view_file', $this->data);
 			$this->parser->parse('includes/footer', $this->data);
 		}
 	}
@@ -43,10 +44,11 @@ class Files extends CI_Controller {
 	 * Downloads an archive file from a project
 	 */
 
-	function download_file()
+	function download_file($identifier)
 	{
 		if ($response = $this->orbital->get_otk($identifier))
 		{
+			$this->output->set_header('Location: ' . $this->config->item('orbital_core_location') . 'file/' . $identifier . '/download?otk=' . $response->response->otk);
 		}
 	}
 }
