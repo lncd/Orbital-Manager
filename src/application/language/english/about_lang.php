@@ -3,19 +3,19 @@
 // About Page
 
 $lang['about_title']		= 'About Orbital';
-$lang['about_main_text']	= 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam pulvinar pharetra ipsum vel congue. Donec id magna tortor. Aliquam hendrerit elit nec sapien gravida scelerisque. Aliquam urna est, tincidunt quis ultrices nec, commodo porttitor nulla. Donec in lectus mauris. Quisque id odio ac urna laoreet convallis ut at mauris. Aliquam velit mauris, mattis sit amet adipiscing in, ullamcorper eu lorem. Fusce hendrerit nunc ut quam convallis vitae luctus metus consectetur. Quisque eget erat magna. Pellentesque mollis dapibus velit, in vulputate purus venenatis tristique.
+$lang['about_main_text']	= 'Orbital is a tool built for researchers who want to manage, share and publish their data. If you're an academic who needs to publish your research data so that it can be permanently cited alongside your published papers, Orbital can do just that. Orbital is designed to be scaleable and native to the web, and we're constantly adding new features to it based on your feedback. With Orbital, you can create a project, upload your data, choose a license, and publish it to the web at an address that can always be cited.  
 
-Mauris in nibh est, in iaculis augue. Praesent porttitor lacus quis nulla congue scelerisque. Mauris vel ullamcorper nulla. Nunc eros nulla, feugiat vel laoreet vel, rutrum non orci. Fusce hendrerit nisl et nisi vulputate fringilla. Nunc non porta eros. Phasellus consectetur venenatis ligula. Ut dapibus pellentesque lacus ac pretium. Sed congue dapibus odio ac placerat. Praesent metus lorem, gravida at interdum quis, pretium vel dui. Etiam mi massa, dapibus quis fringilla luctus, rutrum eu metus. Donec nisl arcu, bibendum ut pharetra eu, molestie et ipsum.';
+Orbital is part of an on-going project at the University of Lincoln to help researchers manage their data. This is our first release and there are many more features planned, such as private workspaces, dynamic data storage, and plugins for popular data analysis tools.';
 
 // Units
 
-$lang['about_trio1_title']	= 'Workspaces';
-$lang['about_trio1_text']	= 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam pulvinar pharetra ipsum vel congue. Donec id magna tortor. Aliquam hendrerit elit nec sapien gravida scelerisque. Aliquam urna est, tincidunt quis ultrices nec, commodo porttitor nulla. Donec in lectus mauris. Quisque id odio ac urna laoreet convallis ut at mauris. Aliquam velit mauris, mattis sit amet adipiscing in, ullamcorper eu lorem. Fusce hendrerit nunc ut quam convallis vitae luctus metus consectetur. Quisque eget erat magna. Pellentesque mollis dapibus velit, in vulputate purus venenatis tristique.';
+$lang['about_trio1_title']	= 'Describe';
+$lang['about_trio1_text']	= 'Create a project, describe your data and invite your team members.';
 
-$lang['about_trio2_title']	= 'Dynamic Data';
-$lang['about_trio2_text']	= 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam pulvinar pharetra ipsum vel congue. Donec id magna tortor. Aliquam hendrerit elit nec sapien gravida scelerisque. Aliquam urna est, tincidunt quis ultrices nec, commodo porttitor nulla. Donec in lectus mauris. Quisque id odio ac urna laoreet convallis ut at mauris. Aliquam velit mauris, mattis sit amet adipiscing in, ullamcorper eu lorem. Fusce hendrerit nunc ut quam convallis vitae luctus metus consectetur. Quisque eget erat magna. Pellentesque mollis dapibus velit, in vulputate purus venenatis tristique.';
+$lang['about_trio2_title']	= 'License';
+$lang['about_trio2_text']	= 'Choose from a list of licenses to ensure that the terms and conditions of use for your data are clearly stated.';
 
-$lang['about_trio3_title']	= 'Archives';
-$lang['about_trio3_text']	= 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam pulvinar pharetra ipsum vel congue. Donec id magna tortor. Aliquam hendrerit elit nec sapien gravida scelerisque. Aliquam urna est, tincidunt quis ultrices nec, commodo porttitor nulla. Donec in lectus mauris. Quisque id odio ac urna laoreet convallis ut at mauris. Aliquam velit mauris, mattis sit amet adipiscing in, ullamcorper eu lorem. Fusce hendrerit nunc ut quam convallis vitae luctus metus consectetur. Quisque eget erat magna. Pellentesque mollis dapibus velit, in vulputate purus venenatis tristique.';
+$lang['about_trio3_title']	= 'Publish';
+$lang['about_trio3_text']	= 'Publish your data to its own project page, at an address that can be permanently cited in your research papers and grant applications.';
 
 // EOF
