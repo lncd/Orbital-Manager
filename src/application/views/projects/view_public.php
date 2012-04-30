@@ -52,7 +52,7 @@
 		<div class="well">
 			<h2>Dynamic Datasets</h2>
 			
-			<p>This project hasn't published any dynamic datasets.</p>
+			<p>This project hasn't made any dynamic datasets public.</p>
 			
 			
 		</div>
@@ -60,9 +60,6 @@
 	<div class="span6">
 		<div class="well">
 			<h2>File Archives</h2>
-			
-			<ul class="nav nav-list">
-				<li class="nav-header">
 			<?php
 			
 			if (count($archive_files) > 0)
@@ -71,20 +68,17 @@
 			
 				foreach ($archive_files as $archive_file)
 				{
-					echo '<li><a href="' . base_url() . 'file/' . $archive_file->id . '"><i class="icon-download"></i> ' . $archive_file->original_name . '</a></li>';
+					echo '<li><a href="' . base_url() . 'file/' . $archive_file->id . '"><i class="icon-eye-open"></i> ' . $archive_file->original_name . '</a></li>';
 				}
 				
 				echo '</ul>';
 			}
 			else
 			{
-				echo '<p>You don\'t have any archive files stored in this project.</p>
-				<p>Archive files let you permanently store and publish your data in whatever format you think is best.';
+				echo '<p>This project hasn\'t made any archived files public.</p>';
 			}
 			
 			?>
-			</ul>
-			
 			
 		</div>
 	</div>

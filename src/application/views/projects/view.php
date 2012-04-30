@@ -154,9 +154,60 @@
 				echo '<ul class="nav nav-list">';
 				foreach ($archive_files as $archive_file)
 				{
-					echo '<li><a href="' . base_url() . 'file/' . $archive_file->id . '"><i class="icon-download"></i> ' . $archive_file->original_name . '</a></li>';
+				
+					if ($archive_file->visibility === 'public')
+					{
+						$priv_icon = 'open';
+					}
+					else
+					{
+						$priv_icon = 'close';
+					}
+				
+					echo '<li>';
+					
+					if ($archive_file->status === 'uploaded')
+					{
+					echo '<a href="' . base_url() . 'file/' . $archive_file->id . '"><i class="icon-eye-' . $priv_icon . '"></i> ' . $archive_file->original_name . '</a>';
+					}
+					else
+					{
+						echo '<i class="icon-eye-' . $priv_icon . '"></i> ' . $archive_file->original_name . ' ';
+						
+						switch ($archive_file->status)
+						{
+						
+							case 'placeholder':
+								echo '<span class="label label-inverse labeltip" rel="popover" data-content="This file is a placeholder for one due to be manually uploaded by an administrator." data-original-title="Placeholder">Placeholder</span>';
+								break;
+								
+							case 'staged':
+								echo '<span class="label label-default labeltip" rel="popover" data-content="This file is queued, waiting to be processed." data-original-title="Queued">Queued</span>';
+								break;
+								
+							case 'uploading':
+								echo '<span class="label label-info labeltip" rel="popover" data-content="This file is currently being processed and will be available soon." data-original-title="Processing">Processing</span>';
+								break;
+								
+							case 'upload_error_soft':
+								echo '<span class="label label-warning labeltip" rel="popover" data-content="Something has gone wrong processing this file, but it will be retried automatically." data-original-title="Upload Error">Upload Error</span>';
+								break;
+								
+							case 'upload_error_hard':
+								echo '<span class="label label-important labeltip" rel="popover" data-content="Something has gone wrong uploading this file, and it cannot be retried. An administrator has been notified." data-original-title="Upload Error">Upload Error</span>';
+								break;
+						
+						}
+					}
+					
+					echo '</li>';
 				}
-				echo '</ul>';
+				
+				echo '</ul>
+				
+				<script type="text/javascript">
+					$(\'.labeltip\').popover({placement:\'top\'});
+				</script>';
 			}
 			else
 			{
