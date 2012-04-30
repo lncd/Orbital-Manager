@@ -85,13 +85,23 @@
 		<?php 
 		if ($this->session->flashdata('message'))
 		{
-			echo '<div class="alert'; 
+			$message = $this->session->flashdata('message');
 			
 			if($this->session->flashdata('message_type'))
 			{
-				echo ' alert-' . $this->session->flashdata('message_type');
+				$message_type = $this->session->flashdata('message_type');
+			}
+		}
+		
+		if (isset($message))
+		{
+			echo '<div class="alert'; 
+			
+			if(isset($message_type))
+			{
+				echo ' alert-' . $message_type;
 			}
 			
-			echo '"><a class="close" data-dismiss="alert">×</a>' . $this->session->flashdata('message') . '</div>';
+			echo '"><a class="close" data-dismiss="alert">×</a>' . $message . '</div>';
 		}
 		?>

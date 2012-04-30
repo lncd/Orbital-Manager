@@ -43,7 +43,7 @@
 
 		</div>
 		<div class="well">
-			<h2>Public Projects</h2>
+			<h2>Recent Public Projects</h2>
 			
 			<ul class="nav nav-pills nav-stacked">
 				

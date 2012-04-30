@@ -218,7 +218,7 @@ class Projects extends CI_Controller {
 
 			if ($response->response->project->start_date !== NULL)
 			{
-				$this->data['project_startdate'] = $response->response->project->start_date;
+				$this->data['project_startdate'] = strtotime($response->response->project->start_date);
 				$this->data['project_startdate_pretty'] = date('D jS F Y', strtotime($response->response->project->start_date));
 			}
 			else
@@ -228,7 +228,7 @@ class Projects extends CI_Controller {
 
 			if ($response->response->project->end_date !== NULL)
 			{
-				$this->data['project_enddate'] = $response->response->project->end_date;
+				$this->data['project_enddate'] = strtotime($response->response->project->end_date);
 				$this->data['project_enddate_pretty'] = date('D jS F Y', strtotime($response->response->project->end_date));
 			}
 			else
@@ -238,9 +238,9 @@ class Projects extends CI_Controller {
 
 			$this->data['project_description'] = $this->typography->auto_typography($response->response->project->abstract);
 
-			if (isset($response->response->project->start_date) and isset($response->response->project->end_date) and $response->response->project->end_date > $response->response->project->start_date)
+			if (isset($response->response->project->start_date) and isset($response->response->project->end_date) and strtotime($response->response->project->end_date) > strtotime($response->response->project->start_date))
 			{
-				$this->data['project_complete'] = abs(((time() - $response->response->project->start_date) / ($response->response->project->end_date - $response->response->project->start_date)) * 100);
+				$this->data['project_complete'] = abs(((time() - strtotime($response->response->project->start_date)) / (strtotime($response->response->project->end_date) - strtotime($response->response->project->start_date))) * 100);
 			}
 
 			// Generate workspace mode
@@ -336,6 +336,8 @@ class Projects extends CI_Controller {
 			{
 				$this->orbital->update_project($identifier, $this->input->post('name'), $this->input->post('abstract'), $this->input->post('research_group'), $this->input->post('start_date'), $this->input->post('end_date'), (int)$this->input->post('default_licence'));
 				$response = $this->orbital->project_details($identifier);
+				$this->data['message'] = 'Project updated successfully.';
+				$this->data['message_type'] = 'success';
 			}
 
 			if($this->input->post('save_members_details'))

@@ -40,10 +40,6 @@
 		</div>
 		
 		{project_description}
-		{project_controls}
-		<a class="btn btn-small" href="{uri}">{title}</a>
-		{/project_controls}
-		
 		
 		<?php
 		
@@ -67,6 +63,11 @@
 		</div>
 		
 		<?php } ?>
+		
+		{project_controls}
+		<a class="btn btn-small" href="{uri}">{title}</a>
+		{/project_controls}
+		
 	</div>
 </div>
 
