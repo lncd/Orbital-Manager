@@ -38,6 +38,29 @@ class Licences extends CI_Controller {
 			$this->parser->parse('licences/view_licence', $this->data);
 			$this->parser->parse('includes/footer', $this->data);
 		}
+		else
+		{
+			show_404();
+		}
+	}
+	
+	function view_licence_json($identifier)
+	{
+		if ($response = $this->orbital->licence_get($identifier))
+		{
+			$data['name'] = $response->response->licence->short_name;
+			$data['original_name'] = $response->response->licence->name;
+			$data['summary_uri'] = $response->response->licence->uri;
+			$data['summary'] = $response->response->licence->summary;
+			$data['allow'] = $response->response->licence->allow_list;
+			$data['forbid'] = $response->response->licence->forbid_list;
+
+			$this->output->set_output(json_encode($data));
+		}
+		else
+		{
+			show_404();
+		}
 	}
 }
 

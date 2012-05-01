@@ -832,7 +832,7 @@ class Orbital {
 
 	public function licence_get($id)
 	{
-		return $this->get_authed('licence/' . $id);
+		return $this->get_unauthed('licence/' . $id);
 	}
 
 	public function licence_create($name, $shortname, $uri)

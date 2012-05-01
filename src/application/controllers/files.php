@@ -57,6 +57,10 @@ class Files extends CI_Controller {
 			$this->parser->parse('files/view_file', $this->data);
 			$this->parser->parse('includes/footer', $this->data);
 		}
+		else
+		{
+			show_404();
+		}
 	}
 
 	/**
