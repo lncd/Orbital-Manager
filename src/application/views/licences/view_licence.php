@@ -16,10 +16,11 @@
 		<div class="page-header">
 			<h1>{licence_original_name}</h1>
 		</div>
-		<div class = "well">
-		URI: <a href = "{licence_summary_uri}">{licence_summary_uri}</a><br>
-		</div>
-		Summary: <br>{licence_summary}
+		
+		<p><a href="{licence_summary_uri}">{licence_summary_uri}</a></p>
+		
+		<h2>Summary</h2>
+		{licence_summary}
 	</div>
 </div>
 

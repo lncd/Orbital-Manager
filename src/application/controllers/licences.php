@@ -33,6 +33,7 @@ class Licences extends CI_Controller {
 			$this->data['licence_summary'] = $response->response->licence->summary;
 			$this->data['licence_allow'] = $response->response->licence->allow_list;
 			$this->data['licence_forbid'] = $response->response->licence->forbid_list;
+			$this->data['licence_condition'] = $response->response->licence->condition_list;
 
 			$this->parser->parse('includes/header', $this->data);
 			$this->parser->parse('licences/view_licence', $this->data);
@@ -51,9 +52,10 @@ class Licences extends CI_Controller {
 			$data['name'] = $response->response->licence->short_name;
 			$data['original_name'] = $response->response->licence->name;
 			$data['summary_uri'] = $response->response->licence->uri;
-			$data['summary'] = $response->response->licence->summary;
+			$data['summary'] = htmlspecialchars(auto_typography($response->response->licence->summary));
 			$data['allow'] = $response->response->licence->allow_list;
 			$data['forbid'] = $response->response->licence->forbid_list;
+			$data['conditions'] = $response->response->licence->condition_list;
 
 			$this->output->set_output(json_encode($data));
 		}

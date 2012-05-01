@@ -289,11 +289,6 @@
 					echo form_label('Make file publicly available?', 'public');
 					echo form_checkbox($form_public);
 					
-					$form_licence = array(
-						'name'        => 'licence',
-						'id'          => 'licence'
-					);
-					
 					$licences = $this->orbital->licences_enabled_list();
 					
 					foreach ($licences->response->licences as $licence)
@@ -302,9 +297,27 @@
 					}
 			
 					echo form_label('Licence to release this file under (if public)', 'licence');
-					echo form_dropdown('licence', $file_licences, $project_default_licence);
+					echo form_dropdown('licence', $file_licences, $project_default_licence, 'id="licence"');
 					
 					?>
+					
+					<div id="licenceAllow" style="display:none">
+						<h4>This licence allows:</h4>
+						<div id="licenceAllowContent">
+						</div>
+					</div>
+					
+					<div id="licenceConditions" style="display:none">
+						<h4>This licence has the following conditions:</h4>
+						<div id="licenceConditionsContent">
+						</div>
+					</div>
+					
+					<div id="licenceDeny" style="display:none">
+						<h4>This licence forbids:</h4>
+						<div id="licenceDenyContent">
+						</div>
+					</div>
 					
 				</div>
 				<div class="modal-footer">
@@ -317,3 +330,68 @@
 		</div>
 	</div>
 </div>
+
+<script type="text/javascript">
+
+$.getJSON('{base_url}licence/' + $('#licence').val() + '/json', function(data) {
+
+	if (data.allow !== null)
+	{
+		$('#licenceAllowContent').html(data.allow);
+		$('#licenceAllow').show();
+	}
+	
+	if (data.conditions !== null)
+	{
+		$('#licenceConditionsContent').html(data.conditions);
+		$('#licenceConditions').show();
+	}
+	
+	if (data.forbid !== null)
+	{
+		$('#licenceDenyContent').html(data.forbid);
+		$('#licenceDeny').show();
+	}
+  
+});
+
+$('#licence').change(function(){
+
+		
+	$.getJSON('{base_url}licence/' + $('#licence').val() + '/json', function(data) {
+	  
+		if (data.allow !== null)
+		{
+			$('#licenceAllowContent').html(data.allow);
+			$('#licenceAllow').show();
+		}
+		else
+		{
+			$('#licenceAllow').hide();
+		}
+		
+		if (data.conditions !== null)
+		{
+			$('#licenceConditionsContent').html(data.conditions);
+			$('#licenceConditions').show();
+		}
+		else
+		{
+			$('#licenceConditions').hide();
+		}
+		
+		if (data.forbid !== null)
+		{
+			$('#licenceDenyContent').html(data.forbid);
+			$('#licenceDeny').show();
+		}
+		else
+		{
+			$('#licenceDeny').hide();
+		}
+	  
+	});
+  
+});
+
+</script>

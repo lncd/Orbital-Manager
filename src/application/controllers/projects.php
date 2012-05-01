@@ -194,6 +194,8 @@ class Projects extends CI_Controller {
 				$this->data['page_title'] = $response->response->project->name;
 				$this->data['project_name'] = $response->response->project->name;
 
+				$this->data['project_controls'] = array();
+
 				//Check for Edit permissions
 				if ($response->response->permissions->write === TRUE)
 				{
