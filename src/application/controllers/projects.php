@@ -350,8 +350,6 @@ class Projects extends CI_Controller {
 			$licences = $this->orbital->licences_enabled_list();
 			$this->data['licences'] = $licences->response->licences;
 
-			
-
 			if($this->input->post('name') and $this->input->post('abstract'))
 			{
 
@@ -365,9 +363,11 @@ class Projects extends CI_Controller {
 				}
 			
 				$this->orbital->project_update($identifier, $this->input->post('name'), $this->input->post('abstract'), $this->input->post('research_group'), $this->input->post('start_date'), $this->input->post('end_date'), (int)$this->input->post('default_licence'), $public_view, $this->input->post('google_analytics'));
-				$response = $this->orbital->project_details($identifier);
-				$this->data['message'] = 'Project updated successfully.';
-				$this->data['message_type'] = 'success';
+				
+				$this->session->set_flashdata('message', 'Project details updated successfully.');
+				$this->session->set_flashdata('message_type', 'success');
+				
+				redirect('project/' . $identifier);
 			}
 
 			if($this->input->post('save_members_details'))
