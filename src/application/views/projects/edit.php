@@ -25,17 +25,75 @@
 
 		<div class="well">
 			<h2>Project Details</h2>
-			<form method="post" action="{base_url}project/{project_id}/edit">
-				<label for="project_name">Project Name</label>
-				<input type="text" id="project_name" name="name" value="{project_name}">
-				<label for="project_abstract">Project Description</label>
-				<textarea id="project_abstract" name="abstract" rows="4">{project_abstract}</textarea>
-				<label for="project_research_group">Research Group</label>
-				<input type="text" id="project_research_group" name="research_group" value="{project_research_group}">
-				<label for="project_start_date">Start Date</label>
-				<input type="date" id="project_start_date" name="start_date" value="{project_start_date}">
-				<label for="project_end_date">End Date</label>
-				<input type="text" id="project_end_date" name="end_date" value="{project_end_date}">
+			
+			<?php echo form_open('project/{project_id}/edit', array('class' => 'form-horizontal'));
+			
+			$form_name = array(
+				'name'			=> 'name',
+				'id'			=> 'project_name',
+				'placeholder'	=> 'Project Name',
+				'value'			=> set_value('name', $project_name),
+				'maxlength'		=> '200',
+				'class'			=> 'span6'
+			);
+	
+			echo '<div class="control-group">';
+			echo form_label('Project Name', 'project_name', array('class' => 'control-label'));
+			echo '<div class="controls">';
+			echo form_input($form_name);
+			echo '</div></div>';
+			
+			$form_abstract = array(
+				'name'			=> 'abstract',
+				'id'			=> 'project_abstract',
+				'placeholder'	=> 'A bit about this project...',
+				'value'			=> set_value('abstract', $project_abstract),
+				'rows'			=> '4',
+				'class'			=> 'span6'
+			);
+	
+			echo form_label('Project Description', 'project_abstract');
+			echo form_textarea($form_abstract);
+			
+			$form_researchgroup = array(
+				'name'			=> 'research_group',
+				'id'			=> 'project_research_group',
+				'placeholder'	=> 'Group Name',
+				'value'			=> set_value('research_group', $project_research_group),
+				'maxlength'		=> '64',
+				'class'			=> 'span4'
+			);
+	
+			echo form_label('Research Group', 'project_research_group');
+			echo form_input($form_researchgroup);
+			
+			$form_startdate = array(
+				'name'			=> 'start_date',
+				'id'			=> 'project_start_date',
+				'placeholder'	=> 'YYYY-MM-DD',
+				'value'			=> set_value('start_date', $project_start_date),
+				'maxlength'		=> '10',
+				'class'			=> 'span2 datepicker'
+			);
+	
+			echo form_label('Project Start Date', 'project_start_date');
+			echo form_input($form_startdate);
+			
+			$form_enddate = array(
+				'name'			=> 'end_date',
+				'id'			=> 'project_end_date',
+				'placeholder'	=> 'YYYY-MM-DD',
+				'value'			=> set_value('end_date', $project_end_date),
+				'maxlength'		=> '10',
+				'class'			=> 'span2 datepicker'
+			);
+	
+			echo form_label('Project End Date', 'project_end_date');
+			echo form_input($form_enddate);
+			
+			
+			?>
+			
 				<label for="project_default_licence">Default Licence</label>
 				<select id="project_default_licence" name="default_licence">
 				<?php foreach ($licences as $licence)
@@ -48,8 +106,12 @@
 					echo '>' . $licence->name .'</option>';
 				}?>
 				</select>
-				<button type="submit" class="btn btn-success"><i class = "icon-ok icon-white"></i> Save Details</button>
-			</form>
+				
+				<div class="form-actions">
+					<button type="submit" class="btn btn-success"><i class = "icon-ok icon-white"></i> Save Details</button>
+				</div>
+				
+			<?php echo form_close(); ?>
 		</div>
 		<div class="well">
 			<h2>Project Members</h2>
