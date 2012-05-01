@@ -268,6 +268,16 @@ class Projects extends CI_Controller {
 
 				// Default licence
 				$this->data['project_default_licence'] = $response->response->project->default_licence;
+				
+				// New project mode
+				if ($this->input->get('special') === 'new')
+				{
+					$this->data['new_project'] = TRUE;
+				}
+				else
+				{
+					$this->data['new_project'] = FALSE;
+				}
 
 				$this->parser->parse('includes/header', $this->data);
 				$this->parser->parse('projects/view', $this->data);
@@ -491,14 +501,15 @@ class Projects extends CI_Controller {
 		{
 			if ($response = $this->orbital->create_project($this->input->post('name'), $this->input->post('abstract')))
 			{
-				redirect('project/' . $response->response->project_id);
+				$this->session->set_flashdata('message', 'Your project has been created!');
+				$this->session->set_flashdata('message_type', 'success');
+				redirect('project/' . $response->response->project_id . '?special=new');
 			}
 		}
 		else
 		{
 			$this->session->set_flashdata('message', 'A project must have a name');
 			$this->session->set_flashdata('message_type', 'alert');
-			redirect('projects');
 		}
 	}
 

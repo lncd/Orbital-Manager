@@ -62,7 +62,19 @@
 			</div>
 		</div>
 		
-		<?php } ?>
+		<?php
+		
+		} 
+		
+		if ($new_project === TRUE)
+		{
+			echo '<div class="alert alert-info">
+				<i class="icon-chevron-down"></i> You can tell us a lot more about your project, which helps us help you manage your research. To do this, click the "Edit" button.
+			</div>';
+
+		}
+		
+		?>
 		
 		{project_controls}
 		<a class="btn btn-small" href="{uri}">{title}</a>
