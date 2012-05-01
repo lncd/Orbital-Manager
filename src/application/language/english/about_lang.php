@@ -3,7 +3,7 @@
 // About Page
 
 $lang['about_title']		= 'About Orbital';
-$lang['about_main_text']	= 'Orbital is a tool built for researchers who want to manage, share and publish their data. If you\'re an academic who needs to publish your research data so that it can be permanently cited alongside your published papers, Orbital can do just that. Orbital is designed to be scaleable and native to the web, and we\'re constantly adding new features to it based on your feedback. With Orbital, you can create a project, upload your data, choose a license, and publish it to the web at an address that can always be cited.  
+$lang['about_main_text']	= 'Orbital is a tool built for researchers who want to manage, share and publish their data. If you\'re an academic who needs to publish your research data so that it can be permanently cited alongside your published papers, Orbital can do just that. Orbital is designed to be scaleable and native to the web, and we\'re constantly adding new features based on your <a href="http://orbital.uservoice.com" title="Feedback forum">feedback</a>. Currently, you can create a project, upload your data, choose a license, and publish it to the web at an address that can always be cited.  
 
 Orbital is part of an on-going project at the University of Lincoln to help researchers manage their data. This is our first release and there are many more features planned, such as private workspaces, dynamic data storage, and plugins for popular data analysis tools.';
 
