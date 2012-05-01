@@ -348,9 +348,21 @@ class Projects extends CI_Controller {
 			$licences = $this->orbital->licences_enabled_list();
 			$this->data['licences'] = $licences->response->licences;
 
+			
+
 			if($this->input->post('name') and $this->input->post('abstract'))
 			{
-				$this->orbital->update_project($identifier, $this->input->post('name'), $this->input->post('abstract'), $this->input->post('research_group'), $this->input->post('start_date'), $this->input->post('end_date'), (int)$this->input->post('default_licence'));
+
+				if ($this->input->post('public') === 'public')
+				{
+					$public_view = 'visible';
+				}
+				else
+				{
+					$public_view = 'hidden';
+				}
+			
+				$this->orbital->project_update($identifier, $this->input->post('name'), $this->input->post('abstract'), $this->input->post('research_group'), $this->input->post('start_date'), $this->input->post('end_date'), (int)$this->input->post('default_licence'), $public_view, $this->input->post('google_analytics'));
 				$response = $this->orbital->project_details($identifier);
 				$this->data['message'] = 'Project updated successfully.';
 				$this->data['message_type'] = 'success';
@@ -379,6 +391,7 @@ class Projects extends CI_Controller {
 			$this->data['project_start_date'] = $response->response->project->start_date;
 			$this->data['project_end_date'] = $response->response->project->end_date;
 			$this->data['project_default_licence'] = $response->response->project->default_licence;
+			$this->data['project_google_analytics'] = $response->response->project->google_analytics;
 
 			if ($response->response->permissions->write)
 			{

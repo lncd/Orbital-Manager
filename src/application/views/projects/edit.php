@@ -138,6 +138,21 @@
 			echo form_dropdown('default_licence', $available_licences, set_value('default_licence', $project_default_licence), 'id="project_default_licence" class="span4"');
 			echo '<p class="help-block">Choosing a default licence makes it easier to publish your data. However, you can still change it on a case-by-case basis for individual files and datasets.</p>';
 			echo '</div></div>';
+			
+			$form_ga = array(
+				'name'			=> 'google_analytics',
+				'id'			=> 'project_google_analytics',
+				'placeholder'	=> 'UA-XXXXXXXX-X',
+				'value'			=> set_value('google_analytics', $project_google_analytics),
+				'class'			=> 'span3'
+			);
+	
+			echo '<div class="control-group">';
+			echo form_label('Google Analytics Property ID', 'project_google_analytics', array('class' => 'control-label'));
+			echo '<div class="controls">';
+			echo form_input($form_ga);
+			echo '<p class="help-block">If you want to track how many people view your project and download files you can enter a <a href="http://www.google.com/analytics/">Google Analytics</a> property ID here.</p>';
+			echo '</div></div>';
 
 			echo '<div class="form-actions">';
 			echo '<button type="submit" class="btn btn-success"><i class = "icon-ok icon-white"></i> Save Details</button> <button type="reset" class="btn btn-warning">Reset</button>';

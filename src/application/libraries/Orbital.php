@@ -799,9 +799,9 @@ class Orbital {
 		return $this->post_authed('projects/create', array('name' => $name, 'abstract' => $abstract));
 	}
 
-	public function update_project($identifier, $name, $abstract, $research_group, $start_date, $end_date, $default_licence)
+	public function project_update($identifier, $name, $abstract, $research_group, $start_date, $end_date, $default_licence, $public_view, $google_analytics)
 	{
-		return $this->put_authed('project/' . $identifier, array('name' => $name, 'abstract' => $abstract, 'research_group' => $research_group, 'start_date' => $start_date, 'end_date' => $end_date, 'default_licence' => $default_licence));
+		return $this->put_authed('project/' . $identifier, array('name' => $name, 'abstract' => $abstract, 'research_group' => $research_group, 'start_date' => $start_date, 'end_date' => $end_date, 'default_licence' => $default_licence, 'public_view' => $public_view, 'google_analytics' => $google_analytics));
 	}
 
 	public function delete_project($identifier)
