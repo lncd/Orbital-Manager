@@ -28,6 +28,7 @@ class Files extends CI_Controller {
 		{
 			$project = $this->orbital->project_public_details($response->response->file->project);
 			$this->load->library('typography');
+			
 			$this->data['file_id'] = $response->response->file->id;
 			$this->data['file_project'] = $response->response->file->project_name;
 			$this->data['file_project_id'] = $response->response->file->project;
@@ -41,6 +42,15 @@ class Files extends CI_Controller {
 
 			if ($project->response->project->google_analytics !== 'NULL'){
 				$this->data['alt_tracking'] = $project->response->project->google_analytics;
+			}
+			
+			if ($response->response->file->status === 'uploaded')
+			{
+				$this->data['file_downloadable'] = TRUE;
+			}
+			else
+			{
+				$this->data['file_downloadable'] = FALSE;
 			}
 
 			$this->parser->parse('includes/header', $this->data);

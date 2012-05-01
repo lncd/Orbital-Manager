@@ -20,35 +20,33 @@
 			<h1>{file_name}</h1>
 		</div>
 		<div class = "well">
-		Licence: <a href = "{file_licence_uri}">{file_licence}</a><br>
-		Extension: {file_extension}<br>
-		Mime type: {file_mimetype}<br>
-		Project: <a href="{base_url}project/{file_project_id}">{file_project}</a>
+			<table class="table">
+				<thead>
+					<tr><th colspan="2">File Summary</th></tr>
+				</thead>
+				<tbody>
+					<tr><td>Licence</td><td><a href="{file_licence_uri}">{file_licence}</a></td></tr>
+					<tr><td>Research Project</td><td><a href="{base_url}project/{file_project_id}">{file_project}</a></td></tr>
+					<tr><td>Permanent URI</td><td><code>http://id.online.lincoln.ac.uk/research-file/{file_id}</code></td></tr>
+				</tbody>
+			</table>
 		</div>
-		<a class="btn btn-large btn-primary" href="{base_url}file/{file_id}/download"><i class = "icon-ok icon-download icon-white"></i> Download</a>		
 		
 		<?php
 		
-		if (isset ($project_startdate) AND isset($project_enddate))
+		if ($file_downloadable)
 		{
 		
-		?>
+			echo '<a class="btn btn-primary" href="{base_url}file/{file_id}/download"><i class = "icon-ok icon-download icon-white"></i> Download File</a>';
 		
-		<div class = "well">
-			<h2>Project Progress</h2>
-			<div class="progress">
-  				<div class="bar" style="width: {project_complete}%;">
-  				</div>
-  			</div>
-  			<div class = "pull-left"><b>Project Start</b><br>{project_startdate_pretty}
-			</div>
-			<div class = "pull-right"><b>Project End</b><br>{project_enddate_pretty}
-			</div>
-			<div style = clear:both>
-			</div>
-		</div>
+		}
+		else
+		{
+			echo '<p>This file isn\'t available for download right now, as it is being processed by Orbital. It should be available soon.</p>';
+		}
 		
-		<?php } ?>
+		?>	
+
 	</div>
 </div>
 
