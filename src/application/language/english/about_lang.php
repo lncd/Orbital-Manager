@@ -16,6 +16,6 @@ $lang['about_trio2_title']	= 'License';
 $lang['about_trio2_text']	= 'Choose from a list of licenses to ensure that the terms and conditions of use for your data are clearly stated.';
 
 $lang['about_trio3_title']	= 'Publish';
-$lang['about_trio3_text']	= 'Publish your data to its own project page, at an address that can be permanently cited in your research papers and grant applications.';
+$lang['about_trio3_text']	= 'Publish your data to its own project page, at an address that can be permanently cited in your research papers and grant applications. Measure your impact through integration with Google Analytics.';
 
 // EOF
