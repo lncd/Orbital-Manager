@@ -20,7 +20,7 @@
 			<h1>{file_name}</h1>
 		</div>
 		<div class = "well">
-		Licence: {file_licence}<br>
+		Licence: <a href = {file_licence_uri}>{file_licence}</a><br>
 		Extension: {file_extension}<br>
 		Mime type: {file_mimetype}<br>
 		Project: <a href="{base_url}project/{file_project_id}">{file_project}</a>

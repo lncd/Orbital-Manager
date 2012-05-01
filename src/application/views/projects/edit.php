@@ -1,3 +1,13 @@
+<head>
+  <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
+    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
+  
+  <script>
+  $(document).ready(function() {
+    $(".datepicker").datepicker({ dateFormat: "yy-mm-dd" });
+  });
+  </script>
+</head>
 <div class="row">
 	<div class="span12">
 
@@ -107,6 +117,7 @@
 				}?>
 				</select>
 				
+
 				<div class="form-actions">
 					<button type="submit" class="btn btn-success"><i class = "icon-ok icon-white"></i> Save Details</button>
 				</div>
