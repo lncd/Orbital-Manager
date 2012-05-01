@@ -14,7 +14,11 @@
 			<h1>{user_name} <small>{institution}</small></h1>
 		</div>
 		
+		<!--
+		
 		<h2>Research Summary</h2>
+		
+		-->
 		
 	</div>
 </div>
