@@ -263,6 +263,10 @@ class Projects extends CI_Controller {
 
 				$this->data['archive_files'] = $response->response->archive_files;
 
+				// Upload token
+				$this->data['upload_token'] = $response->response->upload_token;
+
+				// Default licence
 				$this->data['project_default_licence'] = $response->response->project->default_licence;
 
 				$this->parser->parse('includes/header', $this->data);
