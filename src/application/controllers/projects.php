@@ -240,7 +240,6 @@ class Projects extends CI_Controller {
 					$this->data['project_complete'] = abs(((time() - strtotime($response->response->project->start_date)) / (strtotime($response->response->project->end_date) - strtotime($response->response->project->start_date))) * 100);
 				}
 
-
 				$this->data['project_description'] = $this->typography->auto_typography($response->response->project->abstract);
 
 				// Generate workspace mode

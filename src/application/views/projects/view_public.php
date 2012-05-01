@@ -48,6 +48,9 @@
 <hr>
 
 <div class="row">
+
+	<!--
+
 	<div class="span6">
 		<div class="well">
 			<h2>Dynamic Datasets</h2>
@@ -57,7 +60,10 @@
 			
 		</div>
 	</div>
-	<div class="span6">
+	
+	-->
+	
+	<div class="span12">
 		<div class="well">
 			<h2>File Archives</h2>
 			<?php

@@ -86,6 +86,9 @@
 <hr>
 
 <div class="row">
+
+	<!--
+
 	<div class="span4">
 		<div class="well">
 			<h2>Workspace</h2>
@@ -160,7 +163,10 @@
 			
 		</div>
 	</div>
-	<div class="span4">
+	
+	-->
+	
+	<div class="span12">
 		<div class="well">
 			<h2>File Archives</h2>
 			
