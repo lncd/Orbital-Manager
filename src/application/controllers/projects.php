@@ -70,14 +70,14 @@ class Projects extends CI_Controller {
 								'project_uri' => site_url('project/' . $project->identifier),
 							);
 
-							if (isset($project->start_date) AND $project->start_date !== '')
+							if (isset($project->start_date))
 							{
-								$output['project_startdate'] = date('D jS F Y', $project->start_date);
+								$output['project_startdate'] = date('D jS F Y', strtotime($project->start_date));
 							}
 
 							if (isset($project->end_date))
 							{
-								$output['project_enddate'] = date('D jS F Y', $project->end_date);
+								$output['project_enddate'] = date('D jS F Y', strtotime($project->end_date));
 							}
 							$this->data['public_projects'][] = $output;
 
@@ -234,24 +234,14 @@ class Projects extends CI_Controller {
 					);
 				}
 
-				if (!isset($response->response->project->start_date) && !isset($response->response->project->end_date))
+
+				if (isset($response->response->project->start_date) and isset($response->response->project->end_date) and strtotime($response->response->project->end_date) > strtotime($response->response->project->start_date))
 				{
-					//Check for both start and end dates - if not present dont show project progress
+					$this->data['project_complete'] = abs(((time() - strtotime($response->response->project->start_date)) / (strtotime($response->response->project->end_date) - strtotime($response->response->project->start_date))) * 100);
 				}
-
-
-			if (isset($response->response->project->start_date) and isset($response->response->project->end_date) and strtotime($response->response->project->end_date) > strtotime($response->response->project->start_date))
-			{
-				$this->data['project_complete'] = abs(((time() - strtotime($response->response->project->start_date)) / (strtotime($response->response->project->end_date) - strtotime($response->response->project->start_date))) * 100);
-			}
 
 
 				$this->data['project_description'] = $this->typography->auto_typography($response->response->project->abstract);
-
-				if (isset($response->response->project->start_date) and isset($response->response->project->end_date) and $response->response->project->end_date > $response->response->project->start_date)
-				{
-					$this->data['project_complete'] = abs(((time() - $response->response->project->start_date) / ($response->response->project->end_date - $response->response->project->start_date)) * 100);
-				}
 
 				// Generate workspace mode
 
@@ -328,9 +318,9 @@ class Projects extends CI_Controller {
 			}
 			$this->data['project_description'] = $this->typography->auto_typography($response->response->project->abstract);
 
-			if (isset($response->response->project->start_date) and isset($response->response->project->end_date) and $response->response->project->end_date > $response->response->project->start_date)
+			if (isset($response->response->project->start_date) and isset($response->response->project->end_date) and strtotime($response->response->project->end_date) > strtotime($response->response->project->start_date))
 			{
-				$this->data['project_complete'] = abs(((time() - $response->response->project->start_date) / ($response->response->project->end_date - $response->response->project->start_date)) * 100);
+				$this->data['project_complete'] = abs(((time() - strtotime($response->response->project->start_date)) / (strtotime($response->response->project->end_date) - strtotime($response->response->project->start_date))) * 100);
 			}
 
 			// Generate list of datasets
