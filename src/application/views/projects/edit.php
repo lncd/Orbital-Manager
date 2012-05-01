@@ -58,12 +58,15 @@
 				'id'			=> 'project_abstract',
 				'placeholder'	=> 'A bit about this project...',
 				'value'			=> set_value('abstract', $project_abstract),
-				'rows'			=> '4',
+				'rows'			=> '5',
 				'class'			=> 'span6'
 			);
 	
-			echo form_label('Project Description', 'project_abstract');
+			echo '<div class="control-group">';
+			echo form_label('Project Description', 'project_abstract', array('class' => 'control-label'));
+			echo '<div class="controls">';
 			echo form_textarea($form_abstract);
+			echo '</div></div>';
 			
 			$form_researchgroup = array(
 				'name'			=> 'research_group',
@@ -74,8 +77,11 @@
 				'class'			=> 'span4'
 			);
 	
-			echo form_label('Research Group', 'project_research_group');
+			echo '<div class="control-group">';
+			echo form_label('Research Group', 'project_research_group', array('class' => 'control-label'));
+			echo '<div class="controls">';
 			echo form_input($form_researchgroup);
+			echo '</div></div>';
 			
 			$form_startdate = array(
 				'name'			=> 'start_date',
@@ -86,8 +92,11 @@
 				'class'			=> 'span2 datepicker'
 			);
 	
-			echo form_label('Project Start Date', 'project_start_date');
+			echo '<div class="control-group">';
+			echo form_label('Project Start Date', 'project_start_date', array('class' => 'control-label'));
+			echo '<div class="controls">';
 			echo form_input($form_startdate);
+			echo '</div></div>';
 			
 			$form_enddate = array(
 				'name'			=> 'end_date',
@@ -98,31 +107,43 @@
 				'class'			=> 'span2 datepicker'
 			);
 	
-			echo form_label('Project End Date', 'project_end_date');
+			echo '<div class="control-group">';
+			echo form_label('Project End Date', 'project_end_date', array('class' => 'control-label'));
+			echo '<div class="controls">';
 			echo form_input($form_enddate);
+			echo '</div></div>';
 			
+			$form_public = array(
+				'name'		=> 'public',
+				'id'		=> 'project_public',
+				'value'		=> 'public',
+				'checked'	=> set_checkbox('public', 'public', $project_public_view)
+			);
+	
+			echo '<div class="control-group">';
+			echo form_label('Show Public View', 'project_public', array('class' => 'control-label'));
+			echo '<div class="controls">';
+			echo form_checkbox($form_public);
+			echo '<p class="help-block">If you enable the public view then there will be a summary of this project as well as a list of its publicly available dynamic datasets and archived files made available for general viewing.</p>';
+			echo '</div></div>';
 			
-			?>
-			
-				<label for="project_default_licence">Default Licence</label>
-				<select id="project_default_licence" name="default_licence">
-				<?php foreach ($licences as $licence)
-				{
-					echo '<option value = "' . $licence->id . '" ';
-					if ($licence->id === $project_default_licence)
-					{
-						echo 'selected';
-					}
-					echo '>' . $licence->name .'</option>';
-				}?>
-				</select>
-				
+			foreach ($licences as $licence)
+			{
+				$available_licences[$licence->id] = $licence->name;
+			}
+	
+			echo '<div class="control-group">';
+			echo form_label('Default Licence', 'project_default_licence', array('class' => 'control-label'));
+			echo '<div class="controls">';
+			echo form_dropdown('default_licence', $available_licences, set_value('default_licence', $project_default_licence), 'id="project_default_licence" class="span4"');
+			echo '<p class="help-block">Choosing a default licence makes it easier to publish your data. However, you can still change it on a case-by-case basis for individual files and datasets.</p>';
+			echo '</div></div>';
 
-				<div class="form-actions">
-					<button type="submit" class="btn btn-success"><i class = "icon-ok icon-white"></i> Save Details</button>
-				</div>
+			echo '<div class="form-actions">';
+			echo '<button type="submit" class="btn btn-success"><i class = "icon-ok icon-white"></i> Save Details</button> <button type="reset" class="btn btn-warning">Reset</button>';
+			echo '</div>';
 				
-			<?php echo form_close(); ?>
+			echo form_close(); ?>
 		</div>
 		<div class="well">
 			<h2>Project Members</h2>

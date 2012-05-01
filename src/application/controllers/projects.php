@@ -450,6 +450,15 @@ class Projects extends CI_Controller {
 			}
 			$this->data['project_description'] = $this->typography->auto_typography($response->response->project->abstract);
 
+			if ($response->response->project->public_view === 'visible')
+			{
+				$this->data['project_public_view'] = TRUE;
+			}
+			else
+			{
+				$this->data['project_public_view'] = FALSE;
+			}
+
 			$this->parser->parse('includes/header', $this->data);
 			$this->parser->parse('projects/edit', $this->data);
 			$this->parser->parse('includes/footer', $this->data);
