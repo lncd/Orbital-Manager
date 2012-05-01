@@ -70,7 +70,7 @@ class Projects extends CI_Controller {
 								'project_uri' => site_url('project/' . $project->identifier),
 							);
 
-							if (isset($project->start_date))
+							if (isset($project->start_date) AND $project->start_date !== '')
 							{
 								$output['project_startdate'] = date('D jS F Y', $project->start_date);
 							}
