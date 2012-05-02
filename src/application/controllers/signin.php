@@ -64,7 +64,7 @@ class Signin extends CI_Controller {
 			{
 				$this->data['auth_types'][] = array(
 					'name' => $auth_type->name,
-					'uri' => $auth_type->uri  . '?response_type=code&scope=' . implode(' ', $this->request_scopes) . '&client_id=' . $this->config->item('orbital_app_id') . '&redirect_uri=' . site_url('signin/auth') . '&state=' . urlencode(serialize(array('token' => $this->session->userdata('signin_token'), 'destination' => $destination)))
+					'uri' => $auth_type->uri  . '?response_type=code&scope=' . implode(' ', $this->request_scopes) . '&client_id=' . $this->config->item('orbital_app_id') . '&redirect_uri=' . site_url('signin/auth') . '&state=' . urlencode(serialize(array('token' => $this->session->userdata('signin_token'), 'destination' => $destination, 'handler' => $auth_type->tag)))
 				);
 			}
 			
@@ -158,7 +158,8 @@ class Signin extends CI_Controller {
 								'current_user_string' => $response->user,
 								'access_token' => $response->access_token,
 								'refresh_token' => $response->refresh_token,
-								'system_admin' => $response->system_admin
+								'system_admin' => $response->system_admin,
+								'signin_handler' => $state['handler']
 							));
 							
 							$this->session->set_flashdata('message', 'Signed in successfully. Welcome to Orbital!');
@@ -261,7 +262,14 @@ class Signin extends CI_Controller {
 	function signout()
 	{
 		$this->session->sess_destroy();
-		redirect();
+		if ($this->session->userdata('signin_handler'))
+		{
+			header('Location: ' . $this->config->item('orbital_core_location') . 'auth/signout/' . $this->session->userdata('signin_handler'));
+		}
+		else
+		{
+			redirect();
+		}
 	}
 		
 }
