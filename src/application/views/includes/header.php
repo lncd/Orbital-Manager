@@ -70,7 +70,7 @@
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 					</a>
-					<a class="brand" href="#">{orbital_manager_name}</a>
+					<a class="brand" href="{base_url}">{orbital_manager_name}</a>
 					<div class="nav-collapse">
 						<ul class="nav">
 							{nav_menu}
