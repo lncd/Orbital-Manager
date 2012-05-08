@@ -313,15 +313,15 @@
 						</div>
 					</div>
 					
-					<div id="licenceConditions" style="display:none">
-						<h4>This licence has the following conditions:</h4>
-						<div id="licenceConditionsContent">
-						</div>
-					</div>
-					
 					<div id="licenceDeny" style="display:none">
 						<h4>This licence forbids:</h4>
 						<div id="licenceDenyContent">
+						</div>
+					</div>
+					
+					<div id="licenceConditions" style="display:none">
+						<h4>This licence has the following conditions:</h4>
+						<div id="licenceConditionsContent">
 						</div>
 					</div>
 					
