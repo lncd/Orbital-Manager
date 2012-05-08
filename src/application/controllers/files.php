@@ -39,10 +39,6 @@ class Files extends CI_Controller {
 			$this->data['file_extension'] = $response->response->file->extension;
 			$this->data['file_mimetype'] = $response->response->file->mimetype;
 			$this->data['page_title'] = $response->response->file->original_name;
-
-			if ($project->response->project->google_analytics !== 'NULL'){
-				$this->data['alt_tracking'] = $project->response->project->google_analytics;
-			}
 			
 			if ($response->response->file->status === 'uploaded')
 			{
@@ -86,7 +82,7 @@ class Files extends CI_Controller {
 			$this->data['file_extension'] = $response->response->file->extension;
 			$this->data['file_mimetype'] = $response->response->file->mimetype;
 			$this->data['page_title'] = $response->response->file->original_name;
-
+			
 			if ($project->response->project->google_analytics !== 'NULL'){
 				$this->data['alt_tracking'] = $project->response->project->google_analytics;
 			}
