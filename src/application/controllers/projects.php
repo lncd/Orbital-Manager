@@ -514,94 +514,23 @@ class Projects extends CI_Controller {
 	{
 		if ($response = $this->orbital->project_details($identifier))
 		{
-			if($this->input->post('delete'))
+			if($this->orbital->delete_project($identifier))
 			{
-				$this->orbital->delete_project($identifier);
 				$this->session->set_flashdata('message', 'Project deleted successfully.');
 				$this->session->set_flashdata('message_type', 'success');
 				redirect('projects/');
+			
 			}
-
-			$this->load->library('typography');
-			$this->data['project_id'] = $response->response->project->identifier;
-			$this->data['page_title'] = 'Delete ' . $response->response->project->name;
-			$this->data['project_name'] = $response->response->project->name;
-			$this->data['project_abstract'] = $response->response->project->abstract;
-
-			if ($response->response->permissions->write)
+			else
 			{
-				$this->data['project_controls'][] = array(
-					'uri' => site_url('project/' . $response->response->project->identifier . '/delete'),
-					'title' => 'Delete'
-				);
+				$this->session->set_flashdata('message', $response->response->project->name . ' could not be deleted');
+				$this->session->set_flashdata('message_type', 'alert-error');
+				redirect('project/' . $identifier);
 			}
-
-			foreach($response->response->users as $user => $permissions)
-			{
-				//Set array of permissions for user
-				$user_permissions = array();
-
-				//Gert permissions and set as true or false
-				$user_permissions['permission_read'] = FALSE;
-				if ($permissions->read)
-				{
-					$user_permissions['permission_read'] = TRUE;
-				}
-				$user_permissions['permission_write'] = FALSE;
-				if ($permissions->write)
-				{
-					$user_permissions['permission_write'] = TRUE;
-				}
-				$user_permissions['permission_delete'] = FALSE;
-				if ($permissions->delete)
-				{
-					$user_permissions['permission_delete'] = TRUE;
-				}
-				$user_permissions['permission_archivefiles_write'] = FALSE;
-				if ($permissions->archive_write)
-				{
-					$user_permissions['permission_archivefiles_write'] = TRUE;
-				}
-				$user_permissions['permission_archivefiles_read'] = FALSE;
-				if ($permissions->archive_read)
-				{
-					$user_permissions['permission_archivefiles_read'] = TRUE;
-				}
-				$user_permissions['permission_sharedworkspace_read'] = FALSE;
-				if ($permissions->sharedworkspace_read)
-				{
-					$user_permissions['permission_sharedworkspace_read'] = TRUE;
-				}
-				$user_permissions['permission_dataset_create'] = FALSE;
-				if ($permissions->dataset_create)
-				{
-					$user_permissions['permission_dataset_create'] = TRUE;
-				}
-
-				$this->data['project_users'][] = array('user' => $user, 'permissions' => $user_permissions);
-			}
-
-			if (isset($response->response->project->start_date))
-			{
-				$this->data['project_startdate'] = $response->response->project->start_date;
-				$this->data['project_startdate_pretty'] = date('D jS F Y', strtotime($response->response->project->start_date));
-			}
-			if (isset($response->response->project->end_date))
-			{
-				$this->data['project_enddate'] = $response->response->project->end_date;
-				$this->data['project_enddate_pretty'] = date('D jS F Y', strtotime($response->response->project->end_date));
-			}
-			$this->data['project_description'] = $this->typography->auto_typography($response->response->project->abstract);
-
-			$this->parser->parse('includes/header', $this->data);
-			$this->parser->parse('projects/delete', $this->data);
-			$this->parser->parse('includes/footer', $this->data);
 		}
 		else
 		{
-			$this->session->set_flashdata('message', $response->response->project->name . ' could not be deleted');
-			$this->session->set_flashdata('message_type', 'alert-error');
-			redirect('project/' . $identifier);
+			show_404();
 		}
 	}
 
