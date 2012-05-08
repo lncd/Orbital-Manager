@@ -2,11 +2,8 @@
 			<li>
 				<a href="{base_url}">Home</a> <span class="divider">/</span>
 			</li>
-			<li>
-				<a href="{base_url}projects">Projects</a> <span class="divider">/</span>
-			</li>
 			<li class="active">
-				Public
+				Public Projects
 			</li>
 		</ul>
 

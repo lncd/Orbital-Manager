@@ -64,6 +64,53 @@ class Files extends CI_Controller {
 	}
 
 	/**
+	 * View file details public
+	 *
+	 * views a public files details
+	 */
+
+	function view_file_public($identifier)
+	{
+		if ($response = $this->orbital->file_get_details_public($identifier))
+		{
+			$project = $this->orbital->project_public_details($response->response->file->project);
+			$this->load->library('typography');
+			
+			$this->data['file_id'] = $response->response->file->id;
+			$this->data['file_project'] = $response->response->file->project_name;
+			$this->data['file_project_id'] = $response->response->file->project;
+			$this->data['file_title'] = $response->response->file->original_name;
+			$this->data['file_name'] = $response->response->file->original_name;
+			$this->data['file_licence'] = $response->response->file->licence_name;
+			$this->data['file_licence_uri'] = $response->response->file->licence_uri;
+			$this->data['file_extension'] = $response->response->file->extension;
+			$this->data['file_mimetype'] = $response->response->file->mimetype;
+			$this->data['page_title'] = $response->response->file->original_name;
+
+			if ($project->response->project->google_analytics !== 'NULL'){
+				$this->data['alt_tracking'] = $project->response->project->google_analytics;
+			}
+			
+			if ($response->response->file->status === 'uploaded')
+			{
+				$this->data['file_downloadable'] = TRUE;
+			}
+			else
+			{
+				$this->data['file_downloadable'] = FALSE;
+			}
+
+			$this->parser->parse('includes/header', $this->data);
+			$this->parser->parse('files/view_file_public', $this->data);
+			$this->parser->parse('includes/footer', $this->data);
+		}
+		else
+		{
+			show_404();
+		}
+	}
+
+	/**
 	 * Download archive file
 	 *
 	 * Downloads an archive file from a project

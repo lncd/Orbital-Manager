@@ -859,14 +859,12 @@ class Orbital {
 
 	public function file_get_details($file_id)
 	{
-		if ($this->_ci->session->userdata('current_user_string'))
-		{
-			return $this->get_authed('file/' . $file_id);
-		}
-		else
-		{
-			return $this->get_unauthed('file/' . $file_id);
-		}
+		return $this->get_authed('file/' . $file_id);
+	}
+	
+	public function file_get_details_public($file_id)
+	{
+		return $this->get_unauthed('file/' . $file_id);	
 	}
 }
 

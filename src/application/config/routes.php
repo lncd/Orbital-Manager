@@ -50,6 +50,7 @@ $route['project/(:any)/public'] = "projects/view_public/$1";
 $route['project/(:any)'] = "projects/view/$1";
 $route['projects/public'] = "projects/list_public";
 $route['file/(:any)/download'] = "files/download_file/$1";
+$route['file/(:any)/public'] = "files/view_file_public/$1";
 $route['file/(:any)'] = "files/view_file/$1";
 $route['licence/(:any)/json'] = "licences/view_licence_json/$1";
 $route['licence/(:any)'] = "licences/view_licence/$1";
