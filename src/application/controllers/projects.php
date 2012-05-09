@@ -514,7 +514,9 @@ class Projects extends CI_Controller {
 	{
 		if ($response = $this->orbital->project_details($identifier))
 		{
-			if($this->orbital->delete_project($identifier))
+			$delete = $this->orbital->delete_project($identifier);
+			
+			if($delete->response->status === TRUE)
 			{
 				$this->session->set_flashdata('message', 'Project deleted successfully.');
 				$this->session->set_flashdata('message_type', 'success');
@@ -523,7 +525,7 @@ class Projects extends CI_Controller {
 			}
 			else
 			{
-				$this->session->set_flashdata('message', $response->response->project->name . ' could not be deleted');
+				$this->session->set_flashdata('message', $response->response->project->name . $delete->response->error);
 				$this->session->set_flashdata('message_type', 'alert-error');
 				redirect('project/' . $identifier);
 			}
