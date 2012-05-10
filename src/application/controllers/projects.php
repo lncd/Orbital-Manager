@@ -490,11 +490,24 @@ class Projects extends CI_Controller {
 	{
 		if($this->input->post('name') and $this->input->post('name') !== '')
 		{
-			if ($response = $this->orbital->create_project($this->input->post('name'), $this->input->post('abstract')))
+			if($this->input->post('abstract') and $this->input->post('abstract') !== '')
 			{
-				$this->session->set_flashdata('message', 'Your project has been created!');
-				$this->session->set_flashdata('message_type', 'success');
-				redirect('project/' . $response->response->project_id . '?special=new');
+				if ($response = $this->orbital->create_project($this->input->post('name'), $this->input->post('abstract')))
+				{
+					$this->session->set_flashdata('message', 'Your project has been created!');
+					$this->session->set_flashdata('message_type', 'success');
+					redirect('project/' . $response->response->project_id . '?special=new');
+				}
+				else
+				{
+					$this->session->set_flashdata('message', 'Something went wrong creating the project');
+					$this->session->set_flashdata('message_type', 'error');
+				}
+			}
+			else
+			{
+				$this->session->set_flashdata('message', 'A project must have an abstract');
+				$this->session->set_flashdata('message_type', 'alert');
 			}
 		}
 		else
@@ -520,8 +533,7 @@ class Projects extends CI_Controller {
 			{
 				$this->session->set_flashdata('message', 'Project deleted successfully.');
 				$this->session->set_flashdata('message_type', 'success');
-				redirect('projects/');
-			
+				redirect('projects/');			
 			}
 			else
 			{
@@ -535,7 +547,6 @@ class Projects extends CI_Controller {
 			show_404();
 		}
 	}
-
 }
 
 // End of file me.php
