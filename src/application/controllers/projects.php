@@ -352,7 +352,19 @@ class Projects extends CI_Controller {
 
 			if($this->input->post('name') and $this->input->post('abstract'))
 			{
-
+			
+				if (strtotime($this->input->post('start_date')) < strtotime($this->input->post('end_date')))
+				{
+					$this->data['project_startdate'] = $response->response->project->start_date;
+					$this->data['project_startdate_pretty'] = date('D jS F Y', strtotime($response->response->project->start_date));
+				}
+				else
+				{
+					$this->session->set_flashdata('message', 'Start date cannot be after end date.');
+					$this->session->set_flashdata('message_type', 'error');
+					redirect('project/' . $identifier . '/edit');
+				}
+					
 				if ($this->input->post('public') === 'public')
 				{
 					$public_view = 'visible';
@@ -369,6 +381,7 @@ class Projects extends CI_Controller {
 				
 				redirect('project/' . $identifier);
 			}
+			
 
 			if($this->input->post('save_members_details'))
 				{/*
@@ -453,12 +466,25 @@ class Projects extends CI_Controller {
 				$this->data['project_users'][] = array('user' => $user, 'permissions' => $user_permissions, 'user_email' => base64_encode($user));
 			}
 
-			if (isset($response->response->project->start_date))
+			if (isset($response->response->project->start_date) AND isset($response->response->project->end_date))
+			{
+				if (strtotime($response->response->project->start_date) < strtotime($response->response->project->end_date))
+				{
+					$this->data['project_startdate'] = $response->response->project->start_date;
+					$this->data['project_startdate_pretty'] = date('D jS F Y', strtotime($response->response->project->start_date));
+				}
+				else
+				{
+					$this->data['message'] = 'Start date cannot be after end date';
+				}
+			}
+
+			if (isset($response->response->project->start_date) AND !isset($response->response->project->end_date))
 			{
 				$this->data['project_startdate'] = $response->response->project->start_date;
 				$this->data['project_startdate_pretty'] = date('D jS F Y', strtotime($response->response->project->start_date));
 			}
-			if (isset($response->response->project->end_date))
+			if (isset($response->response->project->end_date) AND !isset($response->response->project->start_date))
 			{
 				$this->data['project_enddate'] = $response->response->project->end_date;
 				$this->data['project_enddate_pretty'] = date('D jS F Y', strtotime($response->response->project->end_date));
@@ -509,14 +535,14 @@ class Projects extends CI_Controller {
 			{
 				$this->session->set_flashdata('message', 'A project must have an abstract');
 				$this->session->set_flashdata('message_type', 'alert');
-					redirect('projects');
+				redirect('projects');
 			}
 		}
 		else
 		{
 			$this->session->set_flashdata('message', 'A project must have a name');
 			$this->session->set_flashdata('message_type', 'alert');
-					redirect('projects');
+			redirect('projects');
 		}
 	}
 
