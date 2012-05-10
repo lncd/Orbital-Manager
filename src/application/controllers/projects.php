@@ -23,7 +23,6 @@ class Projects extends CI_Controller {
 
 	function index()
 	{
-
 		$this->data['page_title'] = 'My Projects';
 
 		if ($response = $this->orbital->projects_list())

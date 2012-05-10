@@ -105,10 +105,10 @@
 	);
 
 	echo '<div class="control-group">';
-	echo form_label('Show Public View', 'project_public', array('class' => 'control-label'));
+	echo form_label('Publish This Project', 'project_public', array('class' => 'control-label'));
 	echo '<div class="controls">';
 	echo form_checkbox($form_public);
-	echo '<p class="help-block">If you enable the public view then there will be a summary of this project as well as a list of its publicly available dynamic datasets and archived files made available for general viewing.</p>';
+	echo '<p class="help-block">This creates a public web page for your project, which people can cite and download your public datasets.</p>';
 	echo '</div></div>';
 	
 	foreach ($licences as $licence)
