@@ -225,14 +225,6 @@ class Projects extends CI_Controller {
 				$this->data['project_enddate_pretty'] = 'Unspecified';
 			}
 
-				//Check for Delete permissions
-				if ($response->response->permissions->delete === TRUE)
-				{
-					$this->data['project_controls'][] = array(
-						'uri' => site_url('project/' . $response->response->project->identifier . '/delete'),
-						'title' => 'Delete'
-					);
-				}
 
 
 				if (isset($response->response->project->start_date) and isset($response->response->project->end_date) and strtotime($response->response->project->end_date) > strtotime($response->response->project->start_date))
@@ -270,6 +262,20 @@ class Projects extends CI_Controller {
 					$this->data['new_project'] = FALSE;
 				}
 
+				//Check for Delete permissions
+				if ($response->response->permissions->delete === TRUE)
+				{
+					//Check project doesn't have files or datasets
+					//CHANGE TO CHECK FOR is_deletable in future
+					if(!isset($this->data['working_datasets']) AND !isset($this->data['archive_files']))
+					{									
+						$this->data['project_controls'][] = array(
+							'uri' => site_url('project/' . $response->response->project->identifier . '/delete'),
+							'title' => 'Delete'
+						);
+					}
+				}
+				
 				$this->parser->parse('includes/header', $this->data);
 				$this->parser->parse('projects/view', $this->data);
 				$this->parser->parse('includes/footer', $this->data);
@@ -578,4 +584,4 @@ class Projects extends CI_Controller {
 	}
 }
 
-// End of file me.php
+// End of file projects.php

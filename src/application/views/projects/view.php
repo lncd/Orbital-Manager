@@ -69,7 +69,7 @@
 		if ($new_project === TRUE)
 		{
 			echo '<div class="alert alert-info">
-				<i class="icon-chevron-down"></i> You can tell us a lot more about your project, which helps us help you manage your research. To do this, click the "Edit" button.
+				<i class="icon-chevron-down"></i> Please describe your project in more detail. Good research data management requires good metadata.
 			</div>';
 
 		}
@@ -249,7 +249,7 @@
 			else
 			{
 				echo '<p>You don\'t have any archive files stored in this project.</p>
-				<p>Archive files let you permanently store and publish your data in whatever format you think is best.';
+				<p>Archive your files to permanently store and publish your data.';
 			}
 			
 			?>
