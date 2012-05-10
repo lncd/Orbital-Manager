@@ -267,7 +267,7 @@ class Projects extends CI_Controller {
 				{
 					//Check project doesn't have files or datasets
 					//CHANGE TO CHECK FOR is_deletable in future
-					if(!isset($this->data['working_datasets']) AND !isset($this->data['archive_files']))
+					if(count($this->data['working_datasets']) === 0 AND count($this->data['archive_files']) === 0)
 					{									
 						$this->data['project_controls'][] = array(
 							'uri' => site_url('project/' . $response->response->project->identifier . '/delete'),
@@ -358,17 +358,19 @@ class Projects extends CI_Controller {
 
 			if($this->input->post('name') and $this->input->post('abstract'))
 			{
-			
-				if (strtotime($this->input->post('start_date')) < strtotime($this->input->post('end_date')))
+				if($this->input->post('start_date') and $this->input->post('end_date'))
 				{
-					$this->data['project_startdate'] = $response->response->project->start_date;
-					$this->data['project_startdate_pretty'] = date('D jS F Y', strtotime($response->response->project->start_date));
-				}
-				else
-				{
-					$this->session->set_flashdata('message', 'Start date cannot be after end date.');
-					$this->session->set_flashdata('message_type', 'error');
-					redirect('project/' . $identifier . '/edit');
+					if (strtotime($this->input->post('start_date')) < strtotime($this->input->post('end_date')))
+					{
+						$this->data['project_startdate'] = $response->response->project->start_date;
+						$this->data['project_startdate_pretty'] = date('D jS F Y', strtotime($response->response->project->start_date));
+					}
+					else
+					{
+						$this->session->set_flashdata('message', 'Start date cannot be after end date.');
+						$this->session->set_flashdata('message_type', 'error');
+						redirect('project/' . $identifier . '/edit');
+					}
 				}
 					
 				if ($this->input->post('public') === 'public')
