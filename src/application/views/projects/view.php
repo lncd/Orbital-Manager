@@ -258,80 +258,18 @@
 			
 			<p><a href="#uploadFileDialogue" class="btn btn-success" class="btn btn-success" data-toggle="modal"><i class="icon-upload icon-white"></i> Upload File</a>
 			
-			<?php
-
-			echo form_open_multipart($orbital_core_location . 'files/upload', array(
-				'class' => 'modal fade',
-				'id' => 'uploadFileDialogue'
-			));
-			
-			echo form_hidden('upload_token', $upload_token);
-			echo form_hidden('return_uri', site_url('project/' . $project_id));
-			
-			?>
-			
+			<div class="modal fade" id="uploadFileDialogue">
 				<div class="modal-header">
 					<button class="close" data-dismiss="modal">×</button>
 					<h3>Upload File to Archives</h3>
 				</div>
 				<div class="modal-body">
-					
-					<?php
-					
-					$form_file = array(
-						'name'        => 'file',
-						'id'          => 'file',
-					);
-			
-					echo form_label('File to be uploaded', 'file');
-					echo form_upload($form_file);
-					
-					$form_public = array(
-						'name'	=> 'public',
-						'id'	=> 'public',
-						'value'	=> 'public',
-					);
-			
-					echo form_label('Make file publicly available?', 'public');
-					echo form_checkbox($form_public);
-					
-					$licences = $this->orbital->licences_enabled_list();
-					
-					foreach ($licences->response->licences as $licence)
-					{
-						$file_licences[$licence->id] = $licence->name;
-					}
-			
-					echo form_label('Licence to release this file under (if public)', 'licence');
-					echo form_dropdown('licence', $file_licences, $project_default_licence, 'id="licence"');
-					
-					?>
-					
-					<div id="licenceAllow" style="display:none">
-						<h4>This licence allows:</h4>
-						<div id="licenceAllowContent">
-						</div>
-					</div>
-					
-					<div id="licenceDeny" style="display:none">
-						<h4>This licence forbids:</h4>
-						<div id="licenceDenyContent">
-						</div>
-					</div>
-					
-					<div id="licenceConditions" style="display:none">
-						<h4>This licence has the following conditions:</h4>
-						<div id="licenceConditionsContent">
-						</div>
-					</div>
-					
+					<iframe style="width:100%;border:none;" src="https://orbital-core/fileupload/form?token=<?php echo $upload_token; ?>&licence=<?php echo $project_default_licence; ?>"></iframe>
 				</div>
 				<div class="modal-footer">
-					<button class="btn" data-dismiss="modal">Close</button>
-					<button type="submit" class="btn btn-success"><i class="icon-upload icon-white"></i> Upload</button>
-				</div>
-			  
-			<?php echo form_close(); ?>
+					<a class="btn" data-dismiss="modal">Close</a>
+				</div>		
+			</div>
 			
 		</div>
 	</div>
