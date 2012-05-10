@@ -6,7 +6,7 @@
 		<title>{page_title} - {orbital_manager_name}</title>
 		
 		<!--[if lt IE 9]>
-		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+		<script src="https://html5shim.googlecode.com/svn/trunk/html5.js"></script>
 		<![endif]-->
 		
 		<!-- Le styles -->
