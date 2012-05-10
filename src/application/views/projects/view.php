@@ -264,7 +264,7 @@
 					<h3>Upload File to Archives</h3>
 				</div>
 				<div class="modal-body">
-					<iframe style="width:100%;border:none;" src="https://orbital-core/fileupload/form?token=<?php echo $upload_token; ?>&licence=<?php echo $project_default_licence; ?>"></iframe>
+					<iframe style="width:100%;border:none;" src="{orbital_core_location}fileupload/form?token=<?php echo $upload_token; ?>&licence=<?php echo $project_default_licence; ?>"></iframe>
 				</div>
 				<div class="modal-footer">
 					<a class="btn" data-dismiss="modal">Close</a>
