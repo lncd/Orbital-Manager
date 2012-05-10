@@ -502,18 +502,21 @@ class Projects extends CI_Controller {
 				{
 					$this->session->set_flashdata('message', 'Something went wrong creating the project');
 					$this->session->set_flashdata('message_type', 'error');
+					redirect('projects');
 				}
 			}
 			else
 			{
 				$this->session->set_flashdata('message', 'A project must have an abstract');
 				$this->session->set_flashdata('message_type', 'alert');
+					redirect('projects');
 			}
 		}
 		else
 		{
 			$this->session->set_flashdata('message', 'A project must have a name');
 			$this->session->set_flashdata('message_type', 'alert');
+					redirect('projects');
 		}
 	}
 
