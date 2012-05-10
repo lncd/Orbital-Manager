@@ -108,7 +108,7 @@
 	echo form_label('Publish This Project', 'project_public', array('class' => 'control-label'));
 	echo '<div class="controls">';
 	echo form_checkbox($form_public);
-	echo '<p class="help-block">This creates a public web page for your project, which people can cite and download your public datasets.</p>';
+	echo '<p class="help-block">This creates a public web page for your project, which people can cite. If you upload public datasets, they will be available to download from this page.</p>';
 	echo '</div></div>';
 	
 	foreach ($licences as $licence)
