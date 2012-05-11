@@ -264,7 +264,7 @@
 					<h3>Upload File to Archives</h3>
 				</div>
 				<div class="modal-body">
-					<iframe style="width:100%;border:none;" src="{orbital_core_location}fileupload/form?token=<?php echo $upload_token; ?>&licence=<?php echo $project_default_licence; ?>"></iframe>
+					<iframe style="width:100%;border:none;height:400px;" src="{orbital_core_location}fileupload/form?token=<?php echo $upload_token; ?>&licence=<?php echo $project_default_licence; ?>"></iframe>
 				</div>
 				<div class="modal-footer">
 					<a class="btn" data-dismiss="modal">Close</a>
@@ -274,68 +274,3 @@
 		</div>
 	</div>
 </div>
-
-<script type="text/javascript">
-
-$.getJSON('{base_url}licence/' + $('#licence').val() + '/json', function(data) {
-
-	if (data.allow !== null)
-	{
-		$('#licenceAllowContent').html(data.allow);
-		$('#licenceAllow').show();
-	}
-	
-	if (data.conditions !== null)
-	{
-		$('#licenceConditionsContent').html(data.conditions);
-		$('#licenceConditions').show();
-	}
-	
-	if (data.forbid !== null)
-	{
-		$('#licenceDenyContent').html(data.forbid);
-		$('#licenceDeny').show();
-	}
-  
-});
-
-$('#licence').change(function(){
-
-		
-	$.getJSON('{base_url}licence/' + $('#licence').val() + '/json', function(data) {
-	  
-		if (data.allow !== null)
-		{
-			$('#licenceAllowContent').html(data.allow);
-			$('#licenceAllow').show();
-		}
-		else
-		{
-			$('#licenceAllow').hide();
-		}
-		
-		if (data.conditions !== null)
-		{
-			$('#licenceConditionsContent').html(data.conditions);
-			$('#licenceConditions').show();
-		}
-		else
-		{
-			$('#licenceConditions').hide();
-		}
-		
-		if (data.forbid !== null)
-		{
-			$('#licenceDenyContent').html(data.forbid);
-			$('#licenceDeny').show();
-		}
-		else
-		{
-			$('#licenceDeny').hide();
-		}
-	  
-	});
-  
-});
-
-</script>
