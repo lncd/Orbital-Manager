@@ -36,6 +36,5 @@
 				<a class="btn" href="{base_url}project/{project_id}">No</a>
 			</form>
 		</div>
-		
 	</div>
 </div>

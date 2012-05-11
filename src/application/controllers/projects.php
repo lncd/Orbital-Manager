@@ -204,27 +204,25 @@ class Projects extends CI_Controller {
 					);
 				}
 
-			if ($response->response->project->start_date !== NULL)
-			{
-				$this->data['project_startdate'] = strtotime($response->response->project->start_date);
-				$this->data['project_startdate_pretty'] = date('D jS F Y', strtotime($response->response->project->start_date));
-			}
-			else
-			{
-				$this->data['project_startdate_pretty'] = 'Unspecified';
-			}
-
-			if ($response->response->project->end_date !== NULL)
-			{
-				$this->data['project_enddate'] = strtotime($response->response->project->end_date);
-				$this->data['project_enddate_pretty'] = date('D jS F Y', strtotime($response->response->project->end_date));
-			}
-			else
-			{
-				$this->data['project_enddate_pretty'] = 'Unspecified';
-			}
-
-
+				if ($response->response->project->start_date !== NULL)
+				{
+					$this->data['project_startdate'] = strtotime($response->response->project->start_date);
+					$this->data['project_startdate_pretty'] = date('D jS F Y', strtotime($response->response->project->start_date));
+				}
+				else
+				{
+					$this->data['project_startdate_pretty'] = 'Unspecified';
+				}
+	
+				if ($response->response->project->end_date !== NULL)
+				{
+					$this->data['project_enddate'] = strtotime($response->response->project->end_date);
+					$this->data['project_enddate_pretty'] = date('D jS F Y', strtotime($response->response->project->end_date));
+				}
+				else
+				{
+					$this->data['project_enddate_pretty'] = 'Unspecified';
+				}
 
 				if (isset($response->response->project->start_date) and isset($response->response->project->end_date) and strtotime($response->response->project->end_date) > strtotime($response->response->project->start_date))
 				{
@@ -301,13 +299,9 @@ class Projects extends CI_Controller {
 			$this->data['page_title'] = $response->response->project->name;
 			$this->data['project_name'] = $response->response->project->name;
 
-			if ($response->response->project->google_analytics !== 'NULL'){
-				$this->data['alt_tracking'] = $response->response->project->google_analytics;
-			}
-
-			if (!isset($response->response->project->start_date) && !isset($response->response->project->end_date))
+			if ($response->response->project->google_analytics !== 'NULL')
 			{
-				//Check for both start and end dates - if not present dont show project progress
+				$this->data['alt_tracking'] = $response->response->project->google_analytics;
 			}
 
 			if ($response->response->project->start_date !== NULL)
@@ -338,6 +332,10 @@ class Projects extends CI_Controller {
 			$this->parser->parse('includes/header', $this->data);
 			$this->parser->parse('projects/view_public', $this->data);
 			$this->parser->parse('includes/footer', $this->data);
+		}
+		else
+		{
+			show_404();
 		}
 	}
 
@@ -385,7 +383,6 @@ class Projects extends CI_Controller {
 				
 				$this->session->set_flashdata('message', 'Project details updated successfully.');
 				$this->session->set_flashdata('message_type', 'success');
-				
 				redirect('project/' . $identifier);
 			}
 			

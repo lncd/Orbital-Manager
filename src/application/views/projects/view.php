@@ -181,7 +181,7 @@
 			
 			$archive_percentage = ceil(($archives_used / $archives_available) * 100);
 			
-			?>
+			?>	
 			
 			<div class="progress">
 			  <div class="bar"

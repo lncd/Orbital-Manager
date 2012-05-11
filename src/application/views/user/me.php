@@ -10,10 +10,7 @@
 			</li>
 		</ul>
 	
-		<div class="page-header">
-			<h1>{user_name} <small>{institution}</small></h1>
-		</div>
-		
+			<h1>{user_name} <small>{institution}</small></h1>		
 		<!--
 		
 		<h2>Research Summary</h2>

@@ -122,7 +122,7 @@
 	echo form_dropdown('default_licence', $available_licences, set_value('default_licence', $project_default_licence), 'id="project_default_licence" class="span4"');
 	echo '<p class="help-block">Choosing a default licence makes it easier to publish and share your data. However, you can still change it on a case-by-case basis for individual files and datasets.</p>';
 	echo '
-	
+	<br>
 <div class="well" style="background:#FDFDFD">
 	<div id="licenceAllow" style="display:none">
 			<h4>This licence allows:</h4>
