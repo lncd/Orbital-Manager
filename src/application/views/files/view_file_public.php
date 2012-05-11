@@ -34,7 +34,7 @@
 if ($file_downloadable)
 {
 
-	echo '<a class="btn btn-primary" href="{base_url}file/{file_id}/download"><i class = "icon-ok icon-download icon-white"></i> Download File</a>';
+	echo '<a class="btn btn-primary" href="{base_url}file/{file_id}/download" onClick="recordDownload(this, \'{file_id}\');"><i class = "icon-ok icon-download icon-white"></i> Download File</a>';
 
 }
 else

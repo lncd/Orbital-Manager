@@ -108,7 +108,7 @@
 	echo form_label('Publish This Project', 'project_public', array('class' => 'control-label'));
 	echo '<div class="controls">';
 	echo form_checkbox($form_public);
-	echo '<p class="help-block">This creates a public web page for your project, which people can cite. If you upload public datasets, they will be available to download from this page.</p>';
+	echo '<p class="help-block">This creates a public web page for your project which people can cite. If you upload public datasets they will be available to download from this page.</p>';
 	echo '</div></div>';
 	
 	foreach ($licences as $licence)
@@ -123,6 +123,7 @@
 	echo '<p class="help-block">Choosing a default licence makes it easier to publish and share your data. However, you can still change it on a case-by-case basis for individual files and datasets.</p>';
 	echo '
 	
+<div class="well" style="background:#FDFDFD">
 	<div id="licenceAllow" style="display:none">
 			<h4>This licence allows:</h4>
 			<div id="licenceAllowContent">
@@ -141,7 +142,8 @@
 			</div>
 		</div>
 	</div>
-	</div>';
+</div>
+</div>';
 	
 	$form_ga = array(
 		'name'			=> 'google_analytics',

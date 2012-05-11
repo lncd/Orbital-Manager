@@ -45,7 +45,27 @@
 		if (isset($alt_tracking))
 		{
 			echo '_gaq.push([\'b.setAccount\', \'' . $alt_tracking . '\']);
-			_gaq.push([\'b._trackPageview\']);';
+			_gaq.push([\'b._trackPageview\']);
+
+			function recordDownload(link, action)
+			{
+				try 
+				{
+					var pageTracker=_gat._getTracker("' . $alt_tracking . '");
+					pageTracker._trackEvent(\'Download File\', action);
+					setTimeout(\'document.location = "\' + link.href + \'"\', 100);
+					return false;
+				}
+				catch(err)
+				{}
+			}';
+
+		}
+		else
+		{
+			echo 'function recordDownload(link, action)
+			{}';
+
 		}
 		
 		?>

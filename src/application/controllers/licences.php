@@ -53,9 +53,9 @@ class Licences extends CI_Controller {
 			$data['original_name'] = $response->response->licence->name;
 			$data['summary_uri'] = $response->response->licence->uri;
 			$data['summary'] = htmlspecialchars(auto_typography($response->response->licence->summary));
-			$data['allow'] = $response->response->licence->allow_list;
-			$data['forbid'] = $response->response->licence->forbid_list;
-			$data['conditions'] = $response->response->licence->condition_list;
+			$data['allow'] = $response->response->licence->allow_list !== NULL ? auto_typography($response->response->licence->allow_list) : NULL;
+			$data['forbid'] = $response->response->licence->forbid_list !== NULL ? auto_typography($response->response->licence->forbid_list) : NULL;
+			$data['conditions'] = $response->response->licence->condition_list !== NULL ? auto_typography($response->response->licence->condition_list) : NULL;
 
 			$this->output->set_output(json_encode($data));
 		}

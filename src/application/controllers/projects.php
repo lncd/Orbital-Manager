@@ -366,7 +366,7 @@ class Projects extends CI_Controller {
 					}
 					else
 					{
-						$this->session->set_flashdata('message', 'Start date cannot be after end date.');
+						$this->session->set_flashdata('message', 'The end date must be after the start date.');
 						$this->session->set_flashdata('message_type', 'error');
 						redirect('project/' . $identifier . '/edit');
 					}
