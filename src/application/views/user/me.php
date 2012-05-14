@@ -1,4 +1,4 @@
-<div class="row-fluid">
+<div class="row">
 	<div class="span12">
 	
 		<ul class="breadcrumb">
@@ -10,9 +10,12 @@
 			</li>
 		</ul>
 	
-		<h1>{user_name}</h1>
+			<h1>{user_name} <small>{institution}</small></h1>		
+		<!--
 		
 		<h2>Research Summary</h2>
+		
+		-->
 		
 	</div>
 </div>

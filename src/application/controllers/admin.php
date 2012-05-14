@@ -35,7 +35,7 @@ class Admin extends CI_Controller {
 		}
 	}
 	
-	function database_status()
+	function mongo_status()
 	{
 	
 		if ($status_response = $this->orbital->core_server_status())
@@ -79,10 +79,117 @@ class Admin extends CI_Controller {
 			}
 			
 			$this->parser->parse('includes/header', $this->data);
-			$this->parser->parse('admin/database_status', $this->data);
+			$this->parser->parse('admin/mongo_status', $this->data);
 			$this->parser->parse('includes/footer', $this->data);
 		}
 	}
+	
+	function licences()
+	{
+	
+		if ($licences_response = $this->orbital->licences_list())
+		{
+			
+			$this->data['page_title'] = 'Data Licences';
+			$this->data['licences'] = array();
+			
+			foreach ($licences_response->response->licences as $licence)
+			{
+				$this->data['licences'][] = $licence;
+			}
+			
+			$this->parser->parse('includes/header', $this->data);
+			$this->parser->parse('admin/licences', $this->data);
+			$this->parser->parse('includes/footer', $this->data);
+		}
+	}
+	
+	function licences_add()
+	{
+	
+		$this->load->library('form_validation');
+		
+		$this->form_validation->set_rules('name', 'Name', 'trim|required');
+		$this->form_validation->set_rules('shortname', 'Short name', 'trim|required');
+		$this->form_validation->set_rules('url', 'URL', 'trim|required');
+		
+		if ($this->form_validation->run() === TRUE)
+		{
+			if ($this->orbital->licence_create($this->input->post('name'), $this->input->post('shortname'), $this->input->post('url')))
+			{
+				$this->session->set_flashdata('message', 'Licence added successfully. Remember to enable it before it can be used.');
+				$this->session->set_flashdata('message_type', 'success');
+			}
+			else
+			{
+				$this->session->set_flashdata('message', 'Something went wrong adding this licence.');
+				$this->session->set_flashdata('message_type', 'error');
+			}
+		}
+		else
+		{
+			$this->session->set_flashdata('message', 'Unable to add licence: ' . validation_errors());
+			$this->session->set_flashdata('message_type', 'error');
+			
+		}
+	
+		redirect('admin/licences');
+	
+	}
+	
+	function licence_enable($id)
+	{
+	
+		if ($licence = $this->orbital->licence_get($id))
+		{
+		
+			$licence = $licence->response->licence;
+		
+			if ($this->orbital->licence_update($licence->id, $licence->name, $licence->short_name, $licence->uri, TRUE))
+			{
+				$this->session->set_flashdata('message', 'Licence enabled.');
+				$this->session->set_flashdata('message_type', 'success');
+			}
+			else
+			{
+				$this->session->set_flashdata('message', 'Something went wrong enabling this licence.');
+				$this->session->set_flashdata('message_type', 'error');
+			}
+		}
+		else
+		{
+			show_404();
+		}
+		
+		redirect('admin/licences');
+	}
+	
+	function licence_disable($id)
+	{
+	
+		if ($licence = $this->orbital->licence_get($id))
+		{
+		
+			$licence = $licence->response->licence;
+		
+			if ($this->orbital->licence_update($licence->id, $licence->name, $licence->short_name, $licence->uri, FALSE))
+			{
+				$this->session->set_flashdata('message', 'Licence disabled.');
+				$this->session->set_flashdata('message_type', 'success');
+			}
+			else
+			{
+				$this->session->set_flashdata('message', 'Something went wrong disabling this licence.');
+				$this->session->set_flashdata('message_type', 'error');
+			}
+		}
+		else
+		{
+			show_404();
+		}
+		
+		redirect('admin/licences');
+	}
 }
 
-// End of file core.php
+// End of file admin.php

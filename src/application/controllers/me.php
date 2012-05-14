@@ -11,12 +11,19 @@ class Me extends CI_Controller {
 		$this->data = $this->orbital->common_content();
 	}
 
+	/**
+	 * User details
+	 *
+	 * Retrieves current user details.
+	 */
+
 	function index()
 	{
 	
 		if ($response = $this->orbital->user_details())
 		{
 			$this->data['user_name'] = $response->response->user->name;
+			$this->data['institution'] = $response->response->user->institution;
 			$this->data['page_title'] = 'My Profile';
 			$this->parser->parse('includes/header', $this->data);
 			$this->parser->parse('user/me', $this->data);

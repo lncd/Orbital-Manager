@@ -36,6 +36,12 @@ class Static_Content extends CI_Controller {
 	function index()
 	{
 	
+		if ($this->session->userdata('current_user_string'))
+		{
+			redirect('projects');
+		}
+	
+		$this->lang->load('marketing');
 		
 		$this->data['page_title'] = 'Welcome';
 	
@@ -52,6 +58,8 @@ class Static_Content extends CI_Controller {
 	
 	function about()
 	{
+	
+		$this->lang->load('about');
 	
 		$this->data['page_title'] = 'About';
 	
