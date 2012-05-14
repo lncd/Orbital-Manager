@@ -1,4 +1,4 @@
-<div class="row-fluid">
+<div class="row">
 	<div class="span12">
 	
 		<ul class="breadcrumb">
@@ -10,14 +10,17 @@
 			</li>
 		</ul>
 	
-		<h1>System Administration</h1>
+		<div class="page-header">
+			<h1>System Administration</h1>
+		</div>
 		
 		<p>As a system administrator, you can access the following restricted functions:</p>
 		
 		<ul class="nav nav-pills nav-stacked">
 				
 			<li>
-				<a href="{base_url}admin/database_status"><i class="icon-chevron-right"></i>Database Status</a>
+				<a href="{base_url}admin/licences"><i class="icon-cog"></i> Data Licences</a>
+				<a href="{base_url}admin/mongo_status"><i class="icon-cog"></i> MongoDB Status</a>
 			</li>
 			
 		</ul>

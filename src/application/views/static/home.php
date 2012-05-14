@@ -1,10 +1,10 @@
 <div class="hero-unit">
-  <h1>Hello. I'm {orbital_manager_name}.</h1>
-  <p>Orbital is a project at the University of Lincoln</p>
-  <p><a href="{base_url}about" class="btn btn-primary btn-large">Find Out More &raquo;</a></p>
+  <h1><?php echo lang('marketing_hero_title'); ?></h1>
+  <p><?php echo lang('marketing_hero_text'); ?></p>
+  <p><a href="{base_url}about" class="btn btn-primary btn-large"><?php echo lang('marketing_hero_button'); ?></a></p>
 </div>
 
-<div class="row-fluid">
+<div class="row">
   <div class="span6">
     <h2>Sign In</h2>
     <p>Dive right in to {orbital_manager_name} and start managing your projects and data.</p>
