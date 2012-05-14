@@ -19,11 +19,19 @@ class Orbital {
 	private $_ci;
 
 	private $data;
-
+	
+	/**
+	 * Constructor
+	 */
+ 
 	function __construct()
 	{
 		$this->_ci =& get_instance();
 	}
+	
+	/**
+	 * Builds the content common to every page
+	 */
 
 	public function common_content()
 	{
@@ -90,11 +98,10 @@ class Orbital {
 	/**
 	 * Refresh Token
 	 *
-	 * Swaps a refresh token for a new access token and refresh token, and
+	 * Swaps a refresh token for a new access token AND refresh token, and
 	 * stores in the session
 	 *
 	 * @access public
-	 *
 	 * @param string $token Token to swap.
 	 *
 	 * @return bool TRUE if swap successful, FALSE if not.
@@ -106,16 +113,19 @@ class Orbital {
 		$postfields = 'grant_type=refresh_token&refresh_token=' . $token;
 		$ch = curl_init();
 		curl_setopt($ch, CURLOPT_URL, $this->_ci->config->item('orbital_core_location') . 'auth/refresh_token');
-		curl_setopt($ch, CURLOPT_POST, true);
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-		if (ENVIRONMENT === 'development') { curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); }
+		curl_setopt($ch, CURLOPT_POST, TRUE);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+		if (ENVIRONMENT === 'development')
+		{
+			curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+		}
 		curl_setopt($ch, CURLOPT_POSTFIELDS, $postfields);
 		curl_setopt($ch, CURLOPT_USERPWD, $this->_ci->config->item('orbital_app_id') . ':' . $this->_ci->config->item('orbital_app_secret'));
 		if ($reply = curl_exec($ch))
 		{
 			$response = json_decode($reply);
 
-			if (!isset($response->error) && isset($response->access_token) && isset($response->token_type) && isset($response->expires_in) && isset($response->refresh_token) && isset($response->scope) && isset($response->user))
+			if (! isset($response->error) AND isset($response->access_token) AND isset($response->token_type) AND isset($response->expires_in) AND isset($response->refresh_token) AND isset($response->scope) AND isset($response->user))
 			{
 				$this->_ci->session->set_userdata(array(
 						'current_user_string' => $response->user,
@@ -145,7 +155,6 @@ class Orbital {
 	 * Performs an authenticated HTTP GET against Orbital Core.
 	 *
 	 * @access private
-	 *
 	 * @param array $scopes Scopes to ensure that the user has access to.
 	 *
 	 * @return object|FALSE An object representing the request result, or
@@ -163,8 +172,11 @@ class Orbital {
 
 				$ch = curl_init($this->_ci->config->item('orbital_core_location') . $target);
 				curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-				if (ENVIRONMENT === 'development') { curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); }
-				curl_setopt($ch,CURLOPT_HTTPHEADER,array('Authorization: Bearer ' . base64_encode($this->_ci->session->userdata('access_token'))));
+				if (ENVIRONMENT === 'development')
+				{
+					curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+				}
+				curl_setopt($ch, CURLOPT_HTTPHEADER, array('Authorization: Bearer ' . base64_encode($this->_ci->session->userdata('access_token'))));
 
 				if ($output = curl_exec($ch))
 				{
@@ -197,7 +209,7 @@ class Orbital {
 					// Different behaviours for unauthorised code
 					if ($http_status === 401)
 					{
-						// Unauthorised response - token invalid/expired/revoked. Try to refresh, and run again
+						// Unauthorised response - token invalid/expired/revoked. Try to refresh, AND run again
 						if ($this->refresh_token($this->_ci->session->userdata('refresh_token')))
 						{
 							return $this->get_authed($target);
@@ -220,7 +232,7 @@ class Orbital {
 					else
 					{
 						// Something else has gone wrong. Try to parse it out.
-						if ($response = json_decode($output) && isset($response->error))
+						if ($response = json_decode($output) AND isset($response->error))
 						{
 
 							$this->data['page_title'] = 'Authentication Error';
@@ -273,6 +285,18 @@ class Orbital {
 		}
 
 	}
+	
+	
+	/**
+	 * Post method, Authenticated
+	 *
+	 * Sends an authenticated POST request
+	 *
+	 * @param string $target Target of HTTP POST.
+	 * @param array $post_fields contents of HTTP POST.
+	 *
+	 * @return bool TRUE if swap successful, FALSE if not.
+	 */
 
 	private function post_authed($target, $post_fields)
 	{
@@ -283,7 +307,7 @@ class Orbital {
 			{
 				$ch = curl_init($this->_ci->config->item('orbital_core_location') . $target);
 				curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-				if (ENVIRONMENT === 'development') { curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); }
+				if (ENVIRONMENT === 'development') { curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE); }
 				curl_setopt($ch,CURLOPT_HTTPHEADER,array('Authorization: Bearer ' . base64_encode($this->_ci->session->userdata('access_token'))));
 				curl_setopt($ch, CURLOPT_POST, TRUE);
 
@@ -328,7 +352,7 @@ class Orbital {
 					// Different behaviours for unauthorised code
 					if ($http_status === 401)
 					{
-						// Unauthorised response - token invalid/expired/revoked. Try to refresh, and run again
+						// Unauthorised response - token invalid/expired/revoked. Try to refresh, AND run again
 						if ($this->refresh_token($this->_ci->session->userdata('refresh_token')))
 						{
 							return $this->get_authed($target);
@@ -351,7 +375,7 @@ class Orbital {
 					else
 					{
 						// Something else has gone wrong. Try to parse it out.
-						if ($response = json_decode($output) && isset($response->error))
+						if ($response = json_decode($output) AND isset($response->error))
 						{
 
 							$this->data['page_title'] = 'Authentication Error';
@@ -411,8 +435,8 @@ class Orbital {
 	 * Performs an unauthenticated HTTP GET against Orbital Core.
 	 *
 	 * @access private
-	 *
 	 * @param string $target Core resource to GET.
+	 * @param array $post_fields Array of fields posted.
 	 *
 	 * @return object|FALSE Object if successful, FALSE if not.
 	 */
@@ -426,8 +450,11 @@ class Orbital {
 			{
 				$ch = curl_init($this->_ci->config->item('orbital_core_location') . $target);
 				curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-				if (ENVIRONMENT === 'development') { curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); }
-				curl_setopt($ch,CURLOPT_HTTPHEADER,array('Authorization: Bearer ' . base64_encode($this->_ci->session->userdata('access_token'))));
+				if (ENVIRONMENT === 'development')
+				{
+					curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+				}
+				curl_setopt($ch, CURLOPT_HTTPHEADER, array('Authorization: Bearer ' . base64_encode($this->_ci->session->userdata('access_token'))));
 				curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
 
 				$postfields = array();
@@ -471,7 +498,7 @@ class Orbital {
 					// Different behaviours for unauthorised code
 					if ($http_status === 401)
 					{
-						// Unauthorised response - token invalid/expired/revoked. Try to refresh, and run again
+						// Unauthorised response - token invalid/expired/revoked. Try to refresh, AND run again
 						if ($this->refresh_token($this->_ci->session->userdata('refresh_token')))
 						{
 							return $this->get_authed($target);
@@ -494,7 +521,7 @@ class Orbital {
 					else
 					{
 						// Something else has gone wrong. Try to parse it out.
-						if ($response = json_decode($output) && isset($response->error))
+						if ($response = json_decode($output) AND isset($response->error))
 						{
 
 							$this->data['page_title'] = 'Authentication Error';
@@ -556,8 +583,11 @@ class Orbital {
 			{
 				$ch = curl_init($this->_ci->config->item('orbital_core_location') . $target);
 				curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-				if (ENVIRONMENT === 'development') { curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); }
-				curl_setopt($ch,CURLOPT_HTTPHEADER,array('Authorization: Bearer ' . base64_encode($this->_ci->session->userdata('access_token'))));
+				if (ENVIRONMENT === 'development')
+				{
+					curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+				}
+				curl_setopt($ch, CURLOPT_HTTPHEADER, array('Authorization: Bearer ' . base64_encode($this->_ci->session->userdata('access_token'))));
 				curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'DELETE');
 
 				if ($output = curl_exec($ch))
@@ -591,7 +621,7 @@ class Orbital {
 					// Different behaviours for unauthorised code
 					if ($http_status === 401)
 					{
-						// Unauthorised response - token invalid/expired/revoked. Try to refresh, and run again
+						// Unauthorised response - token invalid/expired/revoked. Try to refresh, AND run again
 						if ($this->refresh_token($this->_ci->session->userdata('refresh_token')))
 						{
 							return $this->get_authed($target);
@@ -614,7 +644,7 @@ class Orbital {
 					else
 					{
 						// Something else has gone wrong. Try to parse it out.
-						if ($response = json_decode($output) && isset($response->error))
+						if ($response = json_decode($output) AND isset($response->error))
 						{
 
 							$this->data['page_title'] = 'Authentication Error';
@@ -743,7 +773,7 @@ class Orbital {
 	/**
 	 * User: Details
 	 *
-	 * Retrieves details for the specified user, or the current user if none
+	 * Retrieves details for the specified user, OR the current user if none
 	 * is specified.
 	 *
 	 * @access public

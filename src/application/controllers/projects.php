@@ -1,5 +1,18 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
+/**
+ * Projects Controller
+ *
+ * Loads projects views AND performs project actions.
+ *
+ * @category   Controller
+ * @package    Orbital
+ * @subpackage Manager
+ * @author     Nick Jackson <nijackson@lincoln.ac.uk>
+ * @author     Harry Newton <hnewton@lincoln.ac.uk>
+ * @link       https://github.com/lncd/Orbital-Manager
+*/
+
 class Projects extends CI_Controller {
 
 	private $data = array();
@@ -18,7 +31,8 @@ class Projects extends CI_Controller {
 	/**
 	 * Projects list
 	 *
-	 * Get array of projects and their details
+	 * Get array of projects AND their details
+	 * @return return list of users projects
 	 */
 
 	function index()
@@ -103,7 +117,8 @@ class Projects extends CI_Controller {
 	/**
 	 * Public Projects list
 	 *
-	 * Get array of public projects and their details
+	 * Get array of public projects AND their details
+	 * @return returns list of public projects
 	 */
 
 	function list_public()
@@ -170,13 +185,16 @@ class Projects extends CI_Controller {
 	 * Project view
 	 *
 	 * Gets details of a specific project
+	 *
+	 * @param string $identifier The identifier of the project
+	 * @return NULL
 	 */
 
 	function view($identifier)
 	{
 		if ($response = $this->orbital->project_details($identifier))
 		{
-			if ($response->response->status === true)
+			if ($response->response->status === TRUE)
 			{
 				if ($this->input->get('error'))
 				{
@@ -224,7 +242,7 @@ class Projects extends CI_Controller {
 					$this->data['project_enddate_pretty'] = 'Unspecified';
 				}
 
-				if (isset($response->response->project->start_date) and isset($response->response->project->end_date) and strtotime($response->response->project->end_date) > strtotime($response->response->project->start_date))
+				if (isset($response->response->project->start_date) AND isset($response->response->project->end_date) AND strtotime($response->response->project->end_date) > strtotime($response->response->project->start_date))
 				{
 					$this->data['project_complete'] = abs(((time() - strtotime($response->response->project->start_date)) / (strtotime($response->response->project->end_date) - strtotime($response->response->project->start_date))) * 100);
 				}
@@ -233,7 +251,7 @@ class Projects extends CI_Controller {
 
 				// Generate workspace mode
 
-				$this->data['workspace'] = false;
+				$this->data['workspace'] = FALSE;
 
 				// Generate list of datasets
 
@@ -262,7 +280,7 @@ class Projects extends CI_Controller {
 				//Check for Delete permissions
 				if ($response->response->permissions->delete === TRUE)
 				{
-					//Check project doesn't have files or datasets
+					//Check project doesn't have files OR datasets
 					//CHANGE TO CHECK FOR is_deletable in future
 					if(count($this->data['working_datasets']) === 0 AND count($this->data['archive_files']) === 0)
 					{									
@@ -288,6 +306,9 @@ class Projects extends CI_Controller {
 	 * Public Project view
 	 *
 	 * Gets details of a specific public project
+	 *
+	 * @param string $identifier The identifier of the project
+	 * @return NULL
 	 */
 
 	function view_public($identifier)
@@ -316,7 +337,7 @@ class Projects extends CI_Controller {
 			}
 			$this->data['project_description'] = $this->typography->auto_typography($response->response->project->abstract);
 
-			if (isset($response->response->project->start_date) and isset($response->response->project->end_date) and strtotime($response->response->project->end_date) > strtotime($response->response->project->start_date))
+			if (isset($response->response->project->start_date) AND isset($response->response->project->end_date) AND strtotime($response->response->project->end_date) > strtotime($response->response->project->start_date))
 			{
 				$this->data['project_complete'] = abs(((time() - strtotime($response->response->project->start_date)) / (strtotime($response->response->project->end_date) - strtotime($response->response->project->start_date))) * 100);
 			}
@@ -344,6 +365,9 @@ class Projects extends CI_Controller {
 	 * Edit project
 	 *
 	 * Gets project details, users and their permissions
+	 *
+	 * @param string $identifier The identifier of the project
+	 * @return NULL
 	 */
 
 	function edit($identifier)
@@ -353,9 +377,9 @@ class Projects extends CI_Controller {
 			$licences = $this->orbital->licences_enabled_list();
 			$this->data['licences'] = $licences->response->licences;
 
-			if($this->input->post('name') and $this->input->post('abstract'))
+			if($this->input->post('name') AND $this->input->post('abstract'))
 			{
-				if($this->input->post('start_date') and $this->input->post('end_date'))
+				if($this->input->post('start_date') AND $this->input->post('end_date'))
 				{
 					if (strtotime($this->input->post('start_date')) < strtotime($this->input->post('end_date')))
 					{
@@ -425,7 +449,7 @@ class Projects extends CI_Controller {
 				//Set array of permissions for user
 				$user_permissions = array();
 
-				//Gert permissions and set as true or false
+				//Gert permissions AND set as true OR false
 				$user_permissions['permission_read'] = FALSE;
 				if ($permissions->read)
 				{
@@ -483,12 +507,12 @@ class Projects extends CI_Controller {
 				}
 			}
 
-			if (isset($response->response->project->start_date) AND !isset($response->response->project->end_date))
+			if (isset($response->response->project->start_date) AND ! isset($response->response->project->end_date))
 			{
 				$this->data['project_startdate'] = $response->response->project->start_date;
 				$this->data['project_startdate_pretty'] = date('D jS F Y', strtotime($response->response->project->start_date));
 			}
-			if (isset($response->response->project->end_date) AND !isset($response->response->project->start_date))
+			if (isset($response->response->project->end_date) AND ! isset($response->response->project->start_date))
 			{
 				$this->data['project_enddate'] = $response->response->project->end_date;
 				$this->data['project_enddate_pretty'] = date('D jS F Y', strtotime($response->response->project->end_date));
@@ -514,13 +538,15 @@ class Projects extends CI_Controller {
 	 * Create project
 	 *
 	 * Creates a new project
+	 *
+	 * @return NULL
 	 */
 
 	function create()
 	{
-		if($this->input->post('name') and $this->input->post('name') !== '')
+		if($this->input->post('name') AND $this->input->post('name') !== '')
 		{
-			if($this->input->post('abstract') and $this->input->post('abstract') !== '')
+			if($this->input->post('abstract') AND $this->input->post('abstract') !== '')
 			{
 				if ($response = $this->orbital->create_project($this->input->post('name'), $this->input->post('abstract')))
 				{
@@ -554,6 +580,8 @@ class Projects extends CI_Controller {
 	 * Delete project
 	 *
 	 * Deletes a project
+	 *
+	 * @param string $identifier The identifier of the project
 	 */
 
 	function delete($identifier)
@@ -583,3 +611,4 @@ class Projects extends CI_Controller {
 }
 
 // End of file projects.php
+//Location: ./controllers/projects.php
