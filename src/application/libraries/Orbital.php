@@ -17,21 +17,25 @@
 class Orbital {
 
 	/**
-	 * CodeIgniter Instance
+	 * CodeIgniter Instance.
+	 *
+	 * @var $_ci 
 	 */
 
 	private $_ci;
 
 	/**
-	 * Data to be passed to the view
+	 * Data to be passed to the view.
+	 *
+	 * @var $data 
 	 */
 
-	private $data;
+	private $_data;
 	
-    /**
-     * Constructor
-     */
-     
+	/**
+	 * Constructor
+	 */
+
 	function __construct()
 	{
 		$this->_ci =& get_instance();
@@ -111,8 +115,8 @@ class Orbital {
 	 * Swaps a refresh token for a new access token AND refresh token, and
 	 * stores in the session
 	 *
-	 * @access public
 	 * @param string $token Token to swap.
+	 * @access public
 	 *
 	 * @return bool TRUE if swap successful, FALSE if not.
 	 */
@@ -164,8 +168,8 @@ class Orbital {
 	 *
 	 * Performs an authenticated HTTP GET against Orbital Core.
 	 *
-	 * @access private
 	 * @param array $target Scopes to ensure that the user has access to.
+	 * @access private
 	 *
 	 * @return object|FALSE An object representing the request result, or
 	 *                      FALSE on a request failure.
@@ -302,8 +306,8 @@ class Orbital {
 	 *
 	 * Sends an authenticated POST request
 	 *
-	 * @param string $target     Target of HTTP POST.
-	 * @param array $post_fields Contents of HTTP POST.
+	 * @param string $target      Target of HTTP POST.
+	 * @param array  $post_fields Contents of HTTP POST.
 	 *
 	 * @return bool TRUE if swap successful, FALSE if not.
 	 */
@@ -593,8 +597,8 @@ class Orbital {
 	 *
 	 * Performs an authenticated HTTP DELETE against Orbital Core.
 	 *
-	 * @access private
 	 * @param string $target Core resource to DELETE.
+	 * @access private
 	 *
 	 * @return object|FALSE Object if successful, FALSE if not.
 	 */
@@ -727,8 +731,8 @@ class Orbital {
 	 *
 	 * Performs an unauthenticated HTTP GET against Orbital Core.
 	 *
-	 * @access private
 	 * @param array $target Scopes to ensure that the user has access to.
+	 * @access private
 	 *
 	 * @return object|FALSE An object representing the request result, or
 	 *                      FALSE on a request failure.
@@ -808,8 +812,8 @@ class Orbital {
 	 * Retrieves details for the specified user, OR the current user if none
 	 * is specified.
 	 *
-	 * @access public
-	 * @param string $user The email address of the user to query.	
+	 * @param string $user The email address of the user to query.
+	 * @access public	
 	 * @return object|FALSE Object if successful, FALSE if not.
 	 */
 
@@ -832,8 +836,8 @@ class Orbital {
 	 * Retrieves list of projects for the specified user, OR the current user if none
 	 * is specified.
 	 *
-	 * @access public
 	 * @param string $user The email address of the user to query.	
+	 * @access public
 	 * @return object|FALSE Object if successful, FALSE if not.
 	 */
 
@@ -855,8 +859,8 @@ class Orbital {
 	 *
 	 * Retrieves list of public projects up to the specified limit
 	 *
-	 * @access public
 	 * @param int $limit The limit to the number of public projects to display.	
+	 * @access public
 	 * @return ARRAY.
 	 */
 
@@ -870,8 +874,8 @@ class Orbital {
 	 *
 	 * Retrieves project details
 	 *
-	 * @access public
-	 * @param int $project The project to return the details of.	
+	 * @param int $project The project to return the details of.
+	 * @access public	
 	 * @return ARRAY.
 	 */
 
@@ -885,8 +889,8 @@ class Orbital {
 	 *
 	 * Retrieves public project details
 	 *
-	 * @access public
 	 * @param int $project The project to return the details of.	
+	 * @access public
 	 * @return ARRAY.
 	 */
 
@@ -900,9 +904,9 @@ class Orbital {
 	 *
 	 * creates a new project
 	 *
-	 * @access public
 	 * @param int $name     The name of the new project.
 	 * @param int $abstract The abstract of the new project.	
+	 * @access public
 	 * @return object.
 	 */
 
@@ -916,16 +920,16 @@ class Orbital {
 	 *
 	 * creates a new project
 	 *
-	 * @access public
 	 * @param string $identifier       The identifier of the project.
 	 * @param string $name             The project name.
 	 * @param string $abstract         The project abstract.	
-	 * @param string $research_grounp  The research group the project is part of.
-	 * @param int $start_date          The start date of the project.
-	 * @param int $end_date            The end date of the new project.
+	 * @param string $research_group   The research group the project is part of.
+	 * @param int    $start_date       The start date of the project.
+	 * @param int    $end_date         The end date of the new project.
 	 * @param string $default_licence  The licence the project is published under.
-	 * @param bool $public_view        If the project is publically accessible or not.
+	 * @param bool   $public_view      If the project is publically accessible or not.
 	 * @param string $google_analytics The property ID of the project for Google analytics.
+	 * @access public
 	 * @return object.
 	 */
 
