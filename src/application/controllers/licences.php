@@ -2,7 +2,7 @@
 
 class Licences extends CI_Controller {
 
-	private $data = array();
+	private $_data = array();
 
 	/**
 	 * Contruct
@@ -19,6 +19,10 @@ class Licences extends CI_Controller {
 	 * Licence view
 	 *
 	 * Gets details of a specific licence
+	 *
+	 * @param string $identifier Licence identifier
+	 *
+	 * @return NULL
 	 */
 
 	function view_licence($identifier)
@@ -44,6 +48,16 @@ class Licences extends CI_Controller {
 			show_404();
 		}
 	}
+	
+	/**
+	 * Licence view JSON
+	 *
+	 * Gets details of a specific licence in JSON format
+	 *
+	 * @param string $identifier Licence identifier
+	 *
+	 * @return NULL
+	 */
 	
 	function view_licence_json($identifier)
 	{

@@ -5,9 +5,12 @@
  *
  * Configuration for this Orbital Manager instance.
  *
+ * PHP Version 5
+ *
  * @category   Configuration
  * @package    Orbital
  * @subpackage Manager
+ * @licence    https://www.gnu.org/licenses/agpl-3.0.html  GNU Affero General Public License
  * @author     Nick Jackson <nijackson@lincoln.ac.uk>
  * @link       https://github.com/lncd/Orbital-Manager
 */

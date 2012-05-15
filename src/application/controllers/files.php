@@ -2,7 +2,7 @@
 
 class Files extends CI_Controller {
 
-	private $data = array();
+	private $_data = array();
 
 	/**
 	 * Contruct
@@ -20,13 +20,15 @@ class Files extends CI_Controller {
 	 * View file details
 	 *
 	 * views a files details
+	 *
+	 * @param string $identifier
+	 * @return NULL
 	 */
 
 	function view_file($identifier)
 	{
 		if ($response = $this->orbital->file_get_details($identifier))
 		{
-			$project = $this->orbital->project_public_details($response->response->file->project);
 			$this->load->library('typography');
 			
 			$this->data['file_id'] = $response->response->file->id;
@@ -63,6 +65,9 @@ class Files extends CI_Controller {
 	 * View file details public
 	 *
 	 * views a public files details
+	 *
+	 * @param string $identifier
+	 * @return NULL
 	 */
 
 	function view_file_public($identifier)
@@ -110,6 +115,9 @@ class Files extends CI_Controller {
 	 * Download archive file
 	 *
 	 * Downloads an archive file from a project
+	 *
+	 * @param string $identifier
+	 * @return NULL
 	 */
 
 	function download_file($identifier)

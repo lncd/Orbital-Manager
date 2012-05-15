@@ -23,14 +23,6 @@ class Orbital {
 	 */
 
 	private $_ci;
-
-	/**
-	 * Data to be passed to the view.
-	 *
-	 * @var $data 
-	 */
-
-	private $_data;
 	
 	/**
 	 * Constructor
@@ -116,8 +108,8 @@ class Orbital {
 	 * stores in the session
 	 *
 	 * @param string $token Token to swap.
-	 * @access public
 	 *
+	 * @access public
 	 * @return bool TRUE if swap successful, FALSE if not.
 	 */
 
@@ -169,8 +161,8 @@ class Orbital {
 	 * Performs an authenticated HTTP GET against Orbital Core.
 	 *
 	 * @param array $target Scopes to ensure that the user has access to.
-	 * @access private
 	 *
+	 * @access private
 	 * @return object|FALSE An object representing the request result, or
 	 *                      FALSE on a request failure.
 	 */
@@ -451,10 +443,10 @@ class Orbital {
 	 *
 	 * Performs an unauthenticated HTTP GET against Orbital Core.
 	 *
-	 * @access private
 	 * @param string $target     Core resource to GET.
 	 * @param array $post_fields Array of fields posted.
 	 *
+	 * @access private
 	 * @return object|FALSE Object if successful, FALSE if not.
 	 */
 
@@ -598,8 +590,8 @@ class Orbital {
 	 * Performs an authenticated HTTP DELETE against Orbital Core.
 	 *
 	 * @param string $target Core resource to DELETE.
-	 * @access private
 	 *
+	 * @access private
 	 * @return object|FALSE Object if successful, FALSE if not.
 	 */
 
@@ -732,8 +724,8 @@ class Orbital {
 	 * Performs an unauthenticated HTTP GET against Orbital Core.
 	 *
 	 * @param array $target Scopes to ensure that the user has access to.
-	 * @access private
 	 *
+	 * @access private
 	 * @return object|FALSE An object representing the request result, or
 	 *                      FALSE on a request failure.
 	 */
@@ -813,6 +805,7 @@ class Orbital {
 	 * is specified.
 	 *
 	 * @param string $user The email address of the user to query.
+	 *
 	 * @access public	
 	 * @return object|FALSE Object if successful, FALSE if not.
 	 */
@@ -836,7 +829,8 @@ class Orbital {
 	 * Retrieves list of projects for the specified user, OR the current user if none
 	 * is specified.
 	 *
-	 * @param string $user The email address of the user to query.	
+	 * @param string $user The email address of the user to query.
+	 *
 	 * @access public
 	 * @return object|FALSE Object if successful, FALSE if not.
 	 */
@@ -859,7 +853,8 @@ class Orbital {
 	 *
 	 * Retrieves list of public projects up to the specified limit
 	 *
-	 * @param int $limit The limit to the number of public projects to display.	
+	 * @param int $limit The limit to the number of public projects to display.
+	 *
 	 * @access public
 	 * @return ARRAY.
 	 */
@@ -875,6 +870,7 @@ class Orbital {
 	 * Retrieves project details
 	 *
 	 * @param int $project The project to return the details of.
+	 *
 	 * @access public	
 	 * @return ARRAY.
 	 */
@@ -890,6 +886,7 @@ class Orbital {
 	 * Retrieves public project details
 	 *
 	 * @param int $project The project to return the details of.	
+	 *
 	 * @access public
 	 * @return ARRAY.
 	 */
@@ -905,7 +902,8 @@ class Orbital {
 	 * creates a new project
 	 *
 	 * @param int $name     The name of the new project.
-	 * @param int $abstract The abstract of the new project.	
+	 * @param int $abstract The abstract of the new project.
+	 *
 	 * @access public
 	 * @return object.
 	 */
@@ -945,6 +943,7 @@ class Orbital {
 	 *
 	 * @access public
 	 * @param $identifier string The identifier of the project.
+	 *
 	 * @return BOOL.
 	 */
 
@@ -988,7 +987,7 @@ class Orbital {
 	 * Returns a licence.
 	 *
 	 * @access public
-	 * @param $id string The identifier of the licence
+	 * @param string $id The identifier of the licence
 	 * @return object|FALSE Object if successful, FALSE if not.
 	 */
 
@@ -1002,10 +1001,11 @@ class Orbital {
 	 *
 	 * Creates a licence.
 	 *
+	 * @param string $name      The name of the licence
+	 * @param string $shortname The short name of the licence
+	 * @param string $uri       The uri of the licence
+	 *
 	 * @access public
-	 * @param $name string      The name of the licence
-	 * @param $shortname string The short name of the licence
-	 * @param $uri string       The uri of the licence
 	 * @return BOOL.
 	 */
 
@@ -1020,10 +1020,11 @@ class Orbital {
 	 * Updates a licence.
 	 *
 	 * @access public
-	 * @param $id string        The licence identifier
-	 * @param $shortname string The short name of the licence
-	 * @param $uri string       The uri of the licence
-	 * @param $enabled bool     The uri of the licence
+	 * @param string $id        The licence identifier
+	 * @param string $shortname The short name of the licence
+	 * @param string $uri       The uri of the licence
+	 * @param bool $enabled     The uri of the licence
+	 *
 	 * @return BOOL.
 	 */
 
@@ -1038,7 +1039,8 @@ class Orbital {
 	 * Gets a One time key.
 	 *
 	 * @access public
-	 * @param $file_id string The identifier of the file the user wants access to
+	 * @param string $file_id The identifier of the file the user wants access to
+	 *
 	 * @return object.
 	 */
 
@@ -1061,6 +1063,7 @@ class Orbital {
 	 *
 	 * @access public
 	 * @param $file_id string The identifier of the file the user wants access to
+	 *
 	 * @return object.
 	 */
 
@@ -1076,6 +1079,7 @@ class Orbital {
 	 *
 	 * @access public
 	 * @param $file_id string The identifier of the file the user wants access to
+	 *
 	 * @return object.
 	 */
 	 

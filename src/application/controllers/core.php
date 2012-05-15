@@ -2,7 +2,11 @@
 
 class Core extends CI_Controller {
 
-	private $data = array();
+	private $_data = array();
+
+	/**
+	 * Constructor
+	 */
 
 	function __construct()
 	{
@@ -15,6 +19,8 @@ class Core extends CI_Controller {
 	 * Ping
 	 *
 	 * Pings Orbital core.
+	 *
+	 * @return NULL
 	 */
 
 	function ping()
