@@ -1,9 +1,11 @@
-<div class="row-fluid">
+<div class="row">
 	<div class="span12">
-		<h1>Core Ping</h1>
+		<div class="page-header">
+			<h1>Core Ping</h1>
+		</div>
 	</div>
 </div>
-<div class="row-fluid">
+<div class="row">
 	<div class="span8">
 		<table class="table table-striped table-bordered">
 			<tr><th scope="row">Response</th><td>{ping_response_message}</td></tr>

@@ -19,11 +19,19 @@ class Orbital {
 	private $_ci;
 
 	private $data;
-
+	
+	/**
+	 * Constructor
+	 */
+ 
 	function __construct()
 	{
 		$this->_ci =& get_instance();
 	}
+	
+	/**
+	 * Builds the content common to every page
+	 */
 
 	public function common_content()
 	{
@@ -37,11 +45,11 @@ class Orbital {
 
 		if ($this->_ci->session->userdata('current_user_string'))
 		{
-			$common_content['user_presence'] = 'Signed in as <a href="' . site_url('me') . '">' . $this->_ci->session->userdata('current_user_string') . '</a> &middot; <a href="' . site_url('signout') . '">Sign Out</a>';
+			$common_content['user_presence'] = lang('navigation_signed_in') . '<a href="' . site_url('me') . '">' . $this->_ci->session->userdata('current_user_string') . '</a> &middot; <a href="' . site_url('signout') . '">' . lang('navigation_sign_out') . '</a>';
 		}
 		else
 		{
-			$common_content['user_presence'] = '<a href="' . site_url('signin') . '">Sign In</a>';
+			$common_content['user_presence'] = '<a href="' . site_url('signin') . '">' . lang('navigation_sign_in') . '</a>';
 		}
 
 		$common_content['nav_menu'] = array (
@@ -90,11 +98,10 @@ class Orbital {
 	/**
 	 * Refresh Token
 	 *
-	 * Swaps a refresh token for a new access token and refresh token, and
+	 * Swaps a refresh token for a new access token AND refresh token, and
 	 * stores in the session
 	 *
 	 * @access public
-	 *
 	 * @param string $token Token to swap.
 	 *
 	 * @return bool TRUE if swap successful, FALSE if not.
@@ -106,16 +113,19 @@ class Orbital {
 		$postfields = 'grant_type=refresh_token&refresh_token=' . $token;
 		$ch = curl_init();
 		curl_setopt($ch, CURLOPT_URL, $this->_ci->config->item('orbital_core_location') . 'auth/refresh_token');
-		curl_setopt($ch, CURLOPT_POST, true);
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-		if (ENVIRONMENT === 'development') { curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); }
+		curl_setopt($ch, CURLOPT_POST, TRUE);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+		if (ENVIRONMENT === 'development')
+		{
+			curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+		}
 		curl_setopt($ch, CURLOPT_POSTFIELDS, $postfields);
 		curl_setopt($ch, CURLOPT_USERPWD, $this->_ci->config->item('orbital_app_id') . ':' . $this->_ci->config->item('orbital_app_secret'));
 		if ($reply = curl_exec($ch))
 		{
 			$response = json_decode($reply);
 
-			if (!isset($response->error) && isset($response->access_token) && isset($response->token_type) && isset($response->expires_in) && isset($response->refresh_token) && isset($response->scope) && isset($response->user))
+			if (! isset($response->error) AND isset($response->access_token) AND isset($response->token_type) AND isset($response->expires_in) AND isset($response->refresh_token) AND isset($response->scope) AND isset($response->user))
 			{
 				$this->_ci->session->set_userdata(array(
 						'current_user_string' => $response->user,
@@ -145,7 +155,6 @@ class Orbital {
 	 * Performs an authenticated HTTP GET against Orbital Core.
 	 *
 	 * @access private
-	 *
 	 * @param array $scopes Scopes to ensure that the user has access to.
 	 *
 	 * @return object|FALSE An object representing the request result, or
@@ -163,14 +172,32 @@ class Orbital {
 
 				$ch = curl_init($this->_ci->config->item('orbital_core_location') . $target);
 				curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-				if (ENVIRONMENT === 'development') { curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); }
-				curl_setopt($ch,CURLOPT_HTTPHEADER,array('Authorization: Bearer ' . base64_encode($this->_ci->session->userdata('access_token'))));
+				if (ENVIRONMENT === 'development')
+				{
+					curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+				}
+				curl_setopt($ch, CURLOPT_HTTPHEADER, array('Authorization: Bearer ' . base64_encode($this->_ci->session->userdata('access_token'))));
 
 				if ($output = curl_exec($ch))
 				{
 					// Response OK, content all good!
 					curl_close($ch);
-					return json_decode($output);
+					if($return = json_decode($output))
+					{
+						return $return;
+					}
+					else
+					{
+						$this->data['page_title'] = 'Parsing Error';
+						$this->data['error_title'] = 'Invalid Response';
+						$this->data['error_text'] = 'Orbitla Core has not returned a valid reponse.';
+						$this->data['error_technical'] = 'invalid_reponse: Orbital returned an invalid response.<br>' . $output;
+						// Refresh failed. Abort.
+						$this->_ci->parser->parse('includes/header', $this->data);
+						$this->_ci->parser->parse('static/error', $this->data);
+						$this->_ci->parser->parse('includes/footer', $this->data);
+						return FALSE;
+					}
 				}
 				else
 				{
@@ -182,7 +209,7 @@ class Orbital {
 					// Different behaviours for unauthorised code
 					if ($http_status === 401)
 					{
-						// Unauthorised response - token invalid/expired/revoked. Try to refresh, and run again
+						// Unauthorised response - token invalid/expired/revoked. Try to refresh, AND run again
 						if ($this->refresh_token($this->_ci->session->userdata('refresh_token')))
 						{
 							return $this->get_authed($target);
@@ -205,7 +232,7 @@ class Orbital {
 					else
 					{
 						// Something else has gone wrong. Try to parse it out.
-						if ($response = json_decode($output) && isset($response->error))
+						if ($response = json_decode($output) AND isset($response->error))
 						{
 
 							$this->data['page_title'] = 'Authentication Error';
@@ -238,6 +265,15 @@ class Orbital {
 			}
 			catch (Exception $e)
 			{
+				$this->data['page_title'] = 'Unknown Error';
+				$this->data['error_title'] = 'Unknown Error';
+				$this->data['error_text'] = 'Something has gone wrong.';
+				$this->data['error_technical'] = $e->getMessage();
+				// Load error view with own message.
+				$this->_ci->parser->parse('includes/header', $this->data);
+				$this->_ci->parser->parse('static/error', $this->data);
+				$this->_ci->parser->parse('includes/footer', $this->data);
+
 				return FALSE;
 			}
 
@@ -249,6 +285,18 @@ class Orbital {
 		}
 
 	}
+	
+	
+	/**
+	 * Post method, Authenticated
+	 *
+	 * Sends an authenticated POST request
+	 *
+	 * @param string $target Target of HTTP POST.
+	 * @param array $post_fields contents of HTTP POST.
+	 *
+	 * @return bool TRUE if swap successful, FALSE if not.
+	 */
 
 	private function post_authed($target, $post_fields)
 	{
@@ -259,7 +307,7 @@ class Orbital {
 			{
 				$ch = curl_init($this->_ci->config->item('orbital_core_location') . $target);
 				curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-				if (ENVIRONMENT === 'development') { curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); }
+				if (ENVIRONMENT === 'development') { curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE); }
 				curl_setopt($ch,CURLOPT_HTTPHEADER,array('Authorization: Bearer ' . base64_encode($this->_ci->session->userdata('access_token'))));
 				curl_setopt($ch, CURLOPT_POST, TRUE);
 
@@ -277,7 +325,22 @@ class Orbital {
 				{
 					// Response OK, content all good!
 					curl_close($ch);
-					return json_decode($output);
+					if($return = json_decode($output))
+					{
+						return $return;
+					}
+					else
+					{
+						$this->data['page_title'] = 'Parsing Error';
+						$this->data['error_title'] = 'Invalid Response';
+						$this->data['error_text'] = 'Orbitla Core has not returned a valid reponse.';
+						$this->data['error_technical'] = 'invalid_reponse: Orbital returned an invalid response.<br>' . $output;
+						// Refresh failed. Abort.
+						$this->_ci->parser->parse('includes/header', $this->data);
+						$this->_ci->parser->parse('static/error', $this->data);
+						$this->_ci->parser->parse('includes/footer', $this->data);
+						return FALSE;
+					}
 				}
 				else
 				{
@@ -289,7 +352,7 @@ class Orbital {
 					// Different behaviours for unauthorised code
 					if ($http_status === 401)
 					{
-						// Unauthorised response - token invalid/expired/revoked. Try to refresh, and run again
+						// Unauthorised response - token invalid/expired/revoked. Try to refresh, AND run again
 						if ($this->refresh_token($this->_ci->session->userdata('refresh_token')))
 						{
 							return $this->get_authed($target);
@@ -312,7 +375,7 @@ class Orbital {
 					else
 					{
 						// Something else has gone wrong. Try to parse it out.
-						if ($response = json_decode($output) && isset($response->error))
+						if ($response = json_decode($output) AND isset($response->error))
 						{
 
 							$this->data['page_title'] = 'Authentication Error';
@@ -345,6 +408,15 @@ class Orbital {
 			}
 			catch (Exception $e)
 			{
+				$this->data['page_title'] = 'Unknown Error';
+				$this->data['error_title'] = 'Unknown Error';
+				$this->data['error_text'] = 'Something has gone wrong.';
+				$this->data['error_technical'] = $e->getMessage();
+				// Load error view with own message.
+				$this->_ci->parser->parse('includes/header', $this->data);
+				$this->_ci->parser->parse('static/error', $this->data);
+				$this->_ci->parser->parse('includes/footer', $this->data);
+
 				return FALSE;
 			}
 
@@ -363,11 +435,270 @@ class Orbital {
 	 * Performs an unauthenticated HTTP GET against Orbital Core.
 	 *
 	 * @access private
-	 *
 	 * @param string $target Core resource to GET.
+	 * @param array $post_fields Array of fields posted.
 	 *
 	 * @return object|FALSE Object if successful, FALSE if not.
 	 */
+
+	private function put_authed($target, $post_fields)
+	{
+
+		if ($this->_ci->session->userdata('access_token'))
+		{
+			try
+			{
+				$ch = curl_init($this->_ci->config->item('orbital_core_location') . $target);
+				curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+				if (ENVIRONMENT === 'development')
+				{
+					curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+				}
+				curl_setopt($ch, CURLOPT_HTTPHEADER, array('Authorization: Bearer ' . base64_encode($this->_ci->session->userdata('access_token'))));
+				curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
+
+				$postfields = array();
+
+				foreach ($post_fields as $fieldname => $fieldvalue)
+				{
+					$postfields[] .= $fieldname . '=' . urlencode($fieldvalue);
+				}
+
+				curl_setopt($ch, CURLOPT_POSTFIELDS, implode('&', $postfields));
+
+
+				if ($output = curl_exec($ch))
+				{
+					// Response OK, content all good!
+					curl_close($ch);
+					if($return = json_decode($output))
+					{
+						return $return;
+					}
+					else
+					{
+						$this->data['page_title'] = 'Parsing Error';
+						$this->data['error_title'] = 'Invalid Response';
+						$this->data['error_text'] = 'Orbitla Core has not returned a valid reponse.';
+						$this->data['error_technical'] = 'invalid_reponse: Orbital returned an invalid response.<br>' . $output;
+						// Refresh failed. Abort.
+						$this->_ci->parser->parse('includes/header', $this->data);
+						$this->_ci->parser->parse('static/error', $this->data);
+						$this->_ci->parser->parse('includes/footer', $this->data);
+						return FALSE;
+					}
+				}
+				else
+				{
+					// Something has gone wrong - try figure out what.
+					$http_status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+					echo $http_status;
+					curl_close($ch);
+
+					// Different behaviours for unauthorised code
+					if ($http_status === 401)
+					{
+						// Unauthorised response - token invalid/expired/revoked. Try to refresh, AND run again
+						if ($this->refresh_token($this->_ci->session->userdata('refresh_token')))
+						{
+							return $this->get_authed($target);
+						}
+						else
+						{
+
+							$this->data['page_title'] = 'Authentication Error';
+							$this->data['error_title'] = 'Authentication Error';
+							$this->data['error_text'] = 'There has been a problem authenticating this request.';
+							$this->data['error_technical'] = 'refresh_failure: Unable to refresh access token.';
+
+							// Refresh failed. Abort.
+							$this->_ci->parser->parse('includes/header', $this->data);
+							$this->_ci->parser->parse('static/error', $this->data);
+							$this->_ci->parser->parse('includes/footer', $this->data);
+							return FALSE;
+						}
+					}
+					else
+					{
+						// Something else has gone wrong. Try to parse it out.
+						if ($response = json_decode($output) AND isset($response->error))
+						{
+
+							$this->data['page_title'] = 'Authentication Error';
+							$this->data['error_title'] = 'Authentication Error';
+							$this->data['error_text'] = 'There has been a problem authenticating this request.';
+							$this->data['error_technical'] = 'oauth_401: ' . $response->error . ': ' . $response->error_description;
+
+							// Load error view with given error message
+							$this->_ci->parser->parse('includes/header', $this->data);
+							$this->_ci->parser->parse('static/error', $this->data);
+							$this->_ci->parser->parse('includes/footer', $this->data);
+							return FALSE;
+						}
+						else
+						{
+
+							$this->data['page_title'] = 'Authentication Error';
+							$this->data['error_title'] = 'Authentication Error';
+							$this->data['error_text'] = 'There has been a problem authenticating this request.';
+							$this->data['error_technical'] = 'oauth_401_generic: Core issued a HTTP 401 during authentication.';
+
+							// Load error view with own message.
+							$this->_ci->parser->parse('includes/header', $this->data);
+							$this->_ci->parser->parse('static/error', $this->data);
+							$this->_ci->parser->parse('includes/footer', $this->data);
+							return FALSE;
+						}
+					}
+				}
+			}
+			catch (Exception $e)
+			{
+				$this->data['page_title'] = 'Unknown Error';
+				$this->data['error_title'] = 'Unknown Error';
+				$this->data['error_text'] = 'Something has gone wrong.';
+				$this->data['error_technical'] = $e->getMessage();
+				// Load error view with own message.
+				$this->_ci->parser->parse('includes/header', $this->data);
+				$this->_ci->parser->parse('static/error', $this->data);
+				$this->_ci->parser->parse('includes/footer', $this->data);
+
+				return FALSE;
+			}
+
+		}
+		else
+		{
+			// No user is present, thus we have no access token. Send user to sign in.
+			redirect('signin');
+		}
+
+	}
+
+	private function delete_authed($target)
+	{
+		if ($this->_ci->session->userdata('access_token'))
+		{
+			try
+			{
+				$ch = curl_init($this->_ci->config->item('orbital_core_location') . $target);
+				curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+				if (ENVIRONMENT === 'development')
+				{
+					curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+				}
+				curl_setopt($ch, CURLOPT_HTTPHEADER, array('Authorization: Bearer ' . base64_encode($this->_ci->session->userdata('access_token'))));
+				curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'DELETE');
+
+				if ($output = curl_exec($ch))
+				{
+					// Response OK, content all good!
+					curl_close($ch);
+					if($return = json_decode($output))
+					{
+						return $return;
+					}
+					else
+					{
+						$this->data['page_title'] = 'Parsing Error';
+						$this->data['error_title'] = 'Invalid Response';
+						$this->data['error_text'] = 'Orbital Core has not returned a valid response.';
+						$this->data['error_technical'] = 'invalid_response: Orbital returned an invalid response.<br>' . $output;
+						// Refresh failed. Abort.
+						$this->_ci->parser->parse('includes/header', $this->data);
+						$this->_ci->parser->parse('static/error', $this->data);
+						$this->_ci->parser->parse('includes/footer', $this->data);
+						return FALSE;
+					}
+				}
+				else
+				{
+					// Something has gone wrong - try figure out what.
+					$http_status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+					echo $http_status;
+					curl_close($ch);
+
+					// Different behaviours for unauthorised code
+					if ($http_status === 401)
+					{
+						// Unauthorised response - token invalid/expired/revoked. Try to refresh, AND run again
+						if ($this->refresh_token($this->_ci->session->userdata('refresh_token')))
+						{
+							return $this->get_authed($target);
+						}
+						else
+						{
+
+							$this->data['page_title'] = 'Authentication Error';
+							$this->data['error_title'] = 'Authentication Error';
+							$this->data['error_text'] = 'There has been a problem authenticating this request.';
+							$this->data['error_technical'] = 'refresh_failure: Unable to refresh access token.';
+
+							// Refresh failed. Abort.
+							$this->_ci->parser->parse('includes/header', $this->data);
+							$this->_ci->parser->parse('static/error', $this->data);
+							$this->_ci->parser->parse('includes/footer', $this->data);
+							return FALSE;
+						}
+					}
+					else
+					{
+						// Something else has gone wrong. Try to parse it out.
+						if ($response = json_decode($output) AND isset($response->error))
+						{
+
+							$this->data['page_title'] = 'Authentication Error';
+							$this->data['error_title'] = 'Authentication Error';
+							$this->data['error_text'] = 'There has been a problem authenticating this request.';
+							$this->data['error_technical'] = 'oauth_401: ' . $response->error . ': ' . $response->error_description;
+
+							// Load error view with given error message
+							$this->_ci->parser->parse('includes/header', $this->data);
+							$this->_ci->parser->parse('static/error', $this->data);
+							$this->_ci->parser->parse('includes/footer', $this->data);
+							return FALSE;
+						}
+						else
+						{
+
+							$this->data['page_title'] = 'Authentication Error';
+							$this->data['error_title'] = 'Authentication Error';
+							$this->data['error_text'] = 'There has been a problem authenticating this request.';
+							$this->data['error_technical'] = 'oauth_401_generic: Core issued a HTTP 401 during authentication.';
+
+							// Load error view with own message.
+							$this->_ci->parser->parse('includes/header', $this->data);
+							$this->_ci->parser->parse('static/error', $this->data);
+							$this->_ci->parser->parse('includes/footer', $this->data);
+							return FALSE;
+						}
+					}
+				}
+			}
+			catch (Exception $e)
+			{
+				$this->data['page_title'] = 'Unknown Error';
+				$this->data['error_title'] = 'Unknown Error';
+				$this->data['error_text'] = 'Something has gone wrong.';
+				$this->data['error_technical'] = $e->getMessage();
+				// Load error view with own message.
+				$this->_ci->parser->parse('includes/header', $this->data);
+				$this->_ci->parser->parse('static/error', $this->data);
+				$this->_ci->parser->parse('includes/footer', $this->data);
+
+				return FALSE;
+			}
+
+		}
+		else
+		{
+			// No user is present, thus we have no access token. Send user to sign in.
+			redirect('signin');
+		}
+
+	}
+
+
 
 	private function get_unauthed($target)
 	{
@@ -378,9 +709,16 @@ class Orbital {
 		}
 		catch (Exception $e)
 		{
+			$this->data['page_title'] = 'Parsing Error';
+			$this->data['error_title'] = 'Invalid Response';
+			$this->data['error_text'] = 'Orbitla Core has not returned a valid reponse.';
+			$this->data['error_technical'] = 'invalid_reponse: Orbital returned an invalid response.';
+			// Refresh failed. Abort.
+			$this->_ci->parser->parse('includes/header', $this->data);
+			$this->_ci->parser->parse('static/error', $this->data);
+			$this->_ci->parser->parse('includes/footer', $this->data);
 			return FALSE;
 		}
-
 	}
 
 	/**
@@ -429,15 +767,13 @@ class Orbital {
 
 	public function core_server_status()
 	{
-
 		return $this->get_authed('core/mongo_server_status');
-
 	}
 
 	/**
 	 * User: Details
 	 *
-	 * Retrieves details for the specified user, or the current user if none
+	 * Retrieves details for the specified user, OR the current user if none
 	 * is specified.
 	 *
 	 * @access public
@@ -473,14 +809,92 @@ class Orbital {
 		}
 	}
 
+	public function projects_public_list($limit = 20)
+	{
+		return $this->get_unauthed('projects/public?limit=' . $limit);
+	}
+
 	public function project_details($project)
 	{
-		return $this->get_authed('project/' .$project);
+		return $this->get_authed('project/' . $project);
 	}
-	
-		public function create_project($name, $abstract)
+
+	public function project_public_details($project)
+	{
+		return $this->get_unauthed('project/' . $project . '/public');
+	}
+
+	public function create_project($name, $abstract)
 	{
 		return $this->post_authed('projects/create', array('name' => $name, 'abstract' => $abstract));
+	}
+
+	public function project_update($identifier, $name, $abstract, $research_group, $start_date, $end_date, $default_licence, $public_view, $google_analytics)
+	{
+		return $this->put_authed('project/' . $identifier, array('name' => $name, 'abstract' => $abstract, 'research_group' => $research_group, 'start_date' => $start_date, 'end_date' => $end_date, 'default_licence' => $default_licence, 'public_view' => $public_view, 'google_analytics' => $google_analytics));
+	}
+
+	public function delete_project($identifier)
+	{
+		return $this->delete_authed('project/' . $identifier);
+	}
+
+
+	/**
+	 * Licences: List
+	 *
+	 * Returns a list of all licences.
+	 *
+	 * @access public
+	 *
+	 * @return object|FALSE Object if successful, FALSE if not.
+	 */
+
+	public function licences_list()
+	{
+		return $this->get_authed('licences');
+	}
+
+	public function licences_enabled_list()
+	{
+		return $this->get_unauthed('licences/enabled');
+	}
+
+	public function licence_get($id)
+	{
+		return $this->get_unauthed('licence/' . $id);
+	}
+
+	public function licence_create($name, $shortname, $uri)
+	{
+		return $this->post_authed('licences', array('name' => $name, 'shortname' => $shortname, 'uri' => $uri));
+	}
+
+	public function licence_update($id, $name, $shortname, $uri, $enable = FALSE)
+	{
+		return $this->post_authed('licence/' . $id, array('name' => $name, 'shortname' => $shortname, 'uri' => $uri, 'enable' => $enable));
+	}
+
+	public function get_otk($file_id)
+	{
+		if ($this->_ci->session->userdata('current_user_string'))
+		{
+			return $this->get_authed('file/' . $file_id . '/get_otk');
+		}
+		else
+		{
+			return $this->get_unauthed('file/' . $file_id . '/get_otk');
+		}
+	}
+
+	public function file_get_details($file_id)
+	{
+		return $this->get_authed('file/' . $file_id);
+	}
+	
+	public function file_get_details_public($file_id)
+	{
+		return $this->get_unauthed('file/' . $file_id);	
 	}
 }
 

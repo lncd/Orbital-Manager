@@ -1,12 +1,14 @@
-<div class="row-fluid">
+<div class="row">
 	<div class="span12">
 		
-		<h1>{error_title}</h1>
+		<div class="page-header">
+			<h1>{error_title}</h1>
+		</div>
 		
 	</div>
 </div>
 
-<div class="row-fluid">
+<div class="row">
 	<div class="span8">
 		
 		<p>{error_text}</p>

@@ -1,7 +1,9 @@
-<div class="row-fluid">
+<div class="row">
 	<div class="span8">
 	
-		<h1>Sign In</h1>
+		<div class="page-header">
+			<h1>Sign In</h1>
+		</div>
 		
 		<p>To sign in to {orbital_manager_name} just choose your preferred method of signing in from the list below:</p>
 		

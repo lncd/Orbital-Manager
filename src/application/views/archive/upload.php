@@ -1,4 +1,4 @@
-<div class="row-fluid">
+<div class="row">
 	<div class="span12">
 
 		<ul class="breadcrumb">
@@ -21,7 +21,7 @@
 
 		<h1>Upload File to Archives</h1>
 		
-		<div class="row-fluid">
+		<div class="row">
 			<div class="span8">
 				<form id="fileupload" action="{core_url}archive/upload_delegate" method="POST" enctype="multipart/form-data">
 					<input type="hidden" name="project_id" value="{project_id}">
