@@ -69,7 +69,7 @@
 		if ($new_project === TRUE)
 		{
 			echo '<div class="alert alert-info">
-				<i class="icon-chevron-down"></i> Please describe your project in more detail. Good research data management requires good metadata.
+				<i class="icon-chevron-down"></i> Please describe your project in more detail by clicking the \'Edit\' button.
 			</div>';
 
 		}
@@ -268,9 +268,8 @@
 				</div>
 				<div class="modal-footer">
 					<a class="btn" data-dismiss="modal">Close</a>
-				</div>		
+				</div>
 			</div>
-			
 		</div>
 	</div>
 </div>
