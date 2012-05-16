@@ -98,7 +98,7 @@
 					</a>
 				</li>
 				<li>
-					<a href="https://github.com/lncd/Orbital-Core">
+					<a href="https://github.com/lncd/Orbital-Manager">
 						<i class="icon-chevron-right"></i>
 						GitHub (Orbital Manager)
 					</a>
