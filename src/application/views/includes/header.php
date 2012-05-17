@@ -22,6 +22,7 @@
 		</style>
 		<link href="{base_url}css/bootstrap-responsive.min.css" rel="stylesheet">
 		<link href="{base_url}css/jquery-ui.css" rel="stylesheet">
+		<link href="{base_url}css/font-awesome.css" rel="stylesheet">
 		
 		<link rel="shortcut icon" href="{base_url}favicon.ico">
 		<link rel="apple-touch-icon" href="{base_url}img/apple-touch-icon.png">

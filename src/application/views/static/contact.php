@@ -87,25 +87,25 @@
 			<ul class="nav nav-pills nav-stacked">
 				<li>
 					<a href="http://orbital.blogs.lincoln.ac.uk">
-						<i class="icon-chevron-right"></i>
+						<i class="icon-external-link"></i>
 						Orbital Blog
 					</a>
 				</li>
 				<li>
 					<a href="https://github.com/lncd/Orbital-Core">
-						<i class="icon-chevron-right"></i>
+						<i class="icon-external-link"></i>
 						GitHub (Orbital Core)
 					</a>
 				</li>
 				<li>
 					<a href="https://github.com/lncd/Orbital-Manager">
-						<i class="icon-chevron-right"></i>
+						<i class="icon-external-link"></i>
 						GitHub (Orbital Manager)
 					</a>
 				</li>
 				<li>
 					<a href="https://www.pivotaltracker.com/projects/366731">
-						<i class="icon-chevron-right"></i>
+						<i class="icon-external-link"></i>
 						Pivotal Tracker
 					</a>
 				</li>

@@ -267,7 +267,7 @@
 					<iframe style="width:100%;border:none;height:400px;" src="{orbital_core_location}fileupload/form?token=<?php echo $upload_token; ?>&licence=<?php echo $project_default_licence; ?>"></iframe>
 				</div>
 				<div class="modal-footer">
-					<a class="btn" data-dismiss="modal">Close</a>
+					<a class="btn" href="<?php echo site_url('project/{project_id}'); ?>">Done</a>
 				</div>
 			</div>
 		</div>
