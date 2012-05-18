@@ -1087,6 +1087,25 @@ class Orbital {
 	{
 		return $this->get_unauthed('file/' . $file_id);	
 	}
+	
+	
+	/**
+	 * Update file details
+	 *
+	 * updates a files details
+	 *
+	 * @param string $identifier       The identifier of the file.
+	 * @param string $name             The file name.
+	 * @param string $default_licence  The licence the file is published under.
+	 * @param bool   $public_view      If the project is publically accessible or not.
+	 * @access public
+	 * @return object.
+	 */
+
+	public function file_update($identifier, $name, $default_licence, $public_view)
+	{
+		return $this->put_authed('file/' . $identifier, array('name' => $name, 'default_licence' => $default_licence, 'public_view' => $public_view));
+	}
 }
 
 /* End of file Orbital.php */

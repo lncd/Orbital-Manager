@@ -110,6 +110,75 @@ class Files extends CI_Controller {
 			show_404();
 		}
 	}
+	
+	
+
+	/**
+	 * Edit file details
+	 *
+	 * edits a files details
+	 *
+	 * @param string $identifier
+	 * @return NULL
+	 */
+
+	function edit_file($identifier)
+	{
+		if ($response = $this->orbital->file_get_details($identifier))
+		{
+			$licences = $this->orbital->licences_enabled_list();
+			$this->data['licences'] = $licences->response->licences;
+			
+			if($this->input->post('licence'))
+			{
+					
+				if ($this->input->post('file_public') === 'public')
+				{
+					$public_view = 'visible';
+				}
+				else
+				{
+					$public_view = 'hidden';
+				}
+			
+				$this->orbital->file_update($identifier, $this->input->post('file_name'), (int)$this->input->post('file_default_licence'), $this->input->post('public'));
+				
+				$this->session->set_flashdata('message', 'File details updated successfully.');
+				$this->session->set_flashdata('message_type', 'success');
+				redirect('file/' . $identifier);
+			}
+		
+			$this->load->library('typography');
+			
+			$this->data['file_id'] = $response->response->file->id;
+			$this->data['file_project'] = $response->response->file->project_name;
+			$this->data['file_project_id'] = $response->response->file->project;
+			$this->data['file_title'] = $response->response->file->original_name;
+			$this->data['file_name'] = $response->response->file->original_name;
+			$this->data['file_licence'] = $response->response->file->licence_name;
+			$this->data['file_licence_uri'] = $response->response->file->licence_uri;
+			$this->data['file_extension'] = $response->response->file->extension;
+			$this->data['file_mimetype'] = $response->response->file->mimetype;
+			$this->data['page_title'] = 'Edit ' . $response->response->file->original_name;
+			
+			if ($response->response->file->status === 'uploaded')
+			{
+				$this->data['file_downloadable'] = TRUE;
+			}
+			else
+			{
+				$this->data['file_downloadable'] = FALSE;
+			}
+
+			$this->parser->parse('includes/header', $this->data);
+			$this->parser->parse('files/edit_file', $this->data);
+			$this->parser->parse('includes/footer', $this->data);
+		}
+		else
+		{
+			show_404();
+		}
+	}
 
 	/**
 	 * Download archive file
