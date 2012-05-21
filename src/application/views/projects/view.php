@@ -9,7 +9,7 @@
 				<a href="{base_url}projects">Projects</a> <span class="divider">/</span>
 			</li>
 			<li class="active">
-				<a href="{base_url}project/{project_id}">{project_name}</a>
+				{project_name}
 			</li>
 		</ul>
 
