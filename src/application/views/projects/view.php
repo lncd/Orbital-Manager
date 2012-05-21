@@ -83,6 +83,57 @@
 	</div>
 </div>
 
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.js"></script><script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.js"></script>
+<script type="text/javascript">
+$(function() {
+ 
+    $( "#amount_slider" ).slider({
+        orientation: "horizontal",
+        range: false,
+        min: 50, //1000,
+        max: 5000, //300000,
+        value: 100,
+        step: 10,
+        slide: function( event, ui ) {
+                $( "#amount" ).text( ui.value );
+        },
+        stop: function( event, ui ) {
+                calculateMorgage();
+        }
+    });
+ 
+    $( "#amount" ).text($( "#amount_slider" ).slider( "value" ));
+
+	function calculateMorgage()
+	{
+		var amount   = $( "#amount_slider" ).slider( "value" );
+		
+		//Price per unit of space
+		var rate     = amount * 7;
+		
+		//Calculation
+		$( "#result" ).text(rate.toFixed(2));
+	}
+	
+	calculateMorgage();
+
+});
+</script>
+ 
+<link rel="stylesheet" href="/wp-content/themes/recipress/jquery-ui-1.8.16.custom.css"/>
+<style type="text/css">
+#amount_slider { width: 200px; margin-top: 20px; float: left; }
+#amount, #result { margin-left: 20px; margin-top: 20px; float: left; }
+#result { font-weight: bold; } .message { float: left; margin-top: 20px; font-family:Arial; width: 100px; }
+.clear { clear: both; }
+</style>
+ 
+<div>
+<div class="message">Space</div><div id="amount_slider"></div><div id="amount"></div>
+<div class="clear"></div>
+<div class="clear"></div> <div class="message">Cost</div><div id="result"></div> <div class="clear"></div>
+</div>
+
 <hr>
 
 <div class="row">
