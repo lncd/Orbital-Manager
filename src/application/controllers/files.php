@@ -129,10 +129,10 @@ class Files extends CI_Controller {
 			$licences = $this->orbital->licences_enabled_list();
 			$this->data['licences'] = $licences->response->licences;
 			
-			if($this->input->post('licence'))
+			if($this->input->post('default_licence'))
 			{
-					
-				if ($this->input->post('file_public') === 'public')
+				
+				if ($this->input->post('public') === TRUE)
 				{
 					$public_view = 'visible';
 				}
@@ -141,7 +141,7 @@ class Files extends CI_Controller {
 					$public_view = 'hidden';
 				}
 			
-				$this->orbital->file_update($identifier, $this->input->post('file_name'), (int)$this->input->post('file_default_licence'), $this->input->post('public'));
+				$this->orbital->file_update($identifier, $this->input->post('name'), (int)$this->input->post('default_licence'), $this->input->post('public'));
 				
 				$this->session->set_flashdata('message', 'File details updated successfully.');
 				$this->session->set_flashdata('message_type', 'success');
@@ -159,6 +159,7 @@ class Files extends CI_Controller {
 			$this->data['file_licence_uri'] = $response->response->file->licence_uri;
 			$this->data['file_extension'] = $response->response->file->extension;
 			$this->data['file_mimetype'] = $response->response->file->mimetype;
+			$this->data['file_public'] = $response->response->file->visibility;
 			$this->data['page_title'] = 'Edit ' . $response->response->file->original_name;
 			
 			if ($response->response->file->status === 'uploaded')

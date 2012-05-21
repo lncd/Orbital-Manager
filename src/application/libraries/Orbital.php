@@ -1085,7 +1085,7 @@ class Orbital {
 	 
 	public function file_get_details_public($file_id)
 	{
-		return $this->get_unauthed('file/' . $file_id);	
+		return $this->get_unauthed('file/' . $file_id);
 	}
 	
 	

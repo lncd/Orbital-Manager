@@ -28,7 +28,7 @@
 		</thead>
 	</table>
 	
-	<?php echo form_open('project/{project_id}/edit', array('class' => 'form-horizontal'));
+	<?php echo form_open('file/{file_id}/edit', array('class' => 'form-horizontal'));
 	
 	$form_name = array(
 		'name'			=> 'name',
@@ -49,7 +49,7 @@
 		'name'		=> 'public',
 		'id'		=> 'file_public',
 		'value'		=> 'public',
-		'checked'	=> set_checkbox('public', 'public', $file_public_view)
+		'checked'	=> set_checkbox('public', 'public', $file_public)
 	);
 
 	echo '<div class="control-group">';
