@@ -49,7 +49,7 @@
 		'name'		=> 'public',
 		'id'		=> 'file_public',
 		'value'		=> 'public',
-		'checked'	=> set_checkbox('public', 'public', $file_public)
+		'checked'	=> set_checkbox('public', 'public', $file_public_view)
 	);
 
 	echo '<div class="control-group">';
@@ -67,7 +67,7 @@
 	echo '<div class="control-group">';
 	echo form_label('Default Licence', 'file_default_licence', array('class' => 'control-label'));
 	echo '<div class="controls">';
-	echo form_dropdown('default_licence', $available_licences, set_value('default_licence', $file_licence), 'id="file_default_licence" class="span4"');
+	echo form_dropdown('default_licence', $available_licences, set_value('default_licence', $file_licence), 'id="file_licence" class="span4"');
 	echo '<p class="help-block">Choosing a licence makes it easier to publish and share your data.</p>';
 	echo '</div></div>';	
 

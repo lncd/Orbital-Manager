@@ -140,16 +140,16 @@ class Files extends CI_Controller {
 			if($this->input->post('default_licence'))
 			{
 				
-				if ($this->input->post('public') === TRUE)
+				if ($this->input->post('public') === 'public')
 				{
-					$public_view = 'visible';
+					$public_view = 'public';
 				}
 				else
 				{
-					$public_view = 'hidden';
+					$public_view = 'private';
 				}
 			
-				$this->orbital->file_update($identifier, $this->input->post('name'), (int)$this->input->post('default_licence'), $this->input->post('public'));
+				$this->orbital->file_update($identifier, $this->input->post('name'), (int)$this->input->post('default_licence'), $public_view);
 				
 				$this->session->set_flashdata('message', 'File details updated successfully.');
 				$this->session->set_flashdata('message_type', 'success');
@@ -168,15 +168,23 @@ class Files extends CI_Controller {
 			$this->data['file_extension'] = $response->response->file->extension;
 			$this->data['file_mimetype'] = $response->response->file->mimetype;
 			if (isset($response->response->file->visibility))
-			{
-				$this->data['file_public'] = $response->response->file->visibility;
+			{			
+				if ($response->response->file->visibility === 'public')
+				{
+					$this->data['file_public_view'] = TRUE;
+				}
+				else
+				{
+					$this->data['file_public_view'] = FALSE;
+				}
 			}
 			else
 			{
-				//If file visilbility not set, file_get_details_public was called, therefore file is public
-				$this->data['file_public'] = 'public';
+				$this->data['file_public_view'] = TRUE;
 			}
 			$this->data['page_title'] = 'Edit ' . $response->response->file->original_name;
+
+
 			
 			if ($response->response->file->status === 'uploaded')
 			{
