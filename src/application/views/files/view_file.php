@@ -28,6 +28,10 @@
 		</tbody>
 	</table>
 </div>
+		
+		{file_controls}
+		<a class="btn btn-small" href="{uri}">{title}</a>
+		{/file_controls}
 
 <?php
 

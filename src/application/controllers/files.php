@@ -42,6 +42,14 @@ class Files extends CI_Controller {
 			$this->data['file_mimetype'] = $response->response->file->mimetype;
 			$this->data['page_title'] = $response->response->file->original_name;
 			
+			if ($response->response->permissions->write)
+			{
+				$this->data['file_controls'][] = array(
+					'uri' => site_url('file/' . $response->response->file->id . '/edit'),
+					'title' => 'Edit'
+				);
+			}
+			
 			if ($response->response->file->status === 'uploaded')
 			{
 				$this->data['file_downloadable'] = TRUE;
@@ -159,7 +167,15 @@ class Files extends CI_Controller {
 			$this->data['file_licence_uri'] = $response->response->file->licence_uri;
 			$this->data['file_extension'] = $response->response->file->extension;
 			$this->data['file_mimetype'] = $response->response->file->mimetype;
-			$this->data['file_public'] = $response->response->file->visibility;
+			if (isset($response->response->file->visibility))
+			{
+				$this->data['file_public'] = $response->response->file->visibility;
+			}
+			else
+			{
+				//If file visilbility not set, file_get_details_public was called, therefore file is public
+				$this->data['file_public'] = 'public';
+			}
 			$this->data['page_title'] = 'Edit ' . $response->response->file->original_name;
 			
 			if ($response->response->file->status === 'uploaded')
