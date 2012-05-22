@@ -44,6 +44,7 @@ $route['404_override'] = '';
 $route['about'] = 'static_content/about';
 $route['contact'] = 'static_content/contact';
 $route['signout'] = 'signin/signout';
+$route['planner'] = 'admin/project_planner';
 $route['project/(:any)/edit'] = 'projects/edit/$1';
 $route['project/(:any)/delete'] = 'projects/delete/$1';
 $route['project/(:any)/public'] = 'projects/view_public/$1';
