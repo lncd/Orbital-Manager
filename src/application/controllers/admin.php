@@ -233,12 +233,39 @@ class Admin extends CI_Controller {
 		redirect('admin/licences');
 	}
 	
-	function project_planner()
+	/**
+	 * Disable Licence
+	 *
+	 * Disabled a licence
+	 *
+	 * @param string $id
+	 *
+	 * @return NULL
+	 */
+	
+	function licence_delete($id)
 	{	
-		$this->data['page_title'] = 'Project Planner';
-		$this->parser->parse('includes/header', $this->data);
-		$this->parser->parse('static/project_planner', $this->data);
-		$this->parser->parse('includes/footer', $this->data);
+		if ($licence = $this->orbital->licence_get($id))
+		{
+			$licence = $licence->response->licence;
+		
+			if ($this->orbital->licence_delete($licence->id))
+			{
+				$this->session->set_flashdata('message', 'Licence deleted.');
+				$this->session->set_flashdata('message_type', 'success');
+			}
+			else
+			{
+				$this->session->set_flashdata('message', 'Something went wrong deleting this licence.');
+				$this->session->set_flashdata('message_type', 'error');
+			}
+		}
+		else
+		{
+			show_404();
+		}
+		
+		redirect('admin/licences');
 	}
 }
 
