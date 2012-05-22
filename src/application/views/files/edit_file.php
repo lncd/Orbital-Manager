@@ -65,7 +65,7 @@
 	}
 
 	echo '<div class="control-group">';
-	echo form_label('Default Licence', 'file_default_licence', array('class' => 'control-label'));
+	echo form_label('Default Licence', 'file_licence', array('class' => 'control-label'));
 	echo '<div class="controls">';
 	echo form_dropdown('default_licence', $available_licences, set_value('default_licence', $file_licence), 'id="file_licence" class="span4"');
 	echo '<p class="help-block">Choosing a licence makes it easier to publish and share your data.</p>';

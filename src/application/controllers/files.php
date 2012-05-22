@@ -163,7 +163,7 @@ class Files extends CI_Controller {
 			$this->data['file_project_id'] = $response->response->file->project;
 			$this->data['file_title'] = $response->response->file->title;
 			$this->data['file_name'] = $response->response->file->original_name;
-			$this->data['file_licence'] = $response->response->file->licence_name;
+			$this->data['file_licence'] = $response->response->file->licence;
 			$this->data['file_licence_uri'] = $response->response->file->licence_uri;
 			$this->data['file_extension'] = $response->response->file->extension;
 			$this->data['file_mimetype'] = $response->response->file->mimetype;
@@ -183,8 +183,6 @@ class Files extends CI_Controller {
 				$this->data['file_public_view'] = TRUE;
 			}
 			$this->data['page_title'] = 'Edit ' . $response->response->file->original_name;
-
-
 			
 			if ($response->response->file->status === 'uploaded')
 			{
