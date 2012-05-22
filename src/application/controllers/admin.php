@@ -233,14 +233,6 @@ class Admin extends CI_Controller {
 		redirect('admin/licences');
 	}
 	
-	function project_planner()
-	{	
-		$this->data['page_title'] = 'Project Planner';
-		$this->parser->parse('includes/header', $this->data);
-		$this->parser->parse('static/project_planner', $this->data);
-		$this->parser->parse('includes/footer', $this->data);
-	}
-	
 	/**
 	 * Disable Licence
 	 *

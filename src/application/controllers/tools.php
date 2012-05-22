@@ -2,6 +2,23 @@
 
 class Tools extends CI_Controller {
 
+	private $_data = array();
+
+	/**
+	 * Constructor
+	 */
+	 
+	function __construct()
+	{
+		parent::__construct();
+		
+		$this->data = $this->orbital->common_content();
+	}
+	
+	/**
+	 * Project Planner
+	 */
+	 
 	function project_planner()
 	{	
 		$this->data['page_title'] = 'Project Planner';
