@@ -9,7 +9,7 @@
 				<a href="{base_url}projects">Projects</a> <span class="divider">/</span>
 			</li>
 			<li class="active">
-				<a href="{base_url}project/{project_id}">{project_name}</a></span>
+				{project_name}
 			</li>
 		</ul>
 
@@ -81,6 +81,50 @@
 		{/project_controls}
 		
 	</div>
+</div>
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.js"></script><script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.js"></script>
+<script type="text/javascript">
+$(function() {
+ 
+    $( "#amount_slider" ).slider({
+        orientation: "horizontal",
+        range: false,
+        min: 50, //1000,
+        max: 5000, //300000,
+        value: 100,
+        step: 10,
+        slide: function( event, ui ) {
+                $( "#amount" ).text( ui.value );
+        },
+        stop: function( event, ui ) {
+                calculateMorgage();
+        }
+    });
+ 
+    $( "#amount" ).text($( "#amount_slider" ).slider( "value" ));
+
+	function calculateMorgage()
+	{
+		var amount   = $( "#amount_slider" ).slider( "value" );
+		
+		//Price per unit of space
+		var rate     = amount * 7;
+		
+		//Calculation
+		$( "#result" ).text(rate.toFixed(2));
+	}
+	
+	calculateMorgage();
+
+});
+</script>
+ 
+ 
+<div>
+<div class="message">Space</div><div id="amount_slider"></div><div id="amount"></div>
+<div class="clear"></div>
+<div class="clear"></div> <div class="message">Cost</div><div id="result"></div> <div class="clear"></div>
 </div>
 
 <hr>
@@ -256,7 +300,7 @@
 			
 			<hr>
 			
-			<p><a href="#uploadFileDialogue" class="btn btn-success" class="btn btn-success" data-toggle="modal"><i class="icon-upload icon-white"></i> Upload File</a>
+			<p><a href="#uploadFileDialogue" class="btn btn-success" data-toggle="modal"><i class="icon-upload icon-white"></i> Upload File</a>
 			
 			<div class="modal fade" id="uploadFileDialogue">
 				<div class="modal-header">
@@ -264,7 +308,7 @@
 					<h3>Upload File to Archives</h3>
 				</div>
 				<div class="modal-body">
-					<iframe style="width:100%;border:none;height:400px;" src="{orbital_core_location}fileupload/form?token=<?php echo $upload_token; ?>&licence=<?php echo $project_default_licence; ?>"></iframe>
+					<iframe style="width:100%;border:none;height:400px;" src="{orbital_core_location}fileupload/form?token=<?php echo $upload_token; ?>&amp;licence=<?php echo $project_default_licence; ?>"></iframe>
 				</div>
 				<div class="modal-footer">
 					<a class="btn" href="<?php echo site_url('project/{project_id}'); ?>">Done</a>

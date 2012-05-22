@@ -14,7 +14,7 @@
 			<h1>My Projects</h1>
 		</div>
 		
-		<p>"Welcome to Orbital. Please create your first Project."</p>
+		<p>Welcome to Orbital. Please create your first Project.</p>
 		
 		<h2>Create First Project</h2>
 		<form method="post" action="{base_url}projects/create" class="well">

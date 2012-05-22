@@ -9,12 +9,12 @@
 		<a href="{base_url}project/{file_project_id}">{file_project}</a> <span class="divider">/</span>
 	</li>
 	<li class="active">
-		{file_name}
+		{file_title}
 	</li>
 </ul>
 
 <div class="page-header">
-	<h1>{file_name}</h1>
+	<h1>{file_title}</h1>
 </div>
 <div class = "well">
 	<table class="table">
@@ -22,12 +22,17 @@
 			<tr><th colspan="2">File Summary</th></tr>
 		</thead>
 		<tbody>
+			<tr><td>Original File Name</td><td>{file_name}</td></tr>
 			<tr><td>Licence</td><td><a href="{file_licence_uri}">{file_licence}</a></td></tr>
 			<tr><td>Research Project</td><td><a href="{base_url}project/{file_project_id}">{file_project}</a></td></tr>
 			<tr><td>Permanent URI</td><td><code>http://id.lincoln.ac.uk/research-file/{file_id}</code></td></tr>
 		</tbody>
 	</table>
 </div>
+		
+		{file_controls}
+		<a class="btn btn-small" href="{uri}">{title}</a>
+		{/file_controls}
 
 <?php
 

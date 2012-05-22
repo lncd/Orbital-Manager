@@ -1034,6 +1034,22 @@ class Orbital {
 	}
 	
 	/**
+	 * Licence: Delete
+	 *
+	 * Deletes a licence.
+	 *
+	 * @param string $id The ID of the licence
+	 *
+	 * @access public
+	 * @return BOOL.
+	 */
+
+	public function licence_delete($id)
+	{
+		return $this->delete_authed('licence/' . $id);
+	}
+	
+	/**
 	 * Get OTK
 	 *
 	 * Gets a One time key.
@@ -1085,7 +1101,26 @@ class Orbital {
 	 
 	public function file_get_details_public($file_id)
 	{
-		return $this->get_unauthed('file/' . $file_id);	
+		return $this->get_unauthed('file/' . $file_id . '/public');	
+	}
+	
+	
+	/**
+	 * Update file details
+	 *
+	 * updates a files details
+	 *
+	 * @param string $identifier       The identifier of the file.
+	 * @param string $name             The file name.
+	 * @param string $default_licence  The licence the file is published under.
+	 * @param bool   $public_view      If the project is publically accessible or not.
+	 * @access public
+	 * @return object.
+	 */
+
+	public function file_update($identifier, $name, $default_licence, $public_view)
+	{
+		return $this->put_authed('file/' . $identifier, array('name' => $name, 'default_licence' => $default_licence, 'public_view' => $public_view));
 	}
 }
 
