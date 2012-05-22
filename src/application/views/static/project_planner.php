@@ -39,32 +39,32 @@ $(function() {
     $( "#amount" ).text($( "#amount_slider" ).slider( "value" ) + "GB");
  
     $( "#time_slider" ).slider({
-        orientation: "horizontal",
-        range: false,
-        min: 1,
-        max: 60,
-        value: 15,
-        slide: function( event, ui ) {
-                $( "#time" ).text( ui.value + " Months");
-        },
-        stop: function( event, ui ) {
-                calculateMorgage();
-        }
-    });
- 
-    $( "#time" ).text($( "#time_slider" ).slider( "value" ) + " Months");
- 
-    function calculateMorgage() {
- 
-        var amount   = $( "#amount_slider" ).slider( "value" );
-        var time     = $( "#time_slider" ).slider( "value" );
- 
-        var rate     = 0.11 * amount * time;
- 
-        $( "#result" ).text('Approx. £' + rate.toFixed());
-    }
- 
-    calculateMorgage();
+		orientation: "horizontal",
+		range: false,
+		min: 1,
+		max: 60,
+		value: 15,
+		slide: function( event, ui ) {
+			$( "#time" ).text( ui.value + " Months");
+		},
+		stop: function( event, ui ) {
+			calculateMorgage();
+		}
+	});
+
+	$( "#time" ).text($( "#time_slider" ).slider( "value" ) + " Months");
+
+	function calculateMorgage() {
+
+		var amount   = $( "#amount_slider" ).slider( "value" );
+		var time     = $( "#time_slider" ).slider( "value" );
+
+		var rate     = 0.11 * amount * time;
+
+		$( "#result" ).text('Approx. £' + rate.toFixed());
+	}
+
+	calculateMorgage();
  
 });
 </script>

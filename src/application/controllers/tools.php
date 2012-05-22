@@ -1,6 +1,19 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Admin extends CI_Controller {
+class Tools extends CI_Controller {
+
+	private $_data = array();
+
+	/**
+	 * Constructor
+	 */
+	 
+	function __construct()
+	{
+		parent::__construct();
+		
+		$this->data = $this->orbital->common_content();
+	}
 
 	function project_planner()
 	{	
@@ -11,4 +24,4 @@ class Admin extends CI_Controller {
 	}
 }
 
-// End of file admin.php
+// End of file tools.php
