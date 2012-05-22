@@ -34,7 +34,7 @@ class Files extends CI_Controller {
 			$this->data['file_id'] = $response->response->file->id;
 			$this->data['file_project'] = $response->response->file->project_name;
 			$this->data['file_project_id'] = $response->response->file->project;
-			$this->data['file_title'] = $response->response->file->original_name;
+			$this->data['file_title'] = $response->response->file->title;
 			$this->data['file_name'] = $response->response->file->original_name;
 			$this->data['file_licence'] = $response->response->file->licence_name;
 			$this->data['file_licence_uri'] = $response->response->file->licence_uri;
@@ -88,7 +88,7 @@ class Files extends CI_Controller {
 			$this->data['file_id'] = $response->response->file->id;
 			$this->data['file_project'] = $response->response->file->project_name;
 			$this->data['file_project_id'] = $response->response->file->project;
-			$this->data['file_title'] = $response->response->file->original_name;
+			$this->data['file_title'] = $response->response->file->title;
 			$this->data['file_name'] = $response->response->file->original_name;
 			$this->data['file_licence'] = $response->response->file->licence_name;
 			$this->data['file_licence_uri'] = $response->response->file->licence_uri;
@@ -161,7 +161,7 @@ class Files extends CI_Controller {
 			$this->data['file_id'] = $response->response->file->id;
 			$this->data['file_project'] = $response->response->file->project_name;
 			$this->data['file_project_id'] = $response->response->file->project;
-			$this->data['file_title'] = $response->response->file->original_name;
+			$this->data['file_title'] = $response->response->file->title;
 			$this->data['file_name'] = $response->response->file->original_name;
 			$this->data['file_licence'] = $response->response->file->licence_name;
 			$this->data['file_licence_uri'] = $response->response->file->licence_uri;

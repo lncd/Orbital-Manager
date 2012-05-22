@@ -120,13 +120,6 @@ $(function() {
 });
 </script>
  
-<link rel="stylesheet" href="/wp-content/themes/recipress/jquery-ui-1.8.16.custom.css"/>
-<style type="text/css">
-#amount_slider { width: 200px; margin-top: 20px; float: left; }
-#amount, #result { margin-left: 20px; margin-top: 20px; float: left; }
-#result { font-weight: bold; } .message { float: left; margin-top: 20px; font-family:Arial; width: 100px; }
-.clear { clear: both; }
-</style>
  
 <div>
 <div class="message">Space</div><div id="amount_slider"></div><div id="amount"></div>
@@ -307,7 +300,7 @@ $(function() {
 			
 			<hr>
 			
-			<p><a href="#uploadFileDialogue" class="btn btn-success" class="btn btn-success" data-toggle="modal"><i class="icon-upload icon-white"></i> Upload File</a>
+			<p><a href="#uploadFileDialogue" class="btn btn-success" data-toggle="modal"><i class="icon-upload icon-white"></i> Upload File</a>
 			
 			<div class="modal fade" id="uploadFileDialogue">
 				<div class="modal-header">
@@ -315,7 +308,7 @@ $(function() {
 					<h3>Upload File to Archives</h3>
 				</div>
 				<div class="modal-body">
-					<iframe style="width:100%;border:none;height:400px;" src="{orbital_core_location}fileupload/form?token=<?php echo $upload_token; ?>&licence=<?php echo $project_default_licence; ?>"></iframe>
+					<iframe style="width:100%;border:none;height:400px;" src="{orbital_core_location}fileupload/form?token=<?php echo $upload_token; ?>&amp;licence=<?php echo $project_default_licence; ?>"></iframe>
 				</div>
 				<div class="modal-footer">
 					<a class="btn" href="<?php echo site_url('project/{project_id}'); ?>">Done</a>

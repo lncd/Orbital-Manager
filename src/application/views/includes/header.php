@@ -24,6 +24,8 @@
 		<link href="{base_url}css/jquery-ui.css" rel="stylesheet">
 		<link href="{base_url}css/font-awesome.css" rel="stylesheet">
 		
+		<link href="{base_url}css/orbital.css" rel="stylesheet">
+		
 		<link rel="shortcut icon" href="{base_url}favicon.ico">
 		<link rel="apple-touch-icon" href="{base_url}img/apple-touch-icon.png">
 		<link rel="apple-touch-icon" sizes="72x72" href="{base_url}img/apple-touch-icon-72.png">

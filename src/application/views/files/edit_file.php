@@ -9,7 +9,7 @@
 		<a href="{base_url}project/{file_project_id}">{file_project}</a> <span class="divider">/</span>
 	</li>
 	<li>
-		<a href="{base_url}file/{file_id}">{file_name}</a> <span class="divider">/</span>
+		<a href="{base_url}file/{file_id}">{file_title}</a> <span class="divider">/</span>
 	</li>
 	<li>
 		Edit
@@ -17,7 +17,7 @@
 </ul>
 
 <div class="page-header">
-	<h1>{file_name}</h1>
+	<h1>{file_title}</h1>
 </div>
 
 
@@ -32,15 +32,15 @@
 	
 	$form_name = array(
 		'name'			=> 'name',
-		'id'			=> 'file_name',
+		'id'			=> 'file_title',
 		'placeholder'	=> 'File Name',
-		'value'			=> set_value('name', $file_name),
+		'value'			=> set_value('name', $file_title),
 		'maxlength'		=> '200',
 		'class'			=> 'span6'
 	);
 
 	echo '<div class="control-group">';
-	echo form_label('File Name', 'file_name', array('class' => 'control-label'));
+	echo form_label('File Name', 'file_title', array('class' => 'control-label'));
 	echo '<div class="controls">';
 	echo form_input($form_name);
 	echo '</div></div>';
