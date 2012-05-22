@@ -28,7 +28,7 @@
 |	$route['default_controller'] = 'welcome';
 |
 | This route indicates which controller class should be loaded if the
-| URI contains no data. In the above example, the "welcome" class
+| URI contains no data. In the above example, the 'welcome' class
 | would be loaded.
 |
 |	$route['404_override'] = 'errors/page_missing';
@@ -44,20 +44,21 @@ $route['404_override'] = '';
 $route['about'] = 'static_content/about';
 $route['contact'] = 'static_content/contact';
 $route['signout'] = 'signin/signout';
-$route['project/(:any)/edit'] = "projects/edit/$1";
-$route['project/(:any)/delete'] = "projects/delete/$1";
-$route['project/(:any)/public'] = "projects/view_public/$1";
-$route['project/(:any)'] = "projects/view/$1";
-$route['projects/public'] = "projects/list_public";
-$route['file/(:any)/download'] = "files/download_file/$1";
-$route['file/(:any)/public'] = "files/view_file_public/$1";
-$route['file/(:any)'] = "files/view_file/$1";
-$route['licence/(:any)/json'] = "licences/view_licence_json/$1";
-$route['licence/(:any)'] = "licences/view_licence/$1";
+$route['project/(:any)/edit'] = 'projects/edit/$1';
+$route['project/(:any)/delete'] = 'projects/delete/$1';
+$route['project/(:any)/public'] = 'projects/view_public/$1';
+$route['project/(:any)'] = 'projects/view/$1';
+$route['projects/public'] = 'projects/list_public';
+$route['file/(:any)/download'] = 'files/download_file/$1';
+$route['file/(:any)/edit'] = 'files/edit_file/$1';
+$route['file/(:any)/public'] = 'files/view_file_public/$1';
+$route['file/(:any)'] = 'files/view_file/$1';
+$route['licence/(:any)/json'] = 'licences/view_licence_json/$1';
+$route['licence/(:any)'] = 'licences/view_licence/$1';
 
 $route['admin/licences/add'] = 'admin/licences_add';
-$route['admin/licence/(:num)/enable'] = "admin/licence_enable/$1";
-$route['admin/licence/(:num)/disable'] = "admin/licence_disable/$1";
+$route['admin/licence/(:num)/enable'] = 'admin/licence_enable/$1';
+$route['admin/licence/(:num)/disable'] = 'admin/licence_disable/$1';
 
 // End of file routes.php
 // Location: ./config/routes.php
