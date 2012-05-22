@@ -35,41 +35,61 @@
 		echo '<tr>
 				<td>' . $licence->name . '</td>
 				<td>' . $licence->short_name . '</td>
-				<td><a href="#" class="btn"><i class="icon-pencil"></i> Edit</a></td>
+				<td><a href="#licence-' . $licence->id . '-edit" class="btn btn-small" data-toggle="modal"><i class="icon-pencil"></i> Edit</a>
+				<div class="modal fade" id="licence-' . $licence->id . '-edit">
+					<div class="modal-header">
+						<button class="close" data-dismiss="modal">×</button>
+						<h3>Edit Licence</h3>
+						<h4>' . $licence->name . '</h4>
+					</div>
+					<div class="modal-body">
+						
+						<div class="alert alert-info">
+							<h4 class="alert-heading">Please Note</h4>
+							If you edit a licence to have substantially different information then you may inadvertently change the legal status of publicly available research data. If unsure, do <i>not</i> edit a licence.
+						</div>
+					</div>
+					<div class="modal-footer">
+						<a href="#" data-dismiss="modal" class="btn">Close</a>
+						<a href="' . site_url('admin/licence/' . $licence->id . '/disable') . '" class="btn btn-success"><i class="icon-pencil"></i> Edit Licence</a>
+					</div>
+				</div></td>
 				<td>';
 				
 		if ($licence->enabled)
 		{
-			echo '<a href="#licence-' . $licence->id . '-disable" class="btn btn-warning" data-toggle="modal"><i class="icon-off icon-white"></i> Disable</a>
+			echo '<a href="#licence-' . $licence->id . '-disable" class="btn btn-warning btn-small" data-toggle="modal"><i class="icon-off icon-white"></i> Disable</a>
 				<div class="modal fade" id="licence-' . $licence->id . '-disable">
 					<div class="modal-header">
 						<button class="close" data-dismiss="modal">×</button>
 						<h3>Disable Licence</h3>
+						<h4>' . $licence->name . '</h4>
 					</div>
 					<div class="modal-body">
-						<p>Are you sure you want to disable ' . $licence->name . '? This will prevent data from being published under it, and will disable its availability to projects as a default licence, but will not remove it from any data already published.</p>
+						<p>Are you sure you want to disable this licence? This will prevent data from being published under it, and will disable its availability to projects as a default licence, but will not remove it from any data already published.</p>
 					</div>
 					<div class="modal-footer">
 						<a href="#" data-dismiss="modal" class="btn">Close</a>
-						<a href="' . site_url('admin/licence/' . $licence->id . '/disable') . '" class="btn btn-warning"><i class="icon-off icon-white"></i> Disable Licence</a>
+						<a href="' . site_url('admin/licence/' . $licence->id . '/disable') . '" class="btn btn-warning"><i class="icon-off"></i> Disable Licence</a>
 					</div>
 				</div>';
 		}
 		else
 		{
-			echo '<a href="#licence-' . $licence->id . '-enable" class="btn btn-success" data-toggle="modal"><i class="icon-off icon-white"></i> Enable</a>
+			echo '<a href="#licence-' . $licence->id . '-enable" class="btn btn-success btn-small" data-toggle="modal"><i class="icon-off icon-white"></i> Enable</a>
 				<div class="modal fade" id="licence-' . $licence->id . '-enable">
 					<div class="modal-header">
 						<button class="close" data-dismiss="modal">×</button>
 						<h3>Enable Licence</h3>
+						<h4>' . $licence->name . '</h4>
 					</div>
 					<div class="modal-body">
-						<p>Are you sure you want to enable ' . $licence->name . '? This will allow data to be published under this licence, as well as allow projects to select it as their default licence.</p>
+						<p>Are you sure you want to enable this licence? This will allow data to be published under this licence, as well as allow projects to select it as their default licence.</p>
 						<p><strong>Please Note:</strong> Once a licence is in use by published data it cannot be deleted without first unpublishing the data.</p>
 					</div>
 					<div class="modal-footer">
 						<a href="#" data-dismiss="modal" class="btn">Close</a>
-						<a href="' . site_url('admin/licence/' . $licence->id . '/enable') . '" class="btn btn-success"><i class="icon-off icon-white"></i> Enable Licence</a>
+						<a href="' . site_url('admin/licence/' . $licence->id . '/enable') . '" class="btn btn-success"><i class="icon-off"></i> Enable Licence</a>
 					</div>
 				</div>';
 		}
@@ -78,11 +98,28 @@
 		
 		if ($licence->in_use)
 		{
-			echo '<a href="#" class="btn btn-danger disabled undeletable" rel="popover" data-content="This licence is being used by published data or is a default licence for a project, and cannot be deleted." data-original-title="Licence In Use"><i class="icon-trash icon-white"></i> Delete</a>';
+			echo '<a href="#" class="btn btn-danger btn-small disabled undeletable" rel="popover" data-content="This licence is being used by published data or is a default licence for a project, and cannot be deleted." data-original-title="Licence In Use"><i class="icon-trash"></i> Delete</a>';
 		}
 		else
 		{
-			echo '<a href="#" class="btn btn-danger"><i class="icon-trash icon-white"></i> Delete</a>';
+			echo '<a href="#licence-' . $licence->id . '-delete" class="btn btn-danger btn-small" data-toggle="modal"><i class="icon-trash"></i> Delete</a>
+			<div class="modal fade" id="licence-' . $licence->id . '-delete">
+					<div class="modal-header">
+						<button class="close" data-dismiss="modal">×</button>
+						<h3>Delete Licence</h3>
+						<h4>' . $licence->name . '</h4>
+					</div>
+					<div class="modal-body">
+						
+						<p>Are you sure that you want to delete this licence? Deleting a licence will make it unavailable to projects in the future.</p>
+						
+						<p>If you want to temporarily stop people from selecting this licence you may prefer to disable it.</p>
+					</div>
+					<div class="modal-footer">
+						<a href="#" data-dismiss="modal" class="btn">Close</a>
+						<a href="' . site_url('admin/licence/' . $licence->id . '/delete') . '" class="btn btn-danger"><i class="icon-trash"></i> Delete Licence</a>
+					</div>
+				</div>';
 		}
 		
 		echo '</td>
@@ -94,7 +131,7 @@
 	</tbody>
 </table>
 
-<p><a href="#addLicenceDialog" class="btn btn-success" data-toggle="modal"><i class="icon-plus icon-white"></i> Add Licence</a></p>
+<p><a href="#addLicenceDialog" class="btn btn-success" data-toggle="modal"><i class="icon-plus"></i> Add Licence</a></p>
 
 
 <?php

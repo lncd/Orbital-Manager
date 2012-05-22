@@ -1034,6 +1034,22 @@ class Orbital {
 	}
 	
 	/**
+	 * Licence: Delete
+	 *
+	 * Deletes a licence.
+	 *
+	 * @param string $id The ID of the licence
+	 *
+	 * @access public
+	 * @return BOOL.
+	 */
+
+	public function licence_delete($id)
+	{
+		return $this->delete_authed('licence/' . $id);
+	}
+	
+	/**
 	 * Get OTK
 	 *
 	 * Gets a One time key.
