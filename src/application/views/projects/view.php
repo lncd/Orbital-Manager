@@ -9,7 +9,7 @@
 				<a href="{base_url}projects">Projects</a> <span class="divider">/</span>
 			</li>
 			<li class="active">
-				<a href="{base_url}project/{project_id}">{project_name}</a></span>
+				{project_name}
 			</li>
 		</ul>
 
@@ -69,7 +69,7 @@
 		if ($new_project === TRUE)
 		{
 			echo '<div class="alert alert-info">
-				<i class="icon-chevron-down"></i> Please describe your project in more detail. Good research data management requires good metadata.
+				<i class="icon-chevron-down"></i> Please describe your project in more detail by clicking the \'Edit\' button.
 			</div>';
 
 		}
@@ -256,7 +256,7 @@
 			
 			<hr>
 			
-			<p><a href="#uploadFileDialogue" class="btn btn-success" class="btn btn-success" data-toggle="modal"><i class="icon-upload icon-white"></i> Upload File</a>
+			<p><a href="#uploadFileDialogue" class="btn btn-success" data-toggle="modal"><i class="icon-upload icon-white"></i> Upload File</a>
 			
 			<div class="modal fade" id="uploadFileDialogue">
 				<div class="modal-header">
@@ -264,13 +264,12 @@
 					<h3>Upload File to Archives</h3>
 				</div>
 				<div class="modal-body">
-					<iframe style="width:100%;border:none;height:400px;" src="{orbital_core_location}fileupload/form?token=<?php echo $upload_token; ?>&licence=<?php echo $project_default_licence; ?>"></iframe>
+					<iframe style="width:100%;border:none;height:400px;" src="{orbital_core_location}fileupload/form?token=<?php echo $upload_token; ?>&amp;licence=<?php echo $project_default_licence; ?>"></iframe>
 				</div>
 				<div class="modal-footer">
-					<a class="btn" data-dismiss="modal">Close</a>
-				</div>		
+					<a class="btn" href="<?php echo site_url('project/{project_id}'); ?>">Done</a>
+				</div>
 			</div>
-			
 		</div>
 	</div>
 </div>

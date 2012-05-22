@@ -22,6 +22,9 @@
 		</style>
 		<link href="{base_url}css/bootstrap-responsive.min.css" rel="stylesheet">
 		<link href="{base_url}css/jquery-ui.css" rel="stylesheet">
+		<link href="{base_url}css/font-awesome.css" rel="stylesheet">
+		
+		<link href="{base_url}css/orbital.css" rel="stylesheet">
 		
 		<link rel="shortcut icon" href="{base_url}favicon.ico">
 		<link rel="apple-touch-icon" href="{base_url}img/apple-touch-icon.png">
@@ -96,6 +99,17 @@
 							{nav_menu}
 								<li><a href="{uri}">{name}</a></li>
 							{/nav_menu}
+							  <li class="dropdown">
+						    <a href="#"
+						          class="dropdown-toggle"
+						          data-toggle="dropdown">
+						          Tools
+						          <b class="caret"></b>
+						    </a>
+						    <ul class="dropdown-menu">
+								<li><a href="{base_url}planner">Project Planner</a></li>
+						    </ul>
+						  </li>
 						</ul>
 						<p class="navbar-text pull-right">{user_presence}</p>
 					</div>

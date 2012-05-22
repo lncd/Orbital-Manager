@@ -2,8 +2,12 @@
 
 class Admin extends CI_Controller {
 
-	private $data = array();
+	private $_data = array();
 
+	/**
+	 * Constructor
+	 */
+	 
 	function __construct()
 	{
 		parent::__construct();
@@ -11,6 +15,12 @@ class Admin extends CI_Controller {
 		$this->data = $this->orbital->common_content();
 	}
 	
+	/**
+	 * System admin
+	 *
+	 * Admin navigation
+	 */
+	 
 	function index()
 	{
 		if ($this->session->userdata('system_admin'))
@@ -34,6 +44,12 @@ class Admin extends CI_Controller {
 			$this->parser->parse('includes/footer', $this->data);
 		}
 	}
+	
+	/**
+	 * Mongo status
+	 *
+	 * View MongoDB status
+	 */
 	
 	function mongo_status()
 	{
@@ -66,7 +82,7 @@ class Admin extends CI_Controller {
 			
 			$this->data['status_servers'] = array();
 			
-			if (isset($status_response->response->replica_set) && $status_response->response->replica_set !== FALSE)
+			if (isset($status_response->response->replica_set) AND $status_response->response->replica_set !== FALSE)
 			{
 				foreach ($status_response->response->replica_set->members as $member)
 				{
@@ -83,7 +99,11 @@ class Admin extends CI_Controller {
 			$this->parser->parse('includes/footer', $this->data);
 		}
 	}
-	
+		
+	/**
+	 * Administrate Licences
+	 */
+	 
 	function licences()
 	{
 	
@@ -103,6 +123,10 @@ class Admin extends CI_Controller {
 			$this->parser->parse('includes/footer', $this->data);
 		}
 	}
+	
+	/**
+	 * Add Licences
+	 */
 	
 	function licences_add()
 	{
@@ -137,6 +161,16 @@ class Admin extends CI_Controller {
 	
 	}
 	
+	/**
+	 * Enable Licence
+	 *
+	 * Enabled a licence
+	 *
+	 * @param string $id
+	 *
+	 * @return NULL
+	 */
+	
 	function licence_enable($id)
 	{
 	
@@ -164,12 +198,20 @@ class Admin extends CI_Controller {
 		redirect('admin/licences');
 	}
 	
-	function licence_disable($id)
-	{
+	/**
+	 * Disable Licence
+	 *
+	 * Disabled a licence
+	 *
+	 * @param string $id
+	 *
+	 * @return NULL
+	 */
 	
+	function licence_disable($id)
+	{	
 		if ($licence = $this->orbital->licence_get($id))
 		{
-		
 			$licence = $licence->response->licence;
 		
 			if ($this->orbital->licence_update($licence->id, $licence->name, $licence->short_name, $licence->uri, FALSE))
@@ -189,6 +231,14 @@ class Admin extends CI_Controller {
 		}
 		
 		redirect('admin/licences');
+	}
+	
+	function project_planner()
+	{	
+		$this->data['page_title'] = 'Project Planner';
+		$this->parser->parse('includes/header', $this->data);
+		$this->parser->parse('static/project_planner', $this->data);
+		$this->parser->parse('includes/footer', $this->data);
 	}
 }
 

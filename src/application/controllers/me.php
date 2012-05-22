@@ -2,7 +2,7 @@
 
 class Me extends CI_Controller {
 
-	private $data = array();
+	private $_data = array();
 
 	function __construct()
 	{
@@ -15,6 +15,8 @@ class Me extends CI_Controller {
 	 * User details
 	 *
 	 * Retrieves current user details.
+	 *
+	 * @return NULL
 	 */
 
 	function index()

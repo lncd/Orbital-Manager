@@ -14,8 +14,12 @@
 
 class Archive extends CI_Controller {
 
-	private $data = array();
-
+	private $_data = array();
+	
+	/**
+	 * Constructor
+	 */
+	 
 	function __construct()
 	{
 		parent::__construct();
@@ -27,19 +31,21 @@ class Archive extends CI_Controller {
 	 * Upload file
 	 *
 	 * Uploads file to the archive.
+	 *
+	 * @param string $project_id
 	 */
 
 	function upload($project_id)
 	{
-			$this->load->library('typography');
-			$this->data['project_id'] = $response->response->project->identifier;
-		
-			$this->data['page_title'] = 'Archive Upload';
-			$this->data['core_url'] = $this->config->item('orbital_core_location');
+		$this->load->library('typography');
+		$this->data['project_id'] = $response->response->project->identifier;
 	
-			$this->parser->parse('includes/header', $this->data);
-			$this->parser->parse('projects/jqueryupload', $this->data);
-			$this->parser->parse('includes/footer', $this->data);
+		$this->data['page_title'] = 'Archive Upload';
+		$this->data['core_url'] = $this->config->item('orbital_core_location');
+
+		$this->parser->parse('includes/header', $this->data);
+		$this->parser->parse('projects/jqueryupload', $this->data);
+		$this->parser->parse('includes/footer', $this->data);
 	}	
 }
 

@@ -143,7 +143,15 @@
 		</div>
 	</div>
 </div>
-</div>';
+</div>
+
+<div class="control-group">
+<div class="controls">
+<h4><a onClick="$(\'#projectAdvancedSettings\').toggle(\'blind\');"><i class="icon-cog"></i> Show/Hide Advanced Settings</a></h4>
+</div>
+</div>
+
+<div id="projectAdvancedSettings" style="display:none">';
 	
 	$form_ga = array(
 		'name'			=> 'google_analytics',
@@ -159,6 +167,9 @@
 	echo form_input($form_ga);
 	echo '<p class="help-block">If you want to track how many people view your project and download files you can enter a <a href="http://www.google.com/analytics/">Google Analytics</a> property ID here.</p>';
 	echo '</div></div>';
+	
+	// Close advanced settings div
+	echo '</div>';
 
 	echo '<div class="form-actions">';
 	echo '<button type="submit" class="btn btn-success"><i class = "icon-ok icon-white"></i> Save Details</button> <button type="reset" class="btn btn-warning">Reset</button>';

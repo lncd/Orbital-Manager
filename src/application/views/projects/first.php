@@ -14,7 +14,7 @@
 			<h1>My Projects</h1>
 		</div>
 		
-		<p>At the moment you don't have access to any projects in Orbital. Fortunately, we're here to help you get started as quickly as possible! Just use the simple form below and click the button, and we'll get you a shiny new project environment to play in.</p>
+		<p>Welcome to Orbital. Please create your first Project.</p>
 		
 		<h2>Create First Project</h2>
 		<form method="post" action="{base_url}projects/create" class="well">

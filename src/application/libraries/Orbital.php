@@ -16,14 +16,18 @@
 
 class Orbital {
 
-	private $_ci;
+	/**
+	 * CodeIgniter Instance.
+	 *
+	 * @var $_ci 
+	 */
 
-	private $data;
+	private $_ci;
 	
 	/**
 	 * Constructor
 	 */
- 
+
 	function __construct()
 	{
 		$this->_ci =& get_instance();
@@ -31,6 +35,8 @@ class Orbital {
 	
 	/**
 	 * Builds the content common to every page
+	 *
+	 *@return ARRAY
 	 */
 
 	public function common_content()
@@ -101,9 +107,9 @@ class Orbital {
 	 * Swaps a refresh token for a new access token AND refresh token, and
 	 * stores in the session
 	 *
-	 * @access public
 	 * @param string $token Token to swap.
 	 *
+	 * @access public
 	 * @return bool TRUE if swap successful, FALSE if not.
 	 */
 
@@ -125,7 +131,7 @@ class Orbital {
 		{
 			$response = json_decode($reply);
 
-			if (! isset($response->error) AND isset($response->access_token) AND isset($response->token_type) AND isset($response->expires_in) AND isset($response->refresh_token) AND isset($response->scope) AND isset($response->user))
+			if ( ! isset($response->error) AND isset($response->access_token) AND isset($response->token_type) AND isset($response->expires_in) AND isset($response->refresh_token) AND isset($response->scope) AND isset($response->user))
 			{
 				$this->_ci->session->set_userdata(array(
 						'current_user_string' => $response->user,
@@ -154,9 +160,9 @@ class Orbital {
 	 *
 	 * Performs an authenticated HTTP GET against Orbital Core.
 	 *
-	 * @access private
-	 * @param array $scopes Scopes to ensure that the user has access to.
+	 * @param array $target Scopes to ensure that the user has access to.
 	 *
+	 * @access private
 	 * @return object|FALSE An object representing the request result, or
 	 *                      FALSE on a request failure.
 	 */
@@ -292,8 +298,8 @@ class Orbital {
 	 *
 	 * Sends an authenticated POST request
 	 *
-	 * @param string $target Target of HTTP POST.
-	 * @param array $post_fields contents of HTTP POST.
+	 * @param string $target      Target of HTTP POST.
+	 * @param array  $post_fields Contents of HTTP POST.
 	 *
 	 * @return bool TRUE if swap successful, FALSE if not.
 	 */
@@ -307,8 +313,11 @@ class Orbital {
 			{
 				$ch = curl_init($this->_ci->config->item('orbital_core_location') . $target);
 				curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-				if (ENVIRONMENT === 'development') { curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE); }
-				curl_setopt($ch,CURLOPT_HTTPHEADER,array('Authorization: Bearer ' . base64_encode($this->_ci->session->userdata('access_token'))));
+				if (ENVIRONMENT === 'development')
+				{
+					curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+				}
+				curl_setopt($ch, CURLOPT_HTTPHEADER, array('Authorization: Bearer ' . base64_encode($this->_ci->session->userdata('access_token'))));
 				curl_setopt($ch, CURLOPT_POST, TRUE);
 
 				$postfields = array();
@@ -434,10 +443,10 @@ class Orbital {
 	 *
 	 * Performs an unauthenticated HTTP GET against Orbital Core.
 	 *
-	 * @access private
-	 * @param string $target Core resource to GET.
+	 * @param string $target     Core resource to GET.
 	 * @param array $post_fields Array of fields posted.
 	 *
+	 * @access private
 	 * @return object|FALSE Object if successful, FALSE if not.
 	 */
 
@@ -575,6 +584,17 @@ class Orbital {
 
 	}
 
+	/**
+	 * Delete (Authenticated)
+	 *
+	 * Performs an authenticated HTTP DELETE against Orbital Core.
+	 *
+	 * @param string $target Core resource to DELETE.
+	 *
+	 * @access private
+	 * @return object|FALSE Object if successful, FALSE if not.
+	 */
+
 	private function delete_authed($target)
 	{
 		if ($this->_ci->session->userdata('access_token'))
@@ -698,7 +718,17 @@ class Orbital {
 
 	}
 
-
+	/**
+	 * Get (Unauthenticated)
+	 *
+	 * Performs an unauthenticated HTTP GET against Orbital Core.
+	 *
+	 * @param array $target Scopes to ensure that the user has access to.
+	 *
+	 * @access private
+	 * @return object|FALSE An object representing the request result, or
+	 *                      FALSE on a request failure.
+	 */
 
 	private function get_unauthed($target)
 	{
@@ -727,7 +757,6 @@ class Orbital {
 	 * Gets the current status of the Core.
 	 *
 	 * @access public
-	 *
 	 * @return object|FALSE Object if successful, FALSE if not.
 	 */
 
@@ -744,7 +773,6 @@ class Orbital {
 	 * Gets all valid authentication routes for the Core.
 	 *
 	 * @access public
-	 *
 	 * @return object|FALSE Object if successful, FALSE if not.
 	 */
 
@@ -771,15 +799,14 @@ class Orbital {
 	}
 
 	/**
-	 * User: Details
+	 * User Details
 	 *
 	 * Retrieves details for the specified user, OR the current user if none
 	 * is specified.
 	 *
-	 * @access public
-	 *
 	 * @param string $user The email address of the user to query.
 	 *
+	 * @access public	
 	 * @return object|FALSE Object if successful, FALSE if not.
 	 */
 
@@ -796,6 +823,18 @@ class Orbital {
 		}
 	}
 
+	/**
+	 * Projects list
+	 *
+	 * Retrieves list of projects for the specified user, OR the current user if none
+	 * is specified.
+	 *
+	 * @param string $user The email address of the user to query.
+	 *
+	 * @access public
+	 * @return object|FALSE Object if successful, FALSE if not.
+	 */
+
 	public function projects_list($user = NULL)
 	{
 
@@ -808,31 +847,105 @@ class Orbital {
 			return $this->get_authed('projects?user=' . urlencode($user));
 		}
 	}
+	
+	/**
+	 * Public projects list
+	 *
+	 * Retrieves list of public projects up to the specified limit
+	 *
+	 * @param int $limit The limit to the number of public projects to display.
+	 *
+	 * @access public
+	 * @return ARRAY.
+	 */
 
 	public function projects_public_list($limit = 20)
 	{
 		return $this->get_unauthed('projects/public?limit=' . $limit);
 	}
 
+	/**
+	 * Project details
+	 *
+	 * Retrieves project details
+	 *
+	 * @param int $project The project to return the details of.
+	 *
+	 * @access public	
+	 * @return ARRAY.
+	 */
+
 	public function project_details($project)
 	{
 		return $this->get_authed('project/' . $project);
 	}
+
+	/**
+	 * Project public details
+	 *
+	 * Retrieves public project details
+	 *
+	 * @param int $project The project to return the details of.	
+	 *
+	 * @access public
+	 * @return ARRAY.
+	 */
 
 	public function project_public_details($project)
 	{
 		return $this->get_unauthed('project/' . $project . '/public');
 	}
 
+	/**
+	 * Create project
+	 *
+	 * creates a new project
+	 *
+	 * @param int $name     The name of the new project.
+	 * @param int $abstract The abstract of the new project.
+	 *
+	 * @access public
+	 * @return object.
+	 */
+
 	public function create_project($name, $abstract)
 	{
 		return $this->post_authed('projects/create', array('name' => $name, 'abstract' => $abstract));
 	}
 
+	/**
+	 * Update project
+	 *
+	 * creates a new project
+	 *
+	 * @param string $identifier       The identifier of the project.
+	 * @param string $name             The project name.
+	 * @param string $abstract         The project abstract.	
+	 * @param string $research_group   The research group the project is part of.
+	 * @param int    $start_date       The start date of the project.
+	 * @param int    $end_date         The end date of the new project.
+	 * @param string $default_licence  The licence the project is published under.
+	 * @param bool   $public_view      If the project is publically accessible or not.
+	 * @param string $google_analytics The property ID of the project for Google analytics.
+	 * @access public
+	 * @return object.
+	 */
+
 	public function project_update($identifier, $name, $abstract, $research_group, $start_date, $end_date, $default_licence, $public_view, $google_analytics)
 	{
 		return $this->put_authed('project/' . $identifier, array('name' => $name, 'abstract' => $abstract, 'research_group' => $research_group, 'start_date' => $start_date, 'end_date' => $end_date, 'default_licence' => $default_licence, 'public_view' => $public_view, 'google_analytics' => $google_analytics));
 	}
+
+	/**
+	 * Delete project
+	 *
+	 * deletes a project
+	 *
+	 * @access public
+	 * @param $identifier string The identifier of the project.
+	 *
+	 * @return BOOL.
+	 */
 
 	public function delete_project($identifier)
 	{
@@ -846,7 +959,6 @@ class Orbital {
 	 * Returns a list of all licences.
 	 *
 	 * @access public
-	 *
 	 * @return object|FALSE Object if successful, FALSE if not.
 	 */
 
@@ -855,25 +967,82 @@ class Orbital {
 		return $this->get_authed('licences');
 	}
 
+	/**
+	 * Licences: Enabled List
+	 *
+	 * Returns a list of all enabled licences.
+	 *
+	 * @access public
+	 * @return object|FALSE Object if successful, FALSE if not.
+	 */
+
 	public function licences_enabled_list()
 	{
 		return $this->get_unauthed('licences/enabled');
 	}
 
+	/**
+	 * Licence: Get
+	 *
+	 * Returns a licence.
+	 *
+	 * @access public
+	 * @param string $id The identifier of the licence
+	 * @return object|FALSE Object if successful, FALSE if not.
+	 */
+
 	public function licence_get($id)
 	{
 		return $this->get_unauthed('licence/' . $id);
 	}
+	
+	/**
+	 * Licence: Create
+	 *
+	 * Creates a licence.
+	 *
+	 * @param string $name      The name of the licence
+	 * @param string $shortname The short name of the licence
+	 * @param string $uri       The uri of the licence
+	 *
+	 * @access public
+	 * @return BOOL.
+	 */
 
 	public function licence_create($name, $shortname, $uri)
 	{
 		return $this->post_authed('licences', array('name' => $name, 'shortname' => $shortname, 'uri' => $uri));
 	}
 
+	/**
+	 * Licence: Update
+	 *
+	 * Updates a licence.
+	 *
+	 * @access public
+	 * @param string $id        The licence identifier
+	 * @param string $shortname The short name of the licence
+	 * @param string $uri       The uri of the licence
+	 * @param bool $enabled     The uri of the licence
+	 *
+	 * @return BOOL.
+	 */
+
 	public function licence_update($id, $name, $shortname, $uri, $enable = FALSE)
 	{
 		return $this->post_authed('licence/' . $id, array('name' => $name, 'shortname' => $shortname, 'uri' => $uri, 'enable' => $enable));
 	}
+	
+	/**
+	 * Get OTK
+	 *
+	 * Gets a One time key.
+	 *
+	 * @access public
+	 * @param string $file_id The identifier of the file the user wants access to
+	 *
+	 * @return object.
+	 */
 
 	public function get_otk($file_id)
 	{
@@ -886,15 +1055,56 @@ class Orbital {
 			return $this->get_unauthed('file/' . $file_id . '/get_otk');
 		}
 	}
+	
+	/**
+	 * File get details
+	 *
+	 * Gets the details of a file
+	 *
+	 * @access public
+	 * @param $file_id string The identifier of the file the user wants access to
+	 *
+	 * @return object.
+	 */
 
 	public function file_get_details($file_id)
 	{
 		return $this->get_authed('file/' . $file_id);
 	}
 	
+	/**
+	 * File get details public
+	 *
+	 * Gets the details of a public file
+	 *
+	 * @access public
+	 * @param $file_id string The identifier of the file the user wants access to
+	 *
+	 * @return object.
+	 */
+	 
 	public function file_get_details_public($file_id)
 	{
-		return $this->get_unauthed('file/' . $file_id);	
+		return $this->get_unauthed('file/' . $file_id . '/public');	
+	}
+	
+	
+	/**
+	 * Update file details
+	 *
+	 * updates a files details
+	 *
+	 * @param string $identifier       The identifier of the file.
+	 * @param string $name             The file name.
+	 * @param string $default_licence  The licence the file is published under.
+	 * @param bool   $public_view      If the project is publically accessible or not.
+	 * @access public
+	 * @return object.
+	 */
+
+	public function file_update($identifier, $name, $default_licence, $public_view)
+	{
+		return $this->put_authed('file/' . $identifier, array('name' => $name, 'default_licence' => $default_licence, 'public_view' => $public_view));
 	}
 }
 

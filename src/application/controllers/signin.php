@@ -14,7 +14,15 @@
 
 class Signin extends CI_Controller {
 
+	/**
+	 * Data to be passed to the views
+	*/
+	
 	private $data = array();
+	
+	/**
+	 * Scopes to be requested from Orbital Core
+	*/
 	
 	private $request_scopes = array(
 		'access',
@@ -40,6 +48,7 @@ class Signin extends CI_Controller {
 	 * Sign In
 	 *
 	 * Directs user to sign-in method selection.
+	 * @return NULL
 	 */
 
 	function index()
@@ -94,6 +103,7 @@ class Signin extends CI_Controller {
 	 *
 	 * Accepts returning authentication sessions from Core and performs token
 	 * swap.
+	 * @return NULL
 	 */
 	
 	function auth()
@@ -130,7 +140,7 @@ class Signin extends CI_Controller {
 				
 					// No error, begin further magic!
 					
-					// Ensure we have a code, or else abort
+					// Ensure we have a code, OR else abort
 					if ($this->input->get('code'))
 					{
 					
@@ -142,7 +152,10 @@ class Signin extends CI_Controller {
 						curl_setopt($c, CURLOPT_URL, $this->config->item('orbital_core_location') . 'auth/access_token');
 						curl_setopt($c, CURLOPT_POST, TRUE);
 						curl_setopt($c, CURLOPT_RETURNTRANSFER, TRUE);
-						if (ENVIRONMENT === 'development') { curl_setopt($c, CURLOPT_SSL_VERIFYPEER, false); }
+						if (ENVIRONMENT === 'development')
+						{
+							curl_setopt($c, CURLOPT_SSL_VERIFYPEER, FALSE);
+						}
 						curl_setopt($c, CURLOPT_POSTFIELDS, $postfields);
 						curl_setopt($c, CURLOPT_USERPWD, $this->config->item('orbital_app_id') . ':' . $this->config->item('orbital_app_secret'));
 						$reply = curl_exec($c);	
@@ -150,7 +163,7 @@ class Signin extends CI_Controller {
 						
 						$response = json_decode($reply);
 						
-						if (!isset($response->error) && isset($response->access_token) && isset($response->token_type) && isset($response->expires_in) && isset($response->refresh_token) && isset($response->scope) && isset($response->user))
+						if ( ! isset($response->error) AND isset($response->access_token) AND isset($response->token_type) AND isset($response->expires_in) AND isset($response->refresh_token) AND isset($response->scope) AND isset($response->user))
 						{
 							// Sign in has gone smoothly and we have all expected fields. Load up user details to the session!
 							
@@ -221,12 +234,12 @@ class Signin extends CI_Controller {
 			else
 			{
 			
-				// Sign-in token does not match or state not present. Abort.
+				// Sign-in token does not match OR state not present. Abort.
 				
 				$this->data['page_title'] = 'Sign-In Error';
 				$this->data['error_title'] = 'Sign-In Error';
 				$this->data['error_text'] = 'An error has occured during sign-in.';
-				$this->data['error_technical'] = 'invalid_signin_token: The sign-in token was not present in the state, or did not match the expected value.';
+				$this->data['error_technical'] = 'invalid_signin_token: The sign-in token was not present in the state, OR did not match the expected value.';
 				
 				$this->parser->parse('includes/header', $this->data);
 				$this->parser->parse('static/error', $this->data);
@@ -238,7 +251,7 @@ class Signin extends CI_Controller {
 		else
 		{
 		
-			// Sign-in token does not match or state not present. Abort.
+			// Sign-in token does not match OR state not present. Abort.
 			
 			$this->data['page_title'] = 'Sign-In Error';
 			$this->data['error_title'] = 'Sign-In Error';
@@ -257,6 +270,7 @@ class Signin extends CI_Controller {
 	 * Sign Out
 	 *
 	 * Destroys user session and redirects to home page.
+	 * @return NULL
 	 */
 	
 	function signout()

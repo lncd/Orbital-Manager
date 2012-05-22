@@ -31,7 +31,7 @@ class Projects extends CI_Controller {
 	/**
 	 * Projects list
 	 *
-	 * Get array of projects AND their details
+	 * Get array of projects and their details
 	 * @return return list of users projects
 	 */
 
@@ -117,7 +117,7 @@ class Projects extends CI_Controller {
 	/**
 	 * Public Projects list
 	 *
-	 * Get array of public projects AND their details
+	 * Get array of public projects and their details
 	 * @return returns list of public projects
 	 */
 
