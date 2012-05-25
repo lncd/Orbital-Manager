@@ -93,8 +93,6 @@ class Projects extends CI_Controller {
 								$output['project_enddate'] = date('D jS F Y', strtotime($project->end_date));
 							}
 							$this->data['public_projects'][] = $output;
-
-
 						}
 					}
 				}
@@ -248,7 +246,11 @@ class Projects extends CI_Controller {
 				}
 
 				$this->data['project_description'] = $this->typography->auto_typography($response->response->project->abstract);
-
+				
+				if ($this->data['project_description'] === NULL OR $this->data['project_description'] === '')
+				{
+					$this->data['data_required'] = 'ADD MOAR DATA';
+				}
 				// Generate workspace mode
 
 				$this->data['workspace'] = FALSE;

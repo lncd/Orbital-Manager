@@ -8,13 +8,12 @@
 			<li class="active">
 				Project Planner
 			</li>
-		</ul>
-
-		<div class="page-header">
-			<h1>Cost calculator</h1>
-		</div>
-				
+		</ul>				
 	</div>
+</div>
+
+<div class="page-header">
+	<h1>Cost calculator</h1>
 </div>
 
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.js"></script><script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.js"></script>
@@ -82,3 +81,14 @@ $(function() {
 <div class="clear"></div> <div class="message">Time</div><div id="time_slider"></div><div id="time"></div>
 <div class="clear"></div> <div class="message">Cost</div><div id="result"></div> <div class="clear"></div>
 </div>
+
+<br>
+*These figures are based on a rate of 11p per Gigabyte per month
+<hr>
+<div class="page-header">
+	<h1>DMP Online</h1>
+</div>
+
+DMP Online is a tool to help you write your research bids and project plans
+<br><br>
+<a href="http://dmp.lncd.org/">DMP Online</a>

@@ -22,6 +22,14 @@ class Tools extends CI_Controller {
 		$this->parser->parse('static/project_planner', $this->data);
 		$this->parser->parse('includes/footer', $this->data);
 	}
+	
+	function policy_guidance()
+	{	
+		$this->data['page_title'] = 'Policy and Guidance';
+		$this->parser->parse('includes/header', $this->data);
+		$this->parser->parse('static/policy_guidance', $this->data);
+		$this->parser->parse('includes/footer', $this->data);
+	}
 }
 
 // End of file tools.php

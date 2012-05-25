@@ -74,8 +74,14 @@
 
 		}
 		
+		else if (isset ($data_required))
+		{
+			echo '<div class="alert alert-info">
+				<i class="icon-chevron-down"></i> Please describe your project in more detail by clicking the \'Edit\' button.
+			</div>';
+		}
 		?>
-		
+
 		{project_controls}
 		<a class="btn btn-small" href="{uri}">{title}</a>
 		{/project_controls}

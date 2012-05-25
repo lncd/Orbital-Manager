@@ -165,9 +165,11 @@
 	echo form_label('Google Analytics Property ID', 'project_google_analytics', array('class' => 'control-label'));
 	echo '<div class="controls">';
 	echo form_input($form_ga);
-	echo '<p class="help-block">If you want to track how many people view your project and download files you can enter a <a href="http://www.google.com/analytics/">Google Analytics</a> property ID here.</p>';
+	echo '<p class="help-block">If you want to track how many people view your project and download files you can enter a <a href="http://www.google.com/analytics/">Google Analytics</a> property ID here.</p><br>';
+	echo 'To set up Google Analytics, visit the <a href="http://www.google.com/analytics/">Google Analytics</a> site and sign in. It will walk you through the setup and provide you with an ID you can use here for monitoring the project. If you do not have an account, one can be setup for free.';
+
 	echo '</div></div>';
-	
+		
 	// Close advanced settings div
 	echo '</div>';
 
