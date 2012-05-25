@@ -447,6 +447,7 @@ class Projects extends CI_Controller {
 				$this->input->post('sharedworkspace_read'),
 				$this->input->post('dataset_create'));
 				$response = $this->orbital->project_details($identifier);*/
+				
 				print_r($this->input->post());
 			}
 
