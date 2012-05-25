@@ -1106,6 +1106,11 @@ class Orbital {
 	{
 		return $this->put_authed('file/' . $identifier, array('name' => $name, 'default_licence' => $default_licence, 'public_view' => $public_view));
 	}
+	
+	public function update_project_members($identifier, $read, $write, $delete, $archivefiles_read, $archivefiles_write, $sharedworkspace_read, $dataset_create)
+	{
+		return $this->put_authed('project/' . $identifier, array('read' => $read, 'write' => $write, 'delete' => $delete, 'archivefiles_read' => $archivefiles_read, 'archivefiles_write' => $archivefiles_write, 'sharedworkspace_read' => $sharedworkspace_read, 'dataset_create' => $dataset_create));
+	}
 }
 
 /* End of file Orbital.php */

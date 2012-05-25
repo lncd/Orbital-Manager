@@ -419,7 +419,7 @@ class Projects extends CI_Controller {
 			
 
 			if($this->input->post('save_members_details'))
-				{/*
+				{
 				$this->orbital->update_project_members($identifier,
 				$this->input->post('read'),
 				$this->input->post('write'),
@@ -428,7 +428,11 @@ class Projects extends CI_Controller {
 				$this->input->post('archivefiles_write'),
 				$this->input->post('sharedworkspace_read'),
 				$this->input->post('dataset_create'));
-				$response = $this->orbital->project_details($identifier);*/
+				$response = $this->orbital->project_details($identifier);
+				
+				$this->session->set_flashdata('message', 'Project members updated successfully.');
+				$this->session->set_flashdata('message_type', 'success');
+				redirect('project/' . $identifier);
 				print_r($this->input->post());
 			}
 
