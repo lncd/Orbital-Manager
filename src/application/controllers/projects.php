@@ -247,7 +247,7 @@ class Projects extends CI_Controller {
 
 				$this->data['project_description'] = $this->typography->auto_typography($response->response->project->abstract);
 				
-				if ($this->data['project_description'] === NULL OR $this->data['project_description'] === '')
+				if ($this->data['project_description'] === NULL OR $this->data['project_description'] === '' OR $this->data['project_startdate_pretty']  === 'Unspecified' OR $this->data['project_enddate_pretty']  === 'Unspecified' OR $this->data['project_default_licence']  === NULL OR $this->data['project_research_group'] === NULL)
 				{
 					$this->data['data_required'] = 'ADD MOAR DATA';
 				}
@@ -414,6 +414,20 @@ class Projects extends CI_Controller {
 			
 
 			if($this->input->post('save_members_details'))
+				{/*
+				$this->orbital->update_project_members($identifier,
+				$this->input->post('read'),
+				$this->input->post('write'),
+				$this->input->post('delete'),
+				$this->input->post('archivefiles_read'),
+				$this->input->post('archivefiles_write'),
+				$this->input->post('sharedworkspace_read'),
+				$this->input->post('dataset_create'));
+				$response = $this->orbital->project_details($identifier);*/
+				print_r($this->input->post());
+			}
+
+			if($this->input->post('add_members_details'))
 				{/*
 				$this->orbital->update_project_members($identifier,
 				$this->input->post('read'),
