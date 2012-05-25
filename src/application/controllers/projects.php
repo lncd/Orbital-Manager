@@ -247,10 +247,7 @@ class Projects extends CI_Controller {
 
 				$this->data['project_description'] = $this->typography->auto_typography($response->response->project->abstract);
 				
-				if ($this->data['project_description'] === NULL OR $this->data['project_description'] === '' OR $this->data['project_startdate_pretty']  === 'Unspecified' OR $this->data['project_enddate_pretty']  === 'Unspecified' OR $this->data['project_default_licence']  === NULL OR $this->data['project_research_group'] === NULL)
-				{
-					$this->data['data_required'] = 'ADD MOAR DATA';
-				}
+			
 				// Generate workspace mode
 
 				$this->data['workspace'] = FALSE;
@@ -268,6 +265,9 @@ class Projects extends CI_Controller {
 
 				// Default licence
 				$this->data['project_default_licence'] = $response->response->project->default_licence;
+				
+				// Research Group
+				$this->data['project_research_group'] = $response->response->project->research_group;
 				
 				// New project mode
 				if ($this->input->get('special') === 'new')
@@ -291,6 +291,11 @@ class Projects extends CI_Controller {
 							'title' => 'Delete'
 						);
 					}
+				}
+				
+				if ($this->data['project_description'] === NULL OR $this->data['project_description'] === '' OR $this->data['project_startdate_pretty']  === 'Unspecified' OR $this->data['project_enddate_pretty']  === 'Unspecified' OR $this->data['project_default_licence']  === NULL OR $this->data['project_research_group'] === NULL)
+				{
+					$this->data['data_required'] = 'ADD MOAR DATA';
 				}
 				
 				$this->parser->parse('includes/header', $this->data);
