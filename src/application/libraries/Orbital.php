@@ -1107,9 +1107,14 @@ class Orbital {
 		return $this->put_authed('file/' . $identifier, array('name' => $name, 'default_licence' => $default_licence, 'public_view' => $public_view));
 	}
 	
-	public function update_project_members($identifier, $read, $write, $delete, $archivefiles_read, $archivefiles_write, $sharedworkspace_read, $dataset_create)
+	public function update_project_members($identifier, $user, $read, $write, $delete, $manage_users, $archivefiles_read, $archivefiles_write, $sharedworkspace_read, $dataset_create)
 	{
-		return $this->put_authed('project/' . $identifier, array('read' => $read, 'write' => $write, 'delete' => $delete, 'archivefiles_read' => $archivefiles_read, 'archivefiles_write' => $archivefiles_write, 'sharedworkspace_read' => $sharedworkspace_read, 'dataset_create' => $dataset_create));
+		return $this->put_authed('members/' . $identifier, array('read' => $read, 'write' => $write, 'delete' => $delete, 'archivefiles_read' => $archivefiles_read, 'archivefiles_write' => $archivefiles_write, 'sharedworkspace_read' => $sharedworkspace_read, 'dataset_create' => $dataset_create));
+	}
+	
+		public function add_project_member($identifier, $user, $read, $write, $delete, $manage_users, $archivefiles_write, $archivefiles_read, $sharedworkspace_read, $dataset_create)
+	{
+		return $this->put_authed('members/' . $identifier, array('user' => $user, 'read' => $read, 'write' => $write, 'delete' => $delete, 'manage_users' => $manage_users, 'archivefiles_read' => $archivefiles_read, 'archivefiles_write' => $archivefiles_write, 'sharedworkspace_read' => $sharedworkspace_read, 'dataset_create' => $dataset_create));
 	}
 }
 
