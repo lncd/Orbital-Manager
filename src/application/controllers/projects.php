@@ -419,86 +419,46 @@ class Projects extends CI_Controller {
 			
 
 			if($this->input->post('save_members_details'))
-				{/*
-				$this->orbital->update_project_members($identifier,
-				$this->input->post('project_user['user']'),
-				$this->input->post('read'),
-				$this->input->post('write'),
-				$this->input->post('delete'),
-				$this->input->post('archivefiles_read'),
-				$this->input->post('archivefiles_write'),
-				$this->input->post('sharedworkspace_read'),
-				$this->input->post('dataset_create'));
+			{
+				foreach ($this->input->post('permission') as $user => $values)
+				{
+					$user_perms = array();
+					foreach ($values as $value => $exists)
+					{
+						$user_perms[] = $value;
+					}
+					
+					$this->orbital->update_project_member($identifier,
+					$user,
+					$user_perms);
+				}
 				$response = $this->orbital->project_details($identifier);
 				
 				$this->session->set_flashdata('message', 'Project members updated successfully.');
 				$this->session->set_flashdata('message_type', 'success');
-				redirect('project/' . $identifier);*/
-				print_r($this->input->post());
+				redirect('project/' . $identifier);
 			}
 
 			if($this->input->post('add_members_details'))
-			{/*
-				$read = 0;
-				if ($this->input->post('read'))
+			{
+				foreach ($this->input->post('permission') as $user => $values)
 				{
-					$read = 1;
+					$user_perms = array();
+					foreach ($values as $value => $exists)
+					{
+						$user_perms[] = $value;
+					}
 				}
 				
-				$write = 0;
-				if ($this->input->post('write'))
-				{
-					$write = 1;
-				}
+				$this->orbital->update_project_member($identifier,
+				$this->input->post('user'),
+				$user_perms);
 				
-				$delete = 0;
-				if ($this->input->post('delete'))
-				{
-					$delete = 1;
-				}
+				$response = $this->orbital->project_details($identifier);
 				
-				$manage_users = 0;
-				if ($this->input->post('manage_users'))
-				{
-					$manage_users = 1;
-				}
-				
-				$archivefiles_read = 0;
-				if ($this->input->post('archivefiles_write'))
-				{
-					$archivefiles_read = 1;
-				}
-				
-				$archivefiles_write = 0;
-				if ($this->input->post('archivefiles_read'))
-				{
-					$archivefiles_write = 1;
-				}
-				
-				$sharedworkspace_read = 0;
-				if ($this->input->post('sharedworkspace_read'))
-				{
-					$sharedworkspace_read = 1;
-				}
-				
-				$dataset_create = 0;
-				if ($this->input->post('dataset_create'))
-				{
-					$dataset_create = 1;
-				}
-			
-				$this->orbital->add_project_member($identifier,
-				'jwinn@lincoln.ac.uk', //$this->input->post('user'),
-				$this->input->post('read'),
-				$this->input->post('write'),
-				$this->input->post('delete'),
-				$this->input->post('manage_users'),
-				$this->input->post('archivefiles_write'),
-				$this->input->post('archivefiles_read'),
-				$this->input->post('sharedworkspace_read'),
-				$this->input->post('dataset_create'));
-				$response = $this->orbital->project_details($identifier);*/
-				print_r($this->input->post());
+				$this->session->set_flashdata('message', 'Project members updated successfully.');
+				$this->session->set_flashdata('message_type', 'success');
+				redirect('project/' . $identifier);
 			}
 
 			$this->load->library('typography');
