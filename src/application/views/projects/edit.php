@@ -165,9 +165,11 @@
 	echo form_label('Google Analytics Property ID', 'project_google_analytics', array('class' => 'control-label'));
 	echo '<div class="controls">';
 	echo form_input($form_ga);
-	echo '<p class="help-block">If you want to track how many people view your project and download files you can enter a <a href="http://www.google.com/analytics/">Google Analytics</a> property ID here.</p>';
+	echo '<p class="help-block">If you want to track how many people view your project and download files you can enter a <a href="http://www.google.com/analytics/">Google Analytics</a> property ID here.</p><br>';
+	echo 'To set up Google Analytics, visit the <a href="http://www.google.com/analytics/">Google Analytics</a> site and sign in. It will walk you through the setup and provide you with an ID you can use here for monitoring the project. If you do not have an account, one can be setup for free.';
+
 	echo '</div></div>';
-	
+		
 	// Close advanced settings div
 	echo '</div>';
 
@@ -186,6 +188,9 @@
 
 <div class="well">
 	<h2>Project Members</h2>
+	
+		<!-- EDIT MEMBERS -->
+	
 		<form method="post" action="{base_url}project/{project_id}/edit">
 		<table class = "table table-bordered table-striped">
 		<thead><tr><th>User</th><th>Read</th><th>Write</th><th>Delete</th><th>Manage Users</th><th>Archive Write</th><th>Archive Read</th><th>Access Workspace</th><th>Create Dataset</th><th>Options</th></tr></thead>
@@ -196,14 +201,14 @@
 			{
 			?>
 			<tr><td><?php echo $project_user['user']; ?> <span class="label">You</span></td>
-			<td><input type="checkbox" disabled name="permission[{user_email}][read]" value="read" <?php if($project_user['permissions']['permission_read'] === TRUE){echo 'checked';} ?>></td>
-			<td><input type="checkbox" disabled name="permission[{user_email}][write]" value="write" <?php if($project_user['permissions']['permission_write'] === TRUE){echo 'checked';} ?>></td>
-			<td><input type="checkbox" disabled name="permission[{user_email}][delete]" value="delete" <?php if($project_user['permissions']['permission_delete'] === TRUE){echo 'checked';} ?>></td>
-			<td><input type="checkbox" disabled name="permission[{user_email}][manage_users]" value="manage_users" <?php if($project_user['permissions']['permission_manage_users'] === TRUE){echo 'checked';} ?>></td>
-			<td><input type="checkbox" disabled name="permission[{user_email}][archivefiles_write]" value="archivefiles_write" <?php if($project_user['permissions']['permission_write'] === TRUE){echo 'checked';} ?>></td>
-			<td><input type="checkbox" disabled name="permission[{user_email}][archivefiles_read]" value="archivefiles_read" <?php if($project_user['permissions']['permission_archivefiles_read'] === TRUE){echo 'checked';} ?>></td>
-			<td><input type="checkbox" disabled name="permission[{user_email}][sharedworkspace_read]" value="sharedworkspace_read" <?php if($project_user['permissions']['permission_sharedworkspace_read'] === TRUE){echo 'checked';} ?>></td>
-			<td><input type="checkbox" disabled name="permission[{user_email}][dataset_create]" value="dataset_create" <?php if($project_user['permissions']['permission_read'] === TRUE){echo 'checked';} ?>></td>
+			<td><input type="checkbox" disabled name="permission[<?php echo $project_user['user'];?>][]" value="read" <?php if($project_user['permissions']['permission_read'] === TRUE){echo 'checked';} ?>></td>
+			<td><input type="checkbox" disabled name="permission[<?php echo $project_user['user'];?>][]" value="write" <?php if($project_user['permissions']['permission_write'] === TRUE){echo 'checked';} ?>></td>
+			<td><input type="checkbox" disabled name="permission[<?php echo $project_user['user'];?>][]" value="delete" <?php if($project_user['permissions']['permission_delete'] === TRUE){echo 'checked';} ?>></td>
+			<td><input type="checkbox" disabled name="permission[<?php echo $project_user['user'];?>][]" value="manage_users" <?php if($project_user['permissions']['permission_manage_users'] === TRUE){echo 'checked';} ?>></td>
+			<td><input type="checkbox" disabled name="permission[<?php echo $project_user['user'];?>][]" value="archivefiles_write" <?php if($project_user['permissions']['permission_write'] === TRUE){echo 'checked';} ?>></td>
+			<td><input type="checkbox" disabled name="permission[<?php echo $project_user['user'];?>][]" value="archivefiles_read" <?php if($project_user['permissions']['permission_archivefiles_read'] === TRUE){echo 'checked';} ?>></td>
+			<td><input type="checkbox" disabled name="permission[<?php echo $project_user['user'];?>][]" value="sharedworkspace_read" <?php if($project_user['permissions']['permission_sharedworkspace_read'] === TRUE){echo 'checked';} ?>></td>
+			<td><input type="checkbox" disabled name="permission[<?php echo $project_user['user'];?>][]" value="dataset_create" <?php if($project_user['permissions']['permission_dataset_create'] === TRUE){echo 'checked';} ?>></td>
 			<td><a href="#" class = "btn disabled"><i class = "icon-remove"></i> Remove</a></td></tr>
 
 			<?php
@@ -212,14 +217,14 @@
 			{
 			?>
 			<tr><td><?php echo $project_user['user']; ?></td>
-			<td><input type="checkbox" name="permission[{user_email}][read]" value="read" <?php if($project_user['permissions']['permission_read'] === TRUE){echo 'checked';} ?>></td>
-			<td><input type="checkbox" name="permission[{user_email}][write]" value="write" <?php if($project_user['permissions']['permission_write'] === TRUE){echo 'checked';} ?>></td>
-			<td><input type="checkbox" name="permission[{user_email}][delete]" value="delete" <?php if($project_user['permissions']['permission_delete'] === TRUE){echo 'checked';} ?>></td>
-			<td><input type="checkbox" name="permission[{user_email}][manage_users]" value="manage_users" <?php if($project_user['permissions']['permission_manage_users'] === TRUE){echo 'checked';} ?>></td>
-			<td><input type="checkbox" name="permission[{user_email}][archivefiles_write]" value="archivefiles_write" <?php if($project_user['permissions']['permission_write'] === TRUE){echo 'checked';} ?>></td>
-			<td><input type="checkbox" name="permission[{user_email}][archivefiles_read]" value="archivefiles_read" <?php if($project_user['permissions']['permission_archivefiles_read'] === TRUE){echo 'checked';} ?>></td>
-			<td><input type="checkbox" name="permission[{user_email}][sharedworkspace_read]" value="sharedworkspace_read" <?php if($project_user['permissions']['permission_sharedworkspace_read'] === TRUE){echo 'checked';} ?>></td>
-			<td><input type="checkbox" name="permission[{user_email}][dataset_create]" value="dataset_create" <?php if($project_user['permissions']['permission_read'] === TRUE){echo 'checked';} ?>></td>
+			<td><input type="checkbox" name="permission[<?php echo $project_user['user'];?>][]" value="read" <?php if($project_user['permissions']['permission_read'] === TRUE){echo 'checked';} ?>></td>
+			<td><input type="checkbox" name="permission[<?php echo $project_user['user'];?>l][]" value="write" <?php if($project_user['permissions']['permission_write'] === TRUE){echo 'checked';} ?>></td>
+			<td><input type="checkbox" name="permission[<?php echo $project_user['user'];?>][]" value="delete" <?php if($project_user['permissions']['permission_delete'] === TRUE){echo 'checked';} ?>></td>
+			<td><input type="checkbox" name="permission[<?php echo $project_user['user'];?>][]" value="manage_users" <?php if($project_user['permissions']['permission_manage_users'] === TRUE){echo 'checked';} ?>></td>
+			<td><input type="checkbox" name="permission[<?php echo $project_user['user'];?>][]" value="archivefiles_write" <?php if($project_user['permissions']['permission_write'] === TRUE){echo 'checked';} ?>></td>
+			<td><input type="checkbox" name="permission[<?php echo $project_user['user'];?>][]" value="archivefiles_read" <?php if($project_user['permissions']['permission_archivefiles_read'] === TRUE){echo 'checked';} ?>></td>
+			<td><input type="checkbox" name="permission[<?php echo $project_user['user'];?>][]" value="sharedworkspace_read" <?php if($project_user['permissions']['permission_sharedworkspace_read'] === TRUE){echo 'checked';} ?>></td>
+			<td><input type="checkbox" name="permission[<?php echo $project_user['user'];?>][]" value="dataset_create" <?php if($project_user['permissions']['permission_dataset_create'] === TRUE){echo 'checked';} ?>></td>
 			<td><a href="#" class = "btn btn-danger disabled"><i class = "icon-remove icon-white"></i> Remove</a></td></tr>
 
 			<?php
@@ -229,7 +234,26 @@
 			</tbody>
 			</table>
 			<button type="submit" name = "save_members_details" value = "save_members_details" class="btn btn-success disabled"><i class = "icon-check icon-white"></i> Save Members</button>
-
+		</form>
+		
+		<!-- ADD MEMBER -->
+		
+		<form method="post" action="{base_url}project/{project_id}/edit">
+		<table class = "table table-bordered table-striped">
+		<thead><tr><th>User</th><th>Read</th><th>Write</th><th>Delete</th><th>Manage Users</th><th>Archive Write</th><th>Archive Read</th><th>Access Workspace</th><th>Create Dataset</th></tr></thead>
+		<tbody>
+			<tr><td><?php echo $project_user['user']; ?></td>
+			<td><input type="checkbox" name="permission[<?php echo $project_user['user'];?>][]" value="read" <?php if($project_user['permissions']['permission_read'] === TRUE){echo 'checked';} ?>></td>
+			<td><input type="checkbox" name="permission[<?php echo $project_user['user'];?>][]" value="write" <?php if($project_user['permissions']['permission_write'] === TRUE){echo 'checked';} ?>></td>
+			<td><input type="checkbox" name="permission[<?php echo $project_user['user'];?>][]" value="delete" <?php if($project_user['permissions']['permission_delete'] === TRUE){echo 'checked';} ?>></td>
+			<td><input type="checkbox" name="permission[<?php echo $project_user['user'];?>][]" value="manage_users" <?php if($project_user['permissions']['permission_manage_users'] === TRUE){echo 'checked';} ?>></td>
+			<td><input type="checkbox" name="permission[<?php echo $project_user['user'];?>][]" value="archivefiles_write" <?php if($project_user['permissions']['permission_write'] === TRUE){echo 'checked';} ?>></td>
+			<td><input type="checkbox" name="permission[<?php echo $project_user['user'];?>][]" value="archivefiles_read" <?php if($project_user['permissions']['permission_archivefiles_read'] === TRUE){echo 'checked';} ?>></td>
+			<td><input type="checkbox" name="permission[<?php echo $project_user['user'];?>][]" value="sharedworkspace_read" <?php if($project_user['permissions']['permission_sharedworkspace_read'] === TRUE){echo 'checked';} ?>></td>
+			<td><input type="checkbox" name="permission[<?php echo $project_user['user'];?>][]" value="dataset_create" <?php if($project_user['permissions']['permission_dataset_create'] === TRUE){echo 'checked';} ?>></td></tr>
+			</tbody>
+			</table>
+			<button type="submit" name = "add_members_details" value = "add_members_details" class="btn btn-success"><i class = "icon-plus icon-white"></i> Add Member</button>
 		</form>
 </div>
 

@@ -285,9 +285,9 @@ class Admin extends CI_Controller {
 	}
 	
 	/**
-	 * Disable Licence
+	 * Delete Licence
 	 *
-	 * Disabled a licence
+	 * Delete a licence
 	 *
 	 * @param string $id
 	 *
