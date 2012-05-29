@@ -35,26 +35,68 @@
 		echo '<tr>
 				<td>' . $licence->name . '</td>
 				<td>' . $licence->short_name . '</td>
-				<td><a href="#licence-' . $licence->id . '-edit" class="btn btn-small" data-toggle="modal"><i class="icon-pencil"></i> Edit</a>
-				<div class="modal fade" id="licence-' . $licence->id . '-edit">
-					<div class="modal-header">
-						<button class="close" data-dismiss="modal">×</button>
-						<h3>Edit Licence</h3>
-						<h4>' . $licence->name . '</h4>
-					</div>
-					<div class="modal-body">
-						
-						<div class="alert alert-info">
-							<h4 class="alert-heading">Please Note</h4>
-							If you edit a licence to have substantially different information then you may inadvertently change the legal status of publicly available research data. If unsure, do <i>not</i> edit a licence.
-						</div>
-					</div>
-					<div class="modal-footer">
-						<a href="#" data-dismiss="modal" class="btn">Close</a>
-						<a href="' . site_url('admin/licence/' . $licence->id . '/disable') . '" class="btn btn-success"><i class="icon-pencil"></i> Edit Licence</a>
-					</div>
-				</div></td>
-				<td>';
+				<td><a href="#licence-' . $licence->id . '-edit" class="btn btn-small" data-toggle="modal"><i class="icon-pencil"></i> Edit</a>';
+
+				echo form_open(site_url('admin/licence/' . $licence->id . '/edit'), array(
+					'class' => 'modal fade',
+					'id' => 'licence-' . $licence->id . '-edit'
+				));
+
+		echo '<div class="modal-header">
+			<button class="close" data-dismiss="modal">×</button>
+			<h3>Edit Licence</h3>
+			<h4>' . $licence->name . '</h4>
+		</div>
+		<div class="modal-body">
+			<div class="alert alert-info">
+				<h4 class="alert-heading">Please Note</h4>
+				<p>If you edit a licence to have substantially different information then you may inadvertently change the legal status of publicly available research data. If unsure, do <i>not</i> edit a licence.</p>
+				<p>Editing a licence will automatically disable it, making it unavailable for selection.</p>
+			</div>';
+		
+		$form_name = array(
+			'name'        => 'name',
+			'id'          => 'name',
+			'placeholder' => 'Orbital Example Licence',
+			'maxlength'   => '255',
+			'value'       => $licence->name
+		);
+
+		echo form_label('Full name of the licence', 'name');
+		echo form_input($form_name);
+		
+		$form_shortname = array(
+			'name'        => 'shortname',
+			'id'          => 'shortname',
+			'placeholder' => 'OEL v1.0',
+			'maxlength'   => '16',
+			'value'       => $licence->short_name
+		);
+
+		echo form_label('Short name of the licence', 'shortname');
+		echo form_input($form_shortname);
+		
+		$form_url = array(
+			'name'        => 'url',
+			'id'          => 'url',
+			'placeholder' => 'http://example.com/licence/summary',
+			'maxlength'   => '255',
+			'value'       => $licence->uri
+		);
+
+		echo form_label('URL of the licence summary', 'url');
+		echo form_input($form_url);
+		
+		echo '</div>
+		<div class="modal-footer">
+			<button class="btn" data-dismiss="modal">Close</button>
+			<button type="submit" class="btn btn-success"><i class="icon-pencil"></i> Edit Licence</button>
+		</div>';
+	  
+		echo form_close();
+		
+		echo '</td>
+		<td>';
 				
 		if ($licence->enabled)
 		{
@@ -186,7 +228,7 @@ echo form_open(site_url('admin/licences/add'), array(
 	</div>
 	<div class="modal-footer">
 		<button class="btn" data-dismiss="modal">Close</button>
-		<button type="submit" class="btn btn-success"><i class="icon-plus icon-white"></i> Add Licence</button>
+		<button type="submit" class="btn btn-success"><i class="icon-plus"></i> Add Licence</button>
 	</div>
   
 <?php echo form_close(); ?>

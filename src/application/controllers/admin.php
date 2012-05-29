@@ -171,6 +171,57 @@ class Admin extends CI_Controller {
 	 * @return NULL
 	 */
 	
+	function licence_edit($id)
+	{
+	
+		if ($licence = $this->orbital->licence_get($id))
+		{
+			$this->load->library('form_validation');
+		
+			$this->form_validation->set_rules('name', 'Name', 'trim|required');
+			$this->form_validation->set_rules('shortname', 'Short name', 'trim|required');
+			$this->form_validation->set_rules('url', 'URL', 'trim|required');
+		
+			if ($this->form_validation->run() === TRUE)
+			{
+				$licence = $licence->response->licence;
+			
+				if ($this->orbital->licence_update($licence->id, $this->input->post('name'),  $this->input->post('shortname'),  $this->input->post('url'), FALSE))
+				{
+					$this->session->set_flashdata('message', 'Licence edited successfully.');
+					$this->session->set_flashdata('message_type', 'success');
+				}
+				else
+				{
+					$this->session->set_flashdata('message', 'Something went wrong editing this licence.');
+					$this->session->set_flashdata('message_type', 'error');
+				}
+				}
+			else
+			{
+				$this->session->set_flashdata('message', 'Unable to edit licence: ' . validation_errors());
+				$this->session->set_flashdata('message_type', 'error');
+				
+			}
+		}
+		else
+		{
+			show_404();
+		}
+		
+		redirect('admin/licences');
+	}
+	
+	/**
+	 * Enable Licence
+	 *
+	 * Enabled a licence
+	 *
+	 * @param string $id
+	 *
+	 * @return NULL
+	 */
+	
 	function licence_enable($id)
 	{
 	
@@ -251,7 +302,7 @@ class Admin extends CI_Controller {
 		
 			if ($this->orbital->licence_delete($licence->id))
 			{
-				$this->session->set_flashdata('message', 'Licence deleted.');
+				$this->session->set_flashdata('message', 'Licence deleted successfully.');
 				$this->session->set_flashdata('message_type', 'success');
 			}
 			else
