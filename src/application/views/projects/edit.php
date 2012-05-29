@@ -123,8 +123,9 @@
 	echo '<p class="help-block">Choosing a default licence makes it easier to publish and share your data. However, you can still change it on a case-by-case basis for individual files and datasets.</p>';
 	echo '
 	<br>
-<div class="well" style="background:#FDFDFD">
-	<div id="licenceAllow" style="display:none">
+	<div class="well" style="background:#FDFDFD">
+	
+		<div id="licenceAllow" style="display:none">
 			<h4>This licence allows:</h4>
 			<div id="licenceAllowContent">
 			</div>
@@ -141,6 +142,10 @@
 			<div id="licenceConditionsContent">
 			</div>
 		</div>
+		
+		<h4>Read More</h4>
+		<p>More information about this licence, including legal text, is available at:<br>
+		<span id="licenceInfoURL"><a href="' . $licence->uri . '" target="_blank">' . $licence->uri . ' <i class="icon-external-link"></i></a></span></p>
 	</div>
 </div>
 </div>
@@ -233,7 +238,7 @@
 			?>
 			</tbody>
 			</table>
-			<button type="submit" name = "save_members_details" value = "save_members_details" class="btn btn-success disabled"><i class = "icon-check icon-white"></i> Save Members</button>
+			<button type="submit" name = "save_members_details" value = "save_members_details" class="btn btn-success disabled"><i class = "icon-check"></i> Save Members</button>
 		</form>
 		
 		<!-- ADD MEMBER -->
@@ -253,7 +258,7 @@
 			<td><input type="checkbox" name="permission[<?php echo $project_user['user'];?>][]" value="dataset_create" <?php if($project_user['permissions']['permission_dataset_create'] === TRUE){echo 'checked';} ?>></td></tr>
 			</tbody>
 			</table>
-			<button type="submit" name = "add_members_details" value = "add_members_details" class="btn btn-success"><i class = "icon-plus icon-white"></i> Add Member</button>
+			<button type="submit" name = "add_members_details" value = "add_members_details" class="btn btn-success"><i class = "icon-plus"></i> Add Member</button>
 		</form>
 </div>
 
@@ -278,6 +283,8 @@
 			$('#licenceDenyContent').html(data.forbid);
 			$('#licenceDeny').show();
 		}
+		
+		$('#licenceInfoURL').html('<a href="' + data.summary_uri + '" target="_blank">' + data.summary_uri + ' <i class="icon-external-link"></i></a>');
 	  
 	});
 	
@@ -315,6 +322,8 @@
 			{
 				$('#licenceDeny').hide();
 			}
+			
+			$('#licenceInfoURL').html('<a href="' + data.summary_uri + '" target="_blank">' + data.summary_uri + ' <i class="icon-external-link"></i></a>');
 		  
 		});
 	  
