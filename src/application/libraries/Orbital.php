@@ -634,7 +634,6 @@ class Orbital {
 				{
 					// Something has gone wrong - try figure out what.
 					$http_status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-					echo $http_status;
 					curl_close($ch);
 
 					// Different behaviours for unauthorised code
@@ -1198,6 +1197,12 @@ class Orbital {
 		}
 		return $this->put_authed('members/' . $identifier, array('user' => $user, 'read' => $read, 'write' => $write, 'delete' => $delete, 'manage_users' => $manage_users, 'archivefiles_read' => $archivefiles_read, 'archivefiles_write' => $archivefiles_write, 'sharedworkspace_read' => $sharedworkspace_read, 'dataset_create' => $dataset_create));
 	}
+	
+	public function delete_project_member($identifier, $user)
+	{
+		return $this->delete_authed('project/' . $identifier . '/member/' . urlencode($user));
+	}
+
 }
 
 /* End of file Orbital.php */

@@ -427,16 +427,26 @@ class Projects extends CI_Controller {
 					{
 						$user_perms[] = $value;
 					}
-					
-					$this->orbital->update_project_member($identifier,
-					$user,
-					$user_perms);
+					if (count($user_perms) > 0)
+					{
+						if( in_array('remove', $user_perms))
+						{
+							$this->orbital->delete_project_member($identifier,
+							$user);						
+						}
+						else
+						{
+							$this->orbital->update_project_member($identifier,
+							$user,
+							$user_perms);
+						}
+					}
 				}
 				$response = $this->orbital->project_details($identifier);
 				
-				$this->session->set_flashdata('message', 'Project members updated successfully.');
-				$this->session->set_flashdata('message_type', 'success');
-				redirect('project/' . $identifier);
+			//	$this->session->set_flashdata('message', 'Project members updated successfully.');
+			//	$this->session->set_flashdata('message_type', 'success');
+			//	redirect('project/' . $identifier);
 			}
 
 			if($this->input->post('add_members_details'))

@@ -198,7 +198,7 @@
 	
 		<form method="post" action="{base_url}project/{project_id}/edit">
 		<table class = "table table-bordered table-striped" id="users_table">
-		<thead><tr><th>User</th><th>Read</th><th>Write</th><th>Delete</th><th>Manage Users</th><th>Archive Write</th><th>Archive Read</th><th>Access Workspace</th><th>Create Dataset</th><th>Options</th></tr></thead>
+		<thead><tr><th>User</th><th>Read</th><th>Write</th><th>Delete</th><th>Manage Users</th><th>Archive Write</th><th>Archive Read</th><th>Access Workspace</th><th>Create Dataset</th><th>Delete User?</th></tr></thead>
 		<tbody>
 			<?php foreach($project_users as $project_user)
 			{
@@ -214,7 +214,7 @@
 			<td><input type="checkbox" disabled name="permission[<?php echo $project_user['user'];?>][archivefiles_read]" value="TRUE" <?php if($project_user['permissions']['permission_archivefiles_read'] === TRUE){echo 'checked';} ?>></td>
 			<td><input type="checkbox" disabled name="permission[<?php echo $project_user['user'];?>][sharedworkspace_read]" value="TRUE" <?php if($project_user['permissions']['permission_sharedworkspace_read'] === TRUE){echo 'checked';} ?>></td>
 			<td><input type="checkbox" disabled name="permission[<?php echo $project_user['user'];?>][dataset_create]" value="TRUE" <?php if($project_user['permissions']['permission_dataset_create'] === TRUE){echo 'checked';} ?>></td>
-			<td><a href="#" class = "btn disabled"><i class = "icon-remove"></i> Remove</a></td></tr>
+			<td></td></tr>
 
 			<?php
 			}
@@ -230,7 +230,7 @@
 			<td><input type="checkbox" name="permission[<?php echo $project_user['user'];?>][archivefiles_read]" value="TRUE" <?php if($project_user['permissions']['permission_archivefiles_read'] === TRUE){echo 'checked';} ?>></td>
 			<td><input type="checkbox" name="permission[<?php echo $project_user['user'];?>][sharedworkspace_read]" value="TRUE" <?php if($project_user['permissions']['permission_sharedworkspace_read'] === TRUE){echo 'checked';} ?>></td>
 			<td><input type="checkbox" name="permission[<?php echo $project_user['user'];?>][dataset_create]" value="TRUE" <?php if($project_user['permissions']['permission_dataset_create'] === TRUE){echo 'checked';} ?>></td>
-			<td><a href="#" class = "btn btn-danger disabled"><i class = "icon-remove icon-white"></i> Remove</a></td></tr>
+			<td><input type="checkbox" name="permission[<?php echo $project_user['user'];?>][remove]" value="TRUE"></td></tr>
 
 			<?php
 			}
@@ -238,28 +238,25 @@
 			?>
 			</tbody>
 			</table>
-			<button type="submit" name = "save_members_details" value = "save_members_details" class="btn btn-success"><i class = "icon-check icon-white"></i> Save Members</button>
+			<button type="submit" name = "save_members_details" value = "save_members_details" class="btn btn-success"><i class = "icon-check icon-white"></i> Save Members</button> <a class="btn" data-toggle="modal" href="#addMember" ><i class = "icon-plus"></i> Add new member</a>
+
 		</form>
 		
 		<!-- ADD MEMBER -->
+
+		<form class="modal fade" id="addMember">
+			<div class="modal-header">
+				<button class="close" data-dismiss="modal">×</button>
+				<h3>Add Member</h3>
+			</div>
+			<div class="modal-body">
+				<input type="text" id = "user_email" size="12" maxlength="255" name="user">
+			</div>
+			<div class="modal-footer">
+				<a name = "add_members_details" id = "add_member" value = "add_members_details" class="btn btn-success"><i class = "icon-plus"></i> Add Member</a>
+			</div>
+		</form>
 		
-		<form method="post">
-		<table class = "table table-bordered table-striped">
-		<thead><tr><th>User</th><th>Read</th><th>Write</th><th>Delete</th><th>Manage Users</th><th>Archive Write</th><th>Archive Read</th><th>Access Workspace</th><th>Create Dataset</th></tr></thead>
-		<tbody>
-			<tr><td><input type="text" id = "user_email" size="12" maxlength="255" name="user"></td>
-			<td><input type="checkbox" name="permission[read]" value="TRUE" checked></td>
-			<td><input type="checkbox" name="permission[write]" value="TRUE"></td>
-			<td><input type="checkbox" name="permission[delete]" value="TRUE"></td>
-			<td><input type="checkbox" name="permission[manage_users]" value="TRUE"></td>
-			<td><input type="checkbox" name="permission[archivefiles_write]" value="TRUE"></td>
-			<td><input type="checkbox" name="permission[archivefiles_read]" value="TRUE" checked> </td>
-			<td><input type="checkbox" name="permission[sharedworkspace_read]" value="TRUE" checked></td>
-			<td><input type="checkbox" name="permission[dataset_create]" value="TRUE"></td></tr>
-			</tbody>
-			</table>
-			
-			<a name = "add_members_details" id = "add_member" value = "add_members_details" class="btn btn-success disabled"><i class = "icon-plus icon-white"></i> Add Member</a>		</form>
 </div>
 
 <script type="text/javascript">
@@ -267,7 +264,9 @@
 	$('#add_member').click(function()
 	{
 		user_email = $('#user_email').val();
-		$('#users_table').append('<tr><td>' + user_email + '</td><td><input type="checkbox" name="permission[' + user_email + '][read]" value="TRUE"></td>	<td><input type="checkbox" name="permission[' + user_email + '][write]" value="TRUE"></td><td><input type="checkbox" name="permission[' + user_email + '][delete]" value="TRUE"></td><td><input type="checkbox" name="permission[' + user_email + '][manage_users]" value="TRUE"></td><td><input type="checkbox" name="permission[' + user_email + '][archivefiles_write]" value="TRUE"></td><td><input type="checkbox" name="permission[' + user_email + '][archivefiles_read]" value="TRUE"></td><td><input type="checkbox" name="permission[' + user_email + '][sharedworkspace_read]" value="TRUE"></td><td><input type="checkbox" name="permission[' + user_email + '][dataset_create]" value="TRUE"></td><td><a href="#" class = "btn btn-danger disabled"><i class = "icon-remove icon-white"></i> Remove</a></td></tr>');
+		$('#users_table').append('<tr><td>' + user_email + ' <span class="label label-success">New</span></td><td><input type="checkbox" name="permission[' + user_email + '][read]" value="TRUE"></td>	<td><input type="checkbox" name="permission[' + user_email + '][write]" value="TRUE"></td><td><input type="checkbox" name="permission[' + user_email + '][delete]" value="TRUE"></td><td><input type="checkbox" name="permission[' + user_email + '][manage_users]" value="TRUE"></td><td><input type="checkbox" name="permission[' + user_email + '][archivefiles_write]" value="TRUE"></td><td><input type="checkbox" name="permission[' + user_email + '][archivefiles_read]" value="TRUE"></td><td><input type="checkbox" name="permission[' + user_email + '][sharedworkspace_read]" value="TRUE"></td><td><input type="checkbox" name="permission[' + user_email + '][dataset_create]" value="TRUE"></td><td><input type="checkbox" name="permission[' + user_email + '][remove]" value="TRUE"></td></tr>');
+		$('#addMember').modal('hide');
+
 	});
 
 	$.getJSON('{base_url}licence/' + $('#project_default_licence').val() + '/json', function(data) {
