@@ -15,6 +15,77 @@ class Files extends CI_Controller {
 		$this->data = $this->orbital->common_content();
 	}
 
+	function list_files($identifier)
+	{
+		if ($response = $this->orbital->project_details($identifier))
+		{
+			if ($response->response->status === TRUE)
+			{
+				if ($this->input->get('error'))
+				{
+					$this->data['error'] = $this->input->get('error');
+				}
+
+				if ($this->input->get('message'))
+				{
+					$this->data['success'] = $this->input->get('message');
+				}
+
+				$this->load->library('typography');
+				$this->data['project_id'] = $response->response->project->identifier;
+				$this->data['page_title'] = $response->response->project->name;
+				$this->data['project_name'] = $response->response->project->name;
+
+				// Generate list of archive files
+
+				$this->data['archive_files'] = $response->response->archive_files;
+				
+				$this->parser->parse('includes/header', $this->data);
+				$this->parser->parse('files/list', $this->data);
+				$this->parser->parse('includes/footer', $this->data);
+			}
+			else
+			{
+				show_404();
+			}
+		}
+	}
+	
+	function list_file_sets($identifier)
+	{
+		if ($response = $this->orbital->project_details($identifier))
+		{
+			if ($response->response->status === TRUE)
+			{
+				if ($this->input->get('error'))
+				{
+					$this->data['error'] = $this->input->get('error');
+				}
+
+				if ($this->input->get('message'))
+				{
+					$this->data['success'] = $this->input->get('message');
+				}
+
+				$this->load->library('typography');
+				$this->data['project_id'] = $response->response->project->identifier;
+				$this->data['page_title'] = $response->response->project->name;
+				$this->data['project_name'] = $response->response->project->name;
+				
+				//Generate list of file_sets
+				
+				$this->data['file_sets'] = $response->response->file_sets;
+				
+				$this->parser->parse('includes/header', $this->data);
+				$this->parser->parse('files/list_file_sets', $this->data);
+				$this->parser->parse('includes/footer', $this->data);
+			}
+			else
+			{
+				show_404();
+			}
+		}
+	}
 
 	/**
 	 * View file details

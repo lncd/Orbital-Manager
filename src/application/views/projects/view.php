@@ -240,27 +240,64 @@
 						case 'upload_error_hard':
 							echo '<span class="label label-important labeltip" rel="popover" data-content="Something has gone wrong uploading this file, and it cannot be retried. An administrator has been notified." data-original-title="Upload Error">Upload Error</span>';
 							break;
-					
 					}
-					
 					echo '</a></li>';
 				}
-				
 				echo '</ul>
 				
 				<script type="text/javascript">
 					$(\'.labeltip\').popover({placement:\'top\'});
 				</script>';
+				
+				echo '<a class="btn" href="{base_url}project/{project_id}/files">View All &raquo;</a>';
 			}
 			else
 			{
 				echo '<p>You don\'t have any archive files stored in this project.</p>
 				<p>Archive your files to permanently store and publish your data.';
 			}
-			
+						
 			?>
 			
 			<hr>
+			
+			<h2>File Sets</h2>
+			<?php
+			
+			if (count($file_sets) > 0)
+			{
+				echo '<ul class="nav nav-list">';
+				foreach ($file_sets as $file_set)
+				{				
+					if ($file_set->file_set_visibility === 'public')
+					{
+						$priv_icon = 'open';
+					}
+					else
+					{
+						$priv_icon = 'close';
+					}
+				
+					echo '<li><a href="' . base_url() . 'file/' . $file_set->file_set_id . '"><i class="icon-eye-' . $priv_icon . '"></i> ' . $file_set->file_set_name . ' ';
+					
+					echo '</a></li>';
+				}
+				echo '</ul>
+				
+				<script type="text/javascript">
+					$(\'.labeltip\').popover({placement:\'top\'});
+				</script>';
+				
+				
+			echo '<a class="btn" href="{base_url}project/{project_id}/collections">View All &raquo;</a><hr>';
+			}
+			else
+			{
+				echo '<p>You don\'t have any archive files stored in this project.</p>
+				<p>Archive your files to permanently store and publish your data.';
+			}
+
+			?>
 			
 			<p><a href="#uploadFileDialogue" class="btn btn-success" data-toggle="modal"><i class="icon-upload icon-white"></i> Upload File</a>
 			

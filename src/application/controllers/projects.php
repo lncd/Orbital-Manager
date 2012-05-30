@@ -190,7 +190,7 @@ class Projects extends CI_Controller {
 
 	function view($identifier)
 	{
-		if ($response = $this->orbital->project_details($identifier))
+		if ($response = $this->orbital->project_details($identifier, 5))
 		{
 			if ($response->response->status === TRUE)
 			{
@@ -259,7 +259,10 @@ class Projects extends CI_Controller {
 				// Generate list of archive files
 
 				$this->data['archive_files'] = $response->response->archive_files;
+				
+				// Generate list file_sets
 
+				$this->data['file_sets'] = $response->response->file_sets;
 				// Upload token
 				$this->data['upload_token'] = $response->response->upload_token;
 

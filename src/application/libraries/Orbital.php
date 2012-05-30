@@ -873,9 +873,9 @@ class Orbital {
 	 * @return ARRAY.
 	 */
 
-	public function project_details($project)
+	public function project_details($project, $limit = NULL)
 	{
-		return $this->get_authed('project/' . $project);
+		return $this->get_authed('project/' . $project . '?limit=' . $limit);
 	}
 
 	/**

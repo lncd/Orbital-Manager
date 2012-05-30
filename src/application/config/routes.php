@@ -47,6 +47,8 @@ $route['signout'] = 'signin/signout';
 $route['planner'] = 'tools/project_planner';
 $route['policy'] = 'tools/policy_guidance';
 
+$route['project/(:any)/collections'] = 'files/list_file_sets/$1';
+$route['project/(:any)/files'] = 'files/list_files/$1';
 $route['project/(:any)/edit'] = 'projects/edit/$1';
 $route['project/(:any)/delete'] = 'projects/delete/$1';
 $route['project/(:any)/public'] = 'projects/view_public/$1';
