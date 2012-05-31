@@ -24,7 +24,7 @@
 	?>
 			
 	<table class = "table table-bordered table-striped" id="users_table">
-		<thead><tr><th>File name</th><th>File size</th></tr></thead>
+		<thead><tr><th>File name</th><th>File size</th><th>Uploaded</th><th>Licence</th></tr></thead>
 		<tbody>
 			<?php foreach($archive_files as $archive_file)
 			{
@@ -39,7 +39,9 @@
 			}
 				
 					echo '<a href="' . base_url() . 'file/' . $archive_file->id . '"><i class="icon-eye-' . $priv_icon . '"></i> ' . $archive_file->title . ' '; ?></td>
-			<td></td></tr>
+			<td></td>
+			<td><?php echo $archive_file->title ?></td>
+			<td><?php echo $archive_file->licence ?></td></tr>
 
 			<?php
 			}
