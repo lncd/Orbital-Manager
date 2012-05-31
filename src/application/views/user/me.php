@@ -50,4 +50,3 @@ else
 <script type="text/javascript">
 	$('#userTimeline').scrollTo($('#tl_now'));
 </script>
->>>>>>> bb8b3308e70f293bdc014e90508bb356384d3187
