@@ -38,7 +38,7 @@
 				$priv_icon = 'close';
 			}
 				
-					echo '<li><a href="' . base_url() . 'file/' . $archive_file->id . '"><i class="icon-eye-' . $priv_icon . '"></i> ' . $archive_file->original_name . ' '; ?></td>
+					echo '<a href="' . base_url() . 'file/' . $archive_file->id . '"><i class="icon-eye-' . $priv_icon . '"></i> ' . $archive_file->title . ' '; ?></td>
 			<td></td></tr>
 
 			<?php

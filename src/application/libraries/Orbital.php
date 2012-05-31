@@ -1102,6 +1102,21 @@ class Orbital {
 		return $this->get_unauthed('file/' . $file_id . '/public');	
 	}
 	
+	/**
+	 * File get details
+	 *
+	 * Gets the details of a file
+	 *
+	 * @access public
+	 * @param $file_id string The identifier of the file the user wants access to
+	 *
+	 * @return object.
+	 */
+
+	public function file_set_get_details($file_id)
+	{
+		return $this->get_authed('file_set/' . $file_id);
+	}
 	
 	/**
 	 * Update file details

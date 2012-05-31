@@ -59,6 +59,8 @@ $route['file/(:any)/download'] = 'files/download_file/$1';
 $route['file/(:any)/edit'] = 'files/edit_file/$1';
 $route['file/(:any)/public'] = 'files/view_file_public/$1';
 $route['file/(:any)'] = 'files/view_file/$1';
+$route['collection/(:any)'] = 'files/view_file_set/$1';
+
 
 $route['licence/(:any)/json'] = 'licences/view_licence_json/$1';
 $route['licence/(:any)'] = 'licences/view_licence/$1';

@@ -16,6 +16,10 @@
 		<h2>Research Summary</h2>
 		
 		-->
-		
+		<h2>Access Token</h2>
+		<?php
+			echo $this->session->userdata('access_token') . '<br>'; 
+			echo base64_encode($this->session->userdata('access_token'));
+		?>
 	</div>
 </div>

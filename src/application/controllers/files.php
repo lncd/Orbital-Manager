@@ -141,6 +141,101 @@ class Files extends CI_Controller {
 	}
 
 	/**
+	 * View file set details
+	 *
+	 * views a file sets details
+	 *
+	 * @param string $identifier
+	 * @return NULL
+	 */
+
+	function view_file_set($identifier)
+	{
+		if ($response = $this->orbital->file_set_get_details($identifier))
+		{
+			$this->load->library('typography');
+			
+			$this->data['file_set_id'] = $response->response->file_set->id;
+			$this->data['file_set_project'] = $response->response->file_set->project_name;
+			$this->data['file_set_project_id'] = $response->response->file_set->project;
+			$this->data['file_set_title'] = $response->response->file_set->title;
+			$this->data['page_title'] = $response->response->file_set->title;
+			$this->data['archive_files'] = $response->response->archive_files;
+			
+			if ($response->response->permissions->write)
+			{
+				$this->data['file_controls'][] = array(
+					'uri' => site_url('collection/' . $response->response->file_set->id . '/edit'),
+					'title' => 'Edit'
+				);
+			}
+			
+
+			$this->parser->parse('includes/header', $this->data);
+			$this->parser->parse('files/view_file_set', $this->data);
+			$this->parser->parse('includes/footer', $this->data);
+		}
+		else
+		{
+			show_404();
+		}
+	}
+
+	/**
+	 * View public file set details
+	 *
+	 * views a public file sets details
+	 *
+	 * @param string $identifier
+	 * @return NULL
+	 */
+
+	function view_file_set_public($identifier)
+	{
+		if ($response = $this->orbital->file_set_get_details($identifier))
+		{
+			$this->load->library('typography');
+			
+			$this->data['file_set_id'] = $response->response->file_set->id;
+			$this->data['file_set_project'] = $response->response->file_set->project_name;
+			$this->data['file_set_project_id'] = $response->response->file_set->project_id;
+			$this->data['file_set_title'] = $response->response->file_set->title;
+			$this->data['file_set_name'] = $response->response->file_set->original_name;
+			$this->data['file_set_licence'] = $response->response->file_set->licence_name;
+			$this->data['file_set_licence_uri'] = $response->response->file_set->licence_uri;
+			$this->data['file_set_extension'] = $response->response->file_set->extension;
+			$this->data['file_set_mimetype'] = $response->response->file_set->mimetype;
+			$this->data['page_title'] = $response->response->file_set->original_name;
+			
+			if ($response->response->permissions->write)
+			{
+				$this->data['file_controls'][] = array(
+					'uri' => site_url('file/' . $response->response->file->id . '/edit'),
+					'title' => 'Edit'
+				);
+			}
+			
+			if ($response->response->file->status === 'uploaded')
+			{
+				$this->data['file_downloadable'] = TRUE;
+			}
+			else
+			{
+				$this->data['file_downloadable'] = FALSE;
+			}
+
+			$this->parser->parse('includes/header', $this->data);
+			$this->parser->parse('files/view_file_set_public', $this->data);
+			$this->parser->parse('includes/footer', $this->data);
+		}
+		else
+		{
+			show_404();
+		}
+	}
+
+
+	/**
 	 * View file details public
 	 *
 	 * views a public files details

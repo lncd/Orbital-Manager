@@ -14,7 +14,7 @@
 </ul>
 
 <div class="page-header">
-	<h1>{project_name}</h1>
+	<h1>{project_name} <small>File Collections</small></h1>
 </div>
 
 	<?php
@@ -24,7 +24,7 @@
 	?>
 			
 	<table class = "table table-bordered table-striped" id="users_table">
-		<thead><tr><th>Set name</th><th>Description</th></tr></thead>
+		<thead><tr><th>Set name</th><th>No. Files</th><th>Description</th></tr></thead>
 		<tbody>
 			<?php foreach($file_sets as $file_set)
 			{
@@ -38,7 +38,8 @@
 				$priv_icon = 'close';
 			}
 				
-			echo '<a href="' . base_url() . 'file/' . $file_set->file_set_id . '"><i class="icon-eye-' . $priv_icon . '"></i> ' . $file_set->file_set_name . ' '; ?></td>
+			echo '<a href="' . base_url() . 'collection/' . $file_set->file_set_id . '"><i class="icon-eye-' . $priv_icon . '"></i> ' . $file_set->file_set_name . ' '; ?></td>
+			<td>????????</td>
 			<td><?php echo $file_set->file_set_description?></td></tr>
 
 			<?php
