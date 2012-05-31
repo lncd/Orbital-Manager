@@ -96,20 +96,34 @@
 					<a class="brand" href="{base_url}">{orbital_manager_name}</a>
 					<div class="nav-collapse">
 						<ul class="nav">
+							<li><a href="{base_url}">Home</a></li>
 							{nav_menu}
 								<li><a href="{uri}">{name}</a></li>
 							{/nav_menu}
-							  <li class="dropdown">
-						    <a href="#"
-						          class="dropdown-toggle"
-						          data-toggle="dropdown">
-						          Tools
-						          <b class="caret"></b>
-						    </a>
-						    <ul class="dropdown-menu">
-								<li><a href="{base_url}planner">Project Planner</a></li>
-						    </ul>
-						  </li>
+							<li class="dropdown">
+							    <a href="#"
+							          class="dropdown-toggle"
+							          data-toggle="dropdown">
+							          Tools
+							          <b class="caret"></b>
+							    </a>
+							    <ul class="dropdown-menu">
+									<li><a href="{base_url}planner">Project Planner</a></li>
+									<li><a href="{base_url}policy">Policy &amp; Guidance</a></li>
+							    </ul>
+							</li>
+							<li class="dropdown">
+							    <a href="#"
+							          class="dropdown-toggle"
+							          data-toggle="dropdown">
+							          About
+							          <b class="caret"></b>
+							    </a>
+							    <ul class="dropdown-menu">
+									<li><a href="{base_url}about">About Orbital</a></li>
+									<li><a href="{base_url}contact">Contact Details</a></li>
+							    </ul>
+							</li>
 						</ul>
 						<p class="navbar-text pull-right">{user_presence}</p>
 					</div>

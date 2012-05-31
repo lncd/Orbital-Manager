@@ -58,32 +58,19 @@ class Orbital {
 			$common_content['user_presence'] = '<a href="' . site_url('signin') . '">' . lang('navigation_sign_in') . '</a>';
 		}
 
-		$common_content['nav_menu'] = array (
-			array (
-				'name' => 'Home',
-				'uri' => site_url()
-			),
-			array (
-				'name' => 'About',
-				'uri' => site_url('about')
-			),
-			array (
-				'name' => 'Contact',
-				'uri' => site_url('contact')
-			)
-		);
+		$common_content['nav_menu'] = array();
 
 		if ($this->_ci->session->userdata('current_user_string'))
 		{
 
 			$common_content['nav_menu'][] = array (
-				'name' => 'Projects',
+				'name' => 'Your Projects',
 				'uri' => site_url('projects')
 			);
 
 			$common_content['nav_menu'][] = array (
-				'name' => 'Me',
-				'uri' => site_url('me')
+				'name' => 'Your Profile',
+				'uri' => site_url('profile')
 			);
 
 			if ($this->_ci->session->userdata('system_admin'))
