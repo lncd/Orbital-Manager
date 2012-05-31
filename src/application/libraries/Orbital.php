@@ -488,7 +488,6 @@ class Orbital {
 				{
 					// Something has gone wrong - try figure out what.
 					$http_status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-					echo $http_status;
 					curl_close($ch);
 
 					// Different behaviours for unauthorised code
@@ -622,7 +621,6 @@ class Orbital {
 				{
 					// Something has gone wrong - try figure out what.
 					$http_status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-					echo $http_status;
 					curl_close($ch);
 
 					// Different behaviours for unauthorised code
@@ -1110,15 +1108,88 @@ class Orbital {
 		return $this->put_authed('file/' . $identifier, array('name' => $name, 'default_licence' => $default_licence, 'public_view' => $public_view));
 	}
 	
-	public function update_project_members($identifier, $user, $read, $write, $delete, $manage_users, $archivefiles_read, $archivefiles_write, $sharedworkspace_read, $dataset_create)
+	public function update_project_member($identifier, $user, $user_perms)
 	{
-		return $this->put_authed('members/' . $identifier, array('read' => $read, 'write' => $write, 'delete' => $delete, 'archivefiles_read' => $archivefiles_read, 'archivefiles_write' => $archivefiles_write, 'sharedworkspace_read' => $sharedworkspace_read, 'dataset_create' => $dataset_create));
-	}
-	
-		public function add_project_member($identifier, $user, $read, $write, $delete, $manage_users, $archivefiles_write, $archivefiles_read, $sharedworkspace_read, $dataset_create)
-	{
+		if (in_array('read', $user_perms))
+		{
+			$read = 1;
+		}
+		else
+		{
+			$read = 0;
+		}
+		if (in_array('write', $user_perms))
+		{
+			$write = 1;
+		}
+		else
+		{
+			$write = 0;
+		}
+		if (in_array('delete', $user_perms))
+		{
+			$delete = 1;
+		}
+		else
+		{
+			$delete = 0;
+		}
+		if (in_array('manage_users', $user_perms))
+		{
+			$manage_users = 1;
+		}
+		else
+		{
+			$manage_users = 0;
+		}
+		if (in_array('archivefiles_read', $user_perms))
+		{
+			$archivefiles_read = 1;
+		}
+		else
+		{
+			$archivefiles_read = 0;
+		}
+		if (in_array('archivefiles_write', $user_perms))
+		{
+			$archivefiles_write = 1;
+		}
+		else
+		{
+			$archivefiles_write = 0;
+		}
+		if (in_array('read', $user_perms))
+		{
+			$read = 1;
+		}
+		else
+		{
+			$read = 0;
+		}
+		if (in_array('sharedworkspace_read', $user_perms))
+		{
+			$sharedworkspace_read = 1;
+		}
+		else
+		{
+			$sharedworkspace_read = 0;
+		}
+		if (in_array('dataset_create', $user_perms))
+		{
+			$dataset_create = 1;
+		}
+		else
+		{
+			$dataset_create = 0;
+		}
 		return $this->put_authed('members/' . $identifier, array('user' => $user, 'read' => $read, 'write' => $write, 'delete' => $delete, 'manage_users' => $manage_users, 'archivefiles_read' => $archivefiles_read, 'archivefiles_write' => $archivefiles_write, 'sharedworkspace_read' => $sharedworkspace_read, 'dataset_create' => $dataset_create));
 	}
+	
+	public function delete_project_member($identifier, $user)
+	{
+		return $this->delete_authed('project/' . $identifier . '/member/' . urlencode($user));
+	}
+
 }
 
 /* End of file Orbital.php */
