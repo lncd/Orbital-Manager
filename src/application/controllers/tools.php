@@ -14,15 +14,10 @@ class Tools extends CI_Controller {
 		
 		$this->data = $this->orbital->common_content();
 	}
-<<<<<<< HEAD
 	
 	/**
 	 * Project Planner
 	 */
-	 
-=======
-
->>>>>>> 93bf7292053c5b3df3c092fac18cb2ff90445334
 	function project_planner()
 	{	
 		$this->data['page_title'] = 'Project Planner';
@@ -30,9 +25,10 @@ class Tools extends CI_Controller {
 		$this->parser->parse('static/project_planner', $this->data);
 		$this->parser->parse('includes/footer', $this->data);
 	}
-<<<<<<< HEAD
-=======
 	
+	/**
+	 * Policy & Guidance
+	 */
 	function policy_guidance()
 	{	
 		$this->data['page_title'] = 'Policy and Guidance';
@@ -40,7 +36,6 @@ class Tools extends CI_Controller {
 		$this->parser->parse('static/policy_guidance', $this->data);
 		$this->parser->parse('includes/footer', $this->data);
 	}
->>>>>>> 93bf7292053c5b3df3c092fac18cb2ff90445334
 }
 
 // End of file tools.php

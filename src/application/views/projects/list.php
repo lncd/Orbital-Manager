@@ -11,7 +11,7 @@
 		</ul>
 	
 		<div class="page-header">
-			<h1>My Projects</h1>
+			<h1>Your Projects</h1>
 		</div>
 
 	</div>

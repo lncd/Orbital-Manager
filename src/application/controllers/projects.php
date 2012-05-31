@@ -220,32 +220,28 @@ class Projects extends CI_Controller {
 					);
 				}
 
-				if ($response->response->project->start_date !== NULL)
-				{
-					$this->data['project_startdate'] = strtotime($response->response->project->start_date);
-					$this->data['project_startdate_pretty'] = date('D jS F Y', strtotime($response->response->project->start_date));
-				}
-				else
-				{
-					$this->data['project_startdate_pretty'] = 'Unspecified';
-				}
-	
-				if ($response->response->project->end_date !== NULL)
-				{
-					$this->data['project_enddate'] = strtotime($response->response->project->end_date);
-					$this->data['project_enddate_pretty'] = date('D jS F Y', strtotime($response->response->project->end_date));
-				}
-				else
-				{
-					$this->data['project_enddate_pretty'] = 'Unspecified';
-				}
-
-				if (isset($response->response->project->start_date) AND isset($response->response->project->end_date) AND strtotime($response->response->project->end_date) > strtotime($response->response->project->start_date))
-				{
-					$this->data['project_complete'] = abs(((time() - strtotime($response->response->project->start_date)) / (strtotime($response->response->project->end_date) - strtotime($response->response->project->start_date))) * 100);
-				}
-
 				$this->data['project_description'] = $this->typography->auto_typography($response->response->project->abstract);
+				
+				$this->data['timeline'] = array();
+				
+				if (count($response->response->timeline) > 0)
+				{
+				
+					foreach ($response->response->timeline as $item)
+					{
+						$this->data['timeline'][$item->timestamp_unix] = $item;
+					}
+					
+					$now->id = 'now';
+					$now->text = 'Now';
+					$now->payload = NULL;
+					$now->timestamp_human = date('g.ia');
+					
+					$this->data['timeline'][time()] = $now;
+					
+					ksort($this->data['timeline']);
+					
+				}
 				
 			
 				// Generate workspace mode
@@ -293,7 +289,7 @@ class Projects extends CI_Controller {
 					}
 				}
 				
-				if ($this->data['project_description'] === NULL OR $this->data['project_description'] === '' OR $this->data['project_startdate_pretty']  === 'Unspecified' OR $this->data['project_enddate_pretty']  === 'Unspecified' OR $this->data['project_default_licence']  === NULL OR $this->data['project_research_group'] === NULL)
+				if ($this->data['project_description'] === NULL OR $this->data['project_description'] === '' OR $this->data['project_default_licence']  === NULL OR $this->data['project_research_group'] === NULL)
 				{
 					$this->data['data_required'] = 'ADD MOAR DATA';
 				}
@@ -332,22 +328,7 @@ class Projects extends CI_Controller {
 				$this->data['alt_tracking'] = $response->response->project->google_analytics;
 			}
 
-			if ($response->response->project->start_date !== NULL)
-			{
-				$this->data['project_startdate'] = $response->response->project->start_date;
-				$this->data['project_startdate_pretty'] = date('D jS F Y', strtotime($response->response->project->start_date));
-			}
-			if ($response->response->project->end_date !== NULL)
-			{
-				$this->data['project_enddate'] = $response->response->project->end_date;
-				$this->data['project_enddate_pretty'] = date('D jS F Y', strtotime($response->response->project->end_date));
-			}
 			$this->data['project_description'] = $this->typography->auto_typography($response->response->project->abstract);
-
-			if (isset($response->response->project->start_date) AND isset($response->response->project->end_date) AND strtotime($response->response->project->end_date) > strtotime($response->response->project->start_date))
-			{
-				$this->data['project_complete'] = abs(((time() - strtotime($response->response->project->start_date)) / (strtotime($response->response->project->end_date) - strtotime($response->response->project->start_date))) * 100);
-			}
 
 			// Generate list of datasets
 

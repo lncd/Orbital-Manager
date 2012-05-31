@@ -1,93 +1,117 @@
-<div class="row">
-	<div class="span12">
+<ul class="breadcrumb">
+	<li>
+		<a href="{base_url}">Home</a> <span class="divider">/</span>
+	</li>
+	<li>
+		<a href="{base_url}projects">Projects</a> <span class="divider">/</span>
+	</li>
+	<li class="active">
+		{project_name}
+	</li>
+</ul>
 
-		<ul class="breadcrumb">
-			<li>
-				<a href="{base_url}">Home</a> <span class="divider">/</span>
-			</li>
-			<li>
-				<a href="{base_url}projects">Projects</a> <span class="divider">/</span>
-			</li>
-			<li class="active">
-				{project_name}
-			</li>
-		</ul>
+<?php
 
-		<?php
-		
-		if (isset($error))
-		{
-			echo '<div class="alert alert-error alert-block">
-  <a class="close" data-dismiss="alert" href="#">×</a>
-  <h4 class="alert-heading">Upload Error</h4>
-  ' . $error . '
+if (isset($error))
+{
+	echo '<div class="alert alert-error alert-block">
+<a class="close" data-dismiss="alert" href="#">×</a>
+<h4 class="alert-heading">Upload Error</h4>
+' . $error . '
 </div>';
-		}
-		
-		if (isset($success))
-		{
-			echo '<div class="alert alert-success alert-block">
-  <a class="close" data-dismiss="alert" href="#">×</a>
-  <h4 class="alert-heading">Upload Successful</h4>
-  ' . $success . '
+}
+
+if (isset($success))
+{
+	echo '<div class="alert alert-success alert-block">
+<a class="close" data-dismiss="alert" href="#">×</a>
+<h4 class="alert-heading">Upload Successful</h4>
+' . $success . '
 </div>';
-		}
-		
-		?>
+}
 
-		<div class="page-header">
-			<h1>{project_name}</h1>
-		</div>
-		
-		{project_description}
-		
-		<?php
-		
-		if (isset ($project_startdate) AND isset($project_enddate))
-		{
-		
-		?>
-		
-		<div class = "well">
-			<h2>Project Progress</h2>
-			<div class="progress">
-  				<div class="bar" style="width: {project_complete}%;">
-  				</div>
-  			</div>
-  			<div class = "pull-left"><b>Project Start</b><br>{project_startdate_pretty}
-			</div>
-			<div class = "pull-right"><b>Project End</b><br>{project_enddate_pretty}
-			</div>
-			<div style = clear:both>
-			</div>
-		</div>
-		
-		<?php
-		
-		} 
-		
-		if ($new_project === TRUE)
-		{
-			echo '<div class="alert alert-info">
-				<i class="icon-chevron-down"></i> Please describe your project in more detail by clicking the \'Edit\' button.
-			</div>';
+?>
 
-		}
-		
-		else if (isset ($data_required))
-		{
-			echo '<div class="alert alert-info">
-				<i class="icon-chevron-down"></i> Please describe your project in more detail by clicking the \'Edit\' button.
-			</div>';
-		}
-		?>
+<div class="page-header">
+	<h1>{project_name}</h1>
+</div>
 
-		{project_controls}
-		<a class="btn btn-small" href="{uri}">{title}</a>
-		{/project_controls}
-		
+{project_description}
+
+<h2>Project Timeline</h2>
+
+<?php
+
+if (count($timeline) > 0)
+{
+	echo '<ul class="timeline" id="userTimeline">';
+
+	foreach ($timeline as $item)
+	{
+		echo '<li id="tl_' . $item->id . '"><div class="tl_content"><p><b>' . $item->text . '</b>';
+		if ($item->payload !== NULL)
+		{
+			echo '<br>' . $item->payload;
+		}
+		echo '</p><small>' . $item->timestamp_human . '</small></div></li>';
+	}	
+	
+	echo '</ul>';
+}
+else
+{
+	echo 'There isn\'t any activity to show for this project.';
+}
+
+?>
+
+<script type="text/javascript" src="{base_url}js/jquery.scrollTo.min.js"></script>
+<script type="text/javascript">
+	$('#userTimeline').scrollTo($('#tl_now'));
+</script>
+
+<p><a class="btn disabled btn-small"><i class="icon-calendar"></i> Add Timeline Event</a> <a href="#addTLComment" data-toggle="modal" class="btn btn-small"><i class="icon-pencil"></i> Add Comment</a></p>
+			
+<div class="modal fade" id="addTLComment">
+	<div class="modal-header">
+		<button class="close" data-dismiss="modal">×</button>
+		<h3>Add Comment</h3>
+	</div>
+	<div class="modal-body">
+		<p>Foo!</p>
+	</div>
+	<div class="modal-footer">
+		<a class="btn btn-success" href="#"><i class="icon-pencil"></i> Add Comment to Timeline</a>
 	</div>
 </div>
+
+<hr>
+
+<?php
+
+if ($new_project === TRUE)
+{
+	echo '<div class="alert alert-info">
+		<i class="icon-chevron-down"></i> Please describe your project in more detail by clicking the \'Edit\' button.
+	</div>';
+
+}
+
+else if (isset ($data_required))
+{
+	echo '<div class="alert alert-info">
+		<i class="icon-chevron-down"></i> Please describe your project in more detail by clicking the \'Edit\' button.
+	</div>';
+}
+?>
+
+<p>
+
+{project_controls}
+<a class="btn btn-small" href="{uri}">{title}</a>
+{/project_controls}
+
+</p>
 
 <hr>
 

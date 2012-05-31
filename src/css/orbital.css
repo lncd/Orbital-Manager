@@ -2,3 +2,44 @@
 #amount, #result { margin-left: 20px; margin-top: 20px; float: left; }
 #result { font-weight: bold; } .message { float: left; margin-top: 20px; font-family:Arial; width: 100px; }
 .clear { clear: both; }
+
+.timeline {
+	list-style: none;
+	margin: 6px 0;
+	padding: 0;
+	border-left: 1px solid #AAA;
+	border-right: 1px solid #AAA;
+	border-radius: 4px;
+	background: #F0F0F0;
+	overflow-x: scroll;
+	overflow-y: hidden;
+	white-space: nowrap;
+}
+
+.timeline li {
+	margin: 8px 4px;
+	display: inline-block;
+}
+
+.timeline .tl_content {
+	display: inline-block;
+	padding: 6px;
+	max-width: 250px;
+	vertical-align: text-top;
+	max-height: 100px;
+	min-height: 60px;
+	overflow-y: scroll;
+	border: 1px solid #AAA;
+	border-top: 5px solid #B8B8B8;
+	background: #FBFBFB;
+	white-space: normal;
+	border-radius: 3px;
+}
+
+.timeline li#tl_now .tl_content {
+	border-top: 5px solid #3b71e5;
+}
+
+.timeline small {
+	font-size: 0.9em;
+}
