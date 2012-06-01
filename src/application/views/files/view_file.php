@@ -6,7 +6,7 @@
 		<a href="{base_url}projects">Projects</a> <span class="divider">/</span>
 	</li>
 	<li>
-		<a href="{base_url}project/{file_project_id}">{file_project}</a> <span class="divider">/</span>
+		<a href="{base_url}project/{file_project_id}">{file_set_project_id}</a> <span class="divider">/</span>
 	</li>
 	<li class="active">
 		{file_title}

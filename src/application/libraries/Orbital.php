@@ -1079,7 +1079,7 @@ class Orbital {
 	 * Gets the details of a public file
 	 *
 	 * @access public
-	 * @param $file_id string The identifier of the file the user wants access to
+	 * @param $file_id string The identifier of the file set the user wants access to
 	 *
 	 * @return object.
 	 */
@@ -1090,12 +1090,12 @@ class Orbital {
 	}
 	
 	/**
-	 * File get details
+	 * File set get details
 	 *
-	 * Gets the details of a file
+	 * Gets the details of a file set
 	 *
 	 * @access public
-	 * @param $file_id string The identifier of the file the user wants access to
+	 * @param $file_id string The identifier of the file set the user wants access to
 	 *
 	 * @return object.
 	 */
@@ -1103,6 +1103,41 @@ class Orbital {
 	public function file_set_get_details($file_id)
 	{
 		return $this->get_authed('file_set/' . $file_id);
+	}
+	
+	/**
+	 * File set update
+	 *
+	 * Updates the details of a file set
+	 *
+	 * @access public
+	 * @param $file_id string The identifier of the file set the user wants access to
+	 *
+	 * @return object.
+	 */
+
+
+	/**
+	 * Create file set
+	 *
+	 * creates a new file set for a project
+	 *
+	 * @param int $identifier The id of the project the file set belongs to.
+	 * @param int $name       The name of the new project.
+	 * @param int $abstract   The abstract of the new project.
+	 *
+	 * @access public
+	 * @return object.
+	 */
+
+	public function create_new_file_set($identifier, $name, $abstract)
+	{print_r($identifier . $name . $abstract);
+//		return $this->post_authed('file_set/create', array('identifier' => $identifier, 'name' => $name, 'abstract' => $abstract));
+	}
+
+	public function file_set_update($identifier, $name, $description)
+	{
+		return $this->put_authed('file_set/' . $identifier, array('name' => $name, 'description' => $description));
 	}
 	
 	/**

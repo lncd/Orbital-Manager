@@ -33,7 +33,7 @@
 
 
 	<table class = "table table-bordered table-striped" id="users_table">
-		<thead><tr><th>File name</th><th>File size</th></tr></thead>
+		<thead><tr><th>File name</th><th>File size</th><th>Uploaded</th><th>Licence</th></tr></thead>
 		<tbody>
 			<?php foreach($archive_files as $archive_file)
 			{
@@ -47,8 +47,10 @@
 				$priv_icon = 'close';
 			}
 				
-					echo '<a href="' . base_url() . 'file/' . $archive_file->id . '"><i class="icon-eye-' . $priv_icon . '"></i> ' . $archive_file->original_name . ' '; ?></td>
-			<td></td></tr>
+			echo '<a href="' . base_url() . 'file/' . $archive_file->id . '"><i class="icon-eye-' . $priv_icon . '"></i> ' . $archive_file->original_name . ' '; ?></td>
+			<td><?php echo byte_format($archive_file->size, 2) ?></td>
+			<td><?php echo $archive_file->uploaded ?></td>
+			<td><?php echo $archive_file->licence ?></td></tr>
 
 			<?php
 			}

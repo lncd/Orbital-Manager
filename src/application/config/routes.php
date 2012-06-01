@@ -47,29 +47,31 @@ $route['signout'] = 'signin/signout';
 $route['planner'] = 'tools/project_planner';
 $route['policy'] = 'tools/policy_guidance';
 
-$route['project/(:any)/collections'] = 'files/list_file_sets/$1';
-$route['project/(:any)/files'] = 'files/list_files/$1';
-$route['project/(:any)/edit'] = 'projects/edit/$1';
-$route['project/(:any)/delete'] = 'projects/delete/$1';
-$route['project/(:any)/public'] = 'projects/view_public/$1';
-$route['project/(:any)'] = 'projects/view/$1';
-$route['projects/public'] = 'projects/list_public';
+$route['project/(:any)/collections'] = "files/list_file_sets/$1";
+$route['project/(:any)/files'] = "files/list_files/$1";
+$route['project/(:any)/edit'] = "projects/edit/$1";
+$route['project/(:any)/delete'] = "projects/delete/$1";
+$route['project/(:any)/public'] = "projects/view_public/$1";
+$route['project/(:any)/collections/add'] = "files/create_new_file_set/$1";
+$route['project/(:any)'] = "projects/view/$1";
+$route['projects/public'] = "projects/list_public";
 
-$route['file/(:any)/download'] = 'files/download_file/$1';
-$route['file/(:any)/edit'] = 'files/edit_file/$1';
-$route['file/(:any)/public'] = 'files/view_file_public/$1';
-$route['file/(:any)'] = 'files/view_file/$1';
-$route['collection/(:any)'] = 'files/view_file_set/$1';
+$route['file/(:any)/download'] = "files/download_file/$1";
+$route['file/(:any)/edit'] = "files/edit_file/$1";
+$route['file/(:any)/public'] = "files/view_file_public/$1";
+$route['file/(:any)'] = "files/view_file/$1";
+$route['collection/(:any)/edit'] = "files/edit_file_set/$1";
+$route['collection/(:any)'] = "files/view_file_set/$1";
 
 
-$route['licence/(:any)/json'] = 'licences/view_licence_json/$1';
-$route['licence/(:any)'] = 'licences/view_licence/$1';
+$route['licence/(:any)/json'] = "licences/view_licence_json/$1";
+$route['licence/(:any)'] = "licences/view_licence/$1";
 
-$route['admin/licences/add'] = 'admin/licences_add';
-$route['admin/licence/(:num)/edit'] = 'admin/licence_edit/$1';
-$route['admin/licence/(:num)/enable'] = 'admin/licence_enable/$1';
-$route['admin/licence/(:num)/disable'] = 'admin/licence_disable/$1';
-$route['admin/licence/(:num)/delete'] = 'admin/licence_delete/$1';
+$route['admin/licences/add'] = "admin/licences_add";
+$route['admin/licence/(:num)/edit'] = "admin/licence_edit/$1";
+$route['admin/licence/(:num)/enable'] = "admin/licence_enable/$1";
+$route['admin/licence/(:num)/disable'] = "admin/licence_disable/$1";
+$route['admin/licence/(:num)/delete'] = "admin/licence_delete/$1";
 
 // End of file routes.php
 // Location: ./config/routes.php

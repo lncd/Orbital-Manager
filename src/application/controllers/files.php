@@ -21,6 +21,7 @@ class Files extends CI_Controller {
 		{
 			if ($response->response->status === TRUE)
 			{
+				$this->load->helper('number');
 				if ($this->input->get('error'))
 				{
 					$this->data['error'] = $this->input->get('error');
@@ -153,6 +154,7 @@ class Files extends CI_Controller {
 	{
 		if ($response = $this->orbital->file_set_get_details($identifier))
 		{
+			$this->load->helper('number');
 			$this->load->library('typography');
 			
 			$this->data['file_set_id'] = $response->response->file_set->id;
@@ -180,6 +182,103 @@ class Files extends CI_Controller {
 			show_404();
 		}
 	}
+	
+	
+	/**
+	 * Edit file set details
+	 *
+	 * edits a file sets details
+	 *
+	 * @param string $identifier
+	 * @return NULL
+	 */
+
+	function edit_file_set($identifier)
+	{
+		if ($response = $this->orbital->file_set_get_details($identifier))
+		{
+			$this->load->helper('number');
+			$this->load->library('typography');
+			
+			if($this->input->post('file_set_name'))
+			{
+			
+				$this->orbital->file_set_update($identifier, $this->input->post('file_set_name'), $this->input->post('file_set_description'));
+				
+				$this->session->set_flashdata('message', 'File collection details updated successfully.');
+				$this->session->set_flashdata('message_type', 'success');
+				redirect('collection/' . $identifier);
+			}
+			
+			$this->data['file_set_id'] = $response->response->file_set->id;
+			$this->data['file_set_project'] = $response->response->file_set->project_name;
+			$this->data['file_set_description'] = $response->response->file_set->description;
+			$this->data['file_set_title'] = $response->response->file_set->title;
+			$this->data['page_title'] = $response->response->file_set->title;
+			$this->data['archive_files'] = $response->response->archive_files;
+			
+			if ($response->response->permissions->write)
+			{
+				$this->data['file_controls'][] = array(
+					'uri' => site_url('collection/' . $response->response->file_set->id . '/edit'),
+					'title' => 'Edit'
+				);
+			}
+			
+
+			$this->parser->parse('includes/header', $this->data);
+			$this->parser->parse('files/edit_file_set', $this->data);
+			$this->parser->parse('includes/footer', $this->data);
+		}
+		else
+		{
+			show_404();
+		}
+	}
+
+
+	/**
+	 * Create new file set
+	 *
+	 * creates a file set
+	 *
+	 * @return NULL
+	 */
+
+
+	function create_new_file_set($identifier)
+	{
+		if($this->input->post('file_set_name') AND $this->input->post('file_set_name') !== '')
+		{
+			if($this->input->post('file_set_description') AND $this->input->post('file_set_description') !== '')
+			{
+				if ($response = $this->orbital->create_new_file_set($identifier, $this->input->post('file_set_name'), $this->input->post('file_set_description')))
+				{	
+					$this->session->set_flashdata('message', 'Your file set has been created!');
+					$this->session->set_flashdata('message_type', 'success');
+					redirect('project/' . $response->response->project_id . '?special=new');
+				}
+				else
+				{
+					$this->session->set_flashdata('message', 'Something went wrong creating the project');
+					$this->session->set_flashdata('message_type', 'error');
+					redirect('projects');
+				}
+			}
+			else
+			{
+				$this->session->set_flashdata('message', 'A project must have an abstract');
+				$this->session->set_flashdata('message_type', 'alert');
+				redirect('projects');
+			}
+		}
+		else
+		{
+			$this->parser->parse('includes/header', $this->data);
+			$this->parser->parse('files/add_file_set', $this->data);
+			$this->parser->parse('includes/footer', $this->data);
+		}
+	}
 
 	/**
 	 * View public file set details
@@ -194,6 +293,7 @@ class Files extends CI_Controller {
 	{
 		if ($response = $this->orbital->file_set_get_details($identifier))
 		{
+			$this->load->helper('number');
 			$this->load->library('typography');
 			
 			$this->data['file_set_id'] = $response->response->file_set->id;

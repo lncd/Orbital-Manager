@@ -45,16 +45,16 @@
 		<div class="well">
 			<h2>Recent Public Projects</h2>
 			
-			<ul class="nav nav-pills nav-stacked">
+			<ul class="nav nav-list">
 				
 				{public_projects}
 				<li>
 					<a href = "{project_uri}/public"><i class="icon-chevron-right"></i>{project_name}</a>
-					</a>
 				</li>
 				{/public_projects}
+				<li class="divider"></li>
+				<li><a href="{base_url}projects/public"><i class="icon-list"></i> View All</a></li>
 			</ul>
-			<a class="btn" href="{base_url}projects/public">View All &raquo;</a>
 		</div>
 	</div>
 </div>

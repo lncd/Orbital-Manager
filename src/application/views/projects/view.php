@@ -267,13 +267,15 @@ else if (isset ($data_required))
 					}
 					echo '</a></li>';
 				}
+				
+				echo '<li class="divider"></li>
+				<li><a href="{base_url}project/{project_id}/files"><i class="icon-list"></i> View All</a></li>';
 				echo '</ul>
 				
 				<script type="text/javascript">
 					$(\'.labeltip\').popover({placement:\'top\'});
 				</script>';
 				
-				echo '<a class="btn" href="{base_url}project/{project_id}/files">View All &raquo;</a>';
 			}
 			else
 			{
@@ -282,9 +284,7 @@ else if (isset ($data_required))
 			}
 						
 			?>
-			
-			<hr>
-			
+						
 			<h2>File Sets</h2>
 			<?php
 			
@@ -306,14 +306,17 @@ else if (isset ($data_required))
 					
 					echo '</a></li>';
 				}
+				echo '<li class="divider"></li>
+				<li><a href="{base_url}project/{project_id}/collections"><i class="icon-list"></i> View All</a></li>';
+
 				echo '</ul>
 				
 				<script type="text/javascript">
 					$(\'.labeltip\').popover({placement:\'top\'});
 				</script>';
 				
+						echo '<a class="btn disabled" href="{base_url}project/{project_id}/collections/add">Add new dataset &raquo;</a><hr>';
 				
-			echo '<a class="btn" href="{base_url}project/{project_id}/collections">View All &raquo;</a><hr>';
 			}
 			else
 			{
@@ -322,7 +325,7 @@ else if (isset ($data_required))
 			}
 
 			?>
-			
+			<br>
 			<p><a href="#uploadFileDialogue" class="btn btn-success" data-toggle="modal"><i class="icon-upload icon-white"></i> Upload File</a>
 			
 			<div class="modal fade" id="uploadFileDialogue">
