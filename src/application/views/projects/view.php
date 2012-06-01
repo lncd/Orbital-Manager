@@ -48,7 +48,7 @@ if (count($timeline) > 0)
 
 	foreach ($timeline as $item)
 	{
-		echo '<li id="tl_' . $item->id . '"><div class="tl_content"><p><b>' . $item->text . '</b>';
+		echo '<li id="tl_' . $item->id . '"><div class="tl_content tl_vis_' . $item->visibility . '"><p><b>' . $item->text . '</b>';
 		if ($item->payload !== NULL)
 		{
 			echo '<br>' . $item->payload;

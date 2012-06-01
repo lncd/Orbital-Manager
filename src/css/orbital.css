@@ -40,6 +40,10 @@
 	border-top: 5px solid #3b71e5;
 }
 
+.timeline li .tl_vis_private {
+	border-top: 5px solid #d36363;
+}
+
 .timeline small {
 	font-size: 0.9em;
 }

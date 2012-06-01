@@ -235,6 +235,7 @@ class Projects extends CI_Controller {
 					$now->id = 'now';
 					$now->text = 'Now';
 					$now->payload = NULL;
+					$now->visibility = 'public';
 					$now->timestamp_human = date('g.ia');
 					
 					$this->data['timeline'][time()] = $now;
