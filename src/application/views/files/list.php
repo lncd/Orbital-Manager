@@ -9,12 +9,12 @@
 		<a href="{base_url}project/{project_id}">{project_name}</a> <span class="divider">/</span>
 	</li>
 	<li class="active">
-		Files
+		File Archives
 	</li>
 </ul>
 
 <div class="page-header">
-	<h1>{project_name}</h1>
+	<h1>{project_name} <small>File Archives</small></h1>
 </div>
 
 	<?php

@@ -9,7 +9,7 @@
 		<a href="{base_url}project/{project_id}">{project_name}</a> <span class="divider">/</span>
 	</li>
 	<li class="active">
-		Collections
+		File Collections
 	</li>
 </ul>
 
@@ -17,46 +17,44 @@
 	<h1>{project_name} <small>File Collections</small></h1>
 </div>
 
-	<?php
-	
-	if (count($file_sets) > 0)
-	{	
-	?>
+<?php
+
+if (count($file_sets) > 0)
+{	
+?>
+		
+<table class = "table table-bordered table-striped" id="users_table">
+	<thead><tr><th>Set Name</th><th>No. Files</th><th>Description</th></tr></thead>
+	<tbody>
+		<?php foreach($file_sets as $file_set)
+		{
+		echo '<tr><td width="100">';
+		if ($file_set->file_set_visibility === 'public')
+		{
+			$priv_icon = 'open';
+		}
+		else
+		{
+			$priv_icon = 'close';
+		}
 			
-	<table class = "table table-bordered table-striped" id="users_table">
-		<thead><tr><th>Set name</th><th>No. Files</th><th>Description</th></tr></thead>
-		<tbody>
-			<?php foreach($file_sets as $file_set)
-			{
-			echo '<tr><td width="100">';
-			if ($file_set->file_set_visibility === 'public')
-			{
-				$priv_icon = 'open';
-			}
-			else
-			{
-				$priv_icon = 'close';
-			}
-				
-			echo '<a href="' . base_url() . 'collection/' . $file_set->file_set_id . '"><i class="icon-eye-' . $priv_icon . '"></i> ' . $file_set->file_set_name . ' '; ?></td>
-			<td>????????</td>
-			<td><?php echo $file_set->file_set_description?></td></tr>
+		echo '<a href="' . base_url() . 'collection/' . $file_set->file_set_id . '"><i class="icon-eye-' . $priv_icon . '"></i> ' . $file_set->file_set_name . ' '; ?></td>
+		<td>????????</td>
+		<td><?php echo $file_set->file_set_description?></td></tr>
 
-			<?php
-			}
-			?>
-		</tbody>
-	</table>
-
+		<?php
+		}
+		?>
+	</tbody>
+</table>
 
 <?php
 			
-				
-	}
-	else
-	{
-		echo '<p>You don\'t have any file sets stored in this project.</p>
-		<p>Archive your files to permanently store and publish your data.';
-	}
-	
-	?>
+		
+}
+else
+{
+	echo '<p>This project doesn\'t currently have any file collections.</p>';
+}
+
+?>

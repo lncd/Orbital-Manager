@@ -142,6 +142,9 @@ else if (isset ($data_required))
 			
 		</div>
 	</div>
+	
+	-->
+	
 	<div class="span4">
 		<div class="well">
 			<h2>Dynamic Datasets</h2>
@@ -189,14 +192,12 @@ else if (isset ($data_required))
 			
 			<hr>
 			
-			<p><a href="#" class="btn disabled"><i class="icon-plus icon-white"></i> Create Dataset</a>
+			<p><a href="#" class="btn btn-success btn-small" data-toggle="modal"><i class="icon-plus"></i> Create Dynamic Dataset</a>
 			
 		</div>
 	</div>
 	
-	-->
-	
-	<div class="span12">
+	<div class="span4">
 		<div class="well">
 			<h2>File Archives</h2>
 			
@@ -279,13 +280,32 @@ else if (isset ($data_required))
 			}
 			else
 			{
-				echo '<p>You don\'t have any archive files stored in this project.</p>
-				<p>Archive your files to permanently store and publish your data.';
+				echo '<p>This project doesn\'t have any archive files saved. Archive files to permanently store and publish data.</p>';
 			}
 						
 			?>
-						
-			<h2>File Sets</h2>
+
+			<p><a href="#uploadFileDialogue" class="btn btn-success btn-small" data-toggle="modal"><i class="icon-upload"></i> Upload File</a>
+			
+			<div class="modal fade" id="uploadFileDialogue">
+				<div class="modal-header">
+					<button class="close" data-dismiss="modal">×</button>
+					<h3>Upload File to Archives</h3>
+				</div>
+				<div class="modal-body">
+					<iframe style="width:100%;border:none;height:400px;" src="{orbital_core_location}fileupload/form?token=<?php echo $upload_token; ?>&amp;licence=<?php echo $project_default_licence; ?>"></iframe>
+				</div>
+				<div class="modal-footer">
+					<a class="btn" href="<?php echo site_url('project/{project_id}'); ?>">Done</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="span4">
+		<div class="well">
+			<h2>File Collections</h2>
+			
 			<?php
 			
 			if (count($file_sets) > 0)
@@ -315,31 +335,16 @@ else if (isset ($data_required))
 					$(\'.labeltip\').popover({placement:\'top\'});
 				</script>';
 				
-						echo '<a class="btn disabled" href="{base_url}project/{project_id}/collections/add">Add new dataset &raquo;</a><hr>';
-				
 			}
 			else
 			{
-				echo '<p>You don\'t have any archive files stored in this project.</p>
-				<p>Archive your files to permanently store and publish your data.';
+				echo '<p>There aren\'t any file collections associated with this project. File collections can be used to organise archived files.</p>';
 			}
 
 			?>
-			<br>
-			<p><a href="#uploadFileDialogue" class="btn btn-success" data-toggle="modal"><i class="icon-upload icon-white"></i> Upload File</a>
 			
-			<div class="modal fade" id="uploadFileDialogue">
-				<div class="modal-header">
-					<button class="close" data-dismiss="modal">×</button>
-					<h3>Upload File to Archives</h3>
-				</div>
-				<div class="modal-body">
-					<iframe style="width:100%;border:none;height:400px;" src="{orbital_core_location}fileupload/form?token=<?php echo $upload_token; ?>&amp;licence=<?php echo $project_default_licence; ?>"></iframe>
-				</div>
-				<div class="modal-footer">
-					<a class="btn" href="<?php echo site_url('project/{project_id}'); ?>">Done</a>
-				</div>
-			</div>
+			<p><a class="btn btn-success btn-small btn-disabled" href="{base_url}project/{project_id}/collections/add"><i class="icon-plus"></i> Create Collection</a></a>
 		</div>
 	</div>
+	
 </div>
