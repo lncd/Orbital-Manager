@@ -639,6 +639,59 @@ class Projects extends CI_Controller {
 			show_404();
 		}
 	}
+	
+	/**
+	 * Add Timeline Comment
+	 *
+	 * Adds a comment to a project timeline.
+	 *
+	 * @param string $identifier The identifier of the project
+	 */
+	 
+	function timeline_add_comment($identifier)
+	{
+		// Ensure project exists
+		if ($response = $this->orbital->project_details($identifier))
+		{
+		
+			// Load up the validation library
+			$this->load->library('form_validation');
+			
+			// Rules!
+			$this->form_validation->set_rules('comment', 'Comment', 'trim|required');
+
+			if ($this->form_validation->run() === TRUE)
+			{
+				
+				if ($this->orbital->timeline_add_comment($identifier, $this->input->post('comment')))
+				{
+					$this->session->set_flashdata('message', 'Comment added to project timeline.');
+					$this->session->set_flashdata('message_type', 'success');
+					redirect('project/' . $identifier);
+				}
+				else
+				{
+					$this->session->set_flashdata('message', 'Something went wrong adding your comment. Sorry!');
+					$this->session->set_flashdata('message_type', 'error');
+					redirect('project/' . $identifier);
+				}
+			
+				
+			}
+			else
+			{
+				$this->session->set_flashdata('message', 'Unable to add comment to timeline. Did you actually say anything?');
+				$this->session->set_flashdata('message_type', 'error');
+				redirect('project/' . $identifier);
+			}
+		
+			
+		}
+		else
+		{
+			show_404();
+		}
+	}
 }
 
 // End of file projects.php

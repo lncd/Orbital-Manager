@@ -424,17 +424,9 @@ class Orbital {
 		}
 
 	}
-
+	
 	/**
-	 * Get (Unauthenticated)
-	 *
-	 * Performs an unauthenticated HTTP GET against Orbital Core.
-	 *
-	 * @param string $target     Core resource to GET.
-	 * @param array $post_fields Array of fields posted.
-	 *
-	 * @access private
-	 * @return object|FALSE Object if successful, FALSE if not.
+	 * Put (Authenticated)
 	 */
 
 	private function put_authed($target, $post_fields)
@@ -935,6 +927,23 @@ class Orbital {
 	public function delete_project($identifier)
 	{
 		return $this->delete_authed('project/' . $identifier);
+	}
+	
+	/**
+	 * Add Comment to Timeline
+	 *
+	 * Adds a comment to a project timeline
+	 *
+	 * @param string $project The ID of the project.
+	 * @param string $comment The comment to add to the timeline.
+	 *
+	 * @access public
+	 * @return object.
+	 */
+
+	public function timeline_add_comment($project, $comment)
+	{
+		return $this->post_authed('timeline/comment', array('project' => $project, 'comment' => $comment));
 	}
 
 
