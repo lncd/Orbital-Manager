@@ -60,7 +60,7 @@
 		<thead><tr><th>Include</th><th>File</th></tr></thead>
 		<tbody>';
 	
-	foreach($archive_files as $archive_file)
+	foreach($archive_files_set as $archive_file)
 	{
 		echo '<tr>';
 		echo form_hidden('file[' . $archive_file->id . '][]', 'file_in_set');
@@ -81,7 +81,7 @@
 	echo form_close(); 
 	
 	
-	foreach ($archive_files as $archive_file)
+	foreach ($archive_files_project as $archive_file)
 	{
 		$available_files[$archive_file->id] = $archive_file->title;
 	}
@@ -100,6 +100,6 @@
 	{
 		file_name = $('#add_file_to_file_set').val();
 		file_title = $('#add_file_to_file_set option:selected').text();
-		$('#files_table').append('<tr><input type="hidden" name="file[' + file_name + '][]" value="file_in_set" /><td><input type="checkbox" name="file[' + file_name + '][]" value="include" checked="checked"  /></td><td>' + file_title + '<span class="label label-success">New</span></td></tr>');
+		$('#files_table').append('<tr><input type="hidden" name="file[' + file_name + '][]" value="file_in_set" /><td><input type="checkbox" name="file[' + file_name + '][]" value="include" checked="checked"  /></td><td>' + file_title + ' <span class="label label-success">New</span></td></tr>');
 	});
 </script>

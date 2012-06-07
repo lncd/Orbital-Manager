@@ -1135,9 +1135,9 @@ class Orbital {
 //		return $this->post_authed('file_set/create', array('identifier' => $identifier, 'name' => $name, 'abstract' => $abstract));
 	}
 
-	public function file_set_update($identifier, $name, $description)
+	public function file_set_update($identifier, $name, $description, $project_identifier)
 	{
-		return $this->put_authed('file_set/' . $identifier, array('name' => $name, 'description' => $description));
+		return $this->put_authed('file_set/' . $identifier, array('name' => $name, 'description' => $description, 'project_identifier' => $project_identifier));
 	}
 	
 	public function file_set_update_files($identifier, $file, $action)

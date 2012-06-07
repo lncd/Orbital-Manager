@@ -221,7 +221,7 @@ class Files extends CI_Controller {
 					}
 				}
 			
-				$this->orbital->file_set_update($identifier, $this->input->post('file_set_name'), $this->input->post('file_set_description'));
+				$this->orbital->file_set_update($identifier, $this->input->post('file_set_name'), $this->input->post('file_set_description'), $response->response->file_set->project);
 				
 				$this->session->set_flashdata('message', 'File collection details updated successfully.');
 				$this->session->set_flashdata('message_type', 'success');
@@ -234,7 +234,8 @@ class Files extends CI_Controller {
 			$this->data['file_set_description'] = $response->response->file_set->description;
 			$this->data['file_set_title'] = $response->response->file_set->title;
 			$this->data['page_title'] = $response->response->file_set->title;
-			$this->data['archive_files'] = $response->response->archive_files;
+			$this->data['archive_files_set'] = $response->response->archive_files;
+			$this->data['archive_files_project'] = $response->response->archive_files_project;
 			
 			if ($response->response->permissions->write)
 			{
@@ -267,6 +268,8 @@ class Files extends CI_Controller {
 
 	function create_new_file_set($identifier)
 	{
+		$this->data['page_title'] = 'Create New File Set';
+			
 		if($this->input->post('file_set_name') AND $this->input->post('file_set_name') !== '')
 		{
 			if($this->input->post('file_set_description') AND $this->input->post('file_set_description') !== '')
