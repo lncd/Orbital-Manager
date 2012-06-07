@@ -202,6 +202,24 @@ class Files extends CI_Controller {
 			
 			if($this->input->post('file_set_name'))
 			{
+				if ($this->input->post('file') > 0)
+				{
+					foreach($this->input->post('file') as $file_name => $value)			
+					{
+						$action = NULL;
+						if (in_array('include', $value) AND in_array('file_in_set', $value))
+						{
+							$action = 'add';
+						}
+						
+						else if ( ! in_array('include', $value) AND in_array('file_in_set', $value))
+						{
+							$action = 'remove';
+						}
+					
+						$this->orbital->file_set_update_files($identifier, $file_name, $action);
+					}
+				}
 			
 				$this->orbital->file_set_update($identifier, $this->input->post('file_set_name'), $this->input->post('file_set_description'));
 				
@@ -212,6 +230,7 @@ class Files extends CI_Controller {
 			
 			$this->data['file_set_id'] = $response->response->file_set->id;
 			$this->data['file_set_project'] = $response->response->file_set->project_name;
+			$this->data['file_set_project_id'] = $response->response->file_set->project;
 			$this->data['file_set_description'] = $response->response->file_set->description;
 			$this->data['file_set_title'] = $response->response->file_set->title;
 			$this->data['page_title'] = $response->response->file_set->title;

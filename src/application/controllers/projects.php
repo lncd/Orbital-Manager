@@ -429,9 +429,9 @@ class Projects extends CI_Controller {
 				}
 				$response = $this->orbital->project_details($identifier);
 				
-			//	$this->session->set_flashdata('message', 'Project members updated successfully.');
-			//	$this->session->set_flashdata('message_type', 'success');
-			//	redirect('project/' . $identifier);
+				$this->session->set_flashdata('message', 'Project members updated successfully.');
+				$this->session->set_flashdata('message_type', 'success');
+				redirect('project/' . $identifier);
 			}
 
 			if($this->input->post('add_members_details'))
