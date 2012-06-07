@@ -6,7 +6,7 @@
 		<a href="{base_url}projects">Projects</a> <span class="divider">/</span>
 	</li>
 	<li>
-		<a href="{base_url}project/{file_set_project_id}">{file_set_project}</a> <span class="divider">/</span>
+		<a href="{base_url}project/{file_set_project}">{file_set_project}</a> <span class="divider">/</span>
 	</li>	
 	<li class="active">
 		Add New Collection
@@ -21,7 +21,7 @@
 	<h2>File Collection Details</h2>
 	<br>
 	
-	<?php echo form_open('collection/{file_set_id}/edit', array('class' => 'form-horizontal'));
+	<?php echo form_open('project/{file_set_project}/collections/add', array('class' => 'form-horizontal'));
 	
 	$form_name = array(
 		'name'			=> 'file_set_name',
@@ -53,13 +53,6 @@
 	echo form_textarea($form_abstract);
 	echo '</div></div>';
 	
-	echo '<table class = "table table-bordered table-striped" id="files_table">
-		<thead><tr><th>Include</th><th>File</th></tr></thead>
-		<tbody>';
-	
-	echo '</tbody></table>';
-	
-	
 	
 	echo '<div class="form-actions">';
 	
@@ -71,25 +64,3 @@
 	echo form_close(); 
 	
 	
-	foreach ($archive_files_project as $archive_file)
-	{
-		$available_files[$archive_file->id] = $archive_file->title;
-	}
-
-	echo '<div class="control-group">';
-	echo form_label('Add File', 'add_file_to_file_set', array('class' => 'control-label'));
-	echo '<div class="controls">';
-	echo form_dropdown('add_file', $available_files, set_value('add_file'), 'id="add_file_to_file_set" class="span4"');
-	echo '<a name = "add_file_to_file_set" id = "add_file" value = "add_file_to_file_set" class="btn btn-add"><i class = "icon-plus"></i> Add File</a>'; ?>
-	
-</div>
-
-<script type="text/javascript">
-
-	$('#add_file').click(function()
-	{
-		file_name = $('#add_file_to_file_set').val();
-		file_title = $('#add_file_to_file_set option:selected').text();
-		$('#files_table').append('<tr><input type="hidden" name="file[' + file_name + '][]" value="file_in_set" /><td><input type="checkbox" name="file[' + file_name + '][]" value="include" checked="checked"  /></td><td>' + file_title + ' <span class="label label-success">New</span></td></tr>');
-	});
-</script>

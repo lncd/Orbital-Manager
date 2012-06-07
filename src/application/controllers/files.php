@@ -225,7 +225,7 @@ class Files extends CI_Controller {
 				
 				$this->session->set_flashdata('message', 'File collection details updated successfully.');
 				$this->session->set_flashdata('message_type', 'success');
-				redirect('collection/' . $identifier);
+				redirect('collection/' . $identifier . '/edit');
 			}
 			
 			$this->data['file_set_id'] = $response->response->file_set->id;
@@ -266,19 +266,20 @@ class Files extends CI_Controller {
 	 */
 
 
-	function create_new_file_set($identifier)
+	function create_new_file_set($project_identifier)
 	{
 		$this->data['page_title'] = 'Create New File Set';
+		$this->data['file_set_project'] = $project_identifier;
 			
 		if($this->input->post('file_set_name') AND $this->input->post('file_set_name') !== '')
 		{
 			if($this->input->post('file_set_description') AND $this->input->post('file_set_description') !== '')
 			{
-				if ($response = $this->orbital->create_new_file_set($identifier, $this->input->post('file_set_name'), $this->input->post('file_set_description')))
-				{	
+				if ($response = $this->orbital->create_new_file_set($project_identifier, $this->input->post('file_set_name'), $this->input->post('file_set_description')))
+				{					
 					$this->session->set_flashdata('message', 'Your file set has been created!');
 					$this->session->set_flashdata('message_type', 'success');
-					redirect('project/' . $response->response->project_id . '?special=new');
+					redirect('project/' . $project_identifier . '?special=new');
 				}
 				else
 				{
@@ -289,7 +290,7 @@ class Files extends CI_Controller {
 			}
 			else
 			{
-				$this->session->set_flashdata('message', 'A project must have an abstract');
+				$this->session->set_flashdata('message', 'The file set is missing some data');
 				$this->session->set_flashdata('message_type', 'alert');
 				redirect('projects');
 			}
