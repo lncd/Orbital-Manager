@@ -69,11 +69,46 @@
 	echo '<div class="controls">';
 	echo form_dropdown('default_licence', $available_licences, set_value('default_licence', $file_licence), 'id="file_licence" class="span4"');
 	echo '<p class="help-block">Choosing a licence makes it easier to publish and share your data.</p>';
-	echo '</div></div>';	
+	echo '</div></div>';
+	
+	echo '<table class = "table table-bordered table-striped" id="file_sets_table">
+	<thead><tr><th>Include</th><th>File Set</th></tr></thead>
+	<tbody>';
+	
+	foreach($archive_file_sets as $archive_file_set)
+	{
+		echo '<tr>';
+		echo form_hidden('file[' . $archive_file_set->file_set_id . '][]', 'file_in_set');
+		echo '<td>' . form_checkbox('file[' . $archive_file_set->file_set_id . '][]', 'include', TRUE) . '</td>';
+		echo '<td>' . $archive_file_set->file_set_name . '</td></tr>';
+	}
+	echo '</tbody></table>';
 
 	echo '<div class="form-actions">';
 	echo '<button type="submit" class="btn btn-success"><i class = "icon-ok icon-white"></i> Save Details</button> <button type="reset" class="btn btn-warning">Reset</button>';
 	echo '</div>';
 		
-	echo form_close(); ?>
+	echo form_close();
+	$available_file_sets = Array();
+	foreach ($archive_file_sets_project as $archive_file_set)
+	{
+		$available_file_sets[$archive_file_set->file_set_id] = $archive_file_set->file_set_name;
+	}
+
+	echo '<div class="control-group">';
+	//echo form_label('Add to File Set', 'add_fileset_to_file', array('class' => 'control-label'));
+	echo '<div class="controls">';
+	echo form_dropdown('add_file_set', $available_file_sets, set_value('add_file'), 'id="add_fileset_to_file" class="span4"');
+	echo '<a name = "add_fileset_to_file" id = "add_file_set" value = "add_fileset_to_file" class="btn btn-add"><i class = "icon-plus"></i> Add to File Set</a>'; ?>
+	
 </div>
+
+<script type="text/javascript">
+
+	$('#add_file_set').click(function()
+	{
+		file_set_name = $('#add_fileset_to_file').val();
+		file_set_title = $('#add_fileset_to_file option:selected').text();
+		$('#file_sets_table').append('<tr><input type="hidden" name="file[' + file_set_name + '][]" value="file_set_in_file" /><td><input type="checkbox" name="file[' + file_set_name + '][]" value="include" checked="checked"  /></td><td>' + file_set_title + ' <span class="label label-success">New</span></td></tr>');
+	});
+</script>

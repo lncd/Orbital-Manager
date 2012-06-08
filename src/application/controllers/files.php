@@ -112,6 +112,7 @@ class Files extends CI_Controller {
 			$this->data['file_licence_uri'] = $response->response->file->licence_uri;
 			$this->data['file_extension'] = $response->response->file->extension;
 			$this->data['file_mimetype'] = $response->response->file->mimetype;
+			$this->data['archive_file_sets'] = $response->response->archive_file_sets;
 			$this->data['page_title'] = $response->response->file->original_name;
 			
 			if ($response->response->permissions->write)
@@ -440,6 +441,21 @@ class Files extends CI_Controller {
 			
 				$this->orbital->file_update($identifier, $this->input->post('name'), (int)$this->input->post('default_licence'), $public_view);
 				
+				foreach($this->input->post('file') as $file_set_name => $value)			
+					{
+						$action = NULL;
+						if (in_array('include', $value))
+						{
+							$action = 'add';
+						}
+						
+						else if ( ! in_array('include', $value))
+						{
+							$action = 'remove';
+						}
+						$this->orbital->file_update_file_sets($identifier, $file_set_name, $action);
+					}
+				
 				$this->session->set_flashdata('message', 'File details updated successfully.');
 				$this->session->set_flashdata('message_type', 'success');
 				redirect('file/' . $identifier);
@@ -456,6 +472,9 @@ class Files extends CI_Controller {
 			$this->data['file_licence_uri'] = $response->response->file->licence_uri;
 			$this->data['file_extension'] = $response->response->file->extension;
 			$this->data['file_mimetype'] = $response->response->file->mimetype;
+			$this->data['archive_file_sets'] = $response->response->archive_file_sets;
+			$this->data['archive_file_sets_project'] = $response->response->archive_file_sets_project;
+			
 			if (isset($response->response->file->visibility))
 			{			
 				if ($response->response->file->visibility === 'public')

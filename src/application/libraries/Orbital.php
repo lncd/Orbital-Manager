@@ -1154,6 +1154,11 @@ class Orbital {
 		return $this->put_authed('file_set_files/' . $identifier, array('file' => $file, 'action' => $action));
 	}
 	
+	public function file_update_file_sets($identifier, $file_set, $action)
+	{
+		return $this->put_authed('file_file_sets/' . $identifier, array('file_set' => $file_set, 'action' => $action));
+	}
+	
 	/**
 	 * Update file details
 	 *

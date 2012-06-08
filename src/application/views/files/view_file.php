@@ -6,7 +6,7 @@
 		<a href="{base_url}projects">Projects</a> <span class="divider">/</span>
 	</li>
 	<li>
-		<a href="{base_url}project/{file_project_id}">{file_set_project_id}</a> <span class="divider">/</span>
+		<a href="{base_url}project/{file_project_id}">{file_project}</a> <span class="divider">/</span>
 	</li>
 	<li class="active">
 		{file_title}
@@ -29,6 +29,29 @@
 		</tbody>
 	</table>
 </div>
+		
+			<table class = "table table-bordered table-striped" id="users_table">
+		<thead><tr><th>File set name</th></tr></thead>
+		<tbody>
+			<?php foreach($archive_file_sets as $archive_file_set)
+			{
+			echo '<tr><td>';
+			if ($archive_file_set->file_set_visibility === 'public')
+			{
+				$priv_icon = 'open';
+			}
+			else
+			{
+				$priv_icon = 'close';
+			}
+				
+			echo '<a href="' . base_url() . 'collection/' . $archive_file_set->file_set_id . '"><i class="icon-eye-' . $priv_icon . '"></i> ' . $archive_file_set->file_set_name . ' '; ?></td></tr>
+
+			<?php
+			}
+			?>
+		</tbody>
+	</table>
 		
 		{file_controls}
 		<a class="btn btn-small" href="{uri}">{title}</a>
