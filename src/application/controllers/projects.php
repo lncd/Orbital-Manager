@@ -41,6 +41,7 @@ class Projects extends CI_Controller {
 
 		if ($response = $this->orbital->projects_list())
 		{
+			$this->data['timeline'] = $response->response->timeline;
 
 			if (count($response->response->projects) > 0)
 			{

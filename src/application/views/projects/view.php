@@ -304,7 +304,9 @@ else if (isset ($data_required))
 			}
 						
 			?>
-						
+			<br>
+			<p><a href="#uploadFileDialogue" class="btn btn-success" data-toggle="modal"><i class="icon-upload icon-white"></i> Upload File</a>
+			<br>
 			<h2>File Sets</h2>
 			<?php
 			
@@ -335,18 +337,17 @@ else if (isset ($data_required))
 					$(\'.labeltip\').popover({placement:\'top\'});
 				</script>';
 				
-						echo '<a class="btn disabled" href="{base_url}project/{project_id}/collections/add">Add new dataset &raquo;</a><hr>';
+				echo '<br><a class="btn" href="{base_url}project/{project_id}/collections/add">Add new dataset &raquo;</a><hr>';
 				
 			}
 			else
 			{
-				echo '<p>You don\'t have any archive files stored in this project.</p>
+				echo '<p>You don\'t have any archive file sets stored in this project.</p>
 				<p>Archive your files to permanently store and publish your data.';
 			}
 
 			?>
 			<br>
-			<p><a href="#uploadFileDialogue" class="btn btn-success" data-toggle="modal"><i class="icon-upload icon-white"></i> Upload File</a>
 			
 			<div class="modal fade" id="uploadFileDialogue">
 				<div class="modal-header">

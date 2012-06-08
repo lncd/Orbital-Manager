@@ -30,7 +30,13 @@
 	</table>
 </div>
 		
-			<table class = "table table-bordered table-striped" id="users_table">
+		
+		
+		<table class = "table table-bordered table-striped" id="users_table">
+		<?php
+		if (count($archive_file_sets) > 0)
+		{
+		?>
 		<thead><tr><th>File set name</th></tr></thead>
 		<tbody>
 			<?php foreach($archive_file_sets as $archive_file_set)
@@ -49,9 +55,17 @@
 
 			<?php
 			}
+
 			?>
-		</tbody>
+		</tbody><?php
+	}
+	else
+	{
+		echo '<p>This file is not part of any file set';
+	}
+	?>
 	</table>
+	
 		
 		{file_controls}
 		<a class="btn btn-small" href="{uri}">{title}</a>
