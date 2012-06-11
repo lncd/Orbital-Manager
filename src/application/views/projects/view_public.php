@@ -19,6 +19,33 @@
 		
 		{project_description}
 		
+		<h2>Project Timeline</h2>
+		
+		<?php
+		
+		if (count($timeline) > 0)
+		{
+			echo '<ul class="timeline" id="userTimeline">';
+		
+			foreach ($timeline as $item)
+			{
+				echo '<li id="tl_' . $item->id . '"><div class="tl_content tl_vis_' . $item->visibility . '"><p><b>' . $item->text . '</b>';
+				if ($item->payload !== NULL)
+				{
+					echo '<br>' . $item->payload;
+				}
+				echo '</p><small>' . $item->timestamp_human . '</small></div></li>';
+			}	
+			
+			echo '</ul>';
+		}
+		else
+		{
+			echo 'There isn\'t any activity to show for this project.';
+		}
+		
+		?>		
+		
 		
 		<?php
 		

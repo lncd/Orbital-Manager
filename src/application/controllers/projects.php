@@ -335,6 +335,29 @@ class Projects extends CI_Controller {
 
 			$this->data['project_description'] = $this->typography->auto_typography($response->response->project->abstract);
 
+			$this->data['timeline'] = array();
+				
+				if (count($response->response->timeline) > 0)
+				{
+				
+					foreach ($response->response->timeline as $item)
+					{
+						$this->data['timeline'][$item->timestamp_unix] = $item;
+					}
+					
+					$now->id = 'now';
+					$now->text = 'Now';
+					$now->payload = NULL;
+					$now->visibility = 'public';
+					$now->timestamp_human = date('g.ia');
+					
+					$this->data['timeline'][time()] = $now;
+					
+					ksort($this->data['timeline']);
+					
+				}
+				
+
 			// Generate list of datasets
 
 			$this->data['working_datasets'] = array('foo');
