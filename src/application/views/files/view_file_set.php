@@ -25,7 +25,7 @@
 			<tr><td>File Set Name</td><td>{file_set_title}</td></tr>
 			<tr><td>Research Project</td><td><a href="{base_url}project/{file_set_project_id}">{file_set_project}</a></td>
 			<tr><td>Number of Files</td><td><?php echo count($archive_files); ?></td></tr>
-			<tr><td>Size of dataset</td><td>?</td></tr>
+			<tr><td>Size of dataset</td><td><?php echo byte_format($file_set_size) ?></td></tr>
 			</tr>
 		</tbody>
 	</table>

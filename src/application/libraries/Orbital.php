@@ -868,9 +868,9 @@ class Orbital {
 	 * @return ARRAY.
 	 */
 
-	public function project_public_details($project)
+	public function project_public_details($project, $limit = NULL)
 	{
-		return $this->get_unauthed('project/' . $project . '/public');
+		return $this->get_unauthed('project/' . $project . '/public' . '?limit=' . $limit);
 	}
 
 	/**
@@ -1112,6 +1112,23 @@ class Orbital {
 	public function file_set_get_details($file_id)
 	{
 		return $this->get_authed('file_set/' . $file_id);
+	}
+	
+	
+	/**
+	 * File set get details
+	 *
+	 * Gets the details of a file set
+	 *
+	 * @access public
+	 * @param $file_id string The identifier of the file set the user wants access to
+	 *
+	 * @return object.
+	 */
+
+	public function file_set_get_details_public($file_id)
+	{
+		return $this->get_authed('file_set/' . $file_id . '/public');
 	}
 	
 	/**

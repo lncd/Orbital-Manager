@@ -3,44 +3,72 @@
 		<a href="{base_url}">Home</a> <span class="divider">/</span>
 	</li>
 	<li>
-		<a href="{base_url}projects/public">Public Projects</a> <span class="divider">/</span>
+		<a href="{base_url}projects/public">Projects</a> <span class="divider">/</span>
 	</li>
 	<li>
-		<a href="{base_url}project/{file_project_id}/public">{file_project}</a> <span class="divider">/</span>
+		<a href="{base_url}project/{file_set_project_id}/public">{file_set_project}</a> <span class="divider">/</span>
 	</li>
 	<li class="active">
-		{file_title}
+		{file_set_title}
 	</li>
 </ul>
 
 <div class="page-header">
-	<h1>{file_title}</h1>
+	<h1>{file_set_title}</h1>
 </div>
 <div class = "well">
 	<table class="table">
 		<thead>
-			<tr><th colspan="2">File Summary</th></tr>
+			<tr><th colspan="2">File Set Summary</th></tr>
 		</thead>
 		<tbody>
-			<tr><td>Original Name</td><td>{file_name}</td></tr>
-			<tr><td>Licence</td><td><a href="{file_licence_uri}">{file_licence}</a></td></tr>
-			<tr><td>Research Project</td><td><a href="{base_url}project/{file_project_id}/public">{file_project}</a></td></tr>
-			<tr><td>Permanent URI</td><td><code>http://id.lincoln.ac.uk/research-file/{file_id}/public</code></td></tr>
+			<tr><td>File Set Name</td><td>{file_set_title}</td></tr>
+			<tr><td>Research Project</td><td><a href="{base_url}project/{file_set_project_id}">{file_set_project}</a></td>
+			<tr><td>Number of Files</td><td><?php echo count($archive_files); ?></td></tr>
+			<tr><td>Size of dataset</td><td><?php echo byte_format($file_set_size) ?></td></tr>
+			</tr>
 		</tbody>
 	</table>
 </div>
 
-<?php
 
-if ($file_downloadable)
-{
+	<table class = "table table-bordered table-striped" id="users_table">
+		<?php
+		if (count($archive_files) > 0)
+		{
+		?>
+		<thead><tr><th>File name</th><th>File size</th><th>Uploaded</th><th>Licence</th></tr></thead>
+		<tbody>
+			<?php foreach($archive_files as $archive_file)
+			{
+			echo '<tr><td>';
+			if ($archive_file->visibility === 'public')
+			{
+				$priv_icon = 'open';
+				
+				echo '<a href="' . base_url() . 'file/' . $archive_file->id . '"><i class="icon-eye-' . $priv_icon . '"></i> ' . $archive_file->original_name . ' '; ?></td>
+				<td><?php echo byte_format($archive_file->size, 2) ?></td>
+				<td><?php echo $archive_file->uploaded ?></td>
+				<td><?php echo $archive_file->licence ?></td></tr>
+	
+				<?php
+				}
+				?>
+			</tbody>
+				<?php
+				}
+			}
+			else
+			{
+				echo '<p>This file set contains no files.';
+			}
 
-	echo '<a class="btn btn-primary" href="{base_url}file/{file_id}/download" onClick="recordDownload(this, \'{file_id}\');"><i class = "icon-ok icon-download icon-white"></i> Download File</a>';
+			?>
+	</table>
 
-}
-else
-{
-	echo '<p>This file isn\'t available for download right now, as it is being processed by Orbital. It should be available soon.</p>';
-}
+			
 
-?>	
+		
+		{file_controls}
+		<a class="btn btn-small" href="{uri}">{title}</a>
+		{/file_controls}

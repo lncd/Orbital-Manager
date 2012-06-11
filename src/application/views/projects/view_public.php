@@ -90,29 +90,153 @@
 	
 	-->
 	
-	<div class="span12">
+	<div class="span4">
 		<div class="well">
 			<h2>File Archives</h2>
+			
+			<!--
+			
+			<?php
+			
+			$this->load->helper('number');
+			
+			$archives_available = 26843545600;
+			$archives_used = 23833543500;
+			
+			$archive_percentage = ceil(($archives_used / $archives_available) * 100);
+			
+			?>	
+			
+			<div class="progress">
+			  <div class="bar"
+			       style="width: <?php echo $archive_percentage; ?>%;"></div>
+			</div>
+			
+			<p>You have used <?php echo byte_format($archives_used); ?> of <?php echo byte_format($archives_available); ?>.</p>
+			
+			-->
+			
+		
 			<?php
 			
 			if (count($archive_files) > 0)
 			{
 				echo '<ul class="nav nav-list">';
-			
 				foreach ($archive_files as $archive_file)
 				{
-					echo '<li><a href="' . base_url() . 'file/' . $archive_file->id . '/public"><i class="icon-eye-open"></i> ' . $archive_file->original_name . '</a></li>';
+				
+					if ($archive_file->visibility === 'public')
+					{
+						$priv_icon = 'open';
+					}
+					else
+					{
+						$priv_icon = 'close';
+					}
+				
+					echo '<li><a href="' . base_url() . 'file/' . $archive_file->id . '"><i class="icon-eye-' . $priv_icon . '"></i> ' . $archive_file->original_name . ' ';
+						
+					switch ($archive_file->status)
+					{
+					
+						case 'placeholder':
+							echo '<span class="label label-inverse labeltip" rel="popover" data-content="This file is a placeholder for one due to be manually uploaded by an administrator." data-original-title="Placeholder">Placeholder</span>';
+							break;
+							
+						case 'staged':
+							echo '<span class="label label-default labeltip" rel="popover" data-content="This file is queued, waiting to be processed." data-original-title="Queued">Queued</span>';
+							break;
+							
+						case 'uploading':
+							echo '<span class="label label-info labeltip" rel="popover" data-content="This file is currently being processed and will be available soon." data-original-title="Processing">Processing</span>';
+							break;
+							
+						case 'upload_error_soft':
+							echo '<span class="label label-warning labeltip" rel="popover" data-content="Something has gone wrong processing this file, but it will be retried automatically." data-original-title="Upload Error">Upload Error</span>';
+							break;
+							
+						case 'upload_error_hard':
+							echo '<span class="label label-important labeltip" rel="popover" data-content="Something has gone wrong uploading this file, and it cannot be retried. An administrator has been notified." data-original-title="Upload Error">Upload Error</span>';
+							break;
+					}
+					echo '</a></li>';
 				}
 				
-				echo '</ul>';
+				echo '<li class="divider"></li>
+				<li><a href="{base_url}project/{project_id}/files"><i class="icon-list"></i> View All</a></li>';
+				echo '</ul>
+				
+				<script type="text/javascript">
+					$(\'.labeltip\').popover({placement:\'top\'});
+				</script>';
+				
 			}
 			else
 			{
-				echo '<p>This project hasn\'t made any archived files public.</p>';
+				echo '<p>This project doesn\'t have any archive files saved. Archive files to permanently store and publish data.</p>';
 			}
+						
+			?>
+
+			<p><a href="#uploadFileDialogue" class="btn btn-success btn-small" data-toggle="modal"><i class="icon-upload"></i> Upload File</a>
 			
+			<div class="modal fade" id="uploadFileDialogue">
+				<div class="modal-header">
+					<button class="close" data-dismiss="modal">×</button>
+					<h3>Upload File to Archives</h3>
+				</div>
+				<div class="modal-body">
+					<iframe style="width:100%;border:none;height:400px;" src="{orbital_core_location}fileupload/form?token=<?php echo $upload_token; ?>&amp;licence=<?php echo $project_default_licence; ?>"></iframe>
+				</div>
+				<div class="modal-footer">
+					<a class="btn" href="<?php echo site_url('project/{project_id}'); ?>">Done</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="span4">
+		<div class="well">
+			<h2>File Collections</h2>
+			
+			<?php
+			
+			if (count($file_sets) > 0)
+			{
+				echo '<ul class="nav nav-list">';
+				foreach ($file_sets as $file_set)
+				{				
+					if ($file_set->file_set_visibility === 'public')
+					{
+						$priv_icon = 'open';
+					}
+					else
+					{
+						$priv_icon = 'close';
+					}
+				
+					echo '<li><a href="' . base_url() . 'collection/' . $file_set->file_set_id . '"><i class="icon-eye-' . $priv_icon . '"></i> ' . $file_set->file_set_name . ' ';
+					
+					echo '</a></li>';
+				}
+				echo '<li class="divider"></li>
+				<li><a href="{base_url}project/{project_id}/collections"><i class="icon-list"></i> View All</a></li>';
+
+				echo '</ul>
+				
+				<script type="text/javascript">
+					$(\'.labeltip\').popover({placement:\'top\'});
+				</script>';
+				
+			}
+			else
+			{
+				echo '<p>There aren\'t any file collections associated with this project. File collections can be used to organise archived files.</p>';
+			}
+
 			?>
 			
+			<p><a class="btn btn-success btn-small btn-disabled" href="{base_url}project/{project_id}/collections/add"><i class="icon-plus"></i> Create Collection</a></a>
 		</div>
 	</div>
 </div>

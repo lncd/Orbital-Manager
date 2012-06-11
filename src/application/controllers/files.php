@@ -165,6 +165,14 @@ class Files extends CI_Controller {
 			$this->data['page_title'] = $response->response->file_set->title;
 			$this->data['archive_files'] = $response->response->archive_files;
 			
+			$file_set_size = NULL;
+			foreach ($response->response->archive_files as $archive_file)
+			{
+				$file_set_size = $file_set_size + $archive_file->size;
+			}
+			
+			$this->data['file_set_size'] = $file_set_size;
+			
 			if ($response->response->permissions->write)
 			{
 				$this->data['file_controls'][] = array(

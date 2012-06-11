@@ -321,7 +321,7 @@ class Projects extends CI_Controller {
 
 	function view_public($identifier)
 	{
-		if ($response = $this->orbital->project_public_details($identifier))
+		if ($response = $this->orbital->project_public_details($identifier, 5))
 		{
 			$this->load->library('typography');
 			$this->data['project_id'] = $response->response->project->identifier;
@@ -357,7 +357,10 @@ class Projects extends CI_Controller {
 					
 				}
 				
+			// Generate list file_sets
 
+			$this->data['file_sets'] = $response->response->file_sets;
+				
 			// Generate list of datasets
 
 			$this->data['working_datasets'] = array('foo');
