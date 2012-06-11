@@ -71,19 +71,39 @@ else
 </script>
 
 <p><a class="btn disabled btn-small"><i class="icon-calendar"></i> Add Timeline Event</a> <a href="#addTLComment" data-toggle="modal" class="btn btn-small"><i class="icon-pencil"></i> Add Comment</a></p>
-			
-<div class="modal fade" id="addTLComment">
-	<div class="modal-header">
-		<button class="close" data-dismiss="modal">×</button>
-		<h3>Add Comment</h3>
-	</div>
-	<div class="modal-body">
-		<p>Foo!</p>
-	</div>
-	<div class="modal-footer">
-		<a class="btn btn-success" href="#"><i class="icon-pencil"></i> Add Comment to Timeline</a>
-	</div>
+		
+<?php
+
+echo form_open(site_url('project/' . $project_id . '/timeline/comment'), array(
+			'class' => 'modal fade',
+			'id' => 'addTLComment'
+		));
+
+echo '<div class="modal-header">
+	<button class="close" data-dismiss="modal">×</button>
+	<h3>Add Comment to Timeline</h3>
 </div>
+<div class="modal-body">';
+
+$form_comment = array(
+	'name'        => 'comment',
+	'id'          => 'commentBox',
+	'placeholder' => 'Lorem ipsum dolor sit amet...',
+	'style'       => 'width:100%;'
+);
+
+echo form_label('What do you want to say?', 'commentBox');
+echo form_textarea($form_comment);
+
+echo '</div>
+<div class="modal-footer">
+	<button class="btn" data-dismiss="modal">Close</button>
+	<button type="submit" class="btn btn-success"><i class="icon-pencil"></i> Add Comment</button>
+</div>';
+
+echo form_close();
+
+?>
 
 <hr>
 

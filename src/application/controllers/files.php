@@ -112,6 +112,7 @@ class Files extends CI_Controller {
 			$this->data['file_licence_uri'] = $response->response->file->licence_uri;
 			$this->data['file_extension'] = $response->response->file->extension;
 			$this->data['file_mimetype'] = $response->response->file->mimetype;
+			$this->data['archive_file_sets'] = $response->response->archive_file_sets;
 			$this->data['page_title'] = $response->response->file->original_name;
 			
 			if ($response->response->permissions->write)
@@ -202,20 +203,40 @@ class Files extends CI_Controller {
 			
 			if($this->input->post('file_set_name'))
 			{
+				if ($this->input->post('file') > 0)
+				{
+					foreach($this->input->post('file') as $file_name => $value)			
+					{
+						$action = NULL;
+						if (in_array('include', $value) AND in_array('file_in_set', $value))
+						{
+							$action = 'add';
+						}
+						
+						else if ( ! in_array('include', $value) AND in_array('file_in_set', $value))
+						{
+							$action = 'remove';
+						}
+					
+						$this->orbital->file_set_update_files($identifier, $file_name, $action);
+					}
+				}
 			
-				$this->orbital->file_set_update($identifier, $this->input->post('file_set_name'), $this->input->post('file_set_description'));
+				$this->orbital->file_set_update($identifier, $this->input->post('file_set_name'), $this->input->post('file_set_description'), $response->response->file_set->project);
 				
 				$this->session->set_flashdata('message', 'File collection details updated successfully.');
 				$this->session->set_flashdata('message_type', 'success');
-				redirect('collection/' . $identifier);
+				redirect('collection/' . $identifier . '/edit');
 			}
 			
 			$this->data['file_set_id'] = $response->response->file_set->id;
 			$this->data['file_set_project'] = $response->response->file_set->project_name;
+			$this->data['file_set_project_id'] = $response->response->file_set->project;
 			$this->data['file_set_description'] = $response->response->file_set->description;
 			$this->data['file_set_title'] = $response->response->file_set->title;
 			$this->data['page_title'] = $response->response->file_set->title;
-			$this->data['archive_files'] = $response->response->archive_files;
+			$this->data['archive_files_set'] = $response->response->archive_files;
+			$this->data['archive_files_project'] = $response->response->archive_files_project;
 			
 			if ($response->response->permissions->write)
 			{
@@ -246,17 +267,20 @@ class Files extends CI_Controller {
 	 */
 
 
-	function create_new_file_set($identifier)
+	function create_new_file_set($project_identifier)
 	{
+		$this->data['page_title'] = 'Create New File Set';
+		$this->data['file_set_project'] = $project_identifier;
+			
 		if($this->input->post('file_set_name') AND $this->input->post('file_set_name') !== '')
 		{
 			if($this->input->post('file_set_description') AND $this->input->post('file_set_description') !== '')
 			{
-				if ($response = $this->orbital->create_new_file_set($identifier, $this->input->post('file_set_name'), $this->input->post('file_set_description')))
-				{	
+				if ($response = $this->orbital->create_new_file_set($project_identifier, $this->input->post('file_set_name'), $this->input->post('file_set_description')))
+				{					
 					$this->session->set_flashdata('message', 'Your file set has been created!');
 					$this->session->set_flashdata('message_type', 'success');
-					redirect('project/' . $response->response->project_id . '?special=new');
+					redirect('project/' . $project_identifier . '?special=new');
 				}
 				else
 				{
@@ -267,7 +291,7 @@ class Files extends CI_Controller {
 			}
 			else
 			{
-				$this->session->set_flashdata('message', 'A project must have an abstract');
+				$this->session->set_flashdata('message', 'The file set is missing some data');
 				$this->session->set_flashdata('message_type', 'alert');
 				redirect('projects');
 			}
@@ -417,6 +441,21 @@ class Files extends CI_Controller {
 			
 				$this->orbital->file_update($identifier, $this->input->post('name'), (int)$this->input->post('default_licence'), $public_view);
 				
+				foreach($this->input->post('file') as $file_set_name => $value)			
+					{
+						$action = NULL;
+						if (in_array('include', $value))
+						{
+							$action = 'add';
+						}
+						
+						else if ( ! in_array('include', $value))
+						{
+							$action = 'remove';
+						}
+						$this->orbital->file_update_file_sets($identifier, $file_set_name, $action);
+					}
+				
 				$this->session->set_flashdata('message', 'File details updated successfully.');
 				$this->session->set_flashdata('message_type', 'success');
 				redirect('file/' . $identifier);
@@ -433,6 +472,9 @@ class Files extends CI_Controller {
 			$this->data['file_licence_uri'] = $response->response->file->licence_uri;
 			$this->data['file_extension'] = $response->response->file->extension;
 			$this->data['file_mimetype'] = $response->response->file->mimetype;
+			$this->data['archive_file_sets'] = $response->response->archive_file_sets;
+			$this->data['archive_file_sets_project'] = $response->response->archive_file_sets_project;
+			
 			if (isset($response->response->file->visibility))
 			{			
 				if ($response->response->file->visibility === 'public')

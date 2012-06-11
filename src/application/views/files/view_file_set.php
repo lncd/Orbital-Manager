@@ -33,6 +33,10 @@
 
 
 	<table class = "table table-bordered table-striped" id="users_table">
+		<?php
+		if (count($archive_files) > 0)
+		{
+		?>
 		<thead><tr><th>File name</th><th>File size</th><th>Uploaded</th><th>Licence</th></tr></thead>
 		<tbody>
 			<?php foreach($archive_files as $archive_file)
@@ -56,8 +60,17 @@
 			}
 			?>
 		</tbody>
+			<?php
+			}
+			else
+			{
+				echo '<p>This file set contains no files.';
+			}
+
+			?>
 	</table>
 
+			
 
 		
 		{file_controls}

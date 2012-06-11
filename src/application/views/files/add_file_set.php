@@ -6,22 +6,22 @@
 		<a href="{base_url}projects">Projects</a> <span class="divider">/</span>
 	</li>
 	<li>
-		<a href="{base_url}project/{file_set_project_id}">{file_set_project}</a> <span class="divider">/</span>
-	</li>
+		<a href="{base_url}project/{file_set_project}">{file_set_project_name}</a> <span class="divider">/</span>
+	</li>	
 	<li class="active">
-		Add new collection
+		Add New Collection
 	</li>
 </ul>
 
 <div class="page-header">
-	<h1>Add new Collection</h1>
+	<h1>Add New Collection</h1>
 </div>
 
 <div class="well">
 	<h2>File Collection Details</h2>
 	<br>
 	
-	<?php echo form_open('collection/{file_set_id}/edit', array('class' => 'form-horizontal'));
+	<?php echo form_open('project/{file_set_project}/collections/add', array('class' => 'form-horizontal'));
 	
 	$form_name = array(
 		'name'			=> 'file_set_name',
@@ -53,19 +53,14 @@
 	echo form_textarea($form_abstract);
 	echo '</div></div>';
 	
-	foreach($archive_files as $archive_file)
-		{
-		
-		?>
-		<input type="checkbox" name="remove[<?php echo $archive_file->id;?>]" value="TRUE">
-		<?php echo $archive_file->original_name;?>
-
-		<?php
-		}
 	
 	echo '<div class="form-actions">';
+	
 	echo '<button type="submit" class="btn btn-success"><i class = "icon-ok icon-white"></i> Save Details</button> <button type="reset" class="btn btn-warning">Reset</button>';
 	echo '</div>';
+	
+	
 		
-	echo form_close(); ?>
-</div>
+	echo form_close(); 
+	
+	

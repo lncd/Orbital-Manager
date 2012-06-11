@@ -198,7 +198,7 @@
 	
 		<form method="post" action="{base_url}project/{project_id}/edit">
 		<table class = "table table-bordered table-striped" id="users_table">
-		<thead><tr><th>User</th><th>Read</th><th>Write</th><th>Delete</th><th>Manage Users</th><th>Archive Write</th><th>Archive Read</th><th>Access Workspace</th><th>Create Dataset</th><th>Delete User?</th></tr></thead>
+		<thead><tr><th>User</th><th>Read</th><th>Write</th><th>Delete</th><th>Manage Users</th><th>Archive Write</th><th>Archive Read</th><th>Access Workspace</th><th>Create Dataset</th><th>Remove User?</th></tr></thead>
 		<tbody>
 			<?php foreach($project_users as $project_user)
 			{

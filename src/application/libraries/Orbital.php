@@ -424,17 +424,9 @@ class Orbital {
 		}
 
 	}
-
+	
 	/**
-	 * Get (Unauthenticated)
-	 *
-	 * Performs an unauthenticated HTTP GET against Orbital Core.
-	 *
-	 * @param string $target     Core resource to GET.
-	 * @param array $post_fields Array of fields posted.
-	 *
-	 * @access private
-	 * @return object|FALSE Object if successful, FALSE if not.
+	 * Put (Authenticated)
 	 */
 
 	private function put_authed($target, $post_fields)
@@ -936,6 +928,23 @@ class Orbital {
 	{
 		return $this->delete_authed('project/' . $identifier);
 	}
+	
+	/**
+	 * Add Comment to Timeline
+	 *
+	 * Adds a comment to a project timeline
+	 *
+	 * @param string $project The ID of the project.
+	 * @param string $comment The comment to add to the timeline.
+	 *
+	 * @access public
+	 * @return object.
+	 */
+
+	public function timeline_add_comment($project, $comment)
+	{
+		return $this->post_authed('timeline/comment', array('project' => $project, 'comment' => $comment));
+	}
 
 
 	/**
@@ -1131,13 +1140,23 @@ class Orbital {
 	 */
 
 	public function create_new_file_set($identifier, $name, $abstract)
-	{print_r($identifier . $name . $abstract);
-//		return $this->post_authed('file_set/create', array('identifier' => $identifier, 'name' => $name, 'abstract' => $abstract));
+	{
+		return $this->post_authed('file_set/create', array('identifier' => $identifier, 'name' => $name, 'abstract' => $abstract));
 	}
 
-	public function file_set_update($identifier, $name, $description)
+	public function file_set_update($identifier, $name, $description, $project_identifier)
 	{
-		return $this->put_authed('file_set/' . $identifier, array('name' => $name, 'description' => $description));
+		return $this->put_authed('file_set/' . $identifier, array('name' => $name, 'description' => $description, 'project_identifier' => $project_identifier));
+	}
+	
+	public function file_set_update_files($identifier, $file, $action)
+	{
+		return $this->put_authed('file_set_files/' . $identifier, array('file' => $file, 'action' => $action));
+	}
+	
+	public function file_update_file_sets($identifier, $file_set, $action)
+	{
+		return $this->put_authed('file_file_sets/' . $identifier, array('file_set' => $file_set, 'action' => $action));
 	}
 	
 	/**
