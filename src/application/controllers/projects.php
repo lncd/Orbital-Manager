@@ -432,7 +432,10 @@ class Projects extends CI_Controller {
 
 			if($this->input->post('save_members_details'))
 			{
-				foreach ($this->input->post('permission') as $user => $values)
+				$error_users = array();
+				$success_users = 0;
+				
+				foreach ($this->input->post('permission') as $a_user => $values)
 				{
 					$user_perms = array();
 					foreach ($values as $value => $exists)
@@ -444,20 +447,45 @@ class Projects extends CI_Controller {
 						if( in_array('remove', $user_perms))
 						{
 							$this->orbital->delete_project_member($identifier,
-							$user);						
+							$a_user);
+							$success_users ++;				
 						}
 						else
 						{
-							$this->orbital->update_project_member($identifier,
-							$user,
-							$user_perms);
+							if($response = $this->orbital->update_project_member($identifier,
+							$a_user,
+							$user_perms))
+							{
+								if (isset($response->response->error_user))
+								{
+									$error_users[] = $a_user;
+								}
+								else
+								{
+									$success_users ++;
+								}
+							}
 						}
 					}
 				}
+				
 				$response = $this->orbital->project_details($identifier);
 				
-				$this->session->set_flashdata('message', 'Project members updated successfully.');
-				$this->session->set_flashdata('message_type', 'success');
+				if (count($error_users) > 0 AND $success_users === 0)
+				{
+					$this->session->set_flashdata('message', 'Project members not updated. The following were not valid users: ' . implode(', ', $error_users));
+					$this->session->set_flashdata('message_type', 'caution');
+				}
+				if (count($error_users) > 0)
+				{
+					$this->session->set_flashdata('message', 'Project members updated. The following were not valid users: ' . implode(', ', $error_users));
+					$this->session->set_flashdata('message_type', 'caution');
+				}
+				else
+				{
+					$this->session->set_flashdata('message', 'Project members updated successfully.');
+					$this->session->set_flashdata('message_type', 'success');
+				}
 				redirect('project/' . $identifier);
 			}
 
