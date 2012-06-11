@@ -45,7 +45,10 @@
 		}
 		
 		?>		
-		
+		<script type="text/javascript" src="{base_url}js/jquery.scrollTo.min.js"></script>
+<script type="text/javascript">
+	$('#userTimeline').scrollTo($('#tl_now'));
+</script>
 		
 		<?php
 		
@@ -90,7 +93,7 @@
 	
 	-->
 	
-	<div class="span4">
+	<div class="span6">
 		<div class="well">
 			<h2>File Archives</h2>
 			
@@ -195,7 +198,7 @@
 		</div>
 	</div>
 	
-	<div class="span4">
+	<div class="span6">
 		<div class="well">
 			<h2>File Collections</h2>
 			

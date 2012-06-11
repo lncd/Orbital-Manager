@@ -43,6 +43,12 @@ else
 }
 
 ?>
+
+<script type="text/javascript" src="{base_url}js/jquery.scrollTo.min.js"></script>
+<script type="text/javascript">
+	$('#userTimeline').scrollTo($('#tl_now'));
+</script>
+
 </div>
 <div class="row">
 	<div class="span8">

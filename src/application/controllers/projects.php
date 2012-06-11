@@ -42,6 +42,18 @@ class Projects extends CI_Controller {
 		if ($response = $this->orbital->projects_list())
 		{
 			$this->data['timeline'] = $response->response->timeline;
+						
+			$now->id = 'now';
+			$now->text = 'Now';
+			$now->payload = NULL;
+			$now->visibility = 'public';
+			$now->timestamp_human = date('g.ia');
+			
+			$this->data['timeline'][time()] = $now;
+			
+			ksort($this->data['timeline']);
+					
+				
 
 			if (count($response->response->projects) > 0)
 			{
