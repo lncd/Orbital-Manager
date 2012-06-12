@@ -16,6 +16,56 @@ class Datasets extends CI_Controller {
 	}
 	
 	/**
+	 * View dataset
+	 *
+	 * views a dataset
+	 *
+	 * @param string $identifier The dataset identifier
+	 * @return NULL
+	 */
+
+	function view_dataset($identifier)
+	{
+		if ($response = $this->orbital->dataset_get_details($identifier))
+		{
+			$this->load->helper('number');
+			$this->load->library('typography');
+			
+			$this->data['dataset_id'] = $response->response->dataset->id;
+			$this->data['dataset_project'] = $response->response->dataset->project_name;
+			$this->data['dataset_project_id'] = $response->response->dataset->project;
+			$this->data['dataset_title'] = $response->response->dataset->title;
+			$this->data['page_title'] = $response->response->dataset->title;
+			//$this->data['archive_files'] = $response->response->archive_files;
+			
+			$datasset_size = NULL;
+		//	foreach ($response->response->archive_files as $archive_file)
+		//	{
+		//		$file_set_size = $file_set_size + $archive_file->size;
+		//	}
+			
+			
+			if ($response->response->permissions->write)
+			{
+				$this->data['file_controls'][] = array(
+					'uri' => site_url('dataset/' . $response->response->dataset->id . '/edit'),
+					'title' => 'Edit'
+				);
+			}
+			
+
+			$this->parser->parse('includes/header', $this->data);
+			$this->parser->parse('datasets/view_dataset', $this->data);
+			$this->parser->parse('includes/footer', $this->data);
+		}
+		else
+		{
+			show_404();
+		}
+	}
+
+	
+	/**
 	 * Create new dataset
 	 *
 	 * creates a dataset
@@ -41,20 +91,20 @@ class Datasets extends CI_Controller {
 				{					
 					$this->session->set_flashdata('message', 'Your dataset has been created!');
 					$this->session->set_flashdata('message_type', 'success');
-			//		redirect('project/' . $project_identifier . '?special=new');
+					redirect('project/' . $project_identifier . '?special=new');
 				}
 				else
 				{
 					$this->session->set_flashdata('message', 'Something went wrong creating the dataset');
 					$this->session->set_flashdata('message_type', 'error');
-			//		redirect('project/' . $project_identifier);
+					redirect('project/' . $project_identifier);
 				}
 			}
 			else
 			{
 				$this->session->set_flashdata('message', 'The dataset is missing some data');
 				$this->session->set_flashdata('message_type', 'alert');
-		//		redirect('project/' . $project_identifier);
+				redirect('project/' . $project_identifier);
 			}
 		}
 		else

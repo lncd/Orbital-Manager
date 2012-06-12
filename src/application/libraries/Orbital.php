@@ -1303,6 +1303,22 @@ class Orbital {
 	{
 		return $this->post_authed('dataset/create', array('project_identifier' => $project_identifier, 'dataset_name' => $dataset_name, 'dataset_description' => $dataset_description));
 	}
+	
+		
+	/**
+	 * Get dataset details
+	 *
+	 * Gets a datasets details
+	 *
+	 * @param string $identifier  The identifier of the dataset.
+	 * @access public
+	 * @return object.
+	 */
+	
+	public function dataset_get_details($identifier)
+	{
+		return $this->get_authed('dataset/' . $identifier);
+	}
 
 }
 
