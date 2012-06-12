@@ -79,3 +79,43 @@
 
 <h3>Querying Data</h3>
 	
+<p>To query this Dynamic Dataset you need the Dataset ID and API token (already embedded in the below examples), a basic understanding of JSON, and the ability to make a HTTP GET request.</p>
+
+<p>Make a POST request to <code>{orbital_core_location}dataset/{dataset_id}/data</code> with the following parameters:</p>
+
+<table class="table table-bordered table-condensed">
+	<thead>
+		<tr>
+			<th>Parameter</th>
+			<th>Value</th>
+		</tr>
+	</thead>
+	<tr>
+		<td>
+			<code>token</code>
+		</td>
+		<td>
+			<code>{dataset_token}</code>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<code>token</code>
+		</td>
+		<td>
+			<p>URL encoded JSON object in following format:</p>
+			<pre>{
+	"statements": {
+		"key1": {
+			"equals": "value1"
+		},
+		"key2": {
+			"equals": "value2"
+		}
+	}
+}</pre>
+
+			<p>Where <code>statements</code> is a set of keys, and each key contains a statement which limits the query.
+		</td>
+	</tr>
+</table>
