@@ -70,7 +70,7 @@ else
 	$('#userTimeline').scrollTo($('#tl_now'));
 </script>
 
-<p><a class="btn disabled btn-small"><i class="icon-calendar"></i> Add Timeline Event</a> <a href="#addTLComment" data-toggle="modal" class="btn btn-small"><i class="icon-pencil"></i> Add Comment</a></p>
+<p><!--<a class="btn disabled btn-small"><i class="icon-calendar"></i> Add Timeline Event</a> --><a href="#addTLComment" data-toggle="modal" class="btn btn-small"><i class="icon-pencil"></i> Add Comment</a></p>
 		
 <?php
 
