@@ -255,7 +255,7 @@
 				<div class="alert alert-info">At the moment to add a user they must have signed in to Orbital at least once before. This will be fixed in a future release.</div>
 			</div>
 			<div class="modal-footer">
-				<a name = "add_members_details" id = "add_member" value = "add_members_details" class="btn btn-success"><i class = "icon-plus"></i> Add Member</a>
+				<a id="add_member" value="add_members_details" class="btn btn-success"><i class="icon-plus"></i> Add Member</a>
 			</div>
 		</form>
 		
