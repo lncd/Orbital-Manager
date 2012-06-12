@@ -86,6 +86,36 @@
 
 		echo form_label('URL of the licence summary', 'url');
 		echo form_input($form_url);
+				
+		$form_url = array(
+			'name'        => 'allow',
+			'id'          => 'allow',
+			'placeholder' => 'Allow list',
+			'value'       => $licence->allow
+		);
+
+		echo form_label('Allow list', 'allow');
+		echo form_textarea($form_url);
+						
+		$form_url = array(
+			'name'        => 'forbid',
+			'id'          => 'forbid',
+			'placeholder' => 'Forbid list',
+			'value'       => $licence->forbid
+		);
+
+		echo form_label('Forbid list', 'forbid');
+		echo form_textarea($form_url);
+						
+		$form_url = array(
+			'name'        => 'condition',
+			'id'          => 'condition',
+			'placeholder' => 'Condition list',
+			'value'       => $licence->condition
+		);
+
+		echo form_label('Condition list', 'condition');
+		echo form_textarea($form_url);
 		
 		echo '</div>
 		<div class="modal-footer">
@@ -222,6 +252,33 @@ echo form_open(site_url('admin/licences/add'), array(
 
 		echo form_label('URL of the licence summary', 'url');
 		echo form_input($form_url);
+		
+		$form_url = array(
+			'name'        => 'allow',
+			'id'          => 'allow',
+			'placeholder' => 'Allow list'
+		);
+
+		echo form_label('Allow list', 'allow');
+		echo form_textarea($form_url);
+						
+		$form_url = array(
+			'name'        => 'forbid',
+			'id'          => 'forbid',
+			'placeholder' => 'Forbid list'
+		);
+
+		echo form_label('Forbid list', 'forbid');
+		echo form_textarea($form_url);
+						
+		$form_url = array(
+			'name'        => 'condition',
+			'id'          => 'condition',
+			'placeholder' => 'Condition list'
+		);
+
+		echo form_label('Condition list', 'condition');
+		echo form_textarea($form_url);
 		
 		?>
 		

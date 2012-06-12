@@ -139,7 +139,7 @@ class Admin extends CI_Controller {
 		
 		if ($this->form_validation->run() === TRUE)
 		{
-			if ($this->orbital->licence_create($this->input->post('name'), $this->input->post('shortname'), $this->input->post('url')))
+			if ($this->orbital->licence_create($this->input->post('name'), $this->input->post('shortname'), $this->input->post('url'), $this->input->post('allow'), $this->input->post('forbid'), $this->input->post('condition')))
 			{
 				$this->session->set_flashdata('message', 'Licence added successfully. Remember to enable it before it can be used.');
 				$this->session->set_flashdata('message_type', 'success');
@@ -186,7 +186,7 @@ class Admin extends CI_Controller {
 			{
 				$licence = $licence->response->licence;
 			
-				if ($this->orbital->licence_update($licence->id, $this->input->post('name'),  $this->input->post('shortname'),  $this->input->post('url'), FALSE))
+				if ($this->orbital->licence_update($licence->id, $this->input->post('name'),  $this->input->post('shortname'),  $this->input->post('url'), $this->input->post('allow'),  $this->input->post('forbid'),  $this->input->post('condition'), FALSE))
 				{
 					$this->session->set_flashdata('message', 'Licence edited successfully.');
 					$this->session->set_flashdata('message_type', 'success');

@@ -1003,9 +1003,9 @@ class Orbital {
 	 * @return BOOL.
 	 */
 
-	public function licence_create($name, $shortname, $uri)
+	public function licence_create($name, $shortname, $uri, $allow, $forbid, $condition)
 	{
-		return $this->post_authed('licences', array('name' => $name, 'shortname' => $shortname, 'uri' => $uri));
+		return $this->post_authed('licences', array('name' => $name, 'shortname' => $shortname, 'uri' => $uri, 'allow' => $allow, 'forbid' => $forbid, 'condition' => $condition));
 	}
 
 	/**
@@ -1022,9 +1022,9 @@ class Orbital {
 	 * @return BOOL.
 	 */
 
-	public function licence_update($id, $name, $shortname, $uri, $enable = FALSE)
+	public function licence_update($id, $name, $shortname, $uri, $allow, $forbid, $condition, $enable = FALSE)
 	{
-		return $this->post_authed('licence/' . $id, array('name' => $name, 'shortname' => $shortname, 'uri' => $uri, 'enable' => $enable));
+		return $this->post_authed('licence/' . $id, array('name' => $name, 'shortname' => $shortname, 'uri' => $uri, 'allow' => $allow, 'forbid' => $forbid, 'condition' => $condition, 'enable' => $enable));
 	}
 	
 	/**
