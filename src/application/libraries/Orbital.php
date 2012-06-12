@@ -1270,10 +1270,38 @@ class Orbital {
 		}
 		return $this->put_authed('members/' . $identifier, array('user' => $user, 'read' => $read, 'write' => $write, 'delete' => $delete, 'manage_users' => $manage_users, 'archivefiles_read' => $archivefiles_read, 'archivefiles_write' => $archivefiles_write, 'sharedworkspace_read' => $sharedworkspace_read, 'dataset_create' => $dataset_create));
 	}
+		
+	/**
+	 * Deletes project member
+	 *
+	 * deletes a member from a project
+	 *
+	 * @param string $identifier       The identifier of the project.
+	 * @param string $user             The user to be deleted.
+	 * @access public
+	 * @return object.
+	 */
 	
 	public function delete_project_member($identifier, $user)
 	{
 		return $this->delete_authed('project/' . $identifier . '/member/' . urlencode($user));
+	}
+		
+	/**
+	 * Create new dataset
+	 *
+	 * Creates a new dataset
+	 *
+	 * @param string $project_identifier  The identifier of the project.
+	 * @param string $dataset_name        The dataset name.
+	 * @param string $dataset_description The dataset description.
+	 * @access public
+	 * @return object.
+	 */
+	
+	public function create_new_dataset($project_identifier, $dataset_name, $dataset_description)
+	{
+		return $this->post_authed('dataset/create', array('project_identifier' => $project_identifier, 'dataset_name' => $dataset_name, 'dataset_description' => $dataset_description));
 	}
 
 }

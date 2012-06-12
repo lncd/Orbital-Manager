@@ -212,7 +212,7 @@ else if (isset ($data_required))
 			
 			<hr>
 			
-			<p><a href="#" class="btn btn-success btn-small" data-toggle="modal"><i class="icon-plus"></i> Create Dynamic Dataset</a>
+			<p><a href="{base_url}project/{project_id}/datasets/add" class="btn btn-success btn-small"><i class="icon-plus"></i> Create Dynamic Dataset</a>
 			
 		</div>
 	</div>

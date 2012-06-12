@@ -53,6 +53,7 @@ $route['project/(:any)/edit'] = "projects/edit/$1";
 $route['project/(:any)/delete'] = "projects/delete/$1";
 $route['project/(:any)/public'] = "projects/view_public/$1";
 $route['project/(:any)/collections/add'] = "files/create_new_file_set/$1";
+$route['project/(:any)/datasets/add'] = "datasets/create_new_dataset/$1";
 $route['project/(:any)/timeline/comment'] = "projects/timeline_add_comment/$1";
 $route['project/(:any)'] = "projects/view/$1";
 $route['projects/public'] = "projects/list_public";

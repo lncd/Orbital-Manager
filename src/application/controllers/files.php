@@ -296,7 +296,7 @@ class Files extends CI_Controller {
 				}
 				else
 				{
-					$this->session->set_flashdata('message', 'Something went wrong creating the project');
+					$this->session->set_flashdata('message', 'Something went wrong creating the file set');
 					$this->session->set_flashdata('message_type', 'error');
 					redirect('projects');
 				}
@@ -421,6 +421,7 @@ class Files extends CI_Controller {
 		}
 	}
 	
+
 	
 
 	/**
