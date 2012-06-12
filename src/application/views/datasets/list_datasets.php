@@ -39,7 +39,6 @@ if (count($datasets) > 0)
 		}
 			
 		echo '<a href="' . base_url() . 'dataset/' . $dataset->id . '"><i class="icon-eye-' . $priv_icon . '"></i> ' . $dataset->name . ' '; ?></td>
-		<td>????????</td>
 		<td><?php echo $dataset->description?></td></tr>
 
 		<?php
