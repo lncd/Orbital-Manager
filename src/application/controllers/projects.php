@@ -264,7 +264,7 @@ class Projects extends CI_Controller {
 
 				// Generate list of datasets
 
-				$this->data['working_datasets'] = array();
+				$this->data['datasets'] = $response->response->datasets;
 
 				// Generate list of archive files
 
@@ -292,12 +292,12 @@ class Projects extends CI_Controller {
 					$this->data['new_project'] = FALSE;
 				}
 
-				//Check for Delete permissions
+				// Check for Delete permissions
 				if ($response->response->permissions->delete === TRUE)
 				{
-					//Check project doesn't have files OR datasets
-					//CHANGE TO CHECK FOR is_deletable in future
-					if(count($this->data['working_datasets']) === 0 AND count($this->data['archive_files']) === 0)
+					// Check project doesn't have files OR datasets
+					// TODO: CHANGE TO CHECK FOR is_deletable in future
+					if(count($this->data['datasets']) === 0 AND count($this->data['archive_files']) === 0)
 					{									
 						$this->data['project_controls'][] = array(
 							'uri' => site_url('project/' . $response->response->project->identifier . '/delete'),
