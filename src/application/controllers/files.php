@@ -278,7 +278,11 @@ class Files extends CI_Controller {
 	function create_new_file_set($project_identifier)
 	{
 		$this->data['page_title'] = 'Create New File Set';
-		$this->data['file_set_project'] = $project_identifier;
+		
+		$response = $this->orbital->project_details($project_identifier);
+
+		$this->data['file_set_project'] = $response->response->project->identifier;
+		$this->data['file_set_project_name'] = $response->response->project->name;
 			
 		if($this->input->post('file_set_name') AND $this->input->post('file_set_name') !== '')
 		{
