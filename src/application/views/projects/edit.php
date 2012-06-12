@@ -250,7 +250,9 @@
 				<h3>Add Member</h3>
 			</div>
 			<div class="modal-body">
-				<input type="text" id = "user_email" size="12" maxlength="255" name="user">
+				<p>To add a user to this project start by entering their email address and clicking "Add Member" Remember to save your changes once you have selected their permissions.</p>
+				<p><input type="text" id = "user_email" size="12" maxlength="255" name="user" placeholder="email@example.com"></p>
+				<div class="alert alert-info">At the moment to add a user they must have signed in to Orbital at least once before. This will be fixed in a future release.</div>
 			</div>
 			<div class="modal-footer">
 				<a name = "add_members_details" id = "add_member" value = "add_members_details" class="btn btn-success"><i class = "icon-plus"></i> Add Member</a>
