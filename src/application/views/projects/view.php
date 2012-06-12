@@ -171,35 +171,29 @@ else if (isset ($data_required))
 			
 			<?php
 			
-			if (count($working_datasets) > 0)
+			if (count($datasets) > 0)
 			{
 			
-			?>
-			
-			<ul class="nav nav-list">
-				<li class="nav-header">
-					Published
-				</li>
-				<li>
-					<a href="#"><i class="icon-eye-open"></i> Something</a>
-				</li>
-				<li>
-					<a href="#"><i class="icon-eye-open"></i> Something Else</a>
-				</li>
-				<li class="nav-header">
-					Private
-				</li>
-				<li>
-					<a href="#"><i class="icon-eye-close"></i> Something Else</a>
-				</li>
-				<li>
-					<a href="#"><i class="icon-eye-close"></i> Something Else</a>
-				</li>
-			</ul>
-			
-			<hr>
-			
-			<?php
+				echo '<ul class="nav nav-list">';
+				
+				foreach ($datasets as $dataset)
+				{				
+					if ($dataset->visibility === 'public')
+					{
+						$priv_icon = 'open';
+					}
+					else
+					{
+						$priv_icon = 'close';
+					}
+				
+					echo '<li><a href="' . site_url('dataset/' . $dataset->id) . '"><i class="icon-eye-' . $priv_icon . '"></i> ' . $dataset->name . '</a></li>';
+				}
+				
+				echo '<li class="divider"></li>
+				<li><a href="{base_url}project/{project_id}/datasets"><i class="icon-list"></i> View All</a></li>';
+
+				echo '</ul>';
 			
 			}
 			else
@@ -342,9 +336,7 @@ else if (isset ($data_required))
 						$priv_icon = 'close';
 					}
 				
-					echo '<li><a href="' . base_url() . 'collection/' . $file_set->file_set_id . '"><i class="icon-eye-' . $priv_icon . '"></i> ' . $file_set->file_set_name . ' ';
-					
-					echo '</a></li>';
+					echo '<li><a href="' . base_url() . 'collection/' . $file_set->file_set_id . '"><i class="icon-eye-' . $priv_icon . '"></i> ' . $file_set->file_set_name . '</a></li>';
 				}
 				echo '<li class="divider"></li>
 				<li><a href="{base_url}project/{project_id}/collections"><i class="icon-list"></i> View All</a></li>';
