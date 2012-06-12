@@ -100,7 +100,7 @@
 	</tr>
 	<tr>
 		<td>
-			<code>token</code>
+			<code>q</code>
 		</td>
 		<td>
 			<p>URL encoded JSON object in following format:</p>
