@@ -48,6 +48,7 @@ $route['planner'] = 'tools/project_planner';
 $route['policy'] = 'tools/policy_guidance';
 
 $route['project/(:any)/collections'] = "files/list_file_sets/$1";
+$route['project/(:any)/datasets'] = "datasets/list_datasets/$1";
 $route['project/(:any)/files'] = "files/list_files/$1";
 $route['project/(:any)/edit'] = "projects/edit/$1";
 $route['project/(:any)/delete'] = "projects/delete/$1";

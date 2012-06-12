@@ -64,6 +64,42 @@ class Datasets extends CI_Controller {
 			$this->parser->parse('includes/footer', $this->data);
 		}
 	}
+	
+	function list_datasets($identifier)
+	{
+		if ($response = $this->orbital->project_details($identifier))
+		{
+			if ($response->response->status === TRUE)
+			{
+				if ($this->input->get('error'))
+				{
+					$this->data['error'] = $this->input->get('error');
+				}
+
+				if ($this->input->get('message'))
+				{
+					$this->data['success'] = $this->input->get('message');
+				}
+
+				$this->load->library('typography');
+				$this->data['project_id'] = $response->response->project->identifier;
+				$this->data['page_title'] = $response->response->project->name;
+				$this->data['project_name'] = $response->response->project->name;
+				
+				//Generate list of file_sets
+				
+				$this->data['datasets'] = $response->response->datasets;
+				
+				$this->parser->parse('includes/header', $this->data);
+				$this->parser->parse('datasets/list_datasets', $this->data);
+				$this->parser->parse('includes/footer', $this->data);
+			}
+			else
+			{
+				show_404();
+			}
+		}
+	}
 }
 
 // End of Datasets.php
