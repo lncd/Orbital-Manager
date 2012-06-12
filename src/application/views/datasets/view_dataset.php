@@ -19,34 +19,63 @@
 <div class = "well">
 	<table class="table">
 		<thead>
-			<tr><th colspan="2">File Set Summary</th></tr>
+			<tr><th colspan="2">Dynamic Dataset Summary</th></tr>
 		</thead>
 		<tbody>
 			<tr><td>Dataset Name</td><td>{dataset_title}</td></tr>
-			<tr><td>Research Project</td><td><a href="{base_url}project/{dataset_project_id}">{dataset_project}</a></td>			</tr>
+			<tr><td>Research Project</td><td><a href="{base_url}project/{dataset_project_id}">{dataset_project}</a></td></tr>
+			<tr><td>Dataset ID</td><td><code>{dataset_id}</code></td></tr>
+			<tr><td>API Token</td><td><code>{dataset_token}</code></td></tr>
 		</tbody>
 	</table>
 </div>
 
-<!-- Documentation -->
-
-THINGS GO HERE
-
-
-
-<br><br>
-
-<!--
-<table class = "table table-bordered table-striped" id="users_table">
-
-	<thead><tr><th>Action</th><th>File size</th><th>Uploaded</th><th>Licence</th></tr></thead>
-	<tbody>
-
-	</tbody>
-
-</table>
--->
-		
 {file_controls}
 <a class="btn btn-small disabled" href="{uri}">{title}</a>
 {/file_controls}
+
+<hr>
+
+<h2>Using Dynamic Datasets</h2>
+
+<p>Dynamic Datasets let you store your research data directly in Orbital's database, letting you manipulate it directly using your own simple code.
+
+<h3>Adding/Updating Data</h3>
+
+<p>To add or update data in this Dynamic Dataset you need the Dataset ID and API token (already embedded in the below examples), a basic understanding of JSON, and the ability to make a HTTP POST request.</p>
+
+<p>Make a POST request to <code>{orbital_core_location}dataset/{dataset_id}</code> with the body in the following format:</p>
+
+<pre>
+{
+	"token": "{dataset_token}",
+	"data": [
+		{
+			"id": "datapoint-1",
+			"key1": "value1",
+			"key2": "value2"
+		},
+		{
+			"id": "datapoint-2",
+			"key1": "value3",
+			"key2": "value4"
+		}
+		},
+		{
+			"id": "datapoint-2",
+			"key1": "value5",
+			"key2": "value6",
+			"key3": "value7"
+		}
+	]
+}
+</pre>
+
+<p><code>token</code> should be your API Token, and <code>data</code> should be an array of data points to be inserted. Within each data point you can include key/value pairs of data to be stored. If you include a key of <code>id</code> as one of the pairs then this will be used as the unique identifier for that particular data point. If you don't include an <code>id</code> then Orbital will generate one for you.</p>
+
+<p>Note that you can use different keys within each different data point &mdash; if you have more data for one point than another (for example including a new sensor in some time-series data) then you don't need to update old data points, just include the data in new ones).</p>
+
+<p>To update a data point, simply make another POST request with the same <code>id</code>. The previous contents of the data point will be archived automatically, and the current 'working' data updated.</p>
+
+<h3>Querying Data</h3>
+	
