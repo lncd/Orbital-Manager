@@ -23,6 +23,7 @@
 		</thead>
 		<tbody>
 			<tr><td>Original File Name</td><td>{file_name}</td></tr>
+			<tr><td>File Size</td><td><?php echo byte_format($file_size) ?></td></tr>
 			<tr><td>Licence</td><td><a href="{file_licence_uri}">{file_licence}</a></td></tr>
 			<tr><td>Research Project</td><td><a href="{base_url}project/{file_project_id}">{file_project}</a></td></tr>
 			<tr><td>Permanent URI</td><td><code>http://id.lincoln.ac.uk/research-file/{file_id}</code></td></tr>

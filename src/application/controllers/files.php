@@ -52,6 +52,43 @@ class Files extends CI_Controller {
 		}
 	}
 	
+	function list_public_files($identifier)
+	{throw new Exception('123');
+		if ($response = $this->orbital->project_details($identifier))
+		{
+			if ($response->response->status === TRUE)
+			{
+				$this->load->helper('number');
+				if ($this->input->get('error'))
+				{
+					$this->data['error'] = $this->input->get('error');
+				}
+
+				if ($this->input->get('message'))
+				{
+					$this->data['success'] = $this->input->get('message');
+				}
+
+				$this->load->library('typography');
+				$this->data['project_id'] = $response->response->project->identifier;
+				$this->data['page_title'] = $response->response->project->name;
+				$this->data['project_name'] = $response->response->project->name;
+
+				// Generate list of archive files
+
+				$this->data['archive_files'] = $response->response->archive_files;
+				
+				$this->parser->parse('includes/header', $this->data);
+				$this->parser->parse('files/list_public', $this->data);
+				$this->parser->parse('includes/footer', $this->data);
+			}
+			else
+			{
+				show_404();
+			}
+		}
+	}
+	
 	function list_file_sets($identifier)
 	{
 		if ($response = $this->orbital->project_details($identifier))
@@ -102,12 +139,14 @@ class Files extends CI_Controller {
 		if ($response = $this->orbital->file_get_details($identifier))
 		{
 			$this->load->library('typography');
+			$this->load->helper('number');
 			
 			$this->data['file_id'] = $response->response->file->id;
 			$this->data['file_project'] = $response->response->file->project_name;
 			$this->data['file_project_id'] = $response->response->file->project;
 			$this->data['file_title'] = $response->response->file->title;
 			$this->data['file_name'] = $response->response->file->original_name;
+			$this->data['file_size'] = $response->response->file->size;
 			$this->data['file_licence'] = $response->response->file->licence_name;
 			$this->data['file_licence_uri'] = $response->response->file->licence_uri;
 			$this->data['file_extension'] = $response->response->file->extension;
@@ -386,12 +425,14 @@ class Files extends CI_Controller {
 		{
 			$project = $this->orbital->project_public_details($response->response->file->project);
 			$this->load->library('typography');
+			$this->load->helper('number');
 			
 			$this->data['file_id'] = $response->response->file->id;
 			$this->data['file_project'] = $response->response->file->project_name;
 			$this->data['file_project_id'] = $response->response->file->project;
 			$this->data['file_title'] = $response->response->file->title;
 			$this->data['file_name'] = $response->response->file->original_name;
+			$this->data['file_size'] = $response->response->file->size;
 			$this->data['file_licence'] = $response->response->file->licence_name;
 			$this->data['file_licence_uri'] = $response->response->file->licence_uri;
 			$this->data['file_extension'] = $response->response->file->extension;

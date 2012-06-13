@@ -24,7 +24,7 @@ if (count($file_sets) > 0)
 ?>
 		
 <table class = "table table-bordered table-striped" id="users_table">
-	<thead><tr><th>Set Name</th><th>No. Files</th><th>Description</th></tr></thead>
+	<thead><tr><th>Set Name</th><th>Description</th></tr></thead>
 	<tbody>
 		<?php foreach($file_sets as $file_set)
 		{
@@ -39,7 +39,6 @@ if (count($file_sets) > 0)
 		}
 			
 		echo '<a href="' . base_url() . 'collection/' . $file_set->file_set_id . '"><i class="icon-eye-' . $priv_icon . '"></i> ' . $file_set->file_set_name . ' '; ?></td>
-		<td>????????</td>
 		<td><?php echo $file_set->file_set_description?></td></tr>
 
 		<?php

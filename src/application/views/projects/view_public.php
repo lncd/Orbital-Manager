@@ -137,7 +137,7 @@
 						$priv_icon = 'close';
 					}
 				
-					echo '<li><a href="' . base_url() . 'file/' . $archive_file->id . '"><i class="icon-eye-' . $priv_icon . '"></i> ' . $archive_file->original_name . ' ';
+					echo '<li><a href="' . base_url() . 'file/' . $archive_file->id . '/public"><i class="icon-eye-' . $priv_icon . '"></i> ' . $archive_file->original_name . ' ';
 						
 					switch ($archive_file->status)
 					{
@@ -166,7 +166,7 @@
 				}
 				
 				echo '<li class="divider"></li>
-				<li><a href="{base_url}project/{project_id}/files"><i class="icon-list"></i> View All</a></li>';
+				<li><a href="{base_url}project/{project_id}/public/files"><i class="icon-list"></i> View All</a></li>';
 				echo '</ul>
 				
 				<script type="text/javascript">
@@ -181,20 +181,6 @@
 						
 			?>
 
-			<p><a href="#uploadFileDialogue" class="btn btn-success btn-small" data-toggle="modal"><i class="icon-upload"></i> Upload File</a>
-			
-			<div class="modal fade" id="uploadFileDialogue">
-				<div class="modal-header">
-					<button class="close" data-dismiss="modal">×</button>
-					<h3>Upload File to Archives</h3>
-				</div>
-				<div class="modal-body">
-					<iframe style="width:100%;border:none;height:400px;" src="{orbital_core_location}fileupload/form?token=<?php echo $upload_token; ?>&amp;licence=<?php echo $project_default_licence; ?>"></iframe>
-				</div>
-				<div class="modal-footer">
-					<a class="btn" href="<?php echo site_url('project/{project_id}'); ?>">Done</a>
-				</div>
-			</div>
 		</div>
 	</div>
 	
@@ -239,7 +225,6 @@
 
 			?>
 			
-			<p><a class="btn btn-success btn-small btn-disabled" href="{base_url}project/{project_id}/collections/add"><i class="icon-plus"></i> Create Collection</a></a>
 		</div>
 	</div>
 </div>
