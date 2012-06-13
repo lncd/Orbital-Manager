@@ -30,7 +30,9 @@
 			{
 				echo '<tr><td>';
 				if ($archive_file->visibility === 'public')
-				{					
+				{
+					$priv_icon = 'open';
+						
 					echo '<a href="' . base_url() . 'file/' . $archive_file->id . '/public"><i class="icon-eye-' . $priv_icon . '"></i> ' . $archive_file->title . ' '; ?></td>
 					<td><?php echo byte_format($archive_file->size, 2) ?></td>
 					<td><?php echo $archive_file->uploaded ?></td>

@@ -52,9 +52,9 @@ class Files extends CI_Controller {
 		}
 	}
 	
-	function list_public_files($identifier)
-	{throw new Exception('123');
-		if ($response = $this->orbital->project_details($identifier))
+	function list_files_public($identifier)
+	{
+		if ($response = $this->orbital->project_public_details($identifier))
 		{
 			if ($response->response->status === TRUE)
 			{
