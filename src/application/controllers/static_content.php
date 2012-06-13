@@ -67,6 +67,24 @@ class Static_Content extends CI_Controller {
 		$this->parser->parse('static/about', $this->data);
 		$this->parser->parse('includes/footer', $this->data);
 	}
+		
+	/**
+	 * Change Log
+	 *
+	 * Page containing the change log.
+	*/
+	
+	function changelog()
+	{
+	
+		$this->lang->load('changelog');
+	
+		$this->data['page_title'] = 'Change Log';
+	
+		$this->parser->parse('includes/header', $this->data);
+		$this->parser->parse('static/changelog', $this->data);
+		$this->parser->parse('includes/footer', $this->data);
+	}
 	
 	/**
 	 * Contact

@@ -46,6 +46,7 @@ $route['contact'] = 'static_content/contact';
 $route['signout'] = 'signin/signout';
 $route['planner'] = 'tools/project_planner';
 $route['policy'] = 'tools/policy_guidance';
+$route['changelog'] = 'static_content/changelog';
 
 $route['project/(:any)/collections'] = "files/list_file_sets/$1";
 $route['project/(:any)/datasets'] = "datasets/list_datasets/$1";

@@ -122,6 +122,7 @@
 							    <ul class="dropdown-menu">
 									<li><a href="{base_url}about">About Orbital</a></li>
 									<li><a href="{base_url}contact">Contact Details</a></li>
+									<li><a href="{base_url}changelog">Change Log</a></li>
 							    </ul>
 							</li>
 						</ul>
