@@ -46,7 +46,7 @@
 			{
 				$priv_icon = 'open';
 				
-				echo '<a href="' . base_url() . 'file/' . $archive_file->id . '"><i class="icon-eye-' . $priv_icon . '"></i> ' . $archive_file->original_name . ' '; ?></td>
+				echo '<a href="' . base_url() . 'file/' . $archive_file->id . '"><i class="icon-eye-' . $priv_icon . '"></i> ' . $archive_file->title . ' '; ?></td>
 				<td><?php echo byte_format($archive_file->size, 2) ?></td>
 				<td><?php echo $archive_file->uploaded ?></td>
 				<td><?php echo $archive_file->licence ?></td></tr>

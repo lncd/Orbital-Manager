@@ -255,7 +255,7 @@ else if (isset ($data_required))
 						$priv_icon = 'close';
 					}
 				
-					echo '<li><a href="' . base_url() . 'file/' . $archive_file->id . '"><i class="icon-eye-' . $priv_icon . '"></i> ' . $archive_file->original_name . ' ';
+					echo '<li><a href="' . base_url() . 'file/' . $archive_file->id . '"><i class="icon-eye-' . $priv_icon . '"></i> ' . $archive_file->title . ' ';
 						
 					switch ($archive_file->status)
 					{
