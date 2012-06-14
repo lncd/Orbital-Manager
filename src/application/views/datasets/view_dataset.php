@@ -53,18 +53,18 @@
 		{
 			"id": "datapoint-1",
 			"key1": "value1",
-			"key2": "value2"
+			"key2": 1234
 		},
 		{
 			"id": "datapoint-2",
 			"key1": "value3",
-			"key2": "value4"
+			"key2": 5678
 		}
 		},
 		{
 			"id": "datapoint-2",
 			"key1": "value5",
-			"key2": "value6",
+			"key2": 1234,
 			"key3": "value7"
 		}
 	]
@@ -72,6 +72,8 @@
 </pre>
 
 <p><code>token</code> should be your API Token, and <code>data</code> should be an array of data points to be inserted. Within each data point you can include key/value pairs of data to be stored. If you include a key of <code>id</code> as one of the pairs then this will be used as the unique identifier for that particular data point. If you don't include an <code>id</code> then Orbital will generate one for you.</p>
+
+<p>Values can be any valid JSON data type, including strings, booleans, integers and floating point numbers.</p>
 
 <p>Note that you can use different keys within each different data point &mdash; if you have more data for one point than another (for example including a new sensor in some time-series data) then you don't need to update old data points, just include the data in new ones).</p>
 
@@ -110,12 +112,36 @@
 			"equals": "value1"
 		},
 		"key2": {
-			"equals": "value2"
+			"gte": 1000,
+			"lt": 1500
 		}
-	}
+	},
+	"fields": [
+		"key1",
+		"key2",
+		"key3"
+	]
 }</pre>
 
-			<p>Where <code>statements</code> is a set of keys, and each key contains a statement which limits the query.
+			<p><code>statements</code> is a set of keys, and each key contains a statement which limits the query. The following statement types are valid, and a key may include multiple statements:</p>
+			<ul>
+				<li>
+					<code>equals</code>: The value of the key must be exactly equal to the value given. The value may be any valid type.
+				</li>
+				<li>
+					<code>gt</code>: The value of the key must be greater than the value given. This value must be an integer or floating point number.
+				</li>
+				<li>
+					<code>gte</code>: The value of the key must be greater than or equal to the value given. This value must be an integer or floating point number.
+				</li>
+				<li>
+					<code>lt</code>: The value of the key must be less than the value given. This value must be an integer or floating point number.
+				</li>
+				<li>
+					<code>lte</code>: The value of the key must be less than or equal to the value given. This value must be an integer or floating point number.
+				</li>
+			</ul>
+			<p><code>fields</code> is an array of the keys which should be returned. All other keys will be excluded from the response.</p>
 		</td>
 	</tr>
 </table>
