@@ -5,12 +5,17 @@
 </div>
 
 <div class="row">
-  <div class="span6">
+  <div class="span4">
     <h2>Sign In</h2>
     <p>Dive right in to {orbital_manager_name} and start managing your projects and data.</p>
     <p><a class="btn" href="{base_url}signin">Sign In &raquo;</a></p>
   </div>
-  <div class="span6">
+  <div class="span4">
+    <h2>View public projects</h2>
+    <p>See the full list of public projects</p>
+    <p><a class="btn" href="{base_url}projects/public">View All &raquo;</a></p>
+  </div>
+  <div class="span4">
     <h2>Get In Touch</h2>
     <p>Want to talk to a real person about {orbital_manager_name}?</p>
     <p><a class="btn" href="{base_url}contact">View Details &raquo;</a></p>

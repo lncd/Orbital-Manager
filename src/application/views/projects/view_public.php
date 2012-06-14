@@ -131,38 +131,34 @@
 					if ($archive_file->visibility === 'public')
 					{
 						$priv_icon = 'open';
-					}
-					else
-					{
-						$priv_icon = 'close';
-					}
-				
-					echo '<li><a href="' . base_url() . 'file/' . $archive_file->id . '/public"><i class="icon-eye-' . $priv_icon . '"></i> ' . $archive_file->original_name . ' ';
+									
+						echo '<li><a href="' . base_url() . 'file/' . $archive_file->id . '/public"><i class="icon-eye-' . $priv_icon . '"></i> ' . $archive_file->original_name . ' ';
+							
+						switch ($archive_file->status)
+						{
 						
-					switch ($archive_file->status)
-					{
-					
-						case 'placeholder':
-							echo '<span class="label label-inverse labeltip" rel="popover" data-content="This file is a placeholder for one due to be manually uploaded by an administrator." data-original-title="Placeholder">Placeholder</span>';
-							break;
-							
-						case 'staged':
-							echo '<span class="label label-default labeltip" rel="popover" data-content="This file is queued, waiting to be processed." data-original-title="Queued">Queued</span>';
-							break;
-							
-						case 'uploading':
-							echo '<span class="label label-info labeltip" rel="popover" data-content="This file is currently being processed and will be available soon." data-original-title="Processing">Processing</span>';
-							break;
-							
-						case 'upload_error_soft':
-							echo '<span class="label label-warning labeltip" rel="popover" data-content="Something has gone wrong processing this file, but it will be retried automatically." data-original-title="Upload Error">Upload Error</span>';
-							break;
-							
-						case 'upload_error_hard':
-							echo '<span class="label label-important labeltip" rel="popover" data-content="Something has gone wrong uploading this file, and it cannot be retried. An administrator has been notified." data-original-title="Upload Error">Upload Error</span>';
-							break;
+							case 'placeholder':
+								echo '<span class="label label-inverse labeltip" rel="popover" data-content="This file is a placeholder for one due to be manually uploaded by an administrator." data-original-title="Placeholder">Placeholder</span>';
+								break;
+								
+							case 'staged':
+								echo '<span class="label label-default labeltip" rel="popover" data-content="This file is queued, waiting to be processed." data-original-title="Queued">Queued</span>';
+								break;
+								
+							case 'uploading':
+								echo '<span class="label label-info labeltip" rel="popover" data-content="This file is currently being processed and will be available soon." data-original-title="Processing">Processing</span>';
+								break;
+								
+							case 'upload_error_soft':
+								echo '<span class="label label-warning labeltip" rel="popover" data-content="Something has gone wrong processing this file, but it will be retried automatically." data-original-title="Upload Error">Upload Error</span>';
+								break;
+								
+							case 'upload_error_hard':
+								echo '<span class="label label-important labeltip" rel="popover" data-content="Something has gone wrong uploading this file, and it cannot be retried. An administrator has been notified." data-original-title="Upload Error">Upload Error</span>';
+								break;
+						}
+						echo '</a></li>';
 					}
-					echo '</a></li>';
 				}
 				
 				echo '<li class="divider"></li>
@@ -176,7 +172,7 @@
 			}
 			else
 			{
-				echo '<p>This project doesn\'t have any archive files saved. Archive files to permanently store and publish data.</p>';
+				echo '<p>This project doesn\'t have any public archive files saved.</p>';
 			}
 						
 			?>
@@ -198,15 +194,11 @@
 					if ($file_set->file_set_visibility === 'public')
 					{
 						$priv_icon = 'open';
+									
+						echo '<li><a href="' . base_url() . 'collection/' . $file_set->file_set_id . '"><i class="icon-eye-' . $priv_icon . '"></i> ' . $file_set->file_set_name . ' ';
+						
+						echo '</a></li>';
 					}
-					else
-					{
-						$priv_icon = 'close';
-					}
-				
-					echo '<li><a href="' . base_url() . 'collection/' . $file_set->file_set_id . '"><i class="icon-eye-' . $priv_icon . '"></i> ' . $file_set->file_set_name . ' ';
-					
-					echo '</a></li>';
 				}
 				echo '<li class="divider"></li>
 				<li><a href="{base_url}project/{project_id}/collections"><i class="icon-list"></i> View All</a></li>';
@@ -220,7 +212,7 @@
 			}
 			else
 			{
-				echo '<p>There aren\'t any file collections associated with this project. File collections can be used to organise archived files.</p>';
+				echo '<p>There aren\'t any public file collections associated with this project.</p>';
 			}
 
 			?>
