@@ -28,7 +28,7 @@
 </head>
 <body>
 
-	<h1><img src="{base_url}img/logo.png" title="Orbital" alt="Orbital Logo"></h1>
+	<h1><img src="https://orbital.lincoln.ac.uk/img/logo.png" title="Orbital" alt="Orbital Logo"></h1>
 	
 	<h2><?php echo $heading; ?></h2>
 	
