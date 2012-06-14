@@ -138,42 +138,50 @@ class Files extends CI_Controller {
 	{
 		if ($response = $this->orbital->file_get_details($identifier))
 		{
-			$this->load->library('typography');
-			$this->load->helper('number');
-			
-			$this->data['file_id'] = $response->response->file->id;
-			$this->data['file_project'] = $response->response->file->project_name;
-			$this->data['file_project_id'] = $response->response->file->project;
-			$this->data['file_title'] = $response->response->file->title;
-			$this->data['file_name'] = $response->response->file->original_name;
-			$this->data['file_size'] = $response->response->file->size;
-			$this->data['file_licence'] = $response->response->file->licence_name;
-			$this->data['file_licence_uri'] = $response->response->file->licence_uri;
-			$this->data['file_extension'] = $response->response->file->extension;
-			$this->data['file_mimetype'] = $response->response->file->mimetype;
-			$this->data['archive_file_sets'] = $response->response->archive_file_sets;
-			$this->data['page_title'] = $response->response->file->original_name;
-			
-			if ($response->response->permissions->write)
+			if ($response->response->status === TRUE)
 			{
-				$this->data['file_controls'][] = array(
-					'uri' => site_url('file/' . $response->response->file->id . '/edit'),
-					'title' => 'Edit'
-				);
-			}
+				$this->load->library('typography');
+				$this->load->helper('number');
+				
+				$this->data['file_id'] = $response->response->file->id;
+				$this->data['file_project'] = $response->response->file->project_name;
+				$this->data['file_project_id'] = $response->response->file->project;
+				$this->data['file_title'] = $response->response->file->title;
+				$this->data['file_name'] = $response->response->file->original_name;
+				$this->data['file_size'] = $response->response->file->size;
+				$this->data['file_licence'] = $response->response->file->licence_name;
+				$this->data['file_licence_uri'] = $response->response->file->licence_uri;
+				$this->data['file_extension'] = $response->response->file->extension;
+				$this->data['file_mimetype'] = $response->response->file->mimetype;
+				$this->data['archive_file_sets'] = $response->response->archive_file_sets;
+				$this->data['page_title'] = $response->response->file->original_name;
+				
+				if ($response->response->permissions->write)
+				{
+					$this->data['file_controls'][] = array(
+						'uri' => site_url('file/' . $response->response->file->id . '/edit'),
+						'title' => 'Edit'
+					);
+				}
+				
+				if ($response->response->file->status === 'uploaded')
+				{
+					$this->data['file_downloadable'] = TRUE;
+				}
+				else
+				{
+					$this->data['file_downloadable'] = FALSE;
+				}
+	
+				$this->parser->parse('includes/header', $this->data);
+				$this->parser->parse('files/view_file', $this->data);
+				$this->parser->parse('includes/footer', $this->data);
 			
-			if ($response->response->file->status === 'uploaded')
-			{
-				$this->data['file_downloadable'] = TRUE;
 			}
 			else
 			{
-				$this->data['file_downloadable'] = FALSE;
+				show_404();
 			}
-
-			$this->parser->parse('includes/header', $this->data);
-			$this->parser->parse('files/view_file', $this->data);
-			$this->parser->parse('includes/footer', $this->data);
 		}
 		else
 		{
