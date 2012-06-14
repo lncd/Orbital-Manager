@@ -405,230 +405,241 @@ class Projects extends CI_Controller {
 	{
 		if ($response = $this->orbital->project_details($identifier))
 		{
-			$licences = $this->orbital->licences_enabled_list();
-			$this->data['licences'] = $licences->response->licences;
-
-			if($this->input->post('name') AND $this->input->post('abstract'))
+			if ($response->response->status === TRUE)
 			{
-				if($this->input->post('start_date') AND $this->input->post('end_date'))
+				$licences = $this->orbital->licences_enabled_list();
+				$this->data['licences'] = $licences->response->licences;
+	
+				if($this->input->post('name') AND $this->input->post('abstract'))
 				{
-					if (strtotime($this->input->post('start_date')) < strtotime($this->input->post('end_date')))
+					if($this->input->post('start_date') AND $this->input->post('end_date'))
+					{
+						if (strtotime($this->input->post('start_date')) < strtotime($this->input->post('end_date')))
+						{
+							$this->data['project_startdate'] = $response->response->project->start_date;
+							$this->data['project_startdate_pretty'] = date('D jS F Y', strtotime($response->response->project->start_date));
+						}
+						else
+						{
+							$this->session->set_flashdata('message', 'The end date must be after the start date.');
+							$this->session->set_flashdata('message_type', 'error');
+							redirect('project/' . $identifier . '/edit');
+						}
+					}
+						
+					if ($this->input->post('public') === 'public')
+					{
+						$public_view = 'visible';
+					}
+					else
+					{
+						$public_view = 'hidden';
+					}
+				
+					$this->orbital->project_update($identifier, $this->input->post('name'), $this->input->post('abstract'), $this->input->post('research_group'), $this->input->post('start_date'), $this->input->post('end_date'), (int)$this->input->post('default_licence'), $public_view, $this->input->post('google_analytics'));
+					
+					$this->session->set_flashdata('message', 'Project details updated successfully.');
+					$this->session->set_flashdata('message_type', 'success');
+					redirect('project/' . $identifier);
+				}
+				
+	
+				if($this->input->post('save_members_details'))
+				{
+					$error_users = array();
+					$success_users = 0;
+					
+					foreach ($this->input->post('permission') as $a_user => $values)
+					{
+						$user_perms = array();
+						foreach ($values as $value => $exists)
+						{
+							$user_perms[] = $value;
+						}
+						if (count($user_perms) > 0)
+						{
+							if( in_array('remove', $user_perms))
+							{
+								$this->orbital->delete_project_member($identifier,
+								$a_user);
+								$success_users ++;				
+							}
+							else
+							{
+								if($response = $this->orbital->update_project_member($identifier,
+								$a_user,
+								$user_perms))
+								{
+									if (isset($response->response->error_user))
+									{
+										$error_users[] = $a_user;
+									}
+									else
+									{
+										$success_users ++;
+									}
+								}
+							}
+						}
+					}
+					
+					$response = $this->orbital->project_details($identifier);
+					
+					if (count($error_users) > 0 AND $success_users === 0)
+					{
+						$this->session->set_flashdata('message', 'Project members not updated. The following were not valid users: ' . implode(', ', $error_users));
+						$this->session->set_flashdata('message_type', 'caution');
+					}
+					if (count($error_users) > 0)
+					{
+						$this->session->set_flashdata('message', 'Project members updated. The following were not valid users: ' . implode(', ', $error_users));
+						$this->session->set_flashdata('message_type', 'caution');
+					}
+					else
+					{
+						$this->session->set_flashdata('message', 'Project members updated successfully.');
+						$this->session->set_flashdata('message_type', 'success');
+					}
+					redirect('project/' . $identifier);
+				}
+	
+				if($this->input->post('add_members_details'))
+				{
+					foreach ($this->input->post('permission') as $user => $values)
+					{
+						$user_perms = array();
+						foreach ($values as $value => $exists)
+						{
+							$user_perms[] = $value;
+						}
+					}
+					
+					$this->orbital->update_project_member($identifier,
+					$this->input->post('user'),
+					$user_perms);
+					
+					$response = $this->orbital->project_details($identifier);
+					
+					$this->session->set_flashdata('message', 'Project members updated successfully.');
+					$this->session->set_flashdata('message_type', 'success');
+					redirect('project/' . $identifier);
+				}
+	
+				$this->load->library('typography');
+				$this->data['project_id'] = $response->response->project->identifier;
+				$this->data['page_title'] = 'Edit ' . $response->response->project->name;
+				$this->data['project_name'] = $response->response->project->name;
+				$this->data['project_abstract'] = $response->response->project->abstract;
+				$this->data['project_research_group'] = $response->response->project->research_group;
+				$this->data['project_start_date'] = $response->response->project->start_date;
+				$this->data['project_end_date'] = $response->response->project->end_date;
+				$this->data['project_default_licence'] = $response->response->project->default_licence;
+				$this->data['project_google_analytics'] = $response->response->project->google_analytics;
+	
+				if ($response->response->permissions->write)
+				{
+					$this->data['project_controls'][] = array(
+						'uri' => site_url('project/' . $response->response->project->identifier . '/edit'),
+						'title' => 'Edit'
+					);
+				}
+	
+				foreach($response->response->users as $user => $permissions)
+				{
+					//Set array of permissions for user
+					$user_permissions = array();
+	
+					//Gert permissions AND set as true OR false
+					$user_permissions['permission_read'] = FALSE;
+					if ($permissions->read)
+					{
+						$user_permissions['permission_read'] = TRUE;
+					}
+					$user_permissions['permission_write'] = FALSE;
+					if ($permissions->write)
+					{
+						$user_permissions['permission_write'] = TRUE;
+					}
+					$user_permissions['permission_delete'] = FALSE;
+					if ($permissions->delete)
+					{
+						$user_permissions['permission_delete'] = TRUE;
+					}
+					$user_permissions['permission_archivefiles_write'] = FALSE;
+					if ($permissions->archive_write)
+					{
+						$user_permissions['permission_archivefiles_write'] = TRUE;
+					}
+					$user_permissions['permission_archivefiles_read'] = FALSE;
+					if ($permissions->archive_read)
+					{
+						$user_permissions['permission_archivefiles_read'] = TRUE;
+					}
+					$user_permissions['permission_sharedworkspace_read'] = FALSE;
+					if ($permissions->sharedworkspace_read)
+					{
+						$user_permissions['permission_sharedworkspace_read'] = TRUE;
+					}
+					$user_permissions['permission_dataset_create'] = FALSE;
+					if ($permissions->dataset_create)
+					{
+						$user_permissions['permission_dataset_create'] = TRUE;
+					}
+					$user_permissions['permission_manage_users'] = FALSE;
+					if ($permissions->manage_users)
+					{
+						$user_permissions['permission_manage_users'] = TRUE;
+					}
+	
+					$this->data['project_users'][] = array('user' => $user, 'permissions' => $user_permissions, 'user_email' => base64_encode($user));
+				}
+	
+				if (isset($response->response->project->start_date) AND isset($response->response->project->end_date))
+				{
+					if (strtotime($response->response->project->start_date) < strtotime($response->response->project->end_date))
 					{
 						$this->data['project_startdate'] = $response->response->project->start_date;
 						$this->data['project_startdate_pretty'] = date('D jS F Y', strtotime($response->response->project->start_date));
 					}
 					else
 					{
-						$this->session->set_flashdata('message', 'The end date must be after the start date.');
-						$this->session->set_flashdata('message_type', 'error');
-						redirect('project/' . $identifier . '/edit');
+						$this->data['message'] = 'Start date cannot be after end date';
 					}
 				}
-					
-				if ($this->input->post('public') === 'public')
-				{
-					$public_view = 'visible';
-				}
-				else
-				{
-					$public_view = 'hidden';
-				}
-			
-				$this->orbital->project_update($identifier, $this->input->post('name'), $this->input->post('abstract'), $this->input->post('research_group'), $this->input->post('start_date'), $this->input->post('end_date'), (int)$this->input->post('default_licence'), $public_view, $this->input->post('google_analytics'));
-				
-				$this->session->set_flashdata('message', 'Project details updated successfully.');
-				$this->session->set_flashdata('message_type', 'success');
-				redirect('project/' . $identifier);
-			}
-			
-
-			if($this->input->post('save_members_details'))
-			{
-				$error_users = array();
-				$success_users = 0;
-				
-				foreach ($this->input->post('permission') as $a_user => $values)
-				{
-					$user_perms = array();
-					foreach ($values as $value => $exists)
-					{
-						$user_perms[] = $value;
-					}
-					if (count($user_perms) > 0)
-					{
-						if( in_array('remove', $user_perms))
-						{
-							$this->orbital->delete_project_member($identifier,
-							$a_user);
-							$success_users ++;				
-						}
-						else
-						{
-							if($response = $this->orbital->update_project_member($identifier,
-							$a_user,
-							$user_perms))
-							{
-								if (isset($response->response->error_user))
-								{
-									$error_users[] = $a_user;
-								}
-								else
-								{
-									$success_users ++;
-								}
-							}
-						}
-					}
-				}
-				
-				$response = $this->orbital->project_details($identifier);
-				
-				if (count($error_users) > 0 AND $success_users === 0)
-				{
-					$this->session->set_flashdata('message', 'Project members not updated. The following were not valid users: ' . implode(', ', $error_users));
-					$this->session->set_flashdata('message_type', 'caution');
-				}
-				if (count($error_users) > 0)
-				{
-					$this->session->set_flashdata('message', 'Project members updated. The following were not valid users: ' . implode(', ', $error_users));
-					$this->session->set_flashdata('message_type', 'caution');
-				}
-				else
-				{
-					$this->session->set_flashdata('message', 'Project members updated successfully.');
-					$this->session->set_flashdata('message_type', 'success');
-				}
-				redirect('project/' . $identifier);
-			}
-
-			if($this->input->post('add_members_details'))
-			{
-				foreach ($this->input->post('permission') as $user => $values)
-				{
-					$user_perms = array();
-					foreach ($values as $value => $exists)
-					{
-						$user_perms[] = $value;
-					}
-				}
-				
-				$this->orbital->update_project_member($identifier,
-				$this->input->post('user'),
-				$user_perms);
-				
-				$response = $this->orbital->project_details($identifier);
-				
-				$this->session->set_flashdata('message', 'Project members updated successfully.');
-				$this->session->set_flashdata('message_type', 'success');
-				redirect('project/' . $identifier);
-			}
-
-			$this->load->library('typography');
-			$this->data['project_id'] = $response->response->project->identifier;
-			$this->data['page_title'] = 'Edit ' . $response->response->project->name;
-			$this->data['project_name'] = $response->response->project->name;
-			$this->data['project_abstract'] = $response->response->project->abstract;
-			$this->data['project_research_group'] = $response->response->project->research_group;
-			$this->data['project_start_date'] = $response->response->project->start_date;
-			$this->data['project_end_date'] = $response->response->project->end_date;
-			$this->data['project_default_licence'] = $response->response->project->default_licence;
-			$this->data['project_google_analytics'] = $response->response->project->google_analytics;
-
-			if ($response->response->permissions->write)
-			{
-				$this->data['project_controls'][] = array(
-					'uri' => site_url('project/' . $response->response->project->identifier . '/edit'),
-					'title' => 'Edit'
-				);
-			}
-
-			foreach($response->response->users as $user => $permissions)
-			{
-				//Set array of permissions for user
-				$user_permissions = array();
-
-				//Gert permissions AND set as true OR false
-				$user_permissions['permission_read'] = FALSE;
-				if ($permissions->read)
-				{
-					$user_permissions['permission_read'] = TRUE;
-				}
-				$user_permissions['permission_write'] = FALSE;
-				if ($permissions->write)
-				{
-					$user_permissions['permission_write'] = TRUE;
-				}
-				$user_permissions['permission_delete'] = FALSE;
-				if ($permissions->delete)
-				{
-					$user_permissions['permission_delete'] = TRUE;
-				}
-				$user_permissions['permission_archivefiles_write'] = FALSE;
-				if ($permissions->archive_write)
-				{
-					$user_permissions['permission_archivefiles_write'] = TRUE;
-				}
-				$user_permissions['permission_archivefiles_read'] = FALSE;
-				if ($permissions->archive_read)
-				{
-					$user_permissions['permission_archivefiles_read'] = TRUE;
-				}
-				$user_permissions['permission_sharedworkspace_read'] = FALSE;
-				if ($permissions->sharedworkspace_read)
-				{
-					$user_permissions['permission_sharedworkspace_read'] = TRUE;
-				}
-				$user_permissions['permission_dataset_create'] = FALSE;
-				if ($permissions->dataset_create)
-				{
-					$user_permissions['permission_dataset_create'] = TRUE;
-				}
-				$user_permissions['permission_manage_users'] = FALSE;
-				if ($permissions->manage_users)
-				{
-					$user_permissions['permission_manage_users'] = TRUE;
-				}
-
-				$this->data['project_users'][] = array('user' => $user, 'permissions' => $user_permissions, 'user_email' => base64_encode($user));
-			}
-
-			if (isset($response->response->project->start_date) AND isset($response->response->project->end_date))
-			{
-				if (strtotime($response->response->project->start_date) < strtotime($response->response->project->end_date))
+	
+				if (isset($response->response->project->start_date) AND ! isset($response->response->project->end_date))
 				{
 					$this->data['project_startdate'] = $response->response->project->start_date;
 					$this->data['project_startdate_pretty'] = date('D jS F Y', strtotime($response->response->project->start_date));
 				}
+				if (isset($response->response->project->end_date) AND ! isset($response->response->project->start_date))
+				{
+					$this->data['project_enddate'] = $response->response->project->end_date;
+					$this->data['project_enddate_pretty'] = date('D jS F Y', strtotime($response->response->project->end_date));
+				}
+				$this->data['project_description'] = $this->typography->auto_typography($response->response->project->abstract);
+	
+				if ($response->response->project->public_view === 'visible')
+				{
+					$this->data['project_public_view'] = TRUE;
+				}
 				else
 				{
-					$this->data['message'] = 'Start date cannot be after end date';
+					$this->data['project_public_view'] = FALSE;
 				}
-			}
-
-			if (isset($response->response->project->start_date) AND ! isset($response->response->project->end_date))
-			{
-				$this->data['project_startdate'] = $response->response->project->start_date;
-				$this->data['project_startdate_pretty'] = date('D jS F Y', strtotime($response->response->project->start_date));
-			}
-			if (isset($response->response->project->end_date) AND ! isset($response->response->project->start_date))
-			{
-				$this->data['project_enddate'] = $response->response->project->end_date;
-				$this->data['project_enddate_pretty'] = date('D jS F Y', strtotime($response->response->project->end_date));
-			}
-			$this->data['project_description'] = $this->typography->auto_typography($response->response->project->abstract);
-
-			if ($response->response->project->public_view === 'visible')
-			{
-				$this->data['project_public_view'] = TRUE;
+	
+				$this->parser->parse('includes/header', $this->data);
+				$this->parser->parse('projects/edit', $this->data);
+				$this->parser->parse('includes/footer', $this->data);
 			}
 			else
 			{
-				$this->data['project_public_view'] = FALSE;
+				show_404();
 			}
-
-			$this->parser->parse('includes/header', $this->data);
-			$this->parser->parse('projects/edit', $this->data);
-			$this->parser->parse('includes/footer', $this->data);
+		}
+		else
+		{
+			show_404();
 		}
 	}
 
