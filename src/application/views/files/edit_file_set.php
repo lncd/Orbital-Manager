@@ -49,11 +49,26 @@
 		'rows'			=> '5',
 		'class'			=> 'span6'
 	);
+	
 
 	echo '<div class="control-group">';
 	echo form_label('Collection Description', 'collection_description', array('class' => 'control-label'));
 	echo '<div class="controls">';
 	echo form_textarea($form_abstract);
+	echo '</div></div>';
+		
+	$form_public = array(
+		'name'		=> 'public',
+		'id'		=> 'file_set_public',
+		'value'		=> 'public',
+		'checked'	=> set_checkbox('public', 'public', $file_set_visibility)
+	);
+
+	echo '<div class="control-group">';
+	echo form_label('Publish This Fileset', 'file_set_public', array('class' => 'control-label'));
+	echo '<div class="controls">';
+	echo form_checkbox($form_public);
+	echo '<p class="help-block">This creates a public web page for this file set where people can view it.</p>';
 	echo '</div></div>';
 	
 	echo '<table class = "table table-bordered table-striped" id="files_table">

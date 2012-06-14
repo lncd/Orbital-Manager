@@ -24,11 +24,11 @@ if (count($file_sets) > 0)
 ?>
 		
 <table class = "table table-bordered table-striped" id="users_table">
-	<thead><tr><th>Set Name</th><th>Description</th></tr></thead>
+	<thead><tr><th style="min-width:150px">Set Name</th><th>Description</th></tr></thead>
 	<tbody>
 		<?php foreach($file_sets as $file_set)
 		{
-		echo '<tr><td width="100">';
+		echo '<tr><td>';
 		if ($file_set->file_set_visibility === 'public')
 		{
 			$priv_icon = 'open';

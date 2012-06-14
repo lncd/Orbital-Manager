@@ -276,8 +276,17 @@ class Files extends CI_Controller {
 						$this->orbital->file_set_update_files($identifier, $file_name, $action);
 					}
 				}
+				$public_view = NULL;
+				if ($this->input->post('file_set_public') === 'public')
+				{
+					$public_view = 'public';
+				}
+				else
+				{
+					$public_view = 'private';
+				}
 			
-				$this->orbital->file_set_update($identifier, $this->input->post('file_set_name'), $this->input->post('file_set_description'), $response->response->file_set->project);
+				$this->orbital->file_set_update($identifier, $this->input->post('file_set_name'), $this->input->post('file_set_description'), $public_view, $response->response->file_set->project);
 				
 				$this->session->set_flashdata('message', 'File collection details updated successfully.');
 				$this->session->set_flashdata('message_type', 'success');
@@ -288,6 +297,7 @@ class Files extends CI_Controller {
 			$this->data['file_set_project'] = $response->response->file_set->project_name;
 			$this->data['file_set_project_id'] = $response->response->file_set->project;
 			$this->data['file_set_description'] = $response->response->file_set->description;
+			$this->data['file_set_visibility'] = $response->response->file_set->visibility;
 			$this->data['file_set_title'] = $response->response->file_set->title;
 			$this->data['page_title'] = $response->response->file_set->title;
 			$this->data['archive_files_set'] = $response->response->archive_files;
