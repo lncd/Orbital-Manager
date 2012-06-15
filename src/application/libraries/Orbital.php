@@ -1114,11 +1114,10 @@ class Orbital {
 		return $this->get_authed('file_set/' . $file_id);
 	}
 	
-	
 	/**
-	 * File set get details
+	 * File set get details public
 	 *
-	 * Gets the details of a file set
+	 * Gets the details of a public file set
 	 *
 	 * @access public
 	 * @param $file_id string The identifier of the file set the user wants access to
@@ -1130,6 +1129,8 @@ class Orbital {
 	{
 		return $this->get_authed('file_set/' . $file_id . '/public');
 	}
+	
+	
 	
 	/**
 	 * File set update

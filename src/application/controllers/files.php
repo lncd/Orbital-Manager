@@ -384,38 +384,28 @@ class Files extends CI_Controller {
 
 	function view_file_set_public($identifier)
 	{
-		if ($response = $this->orbital->file_set_get_details($identifier))
+		if ($response = $this->orbital->file_set_get_details_public($identifier))
 		{
 			$this->load->helper('number');
 			$this->load->library('typography');
 			
 			$this->data['file_set_id'] = $response->response->file_set->id;
 			$this->data['file_set_project'] = $response->response->file_set->project_name;
-			$this->data['file_set_project_id'] = $response->response->file_set->project_id;
+			$this->data['file_set_project_id'] = $response->response->file_set->project;
 			$this->data['file_set_title'] = $response->response->file_set->title;
-			$this->data['file_set_name'] = $response->response->file_set->original_name;
-			$this->data['file_set_licence'] = $response->response->file_set->licence_name;
-			$this->data['file_set_licence_uri'] = $response->response->file_set->licence_uri;
-			$this->data['file_set_extension'] = $response->response->file_set->extension;
-			$this->data['file_set_mimetype'] = $response->response->file_set->mimetype;
-			$this->data['page_title'] = $response->response->file_set->original_name;
+			$this->data['file_set_name'] = $response->response->file_set->title;
+			$this->data['page_title'] = $response->response->file_set->title;
+			$this->data['archive_files'] = $response->response->archive_files;
 			
-			if ($response->response->permissions->write)
+						
+			$file_set_size = NULL;
+			foreach ($response->response->archive_files as $archive_file)
 			{
-				$this->data['file_controls'][] = array(
-					'uri' => site_url('file/' . $response->response->file->id . '/edit'),
-					'title' => 'Edit'
-				);
+				$file_set_size = $file_set_size + $archive_file->size;
 			}
 			
-			if ($response->response->file->status === 'uploaded')
-			{
-				$this->data['file_downloadable'] = TRUE;
-			}
-			else
-			{
-				$this->data['file_downloadable'] = FALSE;
-			}
+			$this->data['file_set_size'] = $file_set_size;
+			
 
 			$this->parser->parse('includes/header', $this->data);
 			$this->parser->parse('files/view_file_set_public', $this->data);
