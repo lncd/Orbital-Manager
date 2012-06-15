@@ -229,8 +229,8 @@ class Admin extends CI_Controller {
 		{
 		
 			$licence = $licence->response->licence;
-		
-			if ($this->orbital->licence_update($licence->id, $licence->name, $licence->short_name, $licence->uri, TRUE))
+
+			if ($this->orbital->licence_update($licence->id, $licence->name, $licence->short_name, $licence->uri, $licence->allow_list, $licence->forbid_list, $licence->condition_list, TRUE))
 			{
 				$this->session->set_flashdata('message', 'Licence enabled.');
 				$this->session->set_flashdata('message_type', 'success');
