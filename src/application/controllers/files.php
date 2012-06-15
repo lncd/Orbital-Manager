@@ -298,11 +298,26 @@ class Files extends CI_Controller {
 			$this->data['file_set_project'] = $response->response->file_set->project_name;
 			$this->data['file_set_project_id'] = $response->response->file_set->project;
 			$this->data['file_set_description'] = $response->response->file_set->description;
-			$this->data['file_set_visibility'] = $response->response->file_set->visibility;
 			$this->data['file_set_title'] = $response->response->file_set->title;
 			$this->data['page_title'] = $response->response->file_set->title;
 			$this->data['archive_files_set'] = $response->response->archive_files;
 			$this->data['archive_files_project'] = $response->response->archive_files_project;
+			
+			if (isset($response->response->file_set->visibility))
+			{			
+				if ($response->response->file_set->visibility === 'public')
+				{
+					$this->data['file_set_visibility'] = TRUE;
+				}
+				else
+				{
+					$this->data['file_set_visibility'] = FALSE;
+				}
+			}
+			else
+			{
+				$this->data['file_set_visibility'] = TRUE;
+			}
 			
 			if ($response->response->permissions->write)
 			{
@@ -505,19 +520,19 @@ class Files extends CI_Controller {
 				$this->orbital->file_update($identifier, $this->input->post('name'), (int)$this->input->post('default_licence'), $public_view);
 				
 				foreach($this->input->post('file') as $file_set_name => $value)			
+				{
+					$action = NULL;
+					if (in_array('include', $value))
 					{
-						$action = NULL;
-						if (in_array('include', $value))
-						{
-							$action = 'add';
-						}
-						
-						else if ( ! in_array('include', $value))
-						{
-							$action = 'remove';
-						}
-						$this->orbital->file_update_file_sets($identifier, $file_set_name, $action);
+						$action = 'add';
 					}
+					
+					else if ( ! in_array('include', $value))
+					{
+						$action = 'remove';
+					}
+					$this->orbital->file_update_file_sets($identifier, $file_set_name, $action);
+				}
 				
 				$this->session->set_flashdata('message', 'File details updated successfully.');
 				$this->session->set_flashdata('message_type', 'success');
