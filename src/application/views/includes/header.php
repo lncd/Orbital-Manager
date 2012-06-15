@@ -99,7 +99,7 @@
 							<li><a href="{base_url}">Home</a></li>
 							{nav_menu}
 								<li><a href="{uri}">{name}</a></li>
-							{/nav_menu}
+							{/nav_menu}<!--
 							<li class="dropdown">
 							    <a href="#"
 							          class="dropdown-toggle"
@@ -111,7 +111,7 @@
 									<li><a href="{base_url}planner">Project Planner</a></li>
 									<li><a href="{base_url}policy">Policy &amp; Guidance</a></li>
 							    </ul>
-							</li>
+							</li>-->
 							<li class="dropdown">
 							    <a href="#"
 							          class="dropdown-toggle"

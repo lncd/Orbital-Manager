@@ -277,7 +277,8 @@ class Files extends CI_Controller {
 					}
 				}
 				$public_view = NULL;
-				if ($this->input->post('file_set_public') === 'public')
+				
+				if ($this->input->post('public') === 'public')
 				{
 					$public_view = 'public';
 				}

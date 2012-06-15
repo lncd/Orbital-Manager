@@ -1131,17 +1131,6 @@ class Orbital {
 	}
 	
 	
-	
-	/**
-	 * File set update
-	 *
-	 * Updates the details of a file set
-	 *
-	 * @access public
-	 * @param $file_id string The identifier of the file set the user wants access to
-	 *
-	 * @return object.
-	 */
 
 
 	/**
@@ -1161,6 +1150,17 @@ class Orbital {
 	{
 		return $this->post_authed('file_set/create', array('identifier' => $identifier, 'name' => $name, 'abstract' => $abstract));
 	}
+	
+	/**
+	 * File set update
+	 *
+	 * Updates the details of a file set
+	 *
+	 * @access public
+	 * @param $file_id string The identifier of the file set the user wants access to
+	 *
+	 * @return object.
+	 */
 
 	public function file_set_update($identifier, $name, $description, $file_set_public, $project_identifier)
 	{

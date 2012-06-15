@@ -302,6 +302,7 @@ else if (isset ($data_required))
 			<p><a href="#uploadFileDialogue" class="btn btn-success btn-small" data-toggle="modal"><i class="icon-upload"></i> Upload File</a>
 			
 			<div class="modal fade" id="uploadFileDialogue">
+			
 				<div class="modal-header">
 					<button class="close" data-dismiss="modal">×</button>
 					<h3>Upload File to Archives</h3>
