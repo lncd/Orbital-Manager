@@ -539,6 +539,7 @@ class Projects extends CI_Controller {
 					$this->data['project_default_licence'] = $response->response->project->default_licence;
 					$this->data['project_google_analytics'] = $response->response->project->google_analytics;
 		
+					$this->data['project_controls'] = array();
 					if ($response->response->permissions->write)
 					{
 						$this->data['project_controls'][] = array(

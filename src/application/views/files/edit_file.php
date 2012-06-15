@@ -134,4 +134,5 @@
 		$('#file_sets_table').append('<tr><input type="hidden" name="file[' + file_set_name + '][]" value="file_set_in_file" /><td>' + file_set_title + ' <span class="label label-success">New</span></td><td><input type="checkbox" name="file[' + file_set_name + '][]" value="include" checked="checked"  /></td></tr>');
 		$('#file_sets_table').show();
 	});
+	
 </script>
