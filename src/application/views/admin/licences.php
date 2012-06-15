@@ -119,8 +119,8 @@
 		
 		echo '</div>
 		<div class="modal-footer">
-			<button class="btn" data-dismiss="modal">Close</button>
-			<button type="submit" class="btn btn-success"><i class="icon-pencil"></i> Edit Licence</button>
+			<button class="btn" data-dismiss="modal">Cancel</button>
+			<button type="submit" class="btn btn-success"><i class="icon-pencil"></i> Done</button>
 		</div>';
 	  
 		echo form_close();

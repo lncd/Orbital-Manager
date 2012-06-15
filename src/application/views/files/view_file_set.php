@@ -69,10 +69,7 @@
 
 			?>
 	</table>
-
-			
-
 		
-		{file_controls}
-		<a class="btn btn-small" href="{uri}">{title}</a>
-		{/file_controls}
+	{file_controls}
+	<a class="btn btn-small" href="{uri}">{title}</a>
+	{/file_controls}

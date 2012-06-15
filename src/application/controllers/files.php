@@ -156,6 +156,7 @@ class Files extends CI_Controller {
 				$this->data['archive_file_sets'] = $response->response->archive_file_sets;
 				$this->data['page_title'] = $response->response->file->original_name;
 				
+				$this->data['file_controls'] = array();
 				if ($response->response->permissions->write)
 				{
 					$this->data['file_controls'][] = array(
@@ -219,7 +220,7 @@ class Files extends CI_Controller {
 			}
 			
 			$this->data['file_set_size'] = $file_set_size;
-			
+			$this->data['file_controls'] = array();
 			if ($response->response->permissions->write)
 			{
 				$this->data['file_controls'][] = array(

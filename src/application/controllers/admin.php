@@ -196,7 +196,7 @@ class Admin extends CI_Controller {
 					$this->session->set_flashdata('message', 'Something went wrong editing this licence.');
 					$this->session->set_flashdata('message_type', 'error');
 				}
-				}
+			}
 			else
 			{
 				$this->session->set_flashdata('message', 'Unable to edit licence: ' . validation_errors());

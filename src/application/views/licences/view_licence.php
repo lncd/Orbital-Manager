@@ -25,14 +25,19 @@
 </div>
 
 <div class="row">
-	<div class="span6">
+	<div class="span4">
 		<div class="well">
 		{licence_allow}
 		</div>
 	</div>
-	<div class="span6">
+	<div class="span4">
 		<div class="well">
 		{licence_forbid}
+		</div>
+	</div>
+	<div class="span4">
+		<div class="well">
+		{licence_condition}
 		</div>
 	</div>
 </div>

@@ -250,12 +250,10 @@
 				<h3>Add Member</h3>
 			</div>
 			<div class="modal-body">
-				<p>To add a user to this project start by entering their email address and clicking "Add Member" Remember to save your changes once you have selected their permissions.</p>
-				<p><input type="text" id = "user_email" size="12" maxlength="255" name="user" placeholder="email@example.com"></p>
-				<div class="alert alert-info">At the moment to add a user they must have signed in to Orbital at least once before. This will be fixed in a future release.</div>
+				<input type="text" id = "user_email" size="12" maxlength="255" name="user">
 			</div>
 			<div class="modal-footer">
-				<a id="add_member" value="add_members_details" class="btn btn-success"><i class="icon-plus"></i> Add Member</a>
+				<a name = "add_members_details" id = "add_member" value = "add_members_details" class="btn btn-success"><i class = "icon-plus"></i> Add Member</a>
 			</div>
 		</form>
 		
@@ -273,19 +271,19 @@
 
 	$.getJSON('{base_url}licence/' + $('#project_default_licence').val() + '/json', function(data) {
 	
-		if (data.allow !== null)
+		if (data.allow !== '')
 		{
 			$('#licenceAllowContent').html(data.allow);
 			$('#licenceAllow').show();
 		}
 		
-		if (data.conditions !== null)
+		if (data.conditions !== '')
 		{
 			$('#licenceConditionsContent').html(data.conditions);
 			$('#licenceConditions').show();
 		}
 		
-		if (data.forbid !== null)
+		if (data.forbid !== '')
 		{
 			$('#licenceDenyContent').html(data.forbid);
 			$('#licenceDeny').show();
@@ -300,7 +298,7 @@
 			
 		$.getJSON('{base_url}licence/' + $('#project_default_licence').val() + '/json', function(data) {
 		  
-			if (data.allow !== null)
+			if (data.allow !== '')
 			{
 				$('#licenceAllowContent').html(data.allow);
 				$('#licenceAllow').show();
@@ -310,7 +308,7 @@
 				$('#licenceAllow').hide();
 			}
 			
-			if (data.conditions !== null)
+			if (data.conditions !== '')
 			{
 				$('#licenceConditionsContent').html(data.conditions);
 				$('#licenceConditions').show();
@@ -320,7 +318,7 @@
 				$('#licenceConditions').hide();
 			}
 			
-			if (data.forbid !== null)
+			if (data.forbid !== '')
 			{
 				$('#licenceDenyContent').html(data.forbid);
 				$('#licenceDeny').show();
