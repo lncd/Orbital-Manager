@@ -537,6 +537,7 @@ class Projects extends CI_Controller {
 					$this->data['project_start_date'] = $response->response->project->start_date;
 					$this->data['project_end_date'] = $response->response->project->end_date;
 					$this->data['project_default_licence'] = $response->response->project->default_licence;
+					$this->data['project_default_licence_name'] = $response->response->project->default_licence_name;
 					$this->data['project_google_analytics'] = $response->response->project->google_analytics;
 		
 					$this->data['project_controls'] = array();

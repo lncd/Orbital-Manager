@@ -117,11 +117,6 @@
 		{
 			$available_licences[$licence->id] = $licence->name;
 		}
-	}
-	else
-	{
-		$available_licences[$licence->id] = $project_default_licence;
-	}
 
 	echo '<div class="control-group">';
 	echo form_label('Default Licence', 'project_default_licence', array('class' => 'control-label'));
@@ -155,8 +150,46 @@
 		<span id="licenceInfoURL"><a href="' . $licence->uri . '" target="_blank">' . $licence->uri . ' <i class="icon-external-link"></i></a></span></p>
 	</div>
 </div>
-</div>
-
+</div>';
+	}
+	else
+	{	
+		$available_licences[$project_default_licence] = $project_default_licence_name;
+		
+		echo '<div class="control-group">';
+		echo form_label('Default Licence', 'project_default_licence', array('class' => 'control-label'));
+		echo '<div class="controls">';
+		echo form_dropdown('default_licence', $available_licences, set_value('default_licence', $project_default_licence), 'id="project_default_licence" class="span4"');
+		echo '<p class="help-block">Choosing a default licence makes it easier to publish and share your data. However, you can still change it on a case-by-case basis for individual files and datasets.</p>';
+		echo '
+		<br>
+		<div class="well" style="background:#FDFDFD">
+		
+			<div id="licenceAllow" style="display:none">
+				<h4>This licence allows:</h4>
+				<div id="licenceAllowContent">
+				</div>
+			</div>
+			
+			<div id="licenceDeny" style="display:none">
+				<h4>This licence forbids:</h4>
+				<div id="licenceDenyContent">
+				</div>
+			</div>
+			
+			<div id="licenceConditions" style="display:none">
+				<h4>This licence has the following conditions:</h4>
+				<div id="licenceConditionsContent">
+				</div>
+			</div>
+			
+			<h4>NO LICENCES ARE ENABLED</h4>
+			<p>Only the licence this project currently has can be selected</p>
+		</div>
+	</div>
+	</div>';
+	}
+echo'
 <div class="control-group">
 <div class="controls">
 <h4><a onClick="$(\'#projectAdvancedSettings\').toggle(\'blind\');"><i class="icon-cog"></i> Show/Hide Advanced Settings</a></h4>
