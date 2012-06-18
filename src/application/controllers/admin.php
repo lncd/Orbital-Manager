@@ -186,7 +186,16 @@ class Admin extends CI_Controller {
 			{
 				$licence = $licence->response->licence;
 			
-				if ($this->orbital->licence_update($licence->id, $this->input->post('name'),  $this->input->post('shortname'),  $this->input->post('url'), $this->input->post('allow'),  $this->input->post('forbid'),  $this->input->post('condition'), FALSE))
+				if ($this->orbital->licence_update(
+					$licence->id,
+					$this->input->post('name'),
+					$this->input->post('shortname'),
+					$this->input->post('url'),
+					$this->input->post('allow') !== '' ? $this->input->post('allow') : NULL,
+					$this->input->post('forbid') !== '' ? $this->input->post('forbid') : NULL,
+					$this->input->post('condition') !== '' ? $this->input->post('condition') : NULL,
+					FALSE
+				))
 				{
 					$this->session->set_flashdata('message', 'Licence edited successfully.');
 					$this->session->set_flashdata('message_type', 'success');
