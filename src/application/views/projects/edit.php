@@ -111,9 +111,16 @@
 	echo '<p class="help-block">This creates a public web page for your project which people can cite. If you upload public datasets they will be available to download from this page.</p>';
 	echo '</div></div>';
 	
-	foreach ($licences as $licence)
+	if (isset($licences) AND count($licences) > 0)
 	{
-		$available_licences[$licence->id] = $licence->name;
+		foreach ($licences as $licence)
+		{
+			$available_licences[$licence->id] = $licence->name;
+		}
+	}
+	else
+	{
+		$available_licences[$licence->id] = $project_default_licence;
 	}
 
 	echo '<div class="control-group">';
