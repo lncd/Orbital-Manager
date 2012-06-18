@@ -111,10 +111,12 @@
 	echo '<p class="help-block">This creates a public web page for your project which people can cite. If you upload public datasets they will be available to download from this page.</p>';
 	echo '</div></div>';
 	
-	foreach ($licences as $licence)
+	if (isset($licences) AND count($licences) > 0)
 	{
-		$available_licences[$licence->id] = $licence->name;
-	}
+		foreach ($licences as $licence)
+		{
+			$available_licences[$licence->id] = $licence->name;
+		}
 
 	echo '<div class="control-group">';
 	echo form_label('Default Licence', 'project_default_licence', array('class' => 'control-label'));
@@ -148,8 +150,46 @@
 		<span id="licenceInfoURL"><a href="' . $licence->uri . '" target="_blank">' . $licence->uri . ' <i class="icon-external-link"></i></a></span></p>
 	</div>
 </div>
-</div>
-
+</div>';
+	}
+	else
+	{	
+		$available_licences[$project_default_licence] = $project_default_licence_name;
+		
+		echo '<div class="control-group">';
+		echo form_label('Default Licence', 'project_default_licence', array('class' => 'control-label'));
+		echo '<div class="controls">';
+		echo form_dropdown('default_licence', $available_licences, set_value('default_licence', $project_default_licence), 'id="project_default_licence" class="span4"');
+		echo '<p class="help-block">Choosing a default licence makes it easier to publish and share your data. However, you can still change it on a case-by-case basis for individual files and datasets.</p>';
+		echo '
+		<br>
+		<div class="well" style="background:#FDFDFD">
+		
+			<div id="licenceAllow" style="display:none">
+				<h4>This licence allows:</h4>
+				<div id="licenceAllowContent">
+				</div>
+			</div>
+			
+			<div id="licenceDeny" style="display:none">
+				<h4>This licence forbids:</h4>
+				<div id="licenceDenyContent">
+				</div>
+			</div>
+			
+			<div id="licenceConditions" style="display:none">
+				<h4>This licence has the following conditions:</h4>
+				<div id="licenceConditionsContent">
+				</div>
+			</div>
+			
+			<h4>NO LICENCES ARE ENABLED</h4>
+			<p>Only the licence this project currently has can be selected</p>
+		</div>
+	</div>
+	</div>';
+	}
+echo'
 <div class="control-group">
 <div class="controls">
 <h4><a onClick="$(\'#projectAdvancedSettings\').toggle(\'blind\');"><i class="icon-cog"></i> Show/Hide Advanced Settings</a></h4>
@@ -250,12 +290,10 @@
 				<h3>Add Member</h3>
 			</div>
 			<div class="modal-body">
-				<p>To add a user to this project start by entering their email address and clicking "Add Member" Remember to save your changes once you have selected their permissions.</p>
-				<p><input type="text" id = "user_email" size="12" maxlength="255" name="user" placeholder="email@example.com"></p>
-				<div class="alert alert-info">At the moment to add a user they must have signed in to Orbital at least once before. This will be fixed in a future release.</div>
+				<input type="text" id = "user_email" size="12" maxlength="255" name="user">
 			</div>
 			<div class="modal-footer">
-				<a id="add_member" value="add_members_details" class="btn btn-success"><i class="icon-plus"></i> Add Member</a>
+				<a name = "add_members_details" id = "add_member" value = "add_members_details" class="btn btn-success"><i class = "icon-plus"></i> Add Member</a>
 			</div>
 		</form>
 		
@@ -273,19 +311,19 @@
 
 	$.getJSON('{base_url}licence/' + $('#project_default_licence').val() + '/json', function(data) {
 	
-		if (data.allow !== null)
+		if (data.allow !== '')
 		{
 			$('#licenceAllowContent').html(data.allow);
 			$('#licenceAllow').show();
 		}
 		
-		if (data.conditions !== null)
+		if (data.conditions !== '')
 		{
 			$('#licenceConditionsContent').html(data.conditions);
 			$('#licenceConditions').show();
 		}
 		
-		if (data.forbid !== null)
+		if (data.forbid !== '')
 		{
 			$('#licenceDenyContent').html(data.forbid);
 			$('#licenceDeny').show();
@@ -300,7 +338,7 @@
 			
 		$.getJSON('{base_url}licence/' + $('#project_default_licence').val() + '/json', function(data) {
 		  
-			if (data.allow !== null)
+			if (data.allow !== '')
 			{
 				$('#licenceAllowContent').html(data.allow);
 				$('#licenceAllow').show();
@@ -310,7 +348,7 @@
 				$('#licenceAllow').hide();
 			}
 			
-			if (data.conditions !== null)
+			if (data.conditions !== '')
 			{
 				$('#licenceConditionsContent').html(data.conditions);
 				$('#licenceConditions').show();
@@ -320,7 +358,7 @@
 				$('#licenceConditions').hide();
 			}
 			
-			if (data.forbid !== null)
+			if (data.forbid !== '')
 			{
 				$('#licenceDenyContent').html(data.forbid);
 				$('#licenceDeny').show();

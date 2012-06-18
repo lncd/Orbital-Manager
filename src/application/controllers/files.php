@@ -156,6 +156,7 @@ class Files extends CI_Controller {
 				$this->data['archive_file_sets'] = $response->response->archive_file_sets;
 				$this->data['page_title'] = $response->response->file->original_name;
 				
+				$this->data['file_controls'] = array();
 				if ($response->response->permissions->write)
 				{
 					$this->data['file_controls'][] = array(
@@ -219,7 +220,7 @@ class Files extends CI_Controller {
 			}
 			
 			$this->data['file_set_size'] = $file_set_size;
-			
+			$this->data['file_controls'] = array();
 			if ($response->response->permissions->write)
 			{
 				$this->data['file_controls'][] = array(
@@ -277,7 +278,8 @@ class Files extends CI_Controller {
 					}
 				}
 				$public_view = NULL;
-				if ($this->input->post('file_set_public') === 'public')
+				
+				if ($this->input->post('public') === 'public')
 				{
 					$public_view = 'public';
 				}
@@ -297,11 +299,26 @@ class Files extends CI_Controller {
 			$this->data['file_set_project'] = $response->response->file_set->project_name;
 			$this->data['file_set_project_id'] = $response->response->file_set->project;
 			$this->data['file_set_description'] = $response->response->file_set->description;
-			$this->data['file_set_visibility'] = $response->response->file_set->visibility;
 			$this->data['file_set_title'] = $response->response->file_set->title;
 			$this->data['page_title'] = $response->response->file_set->title;
 			$this->data['archive_files_set'] = $response->response->archive_files;
 			$this->data['archive_files_project'] = $response->response->archive_files_project;
+			
+			if (isset($response->response->file_set->visibility))
+			{			
+				if ($response->response->file_set->visibility === 'public')
+				{
+					$this->data['file_set_visibility'] = TRUE;
+				}
+				else
+				{
+					$this->data['file_set_visibility'] = FALSE;
+				}
+			}
+			else
+			{
+				$this->data['file_set_visibility'] = TRUE;
+			}
 			
 			if ($response->response->permissions->write)
 			{
@@ -384,38 +401,28 @@ class Files extends CI_Controller {
 
 	function view_file_set_public($identifier)
 	{
-		if ($response = $this->orbital->file_set_get_details($identifier))
+		if ($response = $this->orbital->file_set_get_details_public($identifier))
 		{
 			$this->load->helper('number');
 			$this->load->library('typography');
 			
 			$this->data['file_set_id'] = $response->response->file_set->id;
 			$this->data['file_set_project'] = $response->response->file_set->project_name;
-			$this->data['file_set_project_id'] = $response->response->file_set->project_id;
+			$this->data['file_set_project_id'] = $response->response->file_set->project;
 			$this->data['file_set_title'] = $response->response->file_set->title;
-			$this->data['file_set_name'] = $response->response->file_set->original_name;
-			$this->data['file_set_licence'] = $response->response->file_set->licence_name;
-			$this->data['file_set_licence_uri'] = $response->response->file_set->licence_uri;
-			$this->data['file_set_extension'] = $response->response->file_set->extension;
-			$this->data['file_set_mimetype'] = $response->response->file_set->mimetype;
-			$this->data['page_title'] = $response->response->file_set->original_name;
+			$this->data['file_set_name'] = $response->response->file_set->title;
+			$this->data['page_title'] = $response->response->file_set->title;
+			$this->data['archive_files'] = $response->response->archive_files;
 			
-			if ($response->response->permissions->write)
+						
+			$file_set_size = NULL;
+			foreach ($response->response->archive_files as $archive_file)
 			{
-				$this->data['file_controls'][] = array(
-					'uri' => site_url('file/' . $response->response->file->id . '/edit'),
-					'title' => 'Edit'
-				);
+				$file_set_size = $file_set_size + $archive_file->size;
 			}
 			
-			if ($response->response->file->status === 'uploaded')
-			{
-				$this->data['file_downloadable'] = TRUE;
-			}
-			else
-			{
-				$this->data['file_downloadable'] = FALSE;
-			}
+			$this->data['file_set_size'] = $file_set_size;
+			
 
 			$this->parser->parse('includes/header', $this->data);
 			$this->parser->parse('files/view_file_set_public', $this->data);
@@ -514,19 +521,19 @@ class Files extends CI_Controller {
 				$this->orbital->file_update($identifier, $this->input->post('name'), (int)$this->input->post('default_licence'), $public_view);
 				
 				foreach($this->input->post('file') as $file_set_name => $value)			
+				{
+					$action = NULL;
+					if (in_array('include', $value))
 					{
-						$action = NULL;
-						if (in_array('include', $value))
-						{
-							$action = 'add';
-						}
-						
-						else if ( ! in_array('include', $value))
-						{
-							$action = 'remove';
-						}
-						$this->orbital->file_update_file_sets($identifier, $file_set_name, $action);
+						$action = 'add';
 					}
+					
+					else if ( ! in_array('include', $value))
+					{
+						$action = 'remove';
+					}
+					$this->orbital->file_update_file_sets($identifier, $file_set_name, $action);
+				}
 				
 				$this->session->set_flashdata('message', 'File details updated successfully.');
 				$this->session->set_flashdata('message_type', 'success');
@@ -541,6 +548,7 @@ class Files extends CI_Controller {
 			$this->data['file_title'] = $response->response->file->title;
 			$this->data['file_name'] = $response->response->file->original_name;
 			$this->data['file_licence'] = $response->response->file->licence;
+			$this->data['file_licence_name'] = $response->response->file->licence_name;
 			$this->data['file_licence_uri'] = $response->response->file->licence_uri;
 			$this->data['file_extension'] = $response->response->file->extension;
 			$this->data['file_mimetype'] = $response->response->file->mimetype;

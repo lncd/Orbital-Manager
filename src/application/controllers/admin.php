@@ -186,7 +186,16 @@ class Admin extends CI_Controller {
 			{
 				$licence = $licence->response->licence;
 			
-				if ($this->orbital->licence_update($licence->id, $this->input->post('name'),  $this->input->post('shortname'),  $this->input->post('url'), $this->input->post('allow'),  $this->input->post('forbid'),  $this->input->post('condition'), FALSE))
+				if ($this->orbital->licence_update(
+					$licence->id,
+					$this->input->post('name'),
+					$this->input->post('shortname'),
+					$this->input->post('url'),
+					$this->input->post('allow'),
+					$this->input->post('forbid'),
+					$this->input->post('condition'),
+					FALSE
+				))
 				{
 					$this->session->set_flashdata('message', 'Licence edited successfully.');
 					$this->session->set_flashdata('message_type', 'success');
@@ -196,7 +205,7 @@ class Admin extends CI_Controller {
 					$this->session->set_flashdata('message', 'Something went wrong editing this licence.');
 					$this->session->set_flashdata('message_type', 'error');
 				}
-				}
+			}
 			else
 			{
 				$this->session->set_flashdata('message', 'Unable to edit licence: ' . validation_errors());
@@ -229,8 +238,8 @@ class Admin extends CI_Controller {
 		{
 		
 			$licence = $licence->response->licence;
-		
-			if ($this->orbital->licence_update($licence->id, $licence->name, $licence->short_name, $licence->uri, TRUE))
+
+			if ($this->orbital->licence_update($licence->id, $licence->name, $licence->short_name, $licence->uri, $licence->allow_list, $licence->forbid_list, $licence->condition_list, TRUE))
 			{
 				$this->session->set_flashdata('message', 'Licence enabled.');
 				$this->session->set_flashdata('message_type', 'success');

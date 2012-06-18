@@ -38,12 +38,15 @@ else
 	echo 'There isn\'t any activity to show for ' . $user_name . '.';
 }
 
-?>
-
-<h2>Access Token</h2>
-<?php
-	echo $this->session->userdata('access_token') . '<br>'; 
-	echo base64_encode($this->session->userdata('access_token'));
+if (ENVIRONMENT === 'development')
+{
+	?>
+	
+	<h2>Access Token</h2>
+	<?php
+		echo '<p>Access Token: <code>' . $this->session->userdata('access_token') . '</code></p>'; 
+		echo '<p>Base 64 Encoded: <code>' . base64_encode($this->session->userdata('access_token')) . '</code></p>';
+}
 ?>
 		
 <script type="text/javascript" src="{base_url}js/jquery.scrollTo.min.js"></script>

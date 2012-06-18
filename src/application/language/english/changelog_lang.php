@@ -6,6 +6,9 @@ $lang['Change_Log_title']		= 'Change Log';
 
 // Versions
 
+$lang['Change_Log_details_title'] = 'For full details, see our project tracker: https://www.pivotaltracker.com/projects/366731';
+
+
 $lang['Change_Log_trio1_title']	= 'v0.2';
 $lang['Change_Log_trio1_text']	= 'An activity timeline for all of a user?s projects
 An activity timeline for each project, with the ability to add comments.
@@ -15,7 +18,8 @@ Create and edit collections of data
 Admins can edit licenses
 Dynamic datasets:
 A documented, authenticated API for loading data into Orbital
-A documented, authenticated API for querying data held in Orbital.';
+A documented, authenticated API for updating data stored in Orbital
+A documented, authenticated API for querying data stored in Orbital';
 
 $lang['Change_Log_trio2_title']	= 'v0.1';
 $lang['Change_Log_trio2_text']	= 'Application home at http://orbital.lincoln.ac.uk
