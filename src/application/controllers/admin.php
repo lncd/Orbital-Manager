@@ -191,9 +191,9 @@ class Admin extends CI_Controller {
 					$this->input->post('name'),
 					$this->input->post('shortname'),
 					$this->input->post('url'),
-					$this->input->post('allow') !== '' ? $this->input->post('allow') : NULL,
-					$this->input->post('forbid') !== '' ? $this->input->post('forbid') : NULL,
-					$this->input->post('condition') !== '' ? $this->input->post('condition') : NULL,
+					$this->input->post('allow'),
+					$this->input->post('forbid'),
+					$this->input->post('condition'),
 					FALSE
 				))
 				{
