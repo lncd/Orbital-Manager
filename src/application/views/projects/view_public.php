@@ -132,7 +132,7 @@
 					{
 						$priv_icon = 'open';
 									
-						echo '<li><a href="' . base_url() . 'file/' . $archive_file->id . '/public"><i class="icon-eye-' . $priv_icon . '"></i> ' . $archive_file->original_name . ' ';
+						echo '<li><a href="' . base_url() . 'file/' . $archive_file->id . '/public"><i class="icon-eye-' . $priv_icon . '"></i> ' . $archive_file->title . ' ';
 							
 						switch ($archive_file->status)
 						{
