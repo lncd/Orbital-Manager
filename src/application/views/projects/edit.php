@@ -311,19 +311,19 @@ echo'
 
 	$.getJSON('{base_url}licence/' + $('#project_default_licence').val() + '/json', function(data) {
 	
-		if (data.allow !== '')
+		if (data.allow !== null)
 		{
 			$('#licenceAllowContent').html(data.allow);
 			$('#licenceAllow').show();
 		}
 		
-		if (data.conditions !== '')
+		if (data.conditions !== null)
 		{
 			$('#licenceConditionsContent').html(data.conditions);
 			$('#licenceConditions').show();
 		}
 		
-		if (data.forbid !== '')
+		if (data.forbid !== null)
 		{
 			$('#licenceDenyContent').html(data.forbid);
 			$('#licenceDeny').show();
@@ -338,7 +338,7 @@ echo'
 			
 		$.getJSON('{base_url}licence/' + $('#project_default_licence').val() + '/json', function(data) {
 		  
-			if (data.allow !== '')
+			if (data.allow !== null)
 			{
 				$('#licenceAllowContent').html(data.allow);
 				$('#licenceAllow').show();
@@ -348,7 +348,7 @@ echo'
 				$('#licenceAllow').hide();
 			}
 			
-			if (data.conditions !== '')
+			if (data.conditions !== null)
 			{
 				$('#licenceConditionsContent').html(data.conditions);
 				$('#licenceConditions').show();
@@ -358,7 +358,7 @@ echo'
 				$('#licenceConditions').hide();
 			}
 			
-			if (data.forbid !== '')
+			if (data.forbid !== null)
 			{
 				$('#licenceDenyContent').html(data.forbid);
 				$('#licenceDeny').show();
