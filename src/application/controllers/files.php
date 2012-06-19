@@ -390,6 +390,59 @@ class Files extends CI_Controller {
 		}
 	}
 
+
+	/**
+	 * Create new file set
+	 *
+	 * creates a file set
+	 *
+	 * @return NULL
+	 */
+
+
+	function create_new_file($project_identifier)
+	{
+		$this->data['page_title'] = 'Create New File';
+		
+		$response = $this->orbital->project_details($project_identifier);
+
+		$licences = $this->orbital->licences_enabled_list();
+		$this->data['file_licences'] = $licences->response->licences;
+		$this->data['file_project'] = $response->response->project->identifier;
+		$this->data['file_project_name'] = $response->response->project->name;
+			
+		if($this->input->post('file_name') AND $this->input->post('file_name') !== '')
+		{
+			if($this->input->post('file_description') AND $this->input->post('file_description') !== '')
+			{
+				if ($response = $this->orbital->create_new_file($project_identifier, $this->input->post('file_name'), $this->input->post('file_description')))
+				{					
+					$this->session->set_flashdata('message', 'File upload complete!');
+					$this->session->set_flashdata('message_type', 'success');
+					redirect('project/' . $project_identifier . '?special=new');
+				}
+				else
+				{
+					$this->session->set_flashdata('message', 'Something went wrong during upload');
+					$this->session->set_flashdata('message_type', 'error');
+					redirect('projects');
+				}
+			}
+			else
+			{
+				$this->session->set_flashdata('message', 'The file is missing some data');
+				$this->session->set_flashdata('message_type', 'alert');
+				redirect('projects');
+			}
+		}
+		else
+		{
+			$this->parser->parse('includes/header', $this->data);
+			$this->parser->parse('files/add_file', $this->data);
+			$this->parser->parse('includes/footer', $this->data);
+		}
+	}
+	
 	/**
 	 * View public file set details
 	 *
