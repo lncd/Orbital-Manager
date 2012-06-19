@@ -296,11 +296,12 @@ else if (isset ($data_required))
 			{
 				echo '<p>This project doesn\'t have any archive files saved. Archive files to permanently store and publish data.</p>';
 			}
-						
-			?>
+				
 
-			<p><a href="#uploadFileDialogue" class="btn btn-success btn-small" data-toggle="modal"><i class="icon-upload"></i> Upload File</a>
-			
+			echo '<a href="{base_url}project/' . $project_id .'/files/add" class="btn btn-success btn-small"><i class="icon-upload"></i> Upload File</a>';
+					
+			?>
+			<!--
 			<div class="modal fade" id="uploadFileDialogue">
 			
 				<div class="modal-header">
@@ -314,6 +315,7 @@ else if (isset ($data_required))
 					<a class="btn" href="<?php echo site_url('project/{project_id}'); ?>">Done</a>
 				</div>
 			</div>
+			-->
 		</div>
 	</div>
 	

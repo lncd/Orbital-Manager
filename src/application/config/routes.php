@@ -48,6 +48,7 @@ $route['planner'] = 'tools/project_planner';
 $route['policy'] = 'tools/policy_guidance';
 $route['changelog'] = 'static_content/changelog';
 
+$route['project/(:any)/upload_token'] = "projects/get_upload_token/$1";
 $route['project/(:any)/public/files'] = "files/list_files_public/$1";
 $route['project/(:any)/collections'] = "files/list_file_sets/$1";
 $route['project/(:any)/datasets'] = "datasets/list_datasets/$1";
@@ -56,6 +57,7 @@ $route['project/(:any)/edit'] = "projects/edit/$1";
 $route['project/(:any)/delete'] = "projects/delete/$1";
 $route['project/(:any)/public'] = "projects/view_public/$1";
 $route['project/(:any)/collections/add'] = "files/create_new_file_set/$1";
+$route['project/(:any)/files/add'] = "files/create_new_file/$1";
 $route['project/(:any)/datasets/add'] = "datasets/create_new_dataset/$1";
 $route['project/(:any)/timeline/comment'] = "projects/timeline_add_comment/$1";
 $route['project/(:any)'] = "projects/view/$1";
