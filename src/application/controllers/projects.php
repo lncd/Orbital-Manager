@@ -261,6 +261,7 @@ class Projects extends CI_Controller {
 				// Generate list file_sets
 
 				$this->data['file_sets'] = $response->response->file_sets;
+				
 				// Upload token
 				$this->data['upload_token'] = $response->response->upload_token;
 
@@ -778,6 +779,23 @@ class Projects extends CI_Controller {
 		else
 		{
 			show_404();
+		}
+	}
+	
+	function get_upload_token($identifier)
+	{	
+		if ($response = $this->orbital->project_details($identifier, 5))
+		{
+			if ($response->response->status === TRUE)
+			{
+				// Upload token
+				$data['upload_token'] = $response->response->upload_token;
+				$this->output->set_output(json_encode($data));
+			}
+			else
+			{
+				show_404();
+			}
 		}
 	}
 }
