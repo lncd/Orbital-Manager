@@ -195,7 +195,7 @@
 					{
 						$priv_icon = 'open';
 									
-						echo '<li><a href="' . base_url() . 'collection/' . $file_set->file_set_id . '"><i class="icon-eye-' . $priv_icon . '"></i> ' . $file_set->file_set_name . ' ';
+						echo '<li><a href="' . base_url() . 'collection/' . $file_set->file_set_id . '/public"><i class="icon-eye-' . $priv_icon . '"></i> ' . $file_set->file_set_name . ' ';
 						
 						echo '</a></li>';
 					}
