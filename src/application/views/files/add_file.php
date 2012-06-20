@@ -67,7 +67,6 @@
 				</div>
 			
 				<p>
-				<a href="#" class="btn btn-primary" id="next_button"><i class = "icon-arrow-right"></i> Next</a></p>
 				';
 		}
 		else
@@ -80,14 +79,25 @@
 		?>
 		</div>
 	</div>
+	<div class="span6" id="settings_message_div">
+		<div id="settings" class="well">
+			<p><h2>1. Choose your settings</h2></p><br>
+			<p><h2>2. Click 'Next' to start uploading files</h2></p><br>
+			<p><a href="#" class="btn btn-primary" id="next_button"><i class = "icon-arrow-right"></i> Next</a></p>
+		</div>
+	</div>
 	<div class="span6">
 		<div class="well" id="upload_div" hidden>
 			<iframe id="upload_frame" style="width:100%;border:none;height:400px;" src=""></iframe>
 		</div>
 	</div>
-	<div class="span6" id="settings_message_div">
+	<div class="span6" id="upload_message_div" hidden>
 		<div id="settings" class="well">
-			SETTINGS
+			<p><h2>1. Choose your files to upload</h2></p><br>
+			<p><h2>2. Confirm to start the upload</h2></p><br>
+			<p><h2>3. Click back to upload files under a different licence or publicity</h2></p><br><br>
+			<p><a href="#" class="btn" id="back_button"><i class = "icon-arrow-left"></i> Back</a></p>
+
 		</div>
 	</div>
 </div>
@@ -99,10 +109,20 @@
 	    $.getJSON('<?php echo base_url(); ?>project/{file_project}/upload_token', function(data) {
 	    
 	    	$('#settings_message_div').hide()
+	    	$('#settings_div').hide()
+	    	$('#upload_message_div').show();
 	    	$('#upload_div').show();
 	    	$('#upload_frame').attr('src','{orbital_core_location}fileupload/form?token=' + data.upload_token + '&licence=' + $('#licence').val() + '&public=' + $('#file_public').attr('checked'));
 	    	
 	    });
+	});
+	
+	$('#back_button').click(function(){
+	
+    	$('#settings_message_div').show()
+    	$('#settings_div').show()
+    	$('#upload_message_div').hide();
+    	$('#upload_div').hide();
 	});
     
     $.getJSON('<?php echo base_url(); ?>licence/' + $('#licence').val() + '/json', function(data) {
