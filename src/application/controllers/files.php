@@ -506,6 +506,7 @@ class Files extends CI_Controller {
 			$this->load->helper('number');
 			
 			$this->data['file_id'] = $response->response->file->id;
+			$this->data['file_visibility'] = $response->response->file->visibility;
 			$this->data['file_project'] = $response->response->file->project_name;
 			$this->data['file_project_id'] = $response->response->file->project;
 			$this->data['file_title'] = $response->response->file->title;
@@ -521,9 +522,21 @@ class Files extends CI_Controller {
 				$this->data['alt_tracking'] = $project->response->project->google_analytics;
 			}
 			
+			
 			if ($response->response->file->status === 'uploaded')
 			{
-				$this->data['file_downloadable'] = TRUE;
+				if ($this->data['file_visibility'] === 'visible')
+				{
+					$this->data['file_downloadable'] = 'no';
+				}
+				if ($this->data['file_visibility'] === 'public')
+				{
+					$this->data['file_downloadable'] = TRUE;
+				}
+				else
+				{
+					$this->data['file_downloadable'] = FALSE;
+				}
 			}
 			else
 			{

@@ -18,8 +18,14 @@
 </div>
 
 <div class="row">
-	<div class="span6">
-		<div class="well" id="settings_div">
+	<div class="span4" id="settings_message_div">
+		<div id="settings" class="well">
+			<ol class="lead"><li>Choose your settings</li>
+			<li>Click 'Next' to start uploading files</li></ol>
+			<p><a href="#" class="btn btn-primary" id="next_button"><i class = "icon-arrow-right"></i> Next</a></p>
+		</div>
+	</div>
+	<div class="span8" id="settings_div">
 		<?php
 		$form_public = array(
 				'name'		=> 'public',
@@ -77,28 +83,18 @@
 			</div>';		
 		}
 		?>
-		</div>
 	</div>
-	<div class="span6" id="settings_message_div">
+	<div class="span4" id="upload_message_div" hidden>
 		<div id="settings" class="well">
-			<p><h2>1. Choose your settings</h2></p><br>
-			<p><h2>2. Click 'Next' to start uploading files</h2></p><br>
-			<p><a href="#" class="btn btn-primary" id="next_button"><i class = "icon-arrow-right"></i> Next</a></p>
-		</div>
-	</div>
-	<div class="span6">
-		<div class="well" id="upload_div" hidden>
-			<iframe id="upload_frame" style="width:100%;border:none;height:400px;" src=""></iframe>
-		</div>
-	</div>
-	<div class="span6" id="upload_message_div" hidden>
-		<div id="settings" class="well">
-			<p><h2>1. Choose your files to upload</h2></p><br>
-			<p><h2>2. Confirm to start the upload</h2></p><br>
-			<p><h2>3. Click back to upload files under a different licence or publicity</h2></p><br><br>
+			<ol class="lead"><li>Choose your files to upload</li>
+			<li>Confirm to start the upload</li>
+			<li>Click back to upload files under a different licence or publicity</li></ol>
 			<p><a href="#" class="btn" id="back_button"><i class = "icon-arrow-left"></i> Back</a></p>
 
 		</div>
+	</div>
+	<div class="span8" id="upload_div" hidden>
+		<iframe id="upload_frame" style="width:100%;border:none;height:400px;" src=""></iframe>
 	</div>
 </div>
 
