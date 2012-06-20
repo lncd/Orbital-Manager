@@ -12,7 +12,6 @@
 		{file_title}
 	</li>
 </ul>
-
 <div class="page-header">
 	<h1>{file_title}</h1>
 </div>
@@ -33,15 +32,20 @@
 
 <?php
 
-if ($file_downloadable)
+if (isset ($file_downloadable))
 {
-
-	echo '<a class="btn btn-primary" href="{base_url}file/{file_id}/download" onClick="recordDownload(this, \'{file_id}\');"><i class = "icon-ok icon-download icon-white"></i> Download File</a>';
-
+	if($file_downloadable)
+	{
+		echo '<a class="btn btn-primary" href="{base_url}file/{file_id}/download" onClick="recordDownload(this, \'{file_id}\');"><i class = "icon-ok icon-download icon-white"></i> Download File</a>';
+	}
+	else if ($file_downloadable === 'no')
+	{
+		echo '<p>This file isn\'t available for download.</p>';
+	}
 }
 else
 {
 	echo '<p>This file isn\'t available for download right now, as it is being processed by Orbital. It should be available soon.</p>';
 }
 
-?>	
+?>
