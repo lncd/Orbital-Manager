@@ -272,7 +272,7 @@ else if (isset ($data_required))
 					}
 					else
 					{
-						$extension_icon = 'exclamation-sign';
+						$extension_icon = 'file';
 					}
 				
 					echo '<li><a href="' . base_url() . 'file/' . $archive_file->id . '"><i class="icon-eye-' . $priv_icon . '"></i> <i class="icon-' . $extension_icon . '"></i> ' . $archive_file->title . ' ';

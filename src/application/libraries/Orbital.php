@@ -427,6 +427,11 @@ class Orbital {
 	
 	/**
 	 * Put (Authenticated)
+	 *
+	 * @param string $target      Target of HTTP PUT.
+	 * @param array  $post_fields Contents of HTTP PUT.
+	 *
+	 * @return bool TRUE if swap successful, FALSE if not.
 	 */
 
 	private function put_authed($target, $post_fields)

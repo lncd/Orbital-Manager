@@ -51,7 +51,7 @@
 					}
 					else
 					{
-						$extension_icon = 'exclamation-sign';
+						$extension_icon = 'file';
 					}
 							
 					echo '<a href="' . base_url() . 'file/' . $archive_file->id . '/public"><i class="icon-eye-' . $priv_icon . '"></i> <i class="icon-' . $extension_icon . '"></i> ' . $archive_file->title . ' '; ?></td>
