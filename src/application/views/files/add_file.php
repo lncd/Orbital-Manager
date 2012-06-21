@@ -27,12 +27,6 @@
 	</div>
 	<div class="span8" id="settings_div">
 		<?php
-		$form_public = array(
-				'name'		=> 'public',
-				'id'		=> 'file_public',
-				'value'		=> 'public',
-				'checked'	=> set_checkbox('public', 'public', 0)
-			);
 		
 		if (isset($file_licences) AND count($file_licences) > 0)
 		{
@@ -40,9 +34,13 @@
 			{
 				$available_licences[$licence->id] = $licence->name;
 			}
+				$publicities['public'] = 'Public';
+				$publicities['visible'] = 'Public - No Download';
+				$publicities['private'] = 'Private';
+			
 				
-			echo form_label('Make these files publicly available?', 'public');
-			echo form_checkbox($form_public);
+			echo form_label('Make these files publicly available?', 'publicity');
+			echo form_dropdown('publicity', $publicities, 'Public', 'id="publicity"');
 			echo form_label('Licence to release these files under (if public)', 'licence');
 			echo form_dropdown('licence', $available_licences, 0, 'id="licence"');
 		
@@ -108,7 +106,7 @@
 	    	$('#settings_div').hide()
 	    	$('#upload_message_div').show();
 	    	$('#upload_div').show();
-	    	$('#upload_frame').attr('src','{orbital_core_location}fileupload/form?token=' + data.upload_token + '&licence=' + $('#licence').val() + '&public=' + $('#file_public').attr('checked'));
+	    	$('#upload_frame').attr('src','{orbital_core_location}fileupload/form?token=' + data.upload_token + '&licence=' + $('#licence').val() + '&public=' + $('#publicity').val());
 	    	
 	    });
 	});

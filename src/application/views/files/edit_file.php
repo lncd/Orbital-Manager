@@ -152,15 +152,15 @@
 			$table_hidden = ' style="display:none"';
 		}
 		echo '<table' . $table_hidden . ' class = "table table-bordered table-striped" id="file_sets_table">
-		<thead><tr><th>File Set</th><th>Include In</th></tr></thead>
+		<thead><tr><th>Include In</th><th>File Set</th></tr></thead>
 		<tbody>';
 	
 		foreach($archive_file_sets as $archive_file_set)
 		{
 			echo '<tr>';
 			echo form_hidden('file[' . $archive_file_set->file_set_id . '][]', 'file_in_set');
-			echo '<td>' . $archive_file_set->file_set_name . '</td>';
-			echo '<td>' . form_checkbox('file[' . $archive_file_set->file_set_id . '][]', 'include', TRUE) . '</td></tr>';
+			echo '<td>' . form_checkbox('file[' . $archive_file_set->file_set_id . '][]', 'include', TRUE) . '</td>';
+			echo '<td>' . $archive_file_set->file_set_name . '</td></tr>';
 		}
 		echo '</tbody></table>';
 		echo form_dropdown('add_file_set', $available_file_sets, set_value('add_file'), 'id="add_fileset_to_file" class="span4"');
@@ -182,7 +182,7 @@
 	{
 		file_set_name = $('#add_fileset_to_file').val();
 		file_set_title = $('#add_fileset_to_file option:selected').text();
-		$('#file_sets_table').append('<tr><input type="hidden" name="file[' + file_set_name + '][]" value="file_set_in_file" /><td>' + file_set_title + ' <span class="label label-success">New</span></td><td><input type="checkbox" name="file[' + file_set_name + '][]" value="include" checked="checked"  /></td></tr>');
+		$('#file_sets_table').append('<tr><input type="hidden" name="file[' + file_set_name + '][]" value="file_set_in_file" /><td><input type="checkbox" name="file[' + file_set_name + '][]" value="include" checked="checked"  /></td><td>' + file_set_title + ' <span class="label label-success">New</span></td></tr>');
 		$('#file_sets_table').show();
 	});
 	
