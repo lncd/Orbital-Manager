@@ -128,7 +128,7 @@
 				foreach ($archive_files as $archive_file)
 				{
 				
-					if ($archive_file->visibility === 'public')
+					if ($archive_file->visibility === 'public' OR $archive_file->visibility === 'visible')
 					{
 						$priv_icon = 'open';
 									
