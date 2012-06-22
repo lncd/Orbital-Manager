@@ -52,10 +52,14 @@
 		'checked'	=> set_checkbox('public', 'public', $file_public_view)
 	);
 
+	$publicity['public'] = 'Public';
+	$publicity['visible'] = 'Public - No Download';
+	$publicity['private'] = 'Private';
+
 	echo '<div class="control-group">';
 	echo form_label('Publish This File', 'file_public', array('class' => 'control-label'));
 	echo '<div class="controls">';
-	echo form_checkbox($form_public);
+	echo form_dropdown('publicity', $publicity, set_value('publicity', $file_visibility), 'id="file_licence" class="span4"');
 	echo '<p class="help-block">This creates a public web page for this file where people can view and download it.</p>';
 	echo '</div></div>';
 	

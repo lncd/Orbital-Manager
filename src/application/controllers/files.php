@@ -574,17 +574,8 @@ class Files extends CI_Controller {
 			
 			if($this->input->post('default_licence'))
 			{
-				
-				if ($this->input->post('public') === 'public')
-				{
-					$public_view = 'public';
-				}
-				else
-				{
-					$public_view = 'private';
-				}
 			
-				$this->orbital->file_update($identifier, $this->input->post('name'), (int)$this->input->post('default_licence'), $public_view);
+				$this->orbital->file_update($identifier, $this->input->post('name'), (int)$this->input->post('default_licence'), $this->input->post('publicity'));
 				
 				foreach($this->input->post('file') as $file_set_name => $value)			
 				{
@@ -613,6 +604,7 @@ class Files extends CI_Controller {
 			$this->data['file_project_id'] = $response->response->file->project;
 			$this->data['file_title'] = $response->response->file->title;
 			$this->data['file_name'] = $response->response->file->original_name;
+			$this->data['file_visibility'] = $response->response->file->visibility;
 			$this->data['file_licence'] = $response->response->file->licence;
 			$this->data['file_licence_name'] = $response->response->file->licence_name;
 			$this->data['file_licence_uri'] = $response->response->file->licence_uri;
