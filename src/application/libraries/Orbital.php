@@ -950,6 +950,24 @@ class Orbital {
 	{
 		return $this->post_authed('timeline/comment', array('project' => $project, 'comment' => $comment));
 	}
+	
+	/**
+	 * Add Event to Timeline
+	 *
+	 * Adds an event to a project timeline
+	 *
+	 * @param string $project The ID of the project.
+	 * @param string $comment The event to add to the timeline.
+	 * @param string $date    The time to add to the timeline.
+	 *
+	 * @access public
+	 * @return object.
+	 */
+
+	public function timeline_add_event($project, $event, $date)
+	{
+		return $this->post_authed('timeline/event', array('project' => $project, 'event' => $event, 'date' => $date));
+	}
 
 
 	/**

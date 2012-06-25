@@ -60,6 +60,7 @@ $route['project/(:any)/collections/add'] = "files/create_new_file_set/$1";
 $route['project/(:any)/files/add'] = "files/create_new_file/$1";
 $route['project/(:any)/datasets/add'] = "datasets/create_new_dataset/$1";
 $route['project/(:any)/timeline/comment'] = "projects/timeline_add_comment/$1";
+$route['project/(:any)/timeline/event'] = "projects/timeline_add_event/$1";
 $route['project/(:any)'] = "projects/view/$1";
 $route['projects/public'] = "projects/list_public";
 

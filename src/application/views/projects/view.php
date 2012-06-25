@@ -70,7 +70,7 @@ else
 	$('#userTimeline').scrollTo($('#tl_now'));
 </script>
 
-<p><!--<a class="btn disabled btn-small"><i class="icon-calendar"></i> Add Timeline Event</a> --><a href="#addTLComment" data-toggle="modal" class="btn btn-small"><i class="icon-pencil"></i> Add Comment</a></p>
+<p><a href="#addTLEvent" data-toggle="modal" class="btn btn-small"><i class="icon-calendar"></i> Add Timeline Event</a><a href="#addTLComment" data-toggle="modal" class="btn btn-small"><i class="icon-pencil"></i> Add Comment</a></p>
 		
 <?php
 
@@ -103,9 +103,60 @@ echo '</div>
 
 echo form_close();
 
+
+echo form_open(site_url('project/' . $project_id . '/timeline/event'), array(
+			'class' => 'modal fade',
+			'id' => 'addTLEvent'
+		));
+
+echo '<div class="modal-header">
+	<button class="close" data-dismiss="modal">×</button>
+	<h3>Add Event to Timeline</h3>
+</div>
+<div class="modal-body">';
+
+$form_event = array(
+	'name'        => 'event',
+	'id'          => 'eventBox',
+	'placeholder' => 'Lorem ipsum dolor sit amet...',
+	'style'       => 'width:100%;'
+);
+
+echo form_label('What do you want to say about the event?', 'eventBox');
+echo form_textarea($form_event);
+
+	
+	$form_date = array(
+		'name'			=> 'date',
+		'id'			=> 'date',
+		'placeholder'	=> 'YYYY-MM-DD',
+		'maxlength'		=> '10',
+		'class'			=> 'span2 datepicker'
+	);
+
+	echo '<div class="control-group">';
+	echo form_label('Event Date', 'date', array('class' => 'control-label'));
+	echo '<div class="controls">';
+	echo form_input($form_date);
+	echo '</div></div>';
+
+echo '</div>
+<div class="modal-footer">
+	<button class="btn" data-dismiss="modal">Close</button>
+	<button type="submit" class="btn btn-success"><i class="icon-pencil"></i> Add Event</button>
+</div>';
+
+echo form_close();
+
 ?>
 
 <hr>
+
+<script>
+	$(document).ready(function() {
+		$(".datepicker").datepicker({ dateFormat: "yy-mm-dd" });
+	});
+</script>
 
 <?php
 
