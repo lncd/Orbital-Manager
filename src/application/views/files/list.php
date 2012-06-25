@@ -37,28 +37,16 @@
 			{
 				$priv_icon = 'close';
 			}
-			if ($archive_file->extension === 'zip')
+			if (file_exists('img/icons/16/' . $archive_file->extension . '.png'))
 			{
-				$extension_icon = 'folder-close';
-			}
-			else if ($archive_file->extension === 'txt')
-			{
-				$extension_icon = 'align-left';
-			}
-			else if ($archive_file->extension === 'jpg' || $archive_file->extension === 'bmp' || $archive_file->extension === 'png')
-			{
-				$extension_icon = 'picture';
-			}
-			else if ($archive_file->extension === 'mov' || $archive_file->extension === 'mp4' || $archive_file->extension === 'wmv' || $archive_file->extension === 'avi' || $archive_file->extension === 'mkv')
-			{
-				$extension_icon = 'facetime-video';
+				$extension_icon = 'img/icons/16/' . $archive_file->extension . '.png';
 			}
 			else
 			{
-				$extension_icon = 'file';
+				$extension_icon = 'img/icons/16/_blank.png';
 			}
 				
-					echo '<a href="' . base_url() . 'file/' . $archive_file->id . '"><i class="icon-eye-' . $priv_icon . '"></i> <i class="icon-' . $extension_icon . '"></i> ' . $archive_file->title . ' '; ?></td>
+			echo '<a href="' . base_url() . 'file/' . $archive_file->id . '"><i class="icon-eye-' . $priv_icon . '"></i> <img src="' . base_url() . $extension_icon . '"> ' . $archive_file->title . ' '; ?></td>
 			<td><?php echo byte_format($archive_file->size, 2) ?></td>
 			<td><?php echo $archive_file->uploaded ?></td>
 			<td><?php echo $archive_file->licence ?></td></tr>
