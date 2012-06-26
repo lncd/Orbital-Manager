@@ -18,7 +18,6 @@
 </div>
 
 <h2>Activity Timeline</h2>
-<div class="well">
 <?php
 
 if (count($timeline) > 0)
@@ -35,21 +34,29 @@ if (count($timeline) > 0)
 		echo '</p><small>' . $item->timestamp_human . '</small></div></li>';
 	}	
 	
-	echo '</ul>';
+	echo '</ul>
+	<script type="text/javascript" src="{base_url}js/jquery.scrollTo.min.js"></script>
+		<script type="text/javascript">
+			$(\'#userTimeline\').scrollTo($(\'#tl_now\'));
+		</script>
+		<div class="row">
+		<div class="span6">
+			<a onClick="$(\'#userTimeline\').scrollTo(\'-=300px\', 600, {axes:\'x\'});" class="btn btn-primary"><i class="icon-arrow-left"></i> Earlier</a>
+		</div>
+		<div class="span6" style="text-align:right">
+			<a onClick="$(\'#userTimeline\').scrollTo(\'+=300px\', 600, {axes:\'x\'});" class="btn btn-primary">Later <i class="icon-arrow-right"></i></a>
+		</div>
+		</div>';
 }
 else
 {
-	echo 'There isn\'t any recent activity to show.';
+	echo '<p>There isn\'t any recent activity to show.</p>';
 }
 
 ?>
 
-<script type="text/javascript" src="{base_url}js/jquery.scrollTo.min.js"></script>
-<script type="text/javascript">
-	$('#userTimeline').scrollTo($('#tl_now'));
-</script>
+<hr>
 
-</div>
 <div class="row">
 	<div class="span8">
 		<table class="table table-striped table-bordered">
