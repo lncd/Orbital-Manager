@@ -162,9 +162,19 @@ class Files extends CI_Controller {
 					$this->data['file_controls'][] = array(
 						'uri' => site_url('file/' . $response->response->file->id . '/edit'),
 						'title' => 'Edit'
-					);
+					);					
+					// Check for Delete permissions
+					if ($response->response->permissions->delete === TRUE)
+					{
+						// TODO: CHANGE TO CHECK FOR is_deletable in future
+						$this->data['file_controls'][] = array(
+							'uri' => site_url('file/' . $response->response->file->id . '/delete'),
+							'title' => 'Delete'
+						);
+					}
+					
 				}
-				
+								
 				if ($response->response->file->status === 'uploaded')
 				{
 					$this->data['file_downloadable'] = TRUE;
@@ -178,6 +188,54 @@ class Files extends CI_Controller {
 				$this->parser->parse('files/view_file', $this->data);
 				$this->parser->parse('includes/footer', $this->data);
 			
+			}
+			else
+			{
+				show_404();
+			}
+		}
+		else
+		{
+			show_404();
+		}
+	}
+	
+
+	/**
+	 * Delete file
+	 *
+	 * Deletes a file
+	 *
+	 * @param string $identifier The identifier of the file
+	 */
+
+	function delete($identifier)
+	{
+		if ($response = $this->orbital->file_get_details($identifier))
+		{
+			if ($response->response->status === TRUE)
+			{
+				if ($response = $this->orbital->file_get_details($identifier))
+				{
+					$delete = $this->orbital->delete_file($identifier);
+					
+					if($delete->response->status === TRUE)
+					{
+						$this->session->set_flashdata('message', 'File deleted successfully.');
+						$this->session->set_flashdata('message_type', 'success');
+						redirect('project/' . $response->response->file->project);			
+					}
+					else
+					{
+						$this->session->set_flashdata('message', $response->response->file->title . $delete->response->error);
+						$this->session->set_flashdata('message_type', 'alert-error');
+						redirect('file/' . $response->response->file->id);
+					}
+				}
+				else
+				{
+					show_404();
+				}
 			}
 			else
 			{

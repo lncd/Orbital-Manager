@@ -67,6 +67,7 @@ $route['projects/public'] = "projects/list_public";
 $route['file/(:any)/download'] = "files/download_file/$1";
 $route['file/(:any)/edit'] = "files/edit_file/$1";
 $route['file/(:any)/public'] = "files/view_file_public/$1";
+$route['file/(:any)/delete'] = "files/delete/$1";
 $route['file/(:any)'] = "files/view_file/$1";
 $route['collection/(:any)/edit'] = "files/edit_file_set/$1";
 $route['collection/(:any)/public'] = "files/view_file_set_public/$1";
