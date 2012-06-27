@@ -95,6 +95,7 @@ $form_comment = array(
 	'name'        => 'comment',
 	'id'          => 'commentBox',
 	'placeholder' => 'Lorem ipsum dolor sit amet...',
+	'required'    => 'required',
 	'style'       => 'width:100%;'
 );
 
@@ -125,6 +126,7 @@ $form_event = array(
 	'name'        => 'event',
 	'id'          => 'eventBox',
 	'placeholder' => 'Lorem ipsum dolor sit amet...',
+	'required'    => 'required',
 	'style'       => 'width:100%;'
 );
 
@@ -136,6 +138,7 @@ echo form_textarea($form_event);
 		'name'			=> 'date',
 		'id'			=> 'date',
 		'placeholder'	=> 'YYYY-MM-DD',
+		'required'      => 'required',
 		'maxlength'		=> '10',
 		'class'			=> 'span2 datepicker'
 	);

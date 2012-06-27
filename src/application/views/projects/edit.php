@@ -24,6 +24,7 @@
 	
 	$form_name = array(
 		'name'			=> 'name',
+		'required'    => 'required',
 		'id'			=> 'project_name',
 		'placeholder'	=> 'Project Name',
 		'value'			=> set_value('name', $project_name),
@@ -39,6 +40,7 @@
 	
 	$form_abstract = array(
 		'name'			=> 'abstract',
+		'required'    => 'required',
 		'id'			=> 'project_abstract',
 		'placeholder'	=> 'A bit about this project...',
 		'value'			=> set_value('abstract', $project_abstract),
