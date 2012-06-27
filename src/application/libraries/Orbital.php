@@ -427,6 +427,11 @@ class Orbital {
 	
 	/**
 	 * Put (Authenticated)
+	 *
+	 * @param string $target      Target of HTTP PUT.
+	 * @param array  $post_fields Contents of HTTP PUT.
+	 *
+	 * @return bool TRUE if swap successful, FALSE if not.
 	 */
 
 	private function put_authed($target, $post_fields)
@@ -945,6 +950,24 @@ class Orbital {
 	{
 		return $this->post_authed('timeline/comment', array('project' => $project, 'comment' => $comment));
 	}
+	
+	/**
+	 * Add Event to Timeline
+	 *
+	 * Adds an event to a project timeline
+	 *
+	 * @param string $project The ID of the project.
+	 * @param string $comment The event to add to the timeline.
+	 * @param string $date    The time to add to the timeline.
+	 *
+	 * @access public
+	 * @return object.
+	 */
+
+	public function timeline_add_event($project, $event, $date)
+	{
+		return $this->post_authed('timeline/event', array('project' => $project, 'event' => $event, 'date' => $date));
+	}
 
 
 	/**
@@ -1109,6 +1132,11 @@ class Orbital {
 	 * @return object.
 	 */
 
+	public function delete_file($identifier)
+	{
+		return $this->delete_authed('file/' . $identifier . '/delete');	
+	}
+	
 	public function file_set_get_details($file_id)
 	{
 		return $this->get_authed('file_set/' . $file_id);

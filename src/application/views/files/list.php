@@ -29,7 +29,7 @@
 			<?php foreach($archive_files as $archive_file)
 			{
 			echo '<tr><td>';
-			if ($archive_file->visibility === 'public')
+			if ($archive_file->visibility === 'public' OR $archive_file->visibility === 'visible')
 			{
 				$priv_icon = 'open';
 			}
@@ -37,8 +37,16 @@
 			{
 				$priv_icon = 'close';
 			}
+			if (file_exists('img/icons/16/' . $archive_file->extension . '.png'))
+			{
+				$extension_icon = 'img/icons/16/' . $archive_file->extension . '.png';
+			}
+			else
+			{
+				$extension_icon = 'img/icons/16/_blank.png';
+			}
 				
-					echo '<a href="' . base_url() . 'file/' . $archive_file->id . '"><i class="icon-eye-' . $priv_icon . '"></i> ' . $archive_file->title . ' '; ?></td>
+			echo '<a href="' . base_url() . 'file/' . $archive_file->id . '"><i class="icon-eye-' . $priv_icon . '"></i> <img src="' . base_url() . $extension_icon . '"> ' . $archive_file->title . ' '; ?></td>
 			<td><?php echo byte_format($archive_file->size, 2) ?></td>
 			<td><?php echo $archive_file->uploaded ?></td>
 			<td><?php echo $archive_file->licence ?></td></tr>

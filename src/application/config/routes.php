@@ -60,12 +60,14 @@ $route['project/(:any)/collections/add'] = "files/create_new_file_set/$1";
 $route['project/(:any)/files/add'] = "files/create_new_file/$1";
 $route['project/(:any)/datasets/add'] = "datasets/create_new_dataset/$1";
 $route['project/(:any)/timeline/comment'] = "projects/timeline_add_comment/$1";
+$route['project/(:any)/timeline/event'] = "projects/timeline_add_event/$1";
 $route['project/(:any)'] = "projects/view/$1";
 $route['projects/public'] = "projects/list_public";
 
 $route['file/(:any)/download'] = "files/download_file/$1";
 $route['file/(:any)/edit'] = "files/edit_file/$1";
 $route['file/(:any)/public'] = "files/view_file_public/$1";
+$route['file/(:any)/delete'] = "files/delete/$1";
 $route['file/(:any)'] = "files/view_file/$1";
 $route['collection/(:any)/edit'] = "files/edit_file_set/$1";
 $route['collection/(:any)/public'] = "files/view_file_set_public/$1";
