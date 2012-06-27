@@ -56,23 +56,29 @@ if (count($timeline) > 0)
 		echo '</p><small>' . $item->timestamp_human . '</small></div></li>';
 	}	
 	
-	echo '</ul>';
+	echo '</ul>
+	<script type="text/javascript" src="{base_url}js/jquery.scrollTo.min.js"></script>
+	<script type="text/javascript">
+		$(\'#userTimeline\').scrollTo($(\'#tl_now\'));
+	</script>';
+	
+	echo '<div class="row">
+	<div class="span4">
+		<a onClick="$(\'#userTimeline\').scrollTo(\'-=300px\', 600, {axes:\'x\'});" class="btn btn-primary"><i class="icon-arrow-left"></i> Earlier</a>
+	</div>
+	<div class="span4" style="text-align:center">
+		<a href="#addTLEvent" data-toggle="modal" class="btn"><i class="icon-calendar"></i> Add Timeline Event</a> <a href="#addTLComment" data-toggle="modal" class="btn"><i class="icon-pencil"></i> Add Comment</a>
+	</div>
+	<div class="span4" style="text-align:right">
+		<a onClick="$(\'#userTimeline\').scrollTo(\'+=300px\', 600, {axes:\'x\'});" class="btn btn-primary">Later <i class="icon-arrow-right"></i></a>
+	</div>
+	</div>';
 }
 else
 {
-	echo 'There isn\'t any activity to show for this project.';
+	echo '<p>There isn\'t any activity to show for this project. Why not add a comment, or a new project event?</p>
+	<p><a href="#addTLEvent" data-toggle="modal" class="btn"><i class="icon-calendar"></i> Add Timeline Event</a> <a href="#addTLComment" data-toggle="modal" class="btn"><i class="icon-pencil"></i> Add Comment</a></p>';
 }
-
-?>
-
-<script type="text/javascript" src="{base_url}js/jquery.scrollTo.min.js"></script>
-<script type="text/javascript">
-	$('#userTimeline').scrollTo($('#tl_now'));
-</script>
-
-<p><!--<a class="btn disabled btn-small"><i class="icon-calendar"></i> Add Timeline Event</a> --><a href="#addTLComment" data-toggle="modal" class="btn btn-small"><i class="icon-pencil"></i> Add Comment</a></p>
-		
-<?php
 
 echo form_open(site_url('project/' . $project_id . '/timeline/comment'), array(
 			'class' => 'modal fade',
@@ -103,9 +109,60 @@ echo '</div>
 
 echo form_close();
 
+
+echo form_open(site_url('project/' . $project_id . '/timeline/event'), array(
+			'class' => 'modal fade',
+			'id' => 'addTLEvent'
+		));
+
+echo '<div class="modal-header">
+	<button class="close" data-dismiss="modal">×</button>
+	<h3>Add Event to Timeline</h3>
+</div>
+<div class="modal-body">';
+
+$form_event = array(
+	'name'        => 'event',
+	'id'          => 'eventBox',
+	'placeholder' => 'Lorem ipsum dolor sit amet...',
+	'style'       => 'width:100%;'
+);
+
+echo form_label('What do you want to say about the event?', 'eventBox');
+echo form_textarea($form_event);
+
+	
+	$form_date = array(
+		'name'			=> 'date',
+		'id'			=> 'date',
+		'placeholder'	=> 'YYYY-MM-DD',
+		'maxlength'		=> '10',
+		'class'			=> 'span2 datepicker'
+	);
+
+	echo '<div class="control-group">';
+	echo form_label('Event Date', 'date', array('class' => 'control-label'));
+	echo '<div class="controls">';
+	echo form_input($form_date);
+	echo '</div></div>';
+
+echo '</div>
+<div class="modal-footer">
+	<button class="btn" data-dismiss="modal">Close</button>
+	<button type="submit" class="btn btn-success"><i class="icon-pencil"></i> Add Event</button>
+</div>';
+
+echo form_close();
+
 ?>
 
 <hr>
+
+<script>
+	$(document).ready(function() {
+		$(".datepicker").datepicker({ dateFormat: "yy-mm-dd" });
+	});
+</script>
 
 <?php
 
@@ -246,7 +303,7 @@ else if (isset ($data_required))
 				foreach ($archive_files as $archive_file)
 				{
 				
-					if ($archive_file->visibility === 'public')
+					if ($archive_file->visibility === 'public' OR $archive_file->visibility === 'visible')
 					{
 						$priv_icon = 'open';
 					}
@@ -254,8 +311,16 @@ else if (isset ($data_required))
 					{
 						$priv_icon = 'close';
 					}
+					if (file_exists('img/icons/16/' . $archive_file->extension . '.png'))
+					{
+						$extension_icon = 'img/icons/16/' . $archive_file->extension . '.png';
+					}
+					else
+					{
+						$extension_icon = 'img/icons/16/_blank.png';
+					}
 				
-					echo '<li><a href="' . base_url() . 'file/' . $archive_file->id . '"><i class="icon-eye-' . $priv_icon . '"></i> ' . $archive_file->title . ' ';
+					echo '<li><a href="' . base_url() . 'file/' . $archive_file->id . '"><i class="icon-eye-' . $priv_icon . '"></i> <img src="' . base_url() . $extension_icon . '"> ' . $archive_file->title . ' ';
 						
 					switch ($archive_file->status)
 					{
@@ -296,7 +361,6 @@ else if (isset ($data_required))
 			{
 				echo '<p>This project doesn\'t have any archive files saved. Archive files to permanently store and publish data.</p>';
 			}
-				
 
 			echo '<a href="{base_url}project/' . $project_id .'/files/add" class="btn btn-success btn-small"><i class="icon-upload"></i> Upload File</a>';
 					
@@ -357,6 +421,7 @@ else if (isset ($data_required))
 			}
 
 			?>
+			<hr>
 			
 			<p><a class="btn btn-success btn-small btn-disabled" href="{base_url}project/{project_id}/collections/add"><i class="icon-plus"></i> Create Collection</a></a>
 		</div>

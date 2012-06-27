@@ -128,11 +128,32 @@
 				foreach ($archive_files as $archive_file)
 				{
 				
-					if ($archive_file->visibility === 'public')
+					if ($archive_file->visibility === 'public' OR $archive_file->visibility === 'visible')
 					{
 						$priv_icon = 'open';
 									
-						echo '<li><a href="' . base_url() . 'file/' . $archive_file->id . '/public"><i class="icon-eye-' . $priv_icon . '"></i> ' . $archive_file->title . ' ';
+					if ($archive_file->extension === 'zip')
+					{
+						$extension_icon = 'folder-close';
+					}
+					else if ($archive_file->extension === 'txt')
+					{
+						$extension_icon = 'align-left';
+					}
+					else if ($archive_file->extension === 'jpg' || $archive_file->extension === 'bmp' || $archive_file->extension === 'png')
+					{
+						$extension_icon = 'picture';
+					}
+					else if ($archive_file->extension === 'mov' || $archive_file->extension === 'mp4' || $archive_file->extension === 'wmv' || $archive_file->extension === 'avi' || $archive_file->extension === 'mkv')
+					{
+						$extension_icon = 'facetime-video';
+					}
+					else
+					{
+						$extension_icon = 'file';
+					}
+									
+						echo '<li><a href="' . base_url() . 'file/' . $archive_file->id . '/public"><i class="icon-eye-' . $priv_icon . '"></i> <i class="icon-' . $extension_icon . '"></i> ' . $archive_file->title . ' ';
 							
 						switch ($archive_file->status)
 						{
@@ -195,7 +216,7 @@
 					{
 						$priv_icon = 'open';
 									
-						echo '<li><a href="' . base_url() . 'collection/' . $file_set->file_set_id . '"><i class="icon-eye-' . $priv_icon . '"></i> ' . $file_set->file_set_name . ' ';
+						echo '<li><a href="' . base_url() . 'collection/' . $file_set->file_set_id . '/public"><i class="icon-eye-' . $priv_icon . '"></i> ' . $file_set->file_set_name . ' ';
 						
 						echo '</a></li>';
 					}

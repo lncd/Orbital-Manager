@@ -162,9 +162,19 @@ class Files extends CI_Controller {
 					$this->data['file_controls'][] = array(
 						'uri' => site_url('file/' . $response->response->file->id . '/edit'),
 						'title' => 'Edit'
-					);
+					);					
+					// Check for Delete permissions
+					if ($response->response->permissions->delete === TRUE)
+					{
+						// TODO: CHANGE TO CHECK FOR is_deletable in future
+						$this->data['file_controls'][] = array(
+							'uri' => site_url('file/' . $response->response->file->id . '/delete'),
+							'title' => 'Delete'
+						);
+					}
+					
 				}
-				
+								
 				if ($response->response->file->status === 'uploaded')
 				{
 					$this->data['file_downloadable'] = TRUE;
@@ -178,6 +188,54 @@ class Files extends CI_Controller {
 				$this->parser->parse('files/view_file', $this->data);
 				$this->parser->parse('includes/footer', $this->data);
 			
+			}
+			else
+			{
+				show_404();
+			}
+		}
+		else
+		{
+			show_404();
+		}
+	}
+	
+
+	/**
+	 * Delete file
+	 *
+	 * Deletes a file
+	 *
+	 * @param string $identifier The identifier of the file
+	 */
+
+	function delete($identifier)
+	{
+		if ($response = $this->orbital->file_get_details($identifier))
+		{
+			if ($response->response->status === TRUE)
+			{
+				if ($response = $this->orbital->file_get_details($identifier))
+				{
+					$delete = $this->orbital->delete_file($identifier);
+					
+					if($delete->response->status === TRUE)
+					{
+						$this->session->set_flashdata('message', 'File deleted successfully.');
+						$this->session->set_flashdata('message_type', 'success');
+						redirect('project/' . $response->response->file->project);			
+					}
+					else
+					{
+						$this->session->set_flashdata('message', $response->response->file->title . $delete->response->error);
+						$this->session->set_flashdata('message_type', 'alert-error');
+						redirect('file/' . $response->response->file->id);
+					}
+				}
+				else
+				{
+					show_404();
+				}
 			}
 			else
 			{
@@ -506,6 +564,7 @@ class Files extends CI_Controller {
 			$this->load->helper('number');
 			
 			$this->data['file_id'] = $response->response->file->id;
+			$this->data['file_visibility'] = $response->response->file->visibility;
 			$this->data['file_project'] = $response->response->file->project_name;
 			$this->data['file_project_id'] = $response->response->file->project;
 			$this->data['file_title'] = $response->response->file->title;
@@ -521,9 +580,21 @@ class Files extends CI_Controller {
 				$this->data['alt_tracking'] = $project->response->project->google_analytics;
 			}
 			
+			
 			if ($response->response->file->status === 'uploaded')
 			{
-				$this->data['file_downloadable'] = TRUE;
+				if ($this->data['file_visibility'] === 'visible')
+				{
+					$this->data['file_downloadable'] = 'no';
+				}
+				if ($this->data['file_visibility'] === 'public')
+				{
+					$this->data['file_downloadable'] = TRUE;
+				}
+				else
+				{
+					$this->data['file_downloadable'] = FALSE;
+				}
 			}
 			else
 			{
@@ -561,17 +632,8 @@ class Files extends CI_Controller {
 			
 			if($this->input->post('default_licence'))
 			{
-				
-				if ($this->input->post('public') === 'public')
-				{
-					$public_view = 'public';
-				}
-				else
-				{
-					$public_view = 'private';
-				}
 			
-				$this->orbital->file_update($identifier, $this->input->post('name'), (int)$this->input->post('default_licence'), $public_view);
+				$this->orbital->file_update($identifier, $this->input->post('name'), (int)$this->input->post('default_licence'), $this->input->post('publicity'));
 				
 				foreach($this->input->post('file') as $file_set_name => $value)			
 				{
@@ -600,6 +662,7 @@ class Files extends CI_Controller {
 			$this->data['file_project_id'] = $response->response->file->project;
 			$this->data['file_title'] = $response->response->file->title;
 			$this->data['file_name'] = $response->response->file->original_name;
+			$this->data['file_visibility'] = $response->response->file->visibility;
 			$this->data['file_licence'] = $response->response->file->licence;
 			$this->data['file_licence_name'] = $response->response->file->licence_name;
 			$this->data['file_licence_uri'] = $response->response->file->licence_uri;
