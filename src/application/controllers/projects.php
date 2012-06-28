@@ -793,28 +793,39 @@ class Projects extends CI_Controller {
 	 
 	function timeline_add_event($identifier)
 	{
-		// Ensure project exists
-		if ($response = $this->orbital->project_details($identifier))
+		if ($this->input->post('event') AND $this->input->post('date'))
 		{
-		
-			// Load up the validation library
-			$this->load->library('form_validation');
-			
-			// Rules!
-			$this->form_validation->set_rules('event', 'Event', 'trim|required');
-
-			if ($this->form_validation->run() === TRUE)
+			// Ensure project exists
+			if ($response = $this->orbital->project_details($identifier))
 			{
+			
+				// Load up the validation library
+				$this->load->library('form_validation');
 				
-				if ($this->orbital->timeline_add_event($identifier, $this->input->post('event'), $this->input->post('date')))
+				// Rules!
+				$this->form_validation->set_rules('event', 'Event', 'trim|required');
+	
+				if ($this->form_validation->run() === TRUE)
 				{
-					$this->session->set_flashdata('message', 'Event added to project timeline.');
-					$this->session->set_flashdata('message_type', 'success');
-					redirect('project/' . $identifier);
+					
+					if ($this->orbital->timeline_add_event($identifier, $this->input->post('event'), $this->input->post('date')))
+					{
+						$this->session->set_flashdata('message', 'Event added to project timeline.');
+						$this->session->set_flashdata('message_type', 'success');
+						redirect('project/' . $identifier);
+					}
+					else
+					{
+						$this->session->set_flashdata('message', 'Something went wrong adding the event.');
+						$this->session->set_flashdata('message_type', 'error');
+						redirect('project/' . $identifier);
+					}
+				
+					
 				}
 				else
 				{
-					$this->session->set_flashdata('message', 'Something went wrong adding the event.');
+					$this->session->set_flashdata('message', 'Unable to add event to timeline. Validation failed.');
 					$this->session->set_flashdata('message_type', 'error');
 					redirect('project/' . $identifier);
 				}
@@ -823,16 +834,14 @@ class Projects extends CI_Controller {
 			}
 			else
 			{
-				$this->session->set_flashdata('message', 'Unable to add comment to timeline. Did you actually say anything?');
-				$this->session->set_flashdata('message_type', 'error');
-				redirect('project/' . $identifier);
+				show_404();
 			}
-		
-			
 		}
-		else
+		else	
 		{
-			show_404();
+			$this->session->set_flashdata('message', 'Event requires both A description and a date.');
+			$this->session->set_flashdata('message_type', 'error');
+			redirect('project/' . $identifier);
 		}
 	}
 	

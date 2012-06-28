@@ -1137,6 +1137,11 @@ class Orbital {
 		return $this->delete_authed('file/' . $identifier . '/delete');	
 	}
 	
+	public function delete_file_set($identifier)
+	{
+		return $this->delete_authed('file_set/' . $identifier . '/delete');	
+	}
+	
 	public function file_set_get_details($file_id)
 	{
 		return $this->get_authed('file_set/' . $file_id);

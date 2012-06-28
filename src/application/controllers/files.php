@@ -278,13 +278,20 @@ class Files extends CI_Controller {
 			}
 			
 			$this->data['file_set_size'] = $file_set_size;
-			$this->data['file_controls'] = array();
+			$this->data['file_set_controls'] = array();
 			if ($response->response->permissions->write)
 			{
-				$this->data['file_controls'][] = array(
+				$this->data['file_set_controls'][] = array(
 					'uri' => site_url('collection/' . $response->response->file_set->id . '/edit'),
 					'title' => 'Edit'
 				);
+				if ($response->response->permissions->delete)
+				{
+					$this->data['file_set_controls'][] = array(
+						'uri' => site_url('collection/' . $response->response->file_set->id . '/delete'),
+						'title' => 'Delete'
+					);
+				}
 			}
 			
 
@@ -396,6 +403,52 @@ class Files extends CI_Controller {
 			show_404();
 		}
 	}
+
+
+	/**
+	 * Delete file set
+	 *
+	 * Deletes a file set
+	 *
+	 * @param string $identifier
+	 * @return NULL
+	 */
+
+	function delete_file_set($identifier)
+	{
+		//Check file set exists
+		if ($response = $this->orbital->file_set_get_details($identifier))
+		{
+			if ($response->response->status === TRUE)
+			{
+				$delete = $this->orbital->delete_file_set($identifier);
+				
+				if($delete->response->status === TRUE)
+				{
+					$this->session->set_flashdata('message', 'File set deleted successfully.');
+					$this->session->set_flashdata('message_type', 'success');
+					redirect('project/' . $response->response->file_set->project);			
+				}
+				else
+				{
+					$this->session->set_flashdata('message', $response->response->file_set->title . $delete->response->error);
+					$this->session->set_flashdata('message_type', 'alert-error');
+					redirect('collection/' . $response->response->file_set->id);
+				}
+			}
+			else
+			{
+				$this->session->set_flashdata('message', $response->response->file_set->title . $delete->response->error);
+				$this->session->set_flashdata('message_type', 'alert-error');
+				redirect('collection/' . $response->response->file_set->id);
+			}
+		}
+		else
+		{
+			show_404();
+		}
+	}
+
 
 
 	/**
