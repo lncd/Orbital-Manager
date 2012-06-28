@@ -7,17 +7,17 @@
 <div class="row">
   <div class="span4">
     <h2>Sign In</h2>
-    <p>Dive right in to {orbital_manager_name} and start managing your projects and data.</p>
+    <p>Get started with Orbital, create and manage your research projects and try all of Orbital's features as soon as they're ready.</p>
     <p><a class="btn" href="{base_url}signin">Sign In &raquo;</a></p>
   </div>
   <div class="span4">
     <h2>View public projects</h2>
-    <p>See the full list of public projects</p>
+    <p>See the full list of public projects, keep track of their progress and download their published data.</p>
     <p><a class="btn" href="{base_url}projects/public">View All &raquo;</a></p>
   </div>
   <div class="span4">
     <h2>Get In Touch</h2>
-    <p>Want to talk to a real person about {orbital_manager_name}?</p>
+    <p>Talk to a member of the project team about about Orbital and how it can help your project.</p>
     <p><a class="btn" href="{base_url}contact">View Details &raquo;</a></p>
   </div>
 </div>

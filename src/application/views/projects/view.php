@@ -56,23 +56,29 @@ if (count($timeline) > 0)
 		echo '</p><small>' . $item->timestamp_human . '</small></div></li>';
 	}	
 	
-	echo '</ul>';
+	echo '</ul>
+	<script type="text/javascript" src="{base_url}js/jquery.scrollTo.min.js"></script>
+	<script type="text/javascript">
+		$(\'#userTimeline\').scrollTo($(\'#tl_now\'));
+	</script>';
+	
+	echo '<div class="row">
+	<div class="span4">
+		<a onClick="$(\'#userTimeline\').scrollTo(\'-=300px\', 600, {axes:\'x\'});" class="btn btn-primary"><i class="icon-arrow-left"></i> Earlier</a>
+	</div>
+	<div class="span4" style="text-align:center">
+		<a href="#addTLEvent" data-toggle="modal" class="btn"><i class="icon-calendar"></i> Add Timeline Event</a> <a href="#addTLComment" data-toggle="modal" class="btn"><i class="icon-pencil"></i> Add Comment</a>
+	</div>
+	<div class="span4" style="text-align:right">
+		<a onClick="$(\'#userTimeline\').scrollTo(\'+=300px\', 600, {axes:\'x\'});" class="btn btn-primary">Later <i class="icon-arrow-right"></i></a>
+	</div>
+	</div>';
 }
 else
 {
-	echo 'There isn\'t any activity to show for this project.';
+	echo '<p>There isn\'t any activity to show for this project. Why not add a comment, or a new project event?</p>
+	<p><a href="#addTLEvent" data-toggle="modal" class="btn"><i class="icon-calendar"></i> Add Timeline Event</a> <a href="#addTLComment" data-toggle="modal" class="btn"><i class="icon-pencil"></i> Add Comment</a></p>';
 }
-
-?>
-
-<script type="text/javascript" src="{base_url}js/jquery.scrollTo.min.js"></script>
-<script type="text/javascript">
-	$('#userTimeline').scrollTo($('#tl_now'));
-</script>
-
-<p><a href="#addTLEvent" data-toggle="modal" class="btn btn-small"><i class="icon-calendar"></i> Add Timeline Event</a><a href="#addTLComment" data-toggle="modal" class="btn btn-small"><i class="icon-pencil"></i> Add Comment</a></p>
-		
-<?php
 
 echo form_open(site_url('project/' . $project_id . '/timeline/comment'), array(
 			'class' => 'modal fade',
@@ -89,6 +95,7 @@ $form_comment = array(
 	'name'        => 'comment',
 	'id'          => 'commentBox',
 	'placeholder' => 'Lorem ipsum dolor sit amet...',
+	'required'    => 'required',
 	'style'       => 'width:100%;'
 );
 
@@ -119,6 +126,7 @@ $form_event = array(
 	'name'        => 'event',
 	'id'          => 'eventBox',
 	'placeholder' => 'Lorem ipsum dolor sit amet...',
+	'required'    => 'required',
 	'style'       => 'width:100%;'
 );
 
@@ -130,6 +138,7 @@ echo form_textarea($form_event);
 		'name'			=> 'date',
 		'id'			=> 'date',
 		'placeholder'	=> 'YYYY-MM-DD',
+		'required'      => 'required',
 		'maxlength'		=> '10',
 		'class'			=> 'span2 datepicker'
 	);

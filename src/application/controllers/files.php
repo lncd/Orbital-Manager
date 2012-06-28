@@ -232,7 +232,7 @@ class Files extends CI_Controller {
 						redirect('file/' . $response->response->file->id);
 					}
 				}
-				else
+				else //CHANGE ERROR MESSAGES
 				{
 					show_404();
 				}

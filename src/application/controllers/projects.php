@@ -826,6 +826,7 @@ class Projects extends CI_Controller {
 				else
 				{
 					$this->session->set_flashdata('message', 'Unable to add event to timeline. Validation failed.');
+
 					$this->session->set_flashdata('message_type', 'error');
 					redirect('project/' . $identifier);
 				}
@@ -839,7 +840,7 @@ class Projects extends CI_Controller {
 		}
 		else	
 		{
-			$this->session->set_flashdata('message', 'Event requires both A description and a date.');
+			$this->session->set_flashdata('message', 'Event requires both Description and Date');
 			$this->session->set_flashdata('message_type', 'error');
 			redirect('project/' . $identifier);
 		}
