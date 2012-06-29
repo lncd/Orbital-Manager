@@ -64,6 +64,7 @@ if (count($timeline) > 0)
 	
 	echo '<div class="row">
 	<div class="span4">
+		<a onClick="$(\'#userTimeline\').scrollTo(\'0px\', 600, {axes:\'x\'});" class="btn btn-primary"><i class="icon-arrow-left"></i></a>
 		<a onClick="$(\'#userTimeline\').scrollTo(\'-=300px\', 600, {axes:\'x\'});" class="btn btn-primary"><i class="icon-arrow-left"></i> Earlier</a>
 	</div>
 	<div class="span4" style="text-align:center">
@@ -71,6 +72,7 @@ if (count($timeline) > 0)
 	</div>
 	<div class="span4" style="text-align:right">
 		<a onClick="$(\'#userTimeline\').scrollTo(\'+=300px\', 600, {axes:\'x\'});" class="btn btn-primary">Later <i class="icon-arrow-right"></i></a>
+		<a onClick="$(\'#userTimeline\').scrollTo(\'max\', 600, {axes:\'x\'});" class="btn btn-primary"><i class="icon-arrow-right"></i></a>
 	</div>
 	</div>';
 }
@@ -203,7 +205,6 @@ if ($permission_write === TRUE)
 }
 
 
-
 echo '<div class="modal fade" id="delete_project">
 		<div class="modal-header">
 			<button class="close" data-dismiss="modal">×</button>
@@ -218,12 +219,6 @@ echo '<div class="modal fade" id="delete_project">
 			<a href="' . site_url('project/' . $project_id . '/delete') . '" class="btn btn-danger"><i class="icon-trash"></i> Delete Project</a>
 		</div>
 	</div>';
-
-
-
-
-
-
 
 ?>
 
