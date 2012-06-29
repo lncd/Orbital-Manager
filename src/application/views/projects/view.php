@@ -169,7 +169,7 @@ echo form_close();
 
 <?php
 
-if ($new_project === TRUE)
+if ($new_project === TRUE OR $project_description === NULL OR $project_description === '' OR $project_default_licence === NULL OR $project_research_group === NULL)
 {
 	echo '<div class="alert alert-info">
 		<i class="icon-chevron-down"></i> Please describe your project in more detail by clicking the \'Edit\' button.
@@ -177,21 +177,55 @@ if ($new_project === TRUE)
 
 }
 
-else if (isset ($data_required))
+
+
+
+//Check for Edit permissions
+if ($permission_write === TRUE)
 {
-	echo '<div class="alert alert-info">
-		<i class="icon-chevron-down"></i> Please describe your project in more detail by clicking the \'Edit\' button.
-	</div>';
+	echo '<p>';
+	
+	echo '<a href="' . site_url('project/' . $project_id . '/edit') . '" class="btn btn-small"><i class="icon-pencil"></i> Edit</a>';
+		
+	
+	// Check for Delete permissions
+	if ($permission_delete === TRUE)
+	{
+		// Check project doesn't have files OR datasets
+		// TODO: CHANGE TO CHECK FOR is_deletable in future
+		if(count($datasets) === 0 AND count($archive_files) === 0)
+		{									
+			echo ' <a href="#delete_project" data-toggle="modal" class="btn btn-small btn-danger"><i class="icon-trash"></i> Delete</a>';
+		}
+	}
+	
+	echo '</p>';
 }
+
+
+
+echo '<div class="modal fade" id="delete_project">
+		<div class="modal-header">
+			<button class="close" data-dismiss="modal">×</button>
+			<h3>Delete Project</h3>
+			<h4>' . $project_name . '</h4>
+		</div>
+		<div class="modal-body">
+			<p>Are you sure you want to delete this project?</p>
+		</div>
+		<div class="modal-footer">
+			<a href="#" data-dismiss="modal" class="btn">Close</a>
+			<a href="' . site_url('project/' . $project_id . '/delete') . '" class="btn btn-danger"><i class="icon-trash"></i> Delete Project</a>
+		</div>
+	</div>';
+
+
+
+
+
+
+
 ?>
-
-<p>
-
-{project_controls}
-<a class="btn btn-small" href="{uri}">{title}</a>
-{/project_controls}
-
-</p>
 
 <hr>
 

@@ -156,24 +156,9 @@ class Files extends CI_Controller {
 				$this->data['archive_file_sets'] = $response->response->archive_file_sets;
 				$this->data['page_title'] = $response->response->file->original_name;
 				
-				$this->data['file_controls'] = array();
-				if ($response->response->permissions->write)
-				{
-					$this->data['file_controls'][] = array(
-						'uri' => site_url('file/' . $response->response->file->id . '/edit'),
-						'title' => 'Edit'
-					);					
-					// Check for Delete permissions
-					if ($response->response->permissions->delete === TRUE)
-					{
-						// TODO: CHANGE TO CHECK FOR is_deletable in future
-						$this->data['file_controls'][] = array(
-							'uri' => site_url('file/' . $response->response->file->id . '/delete'),
-							'title' => 'Delete'
-						);
-					}
-					
-				}
+				
+				$this->data['permission_write'] = $response->response->permissions->write;	
+				$this->data['permission_delete'] = $response->response->permissions->delete;	
 								
 				if ($response->response->file->status === 'uploaded')
 				{

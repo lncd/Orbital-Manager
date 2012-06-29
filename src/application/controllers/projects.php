@@ -281,36 +281,8 @@ class Projects extends CI_Controller {
 					$this->data['new_project'] = FALSE;
 				}
 				
-				
-				//Check for Edit permissions
-				if ($response->response->permissions->write === TRUE)
-				{
-					$this->data['project_controls'][] = array(
-						'uri' => site_url('project/' . $response->response->project->identifier . '/edit'),
-						'title' => 'Edit'
-					);					
-					
-					// Check for Delete permissions
-					if ($response->response->permissions->delete === TRUE)
-					{
-						// Check project doesn't have files OR datasets
-						// TODO: CHANGE TO CHECK FOR is_deletable in future
-						if(count($this->data['datasets']) === 0 AND count($this->data['archive_files']) === 0)
-						{									
-							$this->data['project_controls'][] = array(
-								'uri' => site_url('project/' . $response->response->project->identifier . '/delete'),
-								'title' => 'Delete'
-							);
-						}
-					}
-					
-					if ($this->data['project_description'] === NULL OR $this->data['project_description'] === '' OR $this->data['project_default_licence']  === NULL OR $this->data['project_research_group'] === NULL)
-					{
-						$this->data['data_required'] = 'ADD MOAR DATA';
-					}
-				}
-
-
+				$this->data['permission_write'] = $response->response->permissions->write;	
+				$this->data['permission_delete'] = $response->response->permissions->delete;				
 				
 				$this->parser->parse('includes/header', $this->data);
 				$this->parser->parse('projects/view', $this->data);
