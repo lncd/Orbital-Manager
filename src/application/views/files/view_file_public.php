@@ -13,23 +13,37 @@
 	</li>
 </ul>
 <div class="page-header">
-	<h1>{file_title}</h1>
+	<h1>
+	
+	<?php
+	
+	if (file_exists('img/icons/48/' . $file_extension . '.png'))
+	{
+		$extension_icon = 'img/icons/48/' . $file_extension . '.png';
+	}
+	else
+	{
+		$extension_icon = 'img/icons/48/_blank.png';
+	}
+
+	echo '<img src="' . base_url() . $extension_icon . '">';
+
+	?>
+	
+	{file_title}</h1>
 </div>
-<div class = "well">
-	<table class="table">
+	<table class="table table-bordered">
 		<thead>
 			<tr><th colspan="2">File Summary</th></tr>
 		</thead>
 		<tbody>
-			<tr><td>Original Name</td><td>{file_name}</td></tr>
+			<tr><td>Original File Name</td><td>{file_name}</td></tr>
 			<tr><td>File Size</td><td><?php echo byte_format($file_size) ?></td></tr>
 			<tr><td>Licence</td><td><a href="{file_licence_uri}">{file_licence}</a></td></tr>
-			<tr><td>Research Project</td><td><a href="{base_url}project/{file_project_id}/public">{file_project}</a></td></tr>
-			<tr><td>Permanent URI</td><td><code>http://id.lincoln.ac.uk/research-file/{file_id}/public</code></td></tr>
+			<tr><td>Research Project</td><td><a href="{base_url}project/{file_project_id}">{file_project}</a></td></tr>
+			<tr><td>Permanent URI</td><td><code>http://id.lincoln.ac.uk/research-file/{file_id}</code></td></tr>
 		</tbody>
 	</table>
-</div>
-
 <?php
 
 if (isset ($file_downloadable))

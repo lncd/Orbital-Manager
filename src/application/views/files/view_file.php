@@ -14,10 +14,25 @@
 </ul>
 
 <div class="page-header">
-	<h1>{file_title}</h1>
+
+	<h1>
+	<?php
+	
+	if (file_exists('img/icons/48/' . $file_extension . '.png'))
+	{
+		$extension_icon = 'img/icons/48/' . $file_extension . '.png';
+	}
+	else
+	{
+		$extension_icon = 'img/icons/48/_blank.png';
+	}
+
+	echo '<img src="' . base_url() . $extension_icon . '">';
+
+	?>
+	{file_title}</h1>
 </div>
-<div class = "well">
-	<table class="table">
+	<table class="table table-bordered">
 		<thead>
 			<tr><th colspan="2">File Summary</th></tr>
 		</thead>
@@ -29,11 +44,10 @@
 			<tr><td>Permanent URI</td><td><code>http://id.lincoln.ac.uk/research-file/{file_id}</code></td></tr>
 		</tbody>
 	</table>
-</div>
 		
 		
 		
-		<table class = "table table-bordered table-striped" id="users_table">
+		<table class = "table table-bordered table-striped table-condensed" id="users_table">
 		<?php
 		if (count($archive_file_sets) > 0)
 		{

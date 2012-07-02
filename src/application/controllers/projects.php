@@ -765,7 +765,7 @@ class Projects extends CI_Controller {
 	 
 	function timeline_add_event($identifier)
 	{
-		if ($this->input->post('event') AND $this->input->post('date'))
+		if ($this->input->post('event') AND $this->input->post('start_date'))
 		{
 			// Ensure project exists
 			if ($response = $this->orbital->project_details($identifier))
@@ -780,7 +780,7 @@ class Projects extends CI_Controller {
 				if ($this->form_validation->run() === TRUE)
 				{
 					
-					if ($this->orbital->timeline_add_event($identifier, $this->input->post('event'), $this->input->post('date')))
+					if ($this->orbital->timeline_add_event($identifier, $this->input->post('event'), $this->input->post('start_date'), $this->input->post('end_date')))
 					{
 						$this->session->set_flashdata('message', 'Event added to project timeline.');
 						$this->session->set_flashdata('message_type', 'success');
@@ -812,7 +812,7 @@ class Projects extends CI_Controller {
 		}
 		else	
 		{
-			$this->session->set_flashdata('message', 'Event requires both Description and Date');
+			$this->session->set_flashdata('message', 'Event requires both Description and Start Date');
 			$this->session->set_flashdata('message_type', 'error');
 			redirect('project/' . $identifier);
 		}

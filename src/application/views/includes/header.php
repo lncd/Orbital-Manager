@@ -34,6 +34,7 @@
 		<script src="{base_url}js/jquery.min.js"></script>
 		<script src="{base_url}js/bootstrap.min.js"></script>
 		<script src="{base_url}js/jquery-ui.min.js"></script>
+		<script src="{base_url}js/jquery-ui-timepicker-addon.js"></script>
 		<script src="{base_url}js/jquery.iframe-transport.js"></script>
 		<script src="{base_url}js/jquery.fileupload.js"></script>
 		

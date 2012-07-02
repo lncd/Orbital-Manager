@@ -137,18 +137,34 @@ echo form_textarea($form_event);
 
 	
 	$form_date = array(
-		'name'			=> 'date',
-		'id'			=> 'date',
+		'name'			=> 'start_date',
+		'id'			=> 'start_date',
 		'placeholder'	=> 'YYYY-MM-DD',
 		'required'      => 'required',
 		'maxlength'		=> '10',
-		'class'			=> 'span2 datepicker'
+		'class'			=> 'span2 startdatepicker'
 	);
 
 	echo '<div class="control-group">';
-	echo form_label('Event Date', 'date', array('class' => 'control-label'));
+	echo form_label('Event Start Date', 'date', array('class' => 'control-label'));
 	echo '<div class="controls">';
 	echo form_input($form_date);
+	echo '</div></div>';
+	
+		
+	$form_date_end = array(
+		'name'			=> 'end_date',
+		'id'			=> 'end_date',
+		'placeholder'	=> 'YYYY-MM-DD',
+		'required'      => 'required',
+		'maxlength'		=> '10',
+		'class'			=> 'span2 enddatepicker'
+	);
+
+	echo '<div class="control-group">';
+	echo form_label('Event End Date', 'date', array('class' => 'control-label'));
+	echo '<div class="controls">';
+	echo form_input($form_date_end);
 	echo '</div></div>';
 
 echo '</div>
@@ -165,7 +181,16 @@ echo form_close();
 
 <script>
 	$(document).ready(function() {
-		$(".datepicker").datepicker({ dateFormat: "yy-mm-dd" });
+		$(".startdatepicker").datetimepicker({
+			dateFormat: 'yy-mm-dd',
+			timeFormat: 'hh:mm:ss',
+			separator: ' '}
+	);
+		$(".enddatepicker").datetimepicker({
+			dateFormat: 'yy-mm-dd',
+			timeFormat: 'hh:mm:ss',
+			separator: ' '}
+	);
 	});
 </script>
 
