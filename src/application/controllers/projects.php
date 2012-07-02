@@ -780,7 +780,7 @@ class Projects extends CI_Controller {
 				if ($this->form_validation->run() === TRUE)
 				{
 					
-					if ($this->orbital->timeline_add_event($identifier, $this->input->post('event'), $this->input->post('start_date'), $this->input->post('end_date')))
+					if ($this->orbital->timeline_add_event($identifier, $this->input->post('event'), $this->input->post('start_date'), $this->input->post('end_date'), $this->input->post('publicity')))
 					{
 						$this->session->set_flashdata('message', 'Event added to project timeline.');
 						$this->session->set_flashdata('message_type', 'success');

@@ -964,9 +964,9 @@ class Orbital {
 	 * @return object.
 	 */
 
-	public function timeline_add_event($project, $event, $start_date, $end_date = NULL)
+	public function timeline_add_event($project, $event, $start_date, $end_date = NULL, $publicity)
 	{
-		return $this->post_authed('timeline/event', array('project' => $project, 'event' => $event, 'start_date' => $start_date, 'end_date' => $end_date));
+		return $this->post_authed('timeline/event', array('project' => $project, 'event' => $event, 'start_date' => $start_date, 'end_date' => $end_date, 'publicity' => $publicity));
 	}
 
 

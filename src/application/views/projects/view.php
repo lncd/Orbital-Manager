@@ -160,6 +160,7 @@ echo form_textarea($form_event);
 		'maxlength'		=> '10',
 		'class'			=> 'span2 enddatepicker'
 	);
+		
 
 	echo '<div class="control-group">';
 	echo form_label('Event End Date', 'date', array('class' => 'control-label'));
@@ -167,6 +168,12 @@ echo form_textarea($form_event);
 	echo form_input($form_date_end);
 	echo '</div></div>';
 
+	$publicity['public'] = 'Public';
+	$publicity['private'] = 'Private';
+
+	echo form_label('Public event?', 'publicity');
+	echo form_dropdown('publicity', $publicity, 'Public', 'id="publicity"');
+	
 echo '</div>
 <div class="modal-footer">
 	<button class="btn" data-dismiss="modal">Close</button>
