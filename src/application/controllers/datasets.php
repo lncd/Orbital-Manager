@@ -86,7 +86,7 @@ class Datasets extends CI_Controller {
 			
 		if($this->input->post('dataset_name') AND $this->input->post('dataset_name') !== '')
 		{
-			if($this->input->post('dataset_description') AND $this->input->post('datasetdescription') !== '')
+			if($this->input->post('dataset_description') AND $this->input->post('dataset_description') !== '')
 			{
 				if ($response = $this->orbital->create_new_dataset($this->data['file_set_project'], $this->input->post('dataset_name'), $this->input->post('dataset_description')))
 				{					
@@ -149,6 +149,71 @@ class Datasets extends CI_Controller {
 			{
 				show_404();
 			}
+		}
+	}
+	
+	
+	
+	/**
+	 * Build query
+	 *
+	 * builds a query
+	 *
+	 * @return NULL
+	 */
+
+
+	function build_query($dataset_id)
+	{
+		$this->data['page_title'] = 'Query Builder ';
+		
+		if ($response = $this->orbital->dataset_get_details($dataset_id))
+		{
+		
+			$this->load->helper('number');
+			$this->load->library('typography');
+			
+			$this->data['dataset_id'] = $response->response->dataset->id;
+			$this->data['dataset_project'] = $response->response->dataset->project_name;
+			$this->data['dataset_project_id'] = $response->response->dataset->project;
+			$this->data['dataset_title'] = $response->response->dataset->title;
+			$this->data['dataset_token'] = $response->response->dataset->token;
+			$this->data['page_title'] = $response->response->dataset->title;
+		
+			if($this->input->post('query_name') AND $this->input->post('query_name') !== '')
+			{
+			//	if($this->input->post('fields') AND $this->input->post('fields') !== '' AND $this->input->post('operator') !== '' AND $this->input->post('operator') !== '')
+			//	{
+					if ($response = $this->orbital->build_query($dataset_id, 'abc', 1, 1, 1, 1))//$this->input->post('field'), $this->input->post('operator'), $this->input->post('value'), $this->input->post('output_fields')))
+					{					
+						$this->session->set_flashdata('message', 'Your query has been built!');
+						$this->session->set_flashdata('message_type', 'success');
+						redirect('dataset/' . $dataset_id);
+					}
+					else
+					{
+						$this->session->set_flashdata('message', 'Something went wrong creating the query');
+						$this->session->set_flashdata('message_type', 'error');
+						redirect('dataset/' . $dataset_id . '/query');
+					}
+			//	}
+			//	else
+			//	{
+			//		$this->session->set_flashdata('message', 'The query is missing some data');
+			//		$this->session->set_flashdata('message_type', 'alert');
+			//		redirect('dataset/' . $dataset_id . '/query');
+			//	}
+			}
+			else
+			{
+				$this->parser->parse('includes/header', $this->data);
+				$this->parser->parse('datasets/add_query', $this->data);
+				$this->parser->parse('includes/footer', $this->data);
+			}
+		}
+		else
+		{
+			show_404();
 		}
 	}
 }

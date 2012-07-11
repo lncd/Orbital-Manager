@@ -802,8 +802,6 @@ class Projects extends CI_Controller {
 					$this->session->set_flashdata('message_type', 'error');
 					redirect('project/' . $identifier);
 				}
-			
-				
 			}
 			else
 			{

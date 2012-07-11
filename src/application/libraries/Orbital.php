@@ -1353,7 +1353,23 @@ class Orbital {
 	{
 		return $this->get_authed('dataset/' . $identifier);
 	}
-
+		
+	/**
+	 * Build query
+	 *
+	 * Posts a querys details to MongoDB
+	 *
+	 * @param string $dataset_id The identifier of the dataset.
+	 * @param string $qurty_id   The identifier of the query.
+	 *
+	 * @access public
+	 * @return object.
+	 */
+	
+	public function build_query($dataset_id, $query_id, $field, $operator, $value, $output_fields)
+	{
+		return $this->post_authed('dataset/' . $dataset_id . '/query/' . $query_id, array('field' => $field, 'operator' => $operator, 'value' => $value, 'output_fields' => $output_fields));
+	}
 }
 
 /* End of file Orbital.php */
