@@ -184,7 +184,8 @@ class Datasets extends CI_Controller {
 			{
 			//	if($this->input->post('fields') AND $this->input->post('fields') !== '' AND $this->input->post('operator') !== '' AND $this->input->post('operator') !== '')
 			//	{
-					if ($response = $this->orbital->build_query($dataset_id, 'abc', 1, 1, 1, 1))//$this->input->post('field'), $this->input->post('operator'), $this->input->post('value'), $this->input->post('output_fields')))
+			print_r($dataset_id . $this->input->post('field') . $this->input->post('operator') . $this->input->post('value') . $this->input->post('output_fields'));/*
+					if ($response = $this->orbital->build_query($dataset_id, $this->input->post('field'), $this->input->post('operator'), $this->input->post('value'), $this->input->post('output_fields')))
 					{					
 						$this->session->set_flashdata('message', 'Your query has been built!');
 						$this->session->set_flashdata('message_type', 'success');
@@ -195,7 +196,7 @@ class Datasets extends CI_Controller {
 						$this->session->set_flashdata('message', 'Something went wrong creating the query');
 						$this->session->set_flashdata('message_type', 'error');
 						redirect('dataset/' . $dataset_id . '/query');
-					}
+					}*/
 			//	}
 			//	else
 			//	{

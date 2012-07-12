@@ -34,7 +34,8 @@
 		'id'			=> 'query_name',
 		'placeholder'	=> 'Query Name',
 		'maxlength'		=> '200',
-		'class'			=> 'span6'
+		'class'			=> 'span6',
+		'required'		=> 'TRUE'
 	);
 
 	echo '<div class="control-group">';
@@ -44,7 +45,7 @@
 	echo '</div></div>';
 	
 	
-	//ARRAY OF FIELDS TO SELECT (MONGO)
+	//ARRAY OF FIELDS TO SELECT
 	$fields = Array();
 
 	$fields[0] = '0';
@@ -65,30 +66,28 @@
 	$values[1] = '1';
 	$values[2] = '2';
 	
-	if (count($fields) > 0)
-	{
-		echo '<div class="control-group">';
-		echo form_label('Query', 'add_statements', array('class' => 'control-label'));
-		echo '<div class="controls">';
-			$table_hidden = ' style="display:none"';
-		
-		echo '<table' . $table_hidden . ' class = "table table-bordered table-striped" id="statements_table">
-		<thead><tr><th>Field</th><th>Operator</th><th>Value</th><th>Use this statement?</th></tr></thead>
-		<tbody>';
+	echo '<div class="control-group">';
+	echo form_label('Query', 'add_statements', array('class' => 'control-label'));
+	echo '<div class="controls">';
+		$table_hidden = ' style="display:none"';
 	
+	echo '<table' . $table_hidden . ' class = "table table-bordered table-striped" id="statements_table">
+	<thead><tr><th>Field</th><th>Operator</th><th>Value</th><th>Use this statement?</th></tr></thead>
+	<tbody>';
+	echo '</tbody></table>';
+	echo '</div></div>';
 
-		echo '</tbody></table>';
-		echo form_dropdown('fields', $fields, set_value('field'), 'id="field" class="span3"');
-		echo form_dropdown('operators', $operators, set_value('operator'), 'id="operator" class="span3"');
-		echo form_dropdown('values', $values, set_value('value'), 'id="value" class="span3"');
-		echo ' <a name = "add_statement_to_query" id = "add_statement" value = "add_statement_to_query" class="btn btn-small"><i class = "icon-plus"></i> Add statement</a>';
-		echo '</div></div>';
-	}
-		echo '<div class="form-actions">';
-		echo '<button type="submit" class="btn btn-success"><i class = "icon-ok icon-white"></i> Save Query</button>';
-		echo '</div>';
-		
+	echo '<div class="form-actions">';
+	echo '<button type="submit" class="btn btn-success"><i class = "icon-ok icon-white"></i> Save Query</button>';
+	echo '</div>';
+	
 	echo form_close();
+	
+	echo form_dropdown('fields', $fields, set_value('field'), 'id="field" class="span3"');
+	echo form_dropdown('operators', $operators, set_value('operator'), 'id="operator" class="span3"');
+	echo form_dropdown('values', $values, set_value('value'), 'id="value" class="span3"');
+	echo ' <a name = "add_statement_to_query" id = "add_statement" value = "add_statement_to_query" class="btn btn-small"><i class = "icon-plus"></i> Add statement</a>';
+	
  ?>
 	
 </div>

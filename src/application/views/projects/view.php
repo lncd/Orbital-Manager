@@ -54,6 +54,19 @@ if (count($timeline) > 0)
 			echo '<br>' . $item->payload;
 		}
 		echo '</p><small>' . $item->timestamp_human . '</small></div></li>';
+		/*
+		if ($item->timestamp_unix - time() > 0 AND $item->timestamp_unix - time() < (7 * 24 * 60 * 60))
+		{
+			//Event this week
+		}
+		if ($item->timestamp_unix - time() > (7 * 24 * 60 * 60))
+		{
+			//Future Event
+		}
+		if ($item->timestamp_unix - time() < 0)
+		{
+			//Past Event
+		}*/
 	}	
 	
 	echo '</ul>
@@ -168,8 +181,8 @@ echo form_textarea($form_event);
 	echo form_input($form_date_end);
 	echo '</div></div>';
 
-	$publicity['public'] = 'Public';
 	$publicity['private'] = 'Private';
+	$publicity['public'] = 'Public';
 
 	echo form_label('Public event?', 'publicity');
 	echo form_dropdown('publicity', $publicity, 'Public', 'id="publicity"');

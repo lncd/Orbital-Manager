@@ -263,21 +263,9 @@ class Files extends CI_Controller {
 			}
 			
 			$this->data['file_set_size'] = $file_set_size;
-			$this->data['file_set_controls'] = array();
-			if ($response->response->permissions->write)
-			{
-				$this->data['file_set_controls'][] = array(
-					'uri' => site_url('collection/' . $response->response->file_set->id . '/edit'),
-					'title' => 'Edit'
-				);
-				if ($response->response->permissions->delete)
-				{
-					$this->data['file_set_controls'][] = array(
-						'uri' => site_url('collection/' . $response->response->file_set->id . '/delete'),
-						'title' => 'Delete'
-					);
-				}
-			}
+
+				$this->data['permission_write'] = $response->response->permissions->write;	
+				$this->data['permission_delete'] = $response->response->permissions->delete;	
 			
 
 			$this->parser->parse('includes/header', $this->data);

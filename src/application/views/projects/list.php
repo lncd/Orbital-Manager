@@ -32,6 +32,19 @@ if (count($timeline) > 0)
 			echo '<br>' . $item->payload;
 		}
 		echo '</p><small>' . $item->timestamp_human . '</small></div></li>';
+		/*
+		if ($item->timestamp_unix - time() > 0 AND $item->timestamp_unix - time() < (7 * 24 * 60 * 60))
+		{
+			//Event this week
+		}
+		if ($item->timestamp_unix - time() > (7 * 24 * 60 * 60))
+		{
+			//Future Event
+		}
+		if ($item->timestamp_unix - time() < 0)
+		{
+			//Past Event
+		}*/
 	}	
 	
 	echo '</ul>
