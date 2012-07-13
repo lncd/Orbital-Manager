@@ -30,9 +30,42 @@
 	</table>
 </div>
 
-{file_controls}
-<a class="btn btn-small disabled" href="{uri}">{title}</a>
-{/file_controls}
+		<?php
+
+//Check for Edit permissions
+if ($permission_write === TRUE)
+{
+	echo '<p>';
+	
+	echo '<a href="' . site_url('dataset/' . $dataset_id . '/edit') . '" class="btn btn-small"><i class="icon-pencil"></i> Edit</a>';
+		
+	
+	// Check for Delete permissions
+	if ($permission_delete === TRUE)
+	{								
+		echo ' <a href="#delete_dataset" data-toggle="modal" class="btn btn-small btn-danger"><i class="icon-trash"></i> Delete</a>';
+	}
+	
+	echo '</p>';
+}
+
+
+
+echo '<div class="modal fade" id="delete_dataset">
+		<div class="modal-header">
+			<button class="close" data-dismiss="modal">×</button>
+			<h3>Delete Dataset</h3>
+			<h4>' . $dataset_title . '</h4>
+		</div>
+		<div class="modal-body">
+			<p>Are you sure you want to delete this dataset?</p>
+		</div>
+		<div class="modal-footer">
+			<a href="#" data-dismiss="modal" class="btn">Close</a>
+			<a href="' . site_url('file/' . $dataset_id . '/delete') . '" class="btn btn-danger"><i class="icon-trash"></i> Delete Dataset</a>
+		</div>
+	</div>';
+?>
 
 <hr>
 

@@ -45,14 +45,8 @@ class Datasets extends CI_Controller {
 		//		$file_set_size = $file_set_size + $archive_file->size;
 		//	}
 			
-			
-			if ($response->response->permissions->write)
-			{
-				$this->data['file_controls'][] = array(
-					'uri' => site_url('dataset/' . $response->response->dataset->id . '/edit'),
-					'title' => 'Edit'
-				);
-			}
+			$this->data['permission_write'] = $response->response->permissions->write;	
+			$this->data['permission_delete'] = $response->response->permissions->delete;	
 			
 
 			$this->parser->parse('includes/header', $this->data);
@@ -206,7 +200,7 @@ class Datasets extends CI_Controller {
 					}
 					if ($test_variable > 0 AND $output_variable < 1)
 					{
-						$this->session->set_flashdata('message', 'Your query has been built!' . $test_variable . 'statements added or changed.');
+						$this->session->set_flashdata('message', 'Your query has been built! ' . $test_variable . ' statements added or changed.');
 						$this->session->set_flashdata('message_type', 'success');
 						redirect('dataset/' . $dataset_id);						
 					}
@@ -218,7 +212,7 @@ class Datasets extends CI_Controller {
 					}
 					if ($test_variable > 0 AND $output_variable > 0)
 					{
-						$this->session->set_flashdata('message', 'Your query has been built!' . $test_variable . 'statements added or changed and output fields changed');
+						$this->session->set_flashdata('message', 'Your query has been built! ' . $test_variable . ' statements added or changed and output fields changed');
 						$this->session->set_flashdata('message_type', 'success');
 						redirect('dataset/' . $dataset_id);						
 					}
