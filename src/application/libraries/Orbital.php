@@ -1366,9 +1366,14 @@ class Orbital {
 	 * @return object.
 	 */
 	
-	public function build_query($dataset_id, $query_id, $field, $operator, $value, $output_fields)
+	public function build_query($dataset_id, $query_id, $field, $operator, $value)
 	{
-		return $this->post_authed('dataset/' . $dataset_id . '/query/' . $query_id, array('field' => $field, 'operator' => $operator, 'value' => $value, 'output_fields' => $output_fields));
+		return $this->post_authed('dataset/' . $dataset_id . '/query/' . $query_id, array('field' => $field, 'operator' => $operator, 'value' => $value));
+	}
+	
+	public function build_query_output_fields($dataset_id, $query_id, $output_fields)
+	{
+		return $this->post_authed('dataset/' . $dataset_id . '/query/' . $query_id . 'output_fields', array('output_fields' => $output_fields));	
 	}
 }
 
