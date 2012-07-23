@@ -45,6 +45,7 @@ class Projects extends CI_Controller {
 						
 			$now->id = 'now';
 			$now->text = 'Now';
+			$now->type = 'Comment';
 			$now->payload = NULL;
 			$now->visibility = 'public';
 			$now->timestamp_human = date('g.ia');
@@ -237,6 +238,7 @@ class Projects extends CI_Controller {
 					$now->text = 'Now';
 					$now->payload = NULL;
 					$now->visibility = 'public';
+					$now->type = 'comment';
 					$now->timestamp_human = date('g.ia');
 					
 					$this->data['timeline'][time()] = $now;

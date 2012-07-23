@@ -37,6 +37,8 @@ class Datasets extends CI_Controller {
 			$this->data['dataset_title'] = $response->response->dataset->title;
 			$this->data['dataset_token'] = $response->response->dataset->token;
 			$this->data['page_title'] = $response->response->dataset->title;
+			$this->data['queries'] = $response->response->dataset_queries;
+			
 			//$this->data['archive_files'] = $response->response->archive_files;
 			
 			$datasset_size = NULL;

@@ -65,7 +65,34 @@ echo '<div class="modal fade" id="delete_dataset">
 			<a href="' . site_url('file/' . $dataset_id . '/delete') . '" class="btn btn-danger"><i class="icon-trash"></i> Delete Dataset</a>
 		</div>
 	</div>';
-?>
+
+	echo '<table class = "table table-bordered table-striped table-condensed" id="users_table">';
+	if (count($queries) > 0)
+	{
+	?>
+		<thead><tr><th>Query name</th></tr></thead>
+		<tbody>
+			<?php foreach($queries as $query)
+			{
+			echo '<tr><td>';
+				
+			echo '<a href="#">' . $query->query . ' '; ?></td></tr>
+
+			<?php
+			}
+
+			?>
+		</tbody><?php
+	}
+	else
+	{
+		echo '<p>There are currently no queries available for this dataset';
+	}
+	
+	echo '</table>';
+	echo '<p><a class="btn btn-success btn-small btn-disabled" href="{base_url}dataset/{dataset_id}/query"><i class="icon-plus"></i> Create Query</a></a>';
+
+	?>
 
 <hr>
 

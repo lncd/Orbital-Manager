@@ -47,3 +47,14 @@
 .timeline small {
 	font-size: 0.9em;
 }
+
+.timeline li .tl_week {
+	border-left: 5px solid #63d363;
+}
+
+.timeline li .tl_future {
+	border-left: 5px solid #6363d3;}
+
+.timeline li .tl_past {
+	background: #ffffff;
+}
