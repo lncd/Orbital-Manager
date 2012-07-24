@@ -26,6 +26,7 @@
 			<tr><td>Research Project</td><td><a href="{base_url}project/{dataset_project_id}">{dataset_project}</a></td></tr>
 			<tr><td>Dataset ID</td><td><code>{dataset_id}</code></td></tr>
 			<tr><td>API Token</td><td><code>{dataset_token}</code></td></tr>
+			<tr><td>Number of Datapoints</td><td>{count}</td></tr>
 		</tbody>
 	</table>
 </div>
