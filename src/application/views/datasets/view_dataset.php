@@ -76,7 +76,7 @@ echo '<div class="modal fade" id="delete_dataset">
 			{
 			echo '<tr><td>';
 				
-			echo '<a href="#">' . $query->query . ' '; ?></td></tr>
+			echo '<a href="' . base_url() . 'dataset/' . $dataset_id . '/query/' . $query_id . '">' . $query->query . ' '; ?></td></tr>
 
 			<?php
 			}
