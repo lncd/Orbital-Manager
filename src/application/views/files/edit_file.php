@@ -17,7 +17,7 @@
 </ul>
 
 <div class="page-header">
-	<h1>{file_title}</h1>
+	<h1>{file_title}<small> Edit</small></h1>
 </div>
 
 

@@ -174,7 +174,7 @@ class Datasets extends CI_Controller {
 				$this->load->helper('number');
 				$this->load->library('typography');
 				
-				$this->data['query_id'] = '1';//$response->response->query[0]->id;
+				$this->data['query_id'] = $response->response->query[0]->id;
 				$this->data['query_name'] = $response->response->query[0]->query;
 				$this->data['query_dataset'] = $response->response->query[0]->set;
 				if (isset($response->response->query[0]->value->fields))
@@ -266,7 +266,7 @@ class Datasets extends CI_Controller {
 	 */
 
 
-	function build_query($dataset_id)
+	function build_query($dataset_id, $query_identifier)
 	{
 		$test_variable = NULL;
 		$output_variable = NULL;
@@ -283,67 +283,76 @@ class Datasets extends CI_Controller {
 			$this->data['dataset_project'] = $response->response->dataset->project_name;
 			$this->data['dataset_project_id'] = $response->response->dataset->project;
 			$this->data['dataset_title'] = $response->response->dataset->title;
-			$this->data['dataset_token'] = $response->response->dataset->token;
-			$this->data['page_title'] = $response->response->dataset->title;
-		
-			if($this->input->post('query_name') AND $this->input->post('query_name') !== '')
-			{
-				if($this->input->post('output_fields'))
+			
+			if ($response = $this->orbital->query_get_details($dataset_id, $query_identifier))
+			{			
+				$this->data['page_title'] = $response->response->query[0]->query;
+				$this->data['query_id'] = $response->response->query[0]->id;
+				$this->data['query_name'] = $response->response->query[0]->query;
+			
+				if($this->input->post('query_name') AND $this->input->post('query_name') !== '')
 				{
-					if ($response = $this->orbital->build_query_output_fields($dataset_id, $this->input->post('query_name'), $this->input->post('output_fields')))
+					if($this->input->post('output_fields'))
 					{
-						$output_variable ++;
-					}
-				}
-				if($this->input->post('statements'))
-				{	
-					foreach ($this->input->post('statements') as $field => $statement)
-					{
-						foreach ($statement as $operator => $value)
+						if ($response = $this->orbital->build_query_output_fields($dataset_id, $this->input->post('query_name'), $this->input->post('output_fields')))
 						{
-							if ($response = $this->orbital->build_query($dataset_id, $this->input->post('query_name'), $field, $operator, $value))
-							{
-								$test_variable ++;
-							}
+							$output_variable ++;
 						}
 					}
-					if ($test_variable > 0 AND $output_variable < 1)
-					{
-						$this->session->set_flashdata('message', 'Your query has been built! ' . $test_variable . ' statements added or changed.');
-						$this->session->set_flashdata('message_type', 'success');
-						redirect('dataset/' . $dataset_id);						
-					}
-					if ($output_variable > 0 AND $test_variable < 1)
-					{
-						$this->session->set_flashdata('message', 'Your query has been built! Output fields changed.');
-						$this->session->set_flashdata('message_type', 'success');
-						redirect('dataset/' . $dataset_id);						
-					}
-					if ($test_variable > 0 AND $output_variable > 0)
-					{
-						$this->session->set_flashdata('message', 'Your query has been built! ' . $test_variable . ' statements added or changed and output fields changed');
-						$this->session->set_flashdata('message_type', 'success');
-						redirect('dataset/' . $dataset_id);						
+					if($this->input->post('statements'))
+					{	
+						foreach ($this->input->post('statements') as $field => $statement)
+						{
+							foreach ($statement as $operator => $value)
+							{
+								if ($response = $this->orbital->build_query($dataset_id, $this->input->post('query_name'), $field, $operator, $value))
+								{
+									$test_variable ++;
+								}
+							}
+						}
+						if ($test_variable > 0 AND $output_variable < 1)
+						{
+							$this->session->set_flashdata('message', 'Your query has been built! ' . $test_variable . ' statements added or changed.');
+							$this->session->set_flashdata('message_type', 'success');
+							redirect('dataset/' . $dataset_id);						
+						}
+						if ($output_variable > 0 AND $test_variable < 1)
+						{
+							$this->session->set_flashdata('message', 'Your query has been built! Output fields changed.');
+							$this->session->set_flashdata('message_type', 'success');
+							redirect('dataset/' . $dataset_id);						
+						}
+						if ($test_variable > 0 AND $output_variable > 0)
+						{
+							$this->session->set_flashdata('message', 'Your query has been built! ' . $test_variable . ' statements added or changed and output fields changed');
+							$this->session->set_flashdata('message_type', 'success');
+							redirect('dataset/' . $dataset_id);						
+						}
+						else
+						{
+							$this->session->set_flashdata('message', 'Something went wrong creating the query');
+							$this->session->set_flashdata('message_type', 'error');
+							redirect('dataset/' . $dataset_id . '/query');
+						}
 					}
 					else
 					{
-						$this->session->set_flashdata('message', 'Something went wrong creating the query');
-						$this->session->set_flashdata('message_type', 'error');
+						$this->session->set_flashdata('message', 'The query is missing some data');
+						$this->session->set_flashdata('message_type', 'alert');
 						redirect('dataset/' . $dataset_id . '/query');
 					}
 				}
 				else
 				{
-					$this->session->set_flashdata('message', 'The query is missing some data');
-					$this->session->set_flashdata('message_type', 'alert');
-					redirect('dataset/' . $dataset_id . '/query');
+					$this->parser->parse('includes/header', $this->data);
+					$this->parser->parse('datasets/edit_query', $this->data);
+					$this->parser->parse('includes/footer', $this->data);
 				}
 			}
 			else
 			{
-				$this->parser->parse('includes/header', $this->data);
-				$this->parser->parse('datasets/edit_query', $this->data);
-				$this->parser->parse('includes/footer', $this->data);
+				show_404();
 			}
 		}
 		else

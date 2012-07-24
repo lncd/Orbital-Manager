@@ -11,13 +11,16 @@
 	<li>
 		<a href="{base_url}dataset/{dataset_id}">{dataset_title}</a><span class="divider">/</span>
 	</li>
+	<li>
+		<a href="{base_url}dataset/{query_id}">{query_name}</a> <span class="divider">/</span>
+	</li>
 	<li class="active">
-		Query Builder
+		Edit Query
 	</li>
 </ul>
 
 <div class="page-header">
-	<h1>Query Builder</h1>
+	<h1>{query_name}<small> Edit</small></h1>
 </div>
 	
 <div class="well">
