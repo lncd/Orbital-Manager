@@ -159,42 +159,33 @@ class Datasets extends CI_Controller {
 	 * @return NULL
 	 */
 
-	function view_query($dataset_identifier, $query_identifier)
+	function view_query($query_identifier)
 	{
-		if ($response = $this->orbital->dataset_get_details($dataset_identifier))
+		if ($response = $this->orbital->query_get_details($query_identifier))
 		{
-			$this->data['permission_write'] = $response->response->permissions->write;	
-			$this->data['permission_delete'] = $response->response->permissions->delete;
-			$this->data['dataset_title'] = $response->response->dataset->title;
-			$this->data['dataset_project_name'] = $response->response->dataset->project_name;
-			$this->data['dataset_project_id'] = $response->response->dataset->project;
+			$this->load->helper('number');
+			$this->load->library('typography');
 			
-			if ($response = $this->orbital->query_get_details($dataset_identifier, $query_identifier))
+			$this->data['query_id'] = $response->response->query[0]->id;
+			$this->data['query_name'] = $response->response->query[0]->query;
+			$this->data['query_dataset'] = $response->response->query[0]->set;
+			if (isset($response->response->query[0]->value->fields))
 			{
-				$this->load->helper('number');
-				$this->load->library('typography');
-				
-				$this->data['query_id'] = $response->response->query[0]->id;
-				$this->data['query_name'] = $response->response->query[0]->query;
-				$this->data['query_dataset'] = $response->response->query[0]->set;
-				if (isset($response->response->query[0]->value->fields))
-				{
-					$this->data['query_fields'][] = $response->response->query[0]->value->fields;
-				}
-				if (isset($response->response->query[0]->value->statements))
-				{
-					$this->data['query_fields'][] = $response->response->query[0]->value->statements;
-				}
-				$this->data['page_title'] = $response->response->query[0]->query;
-	
-				$this->parser->parse('includes/header', $this->data);
-				$this->parser->parse('datasets/view_query', $this->data);
-				$this->parser->parse('includes/footer', $this->data);
+				$this->data['query_fields'][] = $response->response->query[0]->value->fields;
 			}
-			else
+			if (isset($response->response->query[0]->value->statements))
 			{
-				show_404();
+				$this->data['query_fields'][] = $response->response->query[0]->value->statements;
 			}
+			$this->data['page_title'] = $response->response->query[0]->query;
+
+			$this->parser->parse('includes/header', $this->data);
+			$this->parser->parse('datasets/view_query', $this->data);
+			$this->parser->parse('includes/footer', $this->data);
+		}
+		else
+		{
+			show_404();
 		}
 	}
 	
@@ -210,7 +201,6 @@ class Datasets extends CI_Controller {
 
 	function create_query($dataset_id)
 	{
-		$test_variable = NULL;
 		$output_variable = NULL;
 		
 		$this->data['page_title'] = 'Query Builder ';
@@ -266,99 +256,129 @@ class Datasets extends CI_Controller {
 	 */
 
 
-	function build_query($dataset_id, $query_identifier)
+	function edit_query($query_identifier)
 	{
-		$test_variable = NULL;
 		$output_variable = NULL;
 		
 		$this->data['page_title'] = 'Query Builder ';
 		
-		if ($response = $this->orbital->dataset_get_details($dataset_id))
-		{
+		$this->load->helper('number');
+		$this->load->library('typography');
 		
-			$this->load->helper('number');
-			$this->load->library('typography');
+		if ($response = $this->orbital->query_get_details($query_identifier))
+		{			
+			$this->data['page_title'] = $response->response->query[0]->query;
+			$this->data['query_id'] = $response->response->query[0]->id;
+			$this->data['query_name'] = $response->response->query[0]->query;
+			$this->data['statements'] = NULL;
+			$this->data['fields'] = NULL;
 			
-			$this->data['dataset_id'] = $response->response->dataset->id;
-			$this->data['dataset_project'] = $response->response->dataset->project_name;
-			$this->data['dataset_project_id'] = $response->response->dataset->project;
-			$this->data['dataset_title'] = $response->response->dataset->title;
-			
-			if ($response = $this->orbital->query_get_details($dataset_id, $query_identifier))
-			{			
-				$this->data['page_title'] = $response->response->query[0]->query;
-				$this->data['query_id'] = $response->response->query[0]->id;
-				$this->data['query_name'] = $response->response->query[0]->query;
-			
-				if($this->input->post('query_name') AND $this->input->post('query_name') !== '')
-				{
-					if($this->input->post('output_fields'))
+			if (isset($response->response->query[0]->value->statements))
+			{
+				$this->data['statements'] = (array)$response->response->query[0]->value->statements;
+			}
+			if (isset($response->response->query[0]->value->fields))
+			{
+				$this->data['fields'] = (array)$response->response->query[0]->value->fields;
+			}
+		
+			if($this->input->post('query_name') AND $this->input->post('query_name') !== '')
+			{
+				if($this->input->post('statements'))
+				{	
+					$statements_array = array();
+					$fields_array = array();
+				
+					$includes = $this->input->post('include');
+				
+					foreach ($this->input->post('statements') as $field => $statement)
 					{
-						if ($response = $this->orbital->build_query_output_fields($dataset_id, $this->input->post('query_name'), $this->input->post('output_fields')))
+						foreach ($statement as $operator => $value)
 						{
-							$output_variable ++;
-						}
-					}
-					if($this->input->post('statements'))
-					{	
-						foreach ($this->input->post('statements') as $field => $statement)
-						{
-							foreach ($statement as $operator => $value)
+							if (isset($includes[$field][$operator]))
 							{
-								if ($response = $this->orbital->build_query($dataset_id, $this->input->post('query_name'), $field, $operator, $value))
-								{
-									$test_variable ++;
-								}
+								$statements_array[$field][$operator] = $value;						
 							}
 						}
-						if ($test_variable > 0 AND $output_variable < 1)
+					}	
+					if($this->input->post('fields'))
+					{	
+						foreach ($this->input->post('fields') as $field => $statement)
 						{
-							$this->session->set_flashdata('message', 'Your query has been built! ' . $test_variable . ' statements added or changed.');
-							$this->session->set_flashdata('message_type', 'success');
-							redirect('dataset/' . $dataset_id);						
+							$fields_array[$field] = $value;						
 						}
-						if ($output_variable > 0 AND $test_variable < 1)
-						{
-							$this->session->set_flashdata('message', 'Your query has been built! Output fields changed.');
-							$this->session->set_flashdata('message_type', 'success');
-							redirect('dataset/' . $dataset_id);						
-						}
-						if ($test_variable > 0 AND $output_variable > 0)
-						{
-							$this->session->set_flashdata('message', 'Your query has been built! ' . $test_variable . ' statements added or changed and output fields changed');
-							$this->session->set_flashdata('message_type', 'success');
-							redirect('dataset/' . $dataset_id);						
-						}
-						else
-						{
-							$this->session->set_flashdata('message', 'Something went wrong creating the query');
-							$this->session->set_flashdata('message_type', 'error');
-							redirect('dataset/' . $dataset_id . '/query');
-						}
+					}
+					
+					if ($response = $this->orbital->update_query($query_identifier, $this->input->post('query_name'), $statements_array, $fields_array))
+					{
+						$this->session->set_flashdata('message', 'Your query has been edited!');
+						$this->session->set_flashdata('message_type', 'success');
+						redirect('query/' . $query_identifier);			
 					}
 					else
 					{
-						$this->session->set_flashdata('message', 'The query is missing some data');
-						$this->session->set_flashdata('message_type', 'alert');
-						redirect('dataset/' . $dataset_id . '/query');
+						$this->session->set_flashdata('message', 'Something went wrong editing the query');
+						$this->session->set_flashdata('message_type', 'error');
+						redirect('query/' . $query_identifier . '/edit');
 					}
 				}
 				else
 				{
-					$this->parser->parse('includes/header', $this->data);
-					$this->parser->parse('datasets/edit_query', $this->data);
-					$this->parser->parse('includes/footer', $this->data);
+					$this->session->set_flashdata('message', 'The query is missing some data');
+					$this->session->set_flashdata('message_type', 'alert');
+					redirect('query/' . $query_identifier . '/edit');
 				}
 			}
 			else
 			{
-				show_404();
+				$this->parser->parse('includes/header', $this->data);
+				$this->parser->parse('datasets/edit_query', $this->data);
+				$this->parser->parse('includes/footer', $this->data);
 			}
 		}
 		else
 		{
 			show_404();
 		}
+		
+	}
+
+	
+	/**
+	 * Delete query
+	 *
+	 * deletes a query
+	 *
+	 * @return NULL
+	 */
+
+
+	function delete_query($query_identifier)
+	{
+		
+		$this->load->helper('number');
+		$this->load->library('typography');
+		
+		if ($response = $this->orbital->query_get_details($query_identifier))
+		{								
+			if ($response = $this->orbital->delete_query($query_identifier))
+			{
+				$this->session->set_flashdata('message', 'Your query has been deleted!');
+				$this->session->set_flashdata('message_type', 'success');
+				redirect('query/' . $query_identifier);			
+			}
+			else
+			{
+				$this->session->set_flashdata('message', 'Something went wrong deleting the query');
+				$this->session->set_flashdata('message_type', 'error');
+				redirect('query/' . $query_identifier);
+			}
+		}
+		else
+		{
+			show_404();
+		}
+		
 	}
 }
 

@@ -30,12 +30,13 @@
 		</thead>
 	</table>
 	
-<?php echo form_open('dataset/{dataset_id}/query', array('class' => 'form-horizontal'));
+<?php echo form_open('query/{query_id}/edit', array('class' => 'form-horizontal'));
 	
 	$form_name = array(
 		'name'			=> 'query_name',
 		'id'			=> 'query_name',
-		'placeholder'	=> 'Query Name',
+		'placeholder'	=> $query_name,
+		'value'			=> set_value('query_name', $query_name),
 		'maxlength'		=> '200',
 		'class'			=> 'span6',
 		'required'		=> 'TRUE'
@@ -45,42 +46,37 @@
 	echo form_label('Query Name', 'query_name', array('class' => 'control-label'));
 	echo '<div class="controls">';
 	echo form_input($form_name);
-	echo '</div></div>';
-	
-	$form_output_fields = array(
-		'name'			=> 'output_fields',
-		'id'			=> 'output_fields',
-		'placeholder'	=> 'Output Fields',
-		'maxlength'		=> '200',
-		'class'			=> 'span6',
-		'required'		=> 'TRUE'
-	);
-
-	echo '<div class="control-group">';
-	echo form_label('Output Fields', 'output_fields', array('class' => 'control-label'));
-	echo '<div class="controls">';
-	echo form_input($form_output_fields);
-	echo '</div></div>';
-	
+	echo '</div></div>';	
 	
 	//ARRAY OF OPERATORS TO SELECT
-	$operators = Array();
+	$form_operators = Array();
 
-	$operators['equals'] = 'Equals';
-	$operators['gt'] = 'Greater than';
-	$operators['gte'] = 'Greater than or equal to';
-	$operators['lt'] = 'Less than';
-	$operators['lte'] = 'Less than or equal to';
+	$form_operators['equals'] = 'Equals';
+	$form_operators['gt'] = 'Greater than';
+	$form_operators['gte'] = 'Greater than or equal to';
+	$form_operators['lt'] = 'Less than';
+	$form_operators['lte'] = 'Less than or equal to';
 	
 	
 	echo '<div class="control-group">';
 	echo form_label('Query', 'add_statements', array('class' => 'control-label'));
 	echo '<div class="controls">';
-		$table_hidden = ' style="display:none"';
 	
-	echo '<table' . $table_hidden . ' class = "table table-bordered table-striped" id="statements_table">
+	echo '<table class = "table table-bordered table-striped" id="statements_table">
 	<thead><tr><th>Field</th><th>Operator</th><th>Value</th><th>Use this statement?</th></tr></thead>
 	<tbody>';
+	if (isset($statements))
+	{
+		foreach ($statements as $field => $operators)
+		{
+			foreach ($operators as $operator => $value)
+			{
+				echo '<tr><td>' . $field . ' </td><td>' . $operator .  ' </td><td>' . $value . ' </td><td><input type="checkbox" name="include[' . $field . '][' . $operator . ']" value="include" checked="checked"  /><input type="hidden" name="statements[' . $field . '][' . $operator . ']" value="' . $value . '"/></td></tr>';
+				
+			}
+		}
+	}
+
 	echo '</tbody></table>';
 	echo '</div></div>';
 
@@ -102,7 +98,7 @@
 
 	echo form_input($form_field);
 	echo ' ';
-	echo form_dropdown('operators', $operators, set_value('operator'), 'id="operator" class="span3"');
+	echo form_dropdown('operators', $form_operators, set_value('operator'), 'id="operator" class="span3"');
 	echo ' ';
 	
 		$form_value = array(
@@ -117,7 +113,6 @@
 	echo form_input($form_value);	
 	
 	echo ' <a name = "add_statement_to_query" id = "add_statement" value = "add_statement_to_query" class="btn btn-small"><i class = "icon-plus"></i> Add statement</a>';
-	
 ?>
 	
 </div>
@@ -129,7 +124,7 @@
 		field = $('#field').val();
 		operator = $('#operator').val();
 		value = $('#value').val();
-		$('#statements_table').append('<tr><td>' + field + ' </td><td>' + operator + ' </td><td>' + value + ' </td><td><input type="checkbox" name="file[' + field + '][]" value="include" checked="checked"  /><input type="hidden" name="statements[' + field + '][' + operator + ']" value="' + value + '"/></td></tr>');
+		$('#statements_table').append('<tr><td>' + field + ' </td><td>' + operator + ' </td><td>' + value + ' </td><td><input type="checkbox" name="include[' + field + '][' + operator + ']" value="include" checked="checked"  /><input type="hidden" name="statements[' + field + '][' + operator + ']" value="' + value + '"/></td></tr>');
 		$('#statements_table').show();
 	});
 </script>

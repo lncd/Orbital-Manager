@@ -311,7 +311,7 @@ class Orbital {
 
 				foreach ($post_fields as $fieldname => $fieldvalue)
 				{
-					$postfields[] .= $fieldname . '=' . urlencode($fieldvalue);
+					$postfields[] = $fieldname . '=' . urlencode($fieldvalue);
 				}
 
 				curl_setopt($ch, CURLOPT_POSTFIELDS, implode('&', $postfields));
@@ -1365,9 +1365,9 @@ class Orbital {
 	 * @return object.
 	 */
 	
-	public function query_get_details($dataset_identifier, $query_identifier)
+	public function query_get_details($query_identifier)
 	{
-		return $this->get_authed('dataset/' . $dataset_identifier . '/query/' . $query_identifier);
+		return $this->get_authed('query/' . $query_identifier);
 	}
 		
 	/**
@@ -1381,10 +1381,10 @@ class Orbital {
 	 * @access public
 	 * @return object.
 	 */
-	
-	public function build_query($dataset_id, $query_id, $field, $operator, $value)
+	 
+	public function update_query($query_id, $query_name, $statements_array, $fields_array)
 	{
-		return $this->post_authed('dataset/' . $dataset_id . '/query/' . $query_id, array('field' => $field, 'operator' => $operator, 'value' => $value));
+		return $this->post_authed('query/' . $query_id . '/edit', array('query_name' => $query_name, 'fields' => json_encode($fields_array), 'statements' => json_encode($statements_array)));
 	}
 	
 	public function create_query($dataset_id, $query_name)
@@ -1392,9 +1392,9 @@ class Orbital {
 		return $this->post_authed('dataset/' . $dataset_id . '/query/new', array('query_name' => $query_name));
 	}
 	
-	public function build_query_output_fields($dataset_id, $query_id, $output_fields)
+	public function delete_query($query_id)
 	{
-		return $this->post_authed('dataset/' . $dataset_id . '/query/' . $query_id . 'output_fields', array('output_fields' => $output_fields));	
+		return $this->delete_authed('query/' . $query_id . '/delete');
 	}
 }
 

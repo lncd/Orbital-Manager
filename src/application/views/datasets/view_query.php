@@ -41,7 +41,7 @@ if (TRUE)
 {
 	echo '<p>';
 	
-	echo '<a href="' . site_url('dataset/' . $query_dataset . '/query/' . $query_id . '/edit') . '" class="btn btn-small"><i class="icon-pencil"></i> Edit</a>';
+	echo '<a href="' . site_url('query/' . $query_id . '/edit') . '" class="btn btn-small"><i class="icon-pencil"></i> Edit</a>';
 		
 	
 	// Check for Delete permissions
@@ -66,7 +66,7 @@ echo '<div class="modal fade" id="delete_query">
 		</div>
 		<div class="modal-footer">
 			<a href="#" data-dismiss="modal" class="btn">Close</a>
-			<a href="' . site_url('dataset/' . $query_dataset . '/query/' .  $query_id . '/delete') . '" class="btn btn-danger"><i class="icon-trash"></i> Delete Query</a>
+			<a href="' . site_url('query/' .  $query_id . '/delete') . '" class="btn btn-danger"><i class="icon-trash"></i> Delete Query</a>
 		</div>
 	</div>';
 

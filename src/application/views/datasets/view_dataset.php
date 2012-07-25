@@ -73,17 +73,20 @@ echo '<div class="modal fade" id="delete_dataset">
 	?>
 		<thead><tr><th>Query name</th></tr></thead>
 		<tbody>
-			<?php foreach($queries as $query)
+		<?php
+		if (isset($queries) AND $queries !== FALSE)
+		{
+			foreach($queries as $query)
 			{
-			echo '<tr><td>';
-				
-			echo '<a href="' . base_url() . 'dataset/' . $dataset_id . '/query/' . $query->id . '">' . $query->query . ' '; ?></td></tr>
+				echo '<tr><td>';
+					
+				echo '<a href="' . base_url() . 'query/' . $query->id . '">' . $query->query . ' '; echo'</td></tr>';
 
-			<?php
 			}
+		}
 
-			?>
-		</tbody><?php
+			
+		echo '</tbody>';
 	}
 	else
 	{
