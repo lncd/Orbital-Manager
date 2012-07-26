@@ -26,7 +26,8 @@
 		</thead>
 		<tbody>
 			<tr><td>Query Name</td><td>{query_name}</td></tr>
-			<tr><td>Query Dataset</td><td><a href="{base_url}dataset/{query_dataset}">{dataset_title}</a></td></tr>			</td></tr>
+			<tr><td>Query Dataset</td><td><a href="{base_url}dataset/{query_dataset}">{dataset_title}</a></td></tr>
+			<tr><td>Results</td><td>{query_results_count}</td></tr>
 		</tbody>
 	</table>
 </div>

@@ -169,6 +169,7 @@ class Datasets extends CI_Controller {
 			$this->data['query_id'] = $response->response->query[0]->id;
 			$this->data['query_name'] = $response->response->query[0]->query;
 			$this->data['query_dataset'] = $response->response->query[0]->set;
+			$this->data['query_results_count'] = $response->response->query_count;
 			$this->data['statements'] = NULL;
 			$this->data['fields'] = NULL;
 			

@@ -70,6 +70,9 @@ echo '<div class="modal fade" id="delete_dataset">
 	echo '<table class = "table table-bordered table-striped table-condensed" id="users_table">';
 	if (count($queries) > 0)
 	{
+		
+		echo '<h2>Queries</h2><br>';
+	
 	?>
 		<thead><tr><th>Query name</th></tr></thead>
 		<tbody>
