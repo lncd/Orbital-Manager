@@ -169,7 +169,17 @@ class Datasets extends CI_Controller {
 			$this->data['query_id'] = $response->response->query[0]->id;
 			$this->data['query_name'] = $response->response->query[0]->query;
 			$this->data['query_dataset'] = $response->response->query[0]->set;
+			$this->data['statements'] = NULL;
+			$this->data['fields'] = NULL;
 			
+			if (isset($response->response->query[0]->value->statements))
+			{
+				$this->data['statements'] = (array)$response->response->query[0]->value->statements;
+			}
+			if (isset($response->response->query[0]->value->fields))
+			{
+				$this->data['fields'] = (array)$response->response->query[0]->value->fields;
+			}
 			
 			if (isset($response->response->query[0]->value->fields))
 			{
@@ -181,11 +191,11 @@ class Datasets extends CI_Controller {
 			}
 			$this->data['page_title'] = $response->response->query[0]->query;
 
-			if ($response = $this->orbital->dataset_get_details($this->data['query_dataset']))
+			if ($response_dataset = $this->orbital->dataset_get_details($this->data['query_dataset']))
 			{			
-				$this->data['dataset_project'] = $response->response->dataset->project_name;
-				$this->data['dataset_project_id'] = $response->response->dataset->project;
-				$this->data['dataset_title'] = $response->response->dataset->title;
+				$this->data['dataset_project'] = $response_dataset->response->dataset->project_name;
+				$this->data['dataset_project_id'] = $response_dataset->response->dataset->project;
+				$this->data['dataset_title'] = $response_dataset->response->dataset->title;
 
 				$this->parser->parse('includes/header', $this->data);
 				$this->parser->parse('datasets/view_query', $this->data);
@@ -288,11 +298,11 @@ class Datasets extends CI_Controller {
 			$this->data['fields'] = NULL;
 			
 			
-			if ($response = $this->orbital->dataset_get_details($this->data['query_dataset']))
+			if ($response_dataset = $this->orbital->dataset_get_details($this->data['query_dataset']))
 			{			
-				$this->data['dataset_project'] = $response->response->dataset->project_name;
-				$this->data['dataset_project_id'] = $response->response->dataset->project;
-				$this->data['dataset_title'] = $response->response->dataset->title;
+				$this->data['dataset_project'] = $response_dataset->response->dataset->project_name;
+				$this->data['dataset_project_id'] = $response_dataset->response->dataset->project;
+				$this->data['dataset_title'] = $response_dataset->response->dataset->title;
 			}
 			else
 			{

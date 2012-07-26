@@ -26,15 +26,12 @@
 		</thead>
 		<tbody>
 			<tr><td>Query Name</td><td>{query_name}</td></tr>
-			<tr><td>Query Dataset</td><td><a href="{base_url}dataset/{query_dataset}">{dataset_title}</a></td></tr>
-			<tr><td>Fields</td><td></td></tr>
-			<tr><td>Statements</td><td></td></tr>
-			<tr><td>Output Fields</td><td></td></tr>
+			<tr><td>Query Dataset</td><td><a href="{base_url}dataset/{query_dataset}">{dataset_title}</a></td></tr>			</td></tr>
 		</tbody>
 	</table>
 </div>
 
-		<?php
+<?php
 
 //Check for Edit permissions
 if (TRUE)
@@ -52,8 +49,51 @@ if (TRUE)
 	
 	echo '</p>';
 }
+?>
+
+<br>
+<h2>Statements</h2>
+<br>
+
+<table class="table table-bordered">
+	<thead>
+		<tr><th>Field</th><th>Operator</th><th>Value</th></tr>
+	</thead>
+	<tbody>
+		<?php			
+			if (isset($statements))
+			{
+				foreach ($statements as $field => $operators)
+				{
+					foreach ($operators as $operator => $value)
+					{
+						echo '<tr><td>' . $field . ' </td><td>' . $operator .  ' </td><td>' . $value . ' </td></tr>';
+						
+					}
+				}
+		
+			}
+			?>
+		
+		</td></tr>
+	</tbody>
+</table>
 
 
+<br>
+<h2>Output Fields</h2>
+<br>
+
+		<?php	
+		if (isset($fields))
+		{
+			echo'<ul>';
+			foreach ($fields as $field)
+			{
+				echo '<li>' . $field . '</li>';
+			}
+			echo'</ul>';	
+		}
 
 echo '<div class="modal fade" id="delete_query">
 		<div class="modal-header">
