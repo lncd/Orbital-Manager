@@ -45,6 +45,7 @@ class Projects extends CI_Controller {
 						
 			$now->id = 'now';
 			$now->text = 'Now';
+			$now->type = 'Comment';
 			$now->payload = NULL;
 			$now->visibility = 'public';
 			$now->timestamp_human = date('g.ia');
@@ -237,6 +238,7 @@ class Projects extends CI_Controller {
 					$now->text = 'Now';
 					$now->payload = NULL;
 					$now->visibility = 'public';
+					$now->type = 'comment';
 					$now->timestamp_human = date('g.ia');
 					
 					$this->data['timeline'][time()] = $now;
@@ -281,36 +283,8 @@ class Projects extends CI_Controller {
 					$this->data['new_project'] = FALSE;
 				}
 				
-				
-				//Check for Edit permissions
-				if ($response->response->permissions->write === TRUE)
-				{
-					$this->data['project_controls'][] = array(
-						'uri' => site_url('project/' . $response->response->project->identifier . '/edit'),
-						'title' => 'Edit'
-					);					
-					
-					// Check for Delete permissions
-					if ($response->response->permissions->delete === TRUE)
-					{
-						// Check project doesn't have files OR datasets
-						// TODO: CHANGE TO CHECK FOR is_deletable in future
-						if(count($this->data['datasets']) === 0 AND count($this->data['archive_files']) === 0)
-						{									
-							$this->data['project_controls'][] = array(
-								'uri' => site_url('project/' . $response->response->project->identifier . '/delete'),
-								'title' => 'Delete'
-							);
-						}
-					}
-					
-					if ($this->data['project_description'] === NULL OR $this->data['project_description'] === '' OR $this->data['project_default_licence']  === NULL OR $this->data['project_research_group'] === NULL)
-					{
-						$this->data['data_required'] = 'ADD MOAR DATA';
-					}
-				}
-
-
+				$this->data['permission_write'] = $response->response->permissions->write;	
+				$this->data['permission_delete'] = $response->response->permissions->delete;				
 				
 				$this->parser->parse('includes/header', $this->data);
 				$this->parser->parse('projects/view', $this->data);
@@ -793,11 +767,12 @@ class Projects extends CI_Controller {
 	 
 	function timeline_add_event($identifier)
 	{
-		if ($this->input->post('event') AND $this->input->post('date'))
+		if ($this->input->post('event') AND $this->input->post('start_date'))
 		{
 			// Ensure project exists
 			if ($response = $this->orbital->project_details($identifier))
-			{		
+			{
+			
 				// Load up the validation library
 				$this->load->library('form_validation');
 				
@@ -807,7 +782,7 @@ class Projects extends CI_Controller {
 				if ($this->form_validation->run() === TRUE)
 				{
 					
-					if ($this->orbital->timeline_add_event($identifier, $this->input->post('event'), $this->input->post('date')))
+					if ($this->orbital->timeline_add_event($identifier, $this->input->post('event'), $this->input->post('start_date'), $this->input->post('end_date'), $this->input->post('publicity')))
 					{
 						$this->session->set_flashdata('message', 'Event added to project timeline.');
 						$this->session->set_flashdata('message_type', 'success');
@@ -824,21 +799,20 @@ class Projects extends CI_Controller {
 				}
 				else
 				{
-					$this->session->set_flashdata('message', 'Unable to add comment to timeline. Did you actually say anything?');
+					$this->session->set_flashdata('message', 'Unable to add event to timeline. Validation failed.');
+
 					$this->session->set_flashdata('message_type', 'error');
 					redirect('project/' . $identifier);
 				}
-			
-				
 			}
 			else
 			{
 				show_404();
 			}
 		}
-		else
+		else	
 		{
-			$this->session->set_flashdata('message', 'Event requires both Description and Date');
+			$this->session->set_flashdata('message', 'Event requires both Description and Start Date');
 			$this->session->set_flashdata('message_type', 'error');
 			redirect('project/' . $identifier);
 		}

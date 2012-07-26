@@ -70,6 +70,38 @@
 			?>
 	</table>
 		
-	{file_controls}
-	<a class="btn btn-small" href="{uri}">{title}</a>
-	{/file_controls}
+	
+	<?php
+	//Check for Edit permissions
+if ($permission_write === TRUE)
+{
+	echo '<p>';
+	
+	echo '<a href="' . site_url('collection/' . $file_set_id . '/edit') . '" class="btn btn-small"><i class="icon-pencil"></i> Edit</a>';
+		
+	
+	// Check for Delete permissions
+	if ($permission_delete === TRUE)
+	{								
+		echo ' <a href="#delete_file_set" data-toggle="modal" class="btn btn-small btn-danger"><i class="icon-trash"></i> Delete</a>';
+	}
+	
+	echo '</p>';
+}
+
+
+
+echo '<div class="modal fade" id="delete_file_set">
+		<div class="modal-header">
+			<button class="close" data-dismiss="modal">×</button>
+			<h3>Delete File Set</h3>
+			<h4>' . $file_set_title . '</h4>
+		</div>
+		<div class="modal-body">
+			<p>Are you sure you want to delete this file set?</p>
+		</div>
+		<div class="modal-footer">
+			<a href="#" data-dismiss="modal" class="btn">Close</a>
+			<a href="' . site_url('collection/' . $file_set_id . '/delete') . '" class="btn btn-danger"><i class="icon-trash"></i> Delete File</a>
+		</div>
+	</div>';

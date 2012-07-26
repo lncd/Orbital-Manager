@@ -26,13 +26,80 @@
 			<tr><td>Research Project</td><td><a href="{base_url}project/{dataset_project_id}">{dataset_project}</a></td></tr>
 			<tr><td>Dataset ID</td><td><code>{dataset_id}</code></td></tr>
 			<tr><td>API Token</td><td><code>{dataset_token}</code></td></tr>
+			<tr><td>Number of Datapoints</td><td>{count}</td></tr>
 		</tbody>
 	</table>
 </div>
 
-{file_controls}
-<a class="btn btn-small disabled" href="{uri}">{title}</a>
-{/file_controls}
+		<?php
+
+//Check for Edit permissions
+if ($permission_write === TRUE)
+{
+	echo '<p>';
+	
+	echo '<a href="' . site_url('dataset/' . $dataset_id . '/edit') . '" class="btn btn-small"><i class="icon-pencil"></i> Edit</a>';
+		
+	
+	// Check for Delete permissions
+	if ($permission_delete === TRUE)
+	{								
+		echo ' <a href="#delete_dataset" data-toggle="modal" class="btn btn-small btn-danger"><i class="icon-trash"></i> Delete</a>';
+	}
+	
+	echo '</p>';
+}
+
+
+
+echo '<div class="modal fade" id="delete_dataset">
+		<div class="modal-header">
+			<button class="close" data-dismiss="modal">×</button>
+			<h3>Delete Dataset</h3>
+			<h4>' . $dataset_title . '</h4>
+		</div>
+		<div class="modal-body">
+			<p>Are you sure you want to delete this dataset?</p>
+		</div>
+		<div class="modal-footer">
+			<a href="#" data-dismiss="modal" class="btn">Close</a>
+			<a href="' . site_url('file/' . $dataset_id . '/delete') . '" class="btn btn-danger"><i class="icon-trash"></i> Delete Dataset</a>
+		</div>
+	</div>';
+
+	echo '<table class = "table table-bordered table-striped table-condensed" id="users_table">';
+	if (count($queries) > 0)
+	{
+		
+		echo '<h2>Queries</h2><br>';
+	
+	?>
+		<thead><tr><th>Query name</th></tr></thead>
+		<tbody>
+		<?php
+		if (isset($queries) AND $queries !== FALSE)
+		{
+			foreach($queries as $query)
+			{
+				echo '<tr><td>';
+					
+				echo '<a href="' . base_url() . 'query/' . $query->id . '">' . $query->query . ' '; echo'</td></tr>';
+
+			}
+		}
+
+			
+		echo '</tbody>';
+	}
+	else
+	{
+		echo '<p>There are currently no queries available for this dataset';
+	}
+	
+	echo '</table>';
+	echo '<p><a class="btn btn-success btn-small btn-disabled" href="{base_url}dataset/{dataset_id}/query"><i class="icon-plus"></i> Create Query</a></a>';
+
+	?>
 
 <hr>
 
