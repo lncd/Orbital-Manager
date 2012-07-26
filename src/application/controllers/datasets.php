@@ -169,6 +169,8 @@ class Datasets extends CI_Controller {
 			$this->data['query_id'] = $response->response->query[0]->id;
 			$this->data['query_name'] = $response->response->query[0]->query;
 			$this->data['query_dataset'] = $response->response->query[0]->set;
+			
+			
 			if (isset($response->response->query[0]->value->fields))
 			{
 				$this->data['query_fields'][] = $response->response->query[0]->value->fields;
@@ -179,9 +181,20 @@ class Datasets extends CI_Controller {
 			}
 			$this->data['page_title'] = $response->response->query[0]->query;
 
-			$this->parser->parse('includes/header', $this->data);
-			$this->parser->parse('datasets/view_query', $this->data);
-			$this->parser->parse('includes/footer', $this->data);
+			if ($response = $this->orbital->dataset_get_details($this->data['query_dataset']))
+			{			
+				$this->data['dataset_project'] = $response->response->dataset->project_name;
+				$this->data['dataset_project_id'] = $response->response->dataset->project;
+				$this->data['dataset_title'] = $response->response->dataset->title;
+
+				$this->parser->parse('includes/header', $this->data);
+				$this->parser->parse('datasets/view_query', $this->data);
+				$this->parser->parse('includes/footer', $this->data);
+			}
+			else
+			{
+				show_404();
+			}
 		}
 		else
 		{
@@ -270,8 +283,21 @@ class Datasets extends CI_Controller {
 			$this->data['page_title'] = $response->response->query[0]->query;
 			$this->data['query_id'] = $response->response->query[0]->id;
 			$this->data['query_name'] = $response->response->query[0]->query;
+			$this->data['query_dataset'] = $response->response->query[0]->set;
 			$this->data['statements'] = NULL;
 			$this->data['fields'] = NULL;
+			
+			
+			if ($response = $this->orbital->dataset_get_details($this->data['query_dataset']))
+			{			
+				$this->data['dataset_project'] = $response->response->dataset->project_name;
+				$this->data['dataset_project_id'] = $response->response->dataset->project;
+				$this->data['dataset_title'] = $response->response->dataset->title;
+			}
+			else
+			{
+				//NO DATASET FOUND FOR QUERY
+			}
 			
 			if (isset($response->response->query[0]->value->statements))
 			{

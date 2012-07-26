@@ -6,7 +6,7 @@
 		<a href="{base_url}projects">Projects</a> <span class="divider">/</span>
 	</li>
 	<li>
-		<a href="{base_url}project/{dataset_project_id}">{dataset_project_name}</a> <span class="divider">/</span>
+		<a href="{base_url}project/{dataset_project_id}">{dataset_project}</a> <span class="divider">/</span>
 	</li>	
 	<li>
 		<a href="{base_url}dataset/{query_dataset}">{dataset_title}</a> <span class="divider">/</span>
@@ -47,7 +47,7 @@ if (TRUE)
 	// Check for Delete permissions
 	if (TRUE)
 	{								
-		echo ' <a href="#delete_query" data-toggle="modal" class="btn btn-small btn-danger disabled"><i class="icon-trash"></i> Delete</a>';
+		echo ' <a href="#delete_query" data-toggle="modal" class="btn btn-small btn-danger"><i class="icon-trash"></i> Delete</a>';
 	}
 	
 	echo '</p>';
