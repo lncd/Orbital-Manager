@@ -156,24 +156,9 @@ class Files extends CI_Controller {
 				$this->data['archive_file_sets'] = $response->response->archive_file_sets;
 				$this->data['page_title'] = $response->response->file->original_name;
 				
-				$this->data['file_controls'] = array();
-				if ($response->response->permissions->write)
-				{
-					$this->data['file_controls'][] = array(
-						'uri' => site_url('file/' . $response->response->file->id . '/edit'),
-						'title' => 'Edit'
-					);					
-					// Check for Delete permissions
-					if ($response->response->permissions->delete === TRUE)
-					{
-						// TODO: CHANGE TO CHECK FOR is_deletable in future
-						$this->data['file_controls'][] = array(
-							'uri' => site_url('file/' . $response->response->file->id . '/delete'),
-							'title' => 'Delete'
-						);
-					}
-					
-				}
+				
+				$this->data['permission_write'] = $response->response->permissions->write;	
+				$this->data['permission_delete'] = $response->response->permissions->delete;	
 								
 				if ($response->response->file->status === 'uploaded')
 				{
@@ -278,14 +263,9 @@ class Files extends CI_Controller {
 			}
 			
 			$this->data['file_set_size'] = $file_set_size;
-			$this->data['file_controls'] = array();
-			if ($response->response->permissions->write)
-			{
-				$this->data['file_controls'][] = array(
-					'uri' => site_url('collection/' . $response->response->file_set->id . '/edit'),
-					'title' => 'Edit'
-				);
-			}
+
+				$this->data['permission_write'] = $response->response->permissions->write;	
+				$this->data['permission_delete'] = $response->response->permissions->delete;	
 			
 
 			$this->parser->parse('includes/header', $this->data);
@@ -396,6 +376,52 @@ class Files extends CI_Controller {
 			show_404();
 		}
 	}
+
+
+	/**
+	 * Delete file set
+	 *
+	 * Deletes a file set
+	 *
+	 * @param string $identifier
+	 * @return NULL
+	 */
+
+	function delete_file_set($identifier)
+	{
+		//Check file set exists
+		if ($response = $this->orbital->file_set_get_details($identifier))
+		{
+			if ($response->response->status === TRUE)
+			{
+				$delete = $this->orbital->delete_file_set($identifier);
+				
+				if($delete->response->status === TRUE)
+				{
+					$this->session->set_flashdata('message', 'File set deleted successfully.');
+					$this->session->set_flashdata('message_type', 'success');
+					redirect('project/' . $response->response->file_set->project);			
+				}
+				else
+				{
+					$this->session->set_flashdata('message', $response->response->file_set->title . $delete->response->error);
+					$this->session->set_flashdata('message_type', 'alert-error');
+					redirect('collection/' . $response->response->file_set->id);
+				}
+			}
+			else
+			{
+				$this->session->set_flashdata('message', $response->response->file_set->title . $delete->response->error);
+				$this->session->set_flashdata('message_type', 'alert-error');
+				redirect('collection/' . $response->response->file_set->id);
+			}
+		}
+		else
+		{
+			show_404();
+		}
+	}
+
 
 
 	/**

@@ -56,7 +56,7 @@ $config['orbital_app_secret'] = $_SERVER['ORBITAL_APP_SECRET'];;
  * The version of this instance of Orbital Manager.
 */
 
-$config['orbital_manager_version'] = '0.2.2.1';
+$config['orbital_manager_version'] = '0.3';
 
 // End of file orbital.php
 // Location: ./config/orbital.php

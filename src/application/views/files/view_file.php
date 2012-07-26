@@ -14,10 +14,25 @@
 </ul>
 
 <div class="page-header">
-	<h1>{file_title}</h1>
+
+	<h1>
+	<?php
+	
+	if (file_exists('img/icons/48/' . $file_extension . '.png'))
+	{
+		$extension_icon = 'img/icons/48/' . $file_extension . '.png';
+	}
+	else
+	{
+		$extension_icon = 'img/icons/48/_blank.png';
+	}
+
+	echo '<img src="' . base_url() . $extension_icon . '">';
+
+	?>
+	{file_title}</h1>
 </div>
-<div class = "well">
-	<table class="table">
+	<table class="table table-bordered">
 		<thead>
 			<tr><th colspan="2">File Summary</th></tr>
 		</thead>
@@ -29,11 +44,10 @@
 			<tr><td>Permanent URI</td><td><code>http://id.lincoln.ac.uk/research-file/{file_id}</code></td></tr>
 		</tbody>
 	</table>
-</div>
 		
 		
 		
-		<table class = "table table-bordered table-striped" id="users_table">
+		<table class = "table table-bordered table-striped table-condensed" id="users_table">
 		<?php
 		if (count($archive_file_sets) > 0)
 		{
@@ -64,15 +78,45 @@
 	{
 		echo '<p>This file is not part of any file set';
 	}
-	?>
-	</table>
+	
+	echo '</table>';
 	
 		
-		{file_controls}
-		<a class="btn btn-small" href="{uri}">{title}</a>
-		{/file_controls}
 
-<?php
+//Check for Edit permissions
+if ($permission_write === TRUE)
+{
+	echo '<p>';
+	
+	echo '<a href="' . site_url('file/' . $file_id . '/edit') . '" class="btn btn-small"><i class="icon-pencil"></i> Edit</a>';
+		
+	
+	// Check for Delete permissions
+	if ($permission_delete === TRUE)
+	{								
+		echo ' <a href="#delete_file" data-toggle="modal" class="btn btn-small btn-danger"><i class="icon-trash"></i> Delete</a>';
+	}
+	
+	echo '</p>';
+}
+
+
+
+echo '<div class="modal fade" id="delete_file">
+		<div class="modal-header">
+			<button class="close" data-dismiss="modal">×</button>
+			<h3>Delete File</h3>
+			<h4>' . $file_name . '</h4>
+		</div>
+		<div class="modal-body">
+			<p>Are you sure you want to delete this file?</p>
+		</div>
+		<div class="modal-footer">
+			<a href="#" data-dismiss="modal" class="btn">Close</a>
+			<a href="' . site_url('file/' . $file_id . '/delete') . '" class="btn btn-danger"><i class="icon-trash"></i> Delete File</a>
+		</div>
+	</div>';
+
 
 if ($file_downloadable)
 {

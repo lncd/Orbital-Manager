@@ -311,7 +311,7 @@ class Orbital {
 
 				foreach ($post_fields as $fieldname => $fieldvalue)
 				{
-					$postfields[] .= $fieldname . '=' . urlencode($fieldvalue);
+					$postfields[] = $fieldname . '=' . urlencode($fieldvalue);
 				}
 
 				curl_setopt($ch, CURLOPT_POSTFIELDS, implode('&', $postfields));
@@ -964,9 +964,9 @@ class Orbital {
 	 * @return object.
 	 */
 
-	public function timeline_add_event($project, $event, $date)
+	public function timeline_add_event($project, $event, $start_date, $end_date = NULL, $publicity)
 	{
-		return $this->post_authed('timeline/event', array('project' => $project, 'event' => $event, 'date' => $date));
+		return $this->post_authed('timeline/event', array('project' => $project, 'event' => $event, 'start_date' => $start_date, 'end_date' => $end_date, 'publicity' => $publicity));
 	}
 
 
@@ -1135,6 +1135,11 @@ class Orbital {
 	public function delete_file($identifier)
 	{
 		return $this->delete_authed('file/' . $identifier . '/delete');	
+	}
+	
+	public function delete_file_set($identifier)
+	{
+		return $this->delete_authed('file_set/' . $identifier . '/delete');	
 	}
 	
 	public function file_set_get_details($file_id)
@@ -1348,7 +1353,49 @@ class Orbital {
 	{
 		return $this->get_authed('dataset/' . $identifier);
 	}
-
+		
+		
+	/**
+	 * Get query details
+	 *
+	 * Gets a querys details
+	 *
+	 * @param string $identifier  The identifier of the query.
+	 * @access public
+	 * @return object.
+	 */
+	
+	public function query_get_details($query_identifier)
+	{
+		return $this->get_authed('query/' . $query_identifier);
+	}
+		
+	/**
+	 * Build query
+	 *
+	 * Posts a querys details to MongoDB
+	 *
+	 * @param string $dataset_id The identifier of the dataset.
+	 * @param string $qurty_id   The identifier of the query.
+	 *
+	 * @access public
+	 * @return object.
+	 */
+	 
+	public function update_query($query_id, $query_name, $statements_array, $fields_array)
+	{
+		return $this->post_authed('query/' . $query_id . '/edit', array('query_name' => $query_name, 'fields' => json_encode($fields_array), 'statements' => json_encode($statements_array)));
+	}
+	
+	public function create_query($dataset_id, $query_name)
+	{
+		return $this->post_authed('dataset/' . $dataset_id . '/query/new', array('query_name' => $query_name));
+	}
+	
+	public function delete_query($query_id)
+	{
+		return $this->delete_authed('query/' . $query_id . '/delete');
+	}
 }
 
 /* End of file Orbital.php */

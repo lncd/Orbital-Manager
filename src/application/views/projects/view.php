@@ -48,12 +48,45 @@ if (count($timeline) > 0)
 
 	foreach ($timeline as $item)
 	{
-		echo '<li id="tl_' . $item->id . '"><div class="tl_content tl_vis_' . $item->visibility . '"><p><b>' . $item->text . '</b>';
+		if (isset($item->timestamp_unix))
+		{
+			$item_class = NULL;
+			if ($item->timestamp_unix - time() > 0 AND $item->timestamp_unix - time() < (7 * 24 * 60 * 60))
+			{
+				$item_class = 'week';
+			}
+			if ($item->timestamp_unix - time() > (7 * 24 * 60 * 60))
+			{
+				$item_class = 'future';
+			}
+			if ($item->timestamp_unix - time() < 0)
+			{
+				$item_class = 'past';
+			}
+		}
+		echo '<li id="tl_' . $item->id . '"><div class="tl_content tl_vis_' . $item->visibility . ' tl_' . $item_class . '"><p><b>' . $item->text . '</b>';
 		if ($item->payload !== NULL)
 		{
 			echo '<br>' . $item->payload;
 		}
-		echo '</p><small>' . $item->timestamp_human . '</small></div></li>';
+		if ($item->type === 'event')
+		{
+			echo 'Posted by ' . $item->user;
+			echo '</p><small>Start: ' . $item->timestamp_human . '</small>';
+			if (isset($item->timestamp_end) AND $item->timestamp_end !== NULL AND $item->timestamp_end !== '')
+			{
+				echo '</p><small>End: ' . $item->timestamp_end . '</small></div></li>';
+			}
+			else
+			{
+				echo'</div></li>';
+			}
+			
+		}
+		else
+		{
+			echo '</p><small>' . $item->timestamp_human . '</small>';
+		}
 	}	
 	
 	echo '</ul>
@@ -64,6 +97,7 @@ if (count($timeline) > 0)
 	
 	echo '<div class="row">
 	<div class="span4">
+		<a onClick="$(\'#userTimeline\').scrollTo(\'0px\', 600, {axes:\'x\'});" class="btn btn-primary"><i class="icon-arrow-left"></i></a>
 		<a onClick="$(\'#userTimeline\').scrollTo(\'-=300px\', 600, {axes:\'x\'});" class="btn btn-primary"><i class="icon-arrow-left"></i> Earlier</a>
 	</div>
 	<div class="span4" style="text-align:center">
@@ -71,6 +105,7 @@ if (count($timeline) > 0)
 	</div>
 	<div class="span4" style="text-align:right">
 		<a onClick="$(\'#userTimeline\').scrollTo(\'+=300px\', 600, {axes:\'x\'});" class="btn btn-primary">Later <i class="icon-arrow-right"></i></a>
+		<a onClick="$(\'#userTimeline\').scrollTo(\'max\', 600, {axes:\'x\'});" class="btn btn-primary"><i class="icon-arrow-right"></i></a>
 	</div>
 	</div>';
 }
@@ -135,20 +170,43 @@ echo form_textarea($form_event);
 
 	
 	$form_date = array(
-		'name'			=> 'date',
-		'id'			=> 'date',
+		'name'			=> 'start_date',
+		'id'			=> 'start_date',
 		'placeholder'	=> 'YYYY-MM-DD',
 		'required'      => 'required',
 		'maxlength'		=> '10',
-		'class'			=> 'span2 datepicker'
+		'class'			=> 'span2 startdatepicker'
 	);
 
 	echo '<div class="control-group">';
-	echo form_label('Event Date', 'date', array('class' => 'control-label'));
+	echo form_label('Event Start Date', 'date', array('class' => 'control-label'));
 	echo '<div class="controls">';
 	echo form_input($form_date);
 	echo '</div></div>';
+	
+		
+	$form_date_end = array(
+		'name'			=> 'end_date',
+		'id'			=> 'end_date',
+		'placeholder'	=> 'YYYY-MM-DD',
+		'required'      => 'required',
+		'maxlength'		=> '10',
+		'class'			=> 'span2 enddatepicker'
+	);
+		
 
+	echo '<div class="control-group">';
+	echo form_label('Event End Date', 'date', array('class' => 'control-label'));
+	echo '<div class="controls">';
+	echo form_input($form_date_end);
+	echo '</div></div>';
+
+	$publicity['private'] = 'Private';
+	$publicity['public'] = 'Public';
+
+	echo form_label('Public event?', 'publicity');
+	echo form_dropdown('publicity', $publicity, 'Public', 'id="publicity"');
+	
 echo '</div>
 <div class="modal-footer">
 	<button class="btn" data-dismiss="modal">Close</button>
@@ -163,13 +221,22 @@ echo form_close();
 
 <script>
 	$(document).ready(function() {
-		$(".datepicker").datepicker({ dateFormat: "yy-mm-dd" });
+		$(".startdatepicker").datetimepicker({
+			dateFormat: 'yy-mm-dd',
+			timeFormat: 'hh:mm:ss',
+			separator: ' '}
+	);
+		$(".enddatepicker").datetimepicker({
+			dateFormat: 'yy-mm-dd',
+			timeFormat: 'hh:mm:ss',
+			separator: ' '}
+	);
 	});
 </script>
 
 <?php
 
-if ($new_project === TRUE)
+if ($new_project === TRUE OR $project_description === NULL OR $project_description === '' OR $project_default_licence === NULL OR $project_research_group === NULL)
 {
 	echo '<div class="alert alert-info">
 		<i class="icon-chevron-down"></i> Please describe your project in more detail by clicking the \'Edit\' button.
@@ -177,21 +244,48 @@ if ($new_project === TRUE)
 
 }
 
-else if (isset ($data_required))
+
+
+
+//Check for Edit permissions
+if ($permission_write === TRUE)
 {
-	echo '<div class="alert alert-info">
-		<i class="icon-chevron-down"></i> Please describe your project in more detail by clicking the \'Edit\' button.
-	</div>';
+	echo '<p>';
+	
+	echo '<a href="' . site_url('project/' . $project_id . '/edit') . '" class="btn btn-small"><i class="icon-pencil"></i> Edit</a>';
+		
+	
+	// Check for Delete permissions
+	if ($permission_delete === TRUE)
+	{
+		// Check project doesn't have files OR datasets
+		// TODO: CHANGE TO CHECK FOR is_deletable in future
+		if(count($datasets) === 0 AND count($archive_files) === 0)
+		{									
+			echo ' <a href="#delete_project" data-toggle="modal" class="btn btn-small btn-danger"><i class="icon-trash"></i> Delete</a>';
+		}
+	}
+	
+	echo '</p>';
 }
+
+
+echo '<div class="modal fade" id="delete_project">
+		<div class="modal-header">
+			<button class="close" data-dismiss="modal">×</button>
+			<h3>Delete Project</h3>
+			<h4>' . $project_name . '</h4>
+		</div>
+		<div class="modal-body">
+			<p>Are you sure you want to delete this project?</p>
+		</div>
+		<div class="modal-footer">
+			<a href="#" data-dismiss="modal" class="btn">Close</a>
+			<a href="' . site_url('project/' . $project_id . '/delete') . '" class="btn btn-danger"><i class="icon-trash"></i> Delete Project</a>
+		</div>
+	</div>';
+
 ?>
-
-<p>
-
-{project_controls}
-<a class="btn btn-small" href="{uri}">{title}</a>
-{/project_controls}
-
-</p>
 
 <hr>
 

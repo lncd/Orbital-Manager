@@ -26,12 +26,45 @@ if (count($timeline) > 0)
 
 	foreach ($timeline as $item)
 	{
-		echo '<li id="tl_' . $item->id . '"><div class="tl_content tl_vis_' . $item->visibility . '"><p><b>' . $item->text . '</b>';
+		if (isset($item->timestamp_unix))
+		{
+			$item_class = NULL;
+			if ($item->timestamp_unix - time() > 0 AND $item->timestamp_unix - time() < (7 * 24 * 60 * 60))
+			{
+				$item_class = 'week';
+			}
+			if ($item->timestamp_unix - time() > (7 * 24 * 60 * 60))
+			{
+				$item_class = 'future';
+			}
+			if ($item->timestamp_unix - time() < 0)
+			{
+				$item_class = 'past';
+			}
+		}
+		echo '<li id="tl_' . $item->id . '"><div class="tl_content tl_vis_' . $item->visibility . ' tl_' . $item_class . '"><p><b>' . $item->text . '</b>';
 		if ($item->payload !== NULL)
 		{
 			echo '<br>' . $item->payload;
 		}
-		echo '</p><small>' . $item->timestamp_human . '</small></div></li>';
+		if ($item->type === 'event')
+		{
+			echo 'Posted by ' . $item->user;
+			echo '</p><small>Start: ' . $item->timestamp_human . '</small>';
+			if (isset($item->timestamp_end) AND $item->timestamp_end !== NULL AND $item->timestamp_end !== '')
+			{
+				echo '</p><small>End: ' . $item->timestamp_end . '</small></div></li>';
+			}
+			else
+			{
+				echo'</div></li>';
+			}
+			
+		}
+		else
+		{
+			echo '</p><small>' . $item->timestamp_human . '</small>';
+		}
 	}	
 	
 	echo '</ul>

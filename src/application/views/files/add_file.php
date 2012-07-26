@@ -82,7 +82,7 @@
 		}
 		?>
 	</div>
-	<div class="span4" id="upload_message_div" hidden>
+	<div class="span4" id="upload_message_div" style="display:none">
 		<div id="settings" class="well">
 			<ol class="lead"><li>Choose your files to upload</li>
 			<li>Confirm to start the upload</li>
@@ -91,7 +91,7 @@
 
 		</div>
 	</div>
-	<div class="span8" id="upload_div" hidden>
+	<div class="span8" id="upload_div" style="display:none">
 		<iframe id="upload_frame" style="width:100%;border:none;height:400px;" src=""></iframe>
 	</div>
 </div>
