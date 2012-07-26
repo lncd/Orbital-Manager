@@ -59,7 +59,7 @@
 	
 	
 	echo '<div class="control-group">';
-	echo form_label('Query', 'add_statements', array('class' => 'control-label'));
+	echo form_label('Statements', 'add_statements', array('class' => 'control-label'));
 	echo '<div class="controls">';
 	
 	echo '<table class = "table table-bordered table-striped" id="statements_table">
@@ -75,9 +75,29 @@
 				
 			}
 		}
+
+	}
+
+	echo '</tbody></table></div>';
+	
+	echo '<div class="control-group">';
+	echo form_label('Output fields', 'add_output_field', array('class' => 'control-label'));
+	echo '<div class="controls">';
+	
+	echo '<table class = "table table-bordered table-striped" id="output_fields_table">
+	<thead><tr><th>Field</th><th>Use this output field?</th></tr></thead>
+	<tbody>';
+	if (isset($fields))
+	{
+		foreach ($fields as $field)
+		{
+			echo '<tr><td>' . $field . ' </td><td><input type="checkbox" name="output_fields[]" value="' . $field . '" checked="checked"  /></td></tr>';
+		}
+
 	}
 
 	echo '</tbody></table>';
+	
 	echo '</div></div>';
 
 	echo '<div class="form-actions">';
@@ -88,7 +108,6 @@
 	
 	
 		$form_field = array(
-		'name'			=> 'field',
 		'id'			=> 'field',
 		'placeholder'	=> 'Field',
 		'maxlength'		=> '200',
@@ -102,7 +121,6 @@
 	echo ' ';
 	
 		$form_value = array(
-		'name'			=> 'value',
 		'id'			=> 'value',
 		'placeholder'	=> 'Value',
 		'maxlength'		=> '200',
@@ -113,6 +131,21 @@
 	echo form_input($form_value);	
 	
 	echo ' <a name = "add_statement_to_query" id = "add_statement" value = "add_statement_to_query" class="btn btn-small"><i class = "icon-plus"></i> Add statement</a>';
+	
+	echo '<br>';
+	echo '<br>';
+	
+		$form_field = array(
+		'id'			=> 'output_field',
+		'placeholder'	=> 'Output field',
+		'maxlength'		=> '200',
+		'class'			=> 'span3',
+		'required'		=> 'TRUE'
+	);
+	
+	echo form_input($form_field);
+	echo ' <a name = "add_output_field_to_query" id = "add_output_field" value = "add_output_field_to_query" class="btn btn-small"><i class = "icon-plus"></i> Add Output field</a>';
+
 ?>
 	
 </div>
@@ -126,5 +159,11 @@
 		value = $('#value').val();
 		$('#statements_table').append('<tr><td>' + field + ' </td><td>' + operator + ' </td><td>' + value + ' </td><td><input type="checkbox" name="include[' + field + '][' + operator + ']" value="include" checked="checked"  /><input type="hidden" name="statements[' + field + '][' + operator + ']" value="' + value + '"/></td></tr>');
 		$('#statements_table').show();
+	});
+	
+	$('#add_output_field').click(function()
+	{
+		output_field = $('#output_field').val();
+		$('#output_fields_table').append('<tr><td>' + output_field + ' </td><td><input type="checkbox" name="output_fields[]" value="' + output_field + '" checked="checked"  /></td></tr>');
 	});
 </script>

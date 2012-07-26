@@ -301,11 +301,11 @@ class Datasets extends CI_Controller {
 							}
 						}
 					}	
-					if($this->input->post('fields'))
+					if($this->input->post('output_fields'))
 					{	
-						foreach ($this->input->post('fields') as $field => $statement)
+						foreach ($this->input->post('output_fields') as $field)
 						{
-							$fields_array[$field] = $value;						
+							$fields_array[] = $field;
 						}
 					}
 					
