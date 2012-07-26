@@ -334,6 +334,10 @@ class Datasets extends CI_Controller {
 						{
 							if (isset($includes[$field][$operator]))
 							{
+								if (is_numeric($value))
+								{
+									$value = (float)$value;
+								}
 								$statements_array[$field][$operator] = $value;						
 							}
 						}

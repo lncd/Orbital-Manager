@@ -111,8 +111,7 @@
 		'id'			=> 'field',
 		'placeholder'	=> 'Field',
 		'maxlength'		=> '200',
-		'class'			=> 'span3',
-		'required'		=> 'TRUE'
+		'class'			=> 'span3'
 	);
 
 	echo form_input($form_field);
@@ -124,8 +123,7 @@
 		'id'			=> 'value',
 		'placeholder'	=> 'Value',
 		'maxlength'		=> '200',
-		'class'			=> 'span3',
-		'required'		=> 'TRUE'
+		'class'			=> 'span3'
 	);
 
 	echo form_input($form_value);	
@@ -139,8 +137,7 @@
 		'id'			=> 'output_field',
 		'placeholder'	=> 'Output field',
 		'maxlength'		=> '200',
-		'class'			=> 'span3',
-		'required'		=> 'TRUE'
+		'class'			=> 'span3'
 	);
 	
 	echo form_input($form_field);
