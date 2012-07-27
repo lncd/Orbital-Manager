@@ -163,44 +163,51 @@ class Datasets extends CI_Controller {
 	{
 		if ($response = $this->orbital->query_get_details($query_identifier))
 		{
-			$this->load->helper('number');
-			$this->load->library('typography');
-			
-			$this->data['query_id'] = $response->response->query[0]->id;
-			$this->data['query_name'] = $response->response->query[0]->query;
-			$this->data['query_dataset'] = $response->response->query[0]->set;
-			$this->data['query_results_count'] = $response->response->query_count;
-			$this->data['statements'] = NULL;
-			$this->data['fields'] = NULL;
-			
-			if (isset($response->response->query[0]->value->statements))
+			if ($response->response->status)
 			{
-				$this->data['statements'] = (array)$response->response->query[0]->value->statements;
-			}
-			if (isset($response->response->query[0]->value->fields))
-			{
-				$this->data['fields'] = (array)$response->response->query[0]->value->fields;
-			}
-			
-			if (isset($response->response->query[0]->value->fields))
-			{
-				$this->data['query_fields'][] = $response->response->query[0]->value->fields;
-			}
-			if (isset($response->response->query[0]->value->statements))
-			{
-				$this->data['query_fields'][] = $response->response->query[0]->value->statements;
-			}
-			$this->data['page_title'] = $response->response->query[0]->query;
-
-			if ($response_dataset = $this->orbital->dataset_get_details($this->data['query_dataset']))
-			{			
-				$this->data['dataset_project'] = $response_dataset->response->dataset->project_name;
-				$this->data['dataset_project_id'] = $response_dataset->response->dataset->project;
-				$this->data['dataset_title'] = $response_dataset->response->dataset->title;
-
-				$this->parser->parse('includes/header', $this->data);
-				$this->parser->parse('datasets/view_query', $this->data);
-				$this->parser->parse('includes/footer', $this->data);
+				$this->load->helper('number');
+				$this->load->library('typography');
+				
+				$this->data['query_id'] = $response->response->query[0]->id;
+				$this->data['query_name'] = $response->response->query[0]->query;
+				$this->data['query_dataset'] = $response->response->query[0]->set;
+				$this->data['query_results_count'] = $response->response->query_count;
+				$this->data['statements'] = NULL;
+				$this->data['fields'] = NULL;
+				
+				if (isset($response->response->query[0]->value->statements))
+				{
+					$this->data['statements'] = (array)$response->response->query[0]->value->statements;
+				}
+				if (isset($response->response->query[0]->value->fields))
+				{
+					$this->data['fields'] = (array)$response->response->query[0]->value->fields;
+				}
+				
+				if (isset($response->response->query[0]->value->fields))
+				{
+					$this->data['query_fields'][] = $response->response->query[0]->value->fields;
+				}
+				if (isset($response->response->query[0]->value->statements))
+				{
+					$this->data['query_fields'][] = $response->response->query[0]->value->statements;
+				}
+				$this->data['page_title'] = $response->response->query[0]->query;
+	
+				if ($response_dataset = $this->orbital->dataset_get_details($this->data['query_dataset']))
+				{			
+					$this->data['dataset_project'] = $response_dataset->response->dataset->project_name;
+					$this->data['dataset_project_id'] = $response_dataset->response->dataset->project;
+					$this->data['dataset_title'] = $response_dataset->response->dataset->title;
+	
+					$this->parser->parse('includes/header', $this->data);
+					$this->parser->parse('datasets/view_query', $this->data);
+					$this->parser->parse('includes/footer', $this->data);
+				}
+				else
+				{
+					show_404();
+				}
 			}
 			else
 			{
@@ -248,7 +255,7 @@ class Datasets extends CI_Controller {
 				{
 					$this->session->set_flashdata('message', 'Your query has been built!');
 					$this->session->set_flashdata('message_type', 'success');
-					redirect('dataset/' . $dataset_id);			
+					redirect('query/' . $response->response->query_id);			
 				}
 				else
 				{
@@ -402,11 +409,11 @@ class Datasets extends CI_Controller {
 		
 		if ($response = $this->orbital->query_get_details($query_identifier))
 		{								
-			if ($response = $this->orbital->delete_query($query_identifier))
+			if ($this->orbital->delete_query($query_identifier))
 			{
 				$this->session->set_flashdata('message', 'Your query has been deleted!');
 				$this->session->set_flashdata('message_type', 'success');
-				redirect('query/' . $query_identifier);			
+				redirect('dataset/' . $response->response->query[0]->set);			
 			}
 			else
 			{
