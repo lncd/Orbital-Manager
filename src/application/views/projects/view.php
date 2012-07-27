@@ -148,7 +148,8 @@ echo form_close();
 
 echo form_open(site_url('project/' . $project_id . '/timeline/event'), array(
 			'class' => 'modal fade',
-			'id' => 'addTLEvent'
+			'id' => 'addTLEvent',
+			'onsubmit' => 'return validate_event()'
 		));
 
 echo '<div class="modal-header">
@@ -189,7 +190,6 @@ echo form_textarea($form_event);
 		'name'			=> 'end_date',
 		'id'			=> 'end_date',
 		'placeholder'	=> 'YYYY-MM-DD',
-		'required'      => 'required',
 		'maxlength'		=> '10',
 		'class'			=> 'span2 enddatepicker'
 	);
@@ -232,6 +232,19 @@ echo form_close();
 			separator: ' '}
 	);
 	});
+	
+	function validate_event()
+	{
+		if ($('#event').val() != '' && $('#start_date').val() != '')
+		{
+			return true;
+		}
+		else
+		{
+			alert('Event requires both a description and a start date');
+			return false;
+		}
+	}
 </script>
 
 <?php
