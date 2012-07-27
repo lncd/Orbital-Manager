@@ -251,10 +251,12 @@ echo form_close();
 
 if ($new_project === TRUE OR $project_description === NULL OR $project_description === '' OR $project_default_licence === NULL OR $project_research_group === NULL)
 {
-	echo '<div class="alert alert-info">
-		<i class="icon-chevron-down"></i> Please describe your project in more detail by clicking the \'Edit\' button.
-	</div>';
-
+	if ($permission_write === TRUE)
+	{
+		echo '<div class="alert alert-info">
+			<i class="icon-chevron-down"></i> Please describe your project in more detail by clicking the \'Edit\' button.
+		</div>';
+	}
 }
 
 
