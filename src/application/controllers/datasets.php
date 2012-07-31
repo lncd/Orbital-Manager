@@ -149,6 +149,76 @@ class Datasets extends CI_Controller {
 		}
 	}
 	
+	
+	
+	/**
+	 * Edit dataset
+	 *
+	 * edits a dataset
+	 *
+	 * @return NULL
+	 */
+
+
+	function edit_dataset($dataset_id)
+	{
+		$output_variable = NULL;
+		
+		$this->load->helper('number');
+		$this->load->library('typography');
+		
+		if ($response = $this->orbital->dataset_get_details($dataset_id))
+		{			
+			$licences = $this->orbital->licences_enabled_list();
+			$this->data['dataset_licences'] = $licences->response->licences;
+			$this->data['page_title'] = $response->response->dataset->title;
+			$this->data['dataset_id'] = $response->response->dataset->id;
+			$this->data['dataset_title'] = $response->response->dataset->title;
+			$this->data['dataset_licence'] = $response->response->dataset->licence;
+			$this->data['dataset_project_id'] = $response->response->dataset->project;
+			$this->data['dataset_project'] = $response->response->dataset->project_name;
+			$this->data['dataset_description'] = $response->response->dataset->description;
+			$this->data['dataset_visibility'] = $response->response->dataset->visibility;
+					
+			if($this->input->post('dataset_title') AND $this->input->post('dataset_title') !== '')
+			{
+				$dataset_public = 'private';
+				
+				if ($this->input->post('public'))
+				{
+					$dataset_public = 'public';
+				}
+				
+				if ($this->orbital->edit_dataset($dataset_id, $this->input->post('dataset_title'), $this->input->post('dataset_description'), $dataset_public, $this->input->post('default_licence')))
+				{
+					$this->session->set_flashdata('message', 'Dataset updated.');
+					$this->session->set_flashdata('message_type', 'success');
+					redirect('dataset/' . $dataset_id);
+				}
+				else
+				{
+					$this->session->set_flashdata('message', 'Something went wrong updating the dataset.');
+					$this->session->set_flashdata('message_type', 'error');
+					redirect('dataset/' . $dataset_id);
+				}
+				
+			}
+			else
+			{
+				$this->parser->parse('includes/header', $this->data);
+				$this->parser->parse('datasets/edit_dataset', $this->data);
+				$this->parser->parse('includes/footer', $this->data);
+			}
+		}
+		else
+		{
+			show_404();
+		}
+		
+	}
+
+
+	
 		
 	/**
 	 * View query
@@ -279,9 +349,9 @@ class Datasets extends CI_Controller {
 
 	
 	/**
-	 * Build query
+	 * Edit query
 	 *
-	 * builds a query
+	 * edits a query
 	 *
 	 * @return NULL
 	 */

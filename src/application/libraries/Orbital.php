@@ -1354,6 +1354,20 @@ class Orbital {
 		return $this->get_authed('dataset/' . $identifier);
 	}
 		
+	/**
+	 * Get dataset details
+	 *
+	 * Gets a datasets details
+	 *
+	 * @param string $identifier  The identifier of the dataset.
+	 * @access public
+	 * @return object.
+	 */
+	
+	public function edit_dataset($dataset_id, $dataset_name, $dataset_description, $dataset_visibility, $dataset_licence)
+	{
+		return $this->post_authed('dataset/' . $dataset_id . '/edit', array('dataset_name' => $dataset_name, 'dataset_description' => $dataset_description, 'dataset_visibility' => $dataset_visibility, 'dataset_licence' => $dataset_licence));
+	}
 		
 	/**
 	 * Get query details
