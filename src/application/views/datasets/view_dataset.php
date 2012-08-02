@@ -63,7 +63,7 @@ echo '<div class="modal fade" id="delete_dataset">
 		</div>
 		<div class="modal-footer">
 			<a href="#" data-dismiss="modal" class="btn">Close</a>
-			<a href="' . site_url('file/' . $dataset_id . '/delete') . '" class="btn btn-danger"><i class="icon-trash"></i> Delete Dataset</a>
+			<a href="' . site_url('dataset/' . $dataset_id . '/delete') . '" class="btn btn-danger"><i class="icon-trash"></i> Delete Dataset</a>
 		</div>
 	</div>';
 
