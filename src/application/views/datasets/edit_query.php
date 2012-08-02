@@ -9,7 +9,7 @@
 		<a href="{base_url}project/{dataset_project_id}">{dataset_project}</a> <span class="divider">/</span>
 	</li>	
 	<li>
-		<a href="{base_url}dataset/{query_dataset}">{dataset_title}</a><span class="divider">/</span>
+		<a href="{base_url}dataset/{query_dataset}">{dataset_title}</a> <span class="divider">/</span>
 	</li>
 	<li>
 		<a href="{base_url}query/{query_id}">{query_name}</a> <span class="divider">/</span>
