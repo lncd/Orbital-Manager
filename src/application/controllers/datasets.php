@@ -217,7 +217,43 @@ class Datasets extends CI_Controller {
 		
 	}
 
+	
+	/**
+	 * Delete dataset
+	 *
+	 * deletes a dataset
+	 *
+	 * @return NULL
+	 */
 
+
+	function delete_dataset($dataset_identifier)
+	{
+		
+		$this->load->helper('number');
+		$this->load->library('typography');
+		
+		if ($response = $this->orbital->dataset_get_details($dataset_identifier))
+		{								
+			if ($this->orbital->delete_dataset($dataset_identifier))
+			{
+				$this->session->set_flashdata('message', 'Your dataset has been deleted!');
+				$this->session->set_flashdata('message_type', 'success');
+				redirect('project/' . $response->response->dataset->project);			
+			}
+			else
+			{
+				$this->session->set_flashdata('message', 'Something went wrong deleting the dataset');
+				$this->session->set_flashdata('message_type', 'error');
+				redirect('dataset/' . $dataset_identifier);
+			}
+		}
+		else
+		{
+			show_404();
+		}
+		
+	}
 	
 		
 	/**

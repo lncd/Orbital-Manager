@@ -77,6 +77,7 @@ $route['collection/(:any)'] = "files/view_file_set/$1";
 $route['query/(:any)/delete'] = "datasets/delete_query/$1";
 $route['query/(:any)/edit'] = "datasets/edit_query/$1";
 $route['query/(:any)'] = "datasets/view_query/$1";
+$route['dataset/(:any)/delete'] = "datasets/delete_dataset/$1";
 $route['dataset/(:any)/query'] = "datasets/create_query/$1";
 $route['dataset/(:any)/edit'] = "datasets/edit_dataset/$1";
 $route['dataset/(:any)'] = "datasets/view_dataset/$1";

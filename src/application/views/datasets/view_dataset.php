@@ -87,7 +87,6 @@ echo '<div class="modal fade" id="delete_dataset">
 
 			}
 		}
-
 			
 		echo '</tbody>';
 	}
