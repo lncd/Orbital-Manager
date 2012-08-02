@@ -48,13 +48,13 @@
 
 if (isset ($file_downloadable))
 {
-	if($file_downloadable)
-	{
-		echo '<a class="btn btn-primary" href="{base_url}file/{file_id}/download" onClick="recordDownload(this, \'{file_id}\');"><i class = "icon-ok icon-download icon-white"></i> Download File</a>';
-	}
-	else if ($file_downloadable === 'no')
+	if ($file_downloadable === 'no')
 	{
 		echo '<p>This file isn\'t available for download.</p>';
+	}
+	else if($file_downloadable)
+	{
+		echo '<a class="btn btn-primary" href="{base_url}file/{file_id}/download" onClick="recordDownload(this, \'{file_id}\');"><i class = "icon-ok icon-download icon-white"></i> Download File</a>';
 	}
 }
 else
