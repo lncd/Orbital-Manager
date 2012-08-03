@@ -243,7 +243,7 @@ class Datasets extends CI_Controller {
 			}
 			else
 			{
-				$this->session->set_flashdata('message', 'Something went wrong deleting the dataset');
+				$this->session->set_flashdata('message', $response->error());
 				$this->session->set_flashdata('message_type', 'error');
 				redirect('dataset/' . $dataset_identifier);
 			}

@@ -1382,7 +1382,7 @@ class Orbital {
 	
 	public function delete_dataset($dataset_identifier)
 	{
-		return $this->delete_authed('dataset/' . $identifier . '/delete');
+		return $this->delete_authed('dataset/' . $dataset_identifier . '/delete');
 	}
 		
 	/**
